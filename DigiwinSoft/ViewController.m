@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //test git by shihjie
     // Do any additional setup after loading the view, typically from a nib.
 }
 
