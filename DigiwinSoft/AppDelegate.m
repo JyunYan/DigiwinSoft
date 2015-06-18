@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "MMDrawerController.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -18,7 +20,24 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    // test test
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    self.tabBarController = [[MTabBarViewController alloc] init];
+    
+    ViewController* setting = [[ViewController alloc] init];
+    UINavigationController* right = [[UINavigationController alloc] initWithRootViewController:setting];
+    right.navigationBarHidden = YES;
+
+    MMDrawerController* drawer = [[MMDrawerController alloc] initWithCenterViewController:self.tabBarController rightDrawerViewController:right];
+    [drawer setMaximumRightDrawerWidth:262];
+    [drawer setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+    [drawer setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
+
+    self.window.rootViewController = drawer;
+    self.window.rootViewController.view.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    
     return YES;
 }
 
@@ -42,6 +61,14 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - MMDrawerController
+
+- (void) toggleRight
+{
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    [drawer toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
 }
 
 @end
