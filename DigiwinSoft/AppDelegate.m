@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MMDrawerController.h"
-#import "ViewController.h"
+#import "MSettingViewController.h"
 
 @interface AppDelegate ()
 
@@ -24,7 +24,7 @@
 
     self.tabBarController = [[MTabBarViewController alloc] init];
     
-    ViewController* setting = [[ViewController alloc] init];
+    MSettingViewController* setting = [[MSettingViewController alloc] init];
     UINavigationController* right = [[UINavigationController alloc] initWithRootViewController:setting];
     right.navigationBarHidden = YES;
 
@@ -34,7 +34,6 @@
     [drawer setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
 
     self.window.rootViewController = drawer;
-    self.window.rootViewController.view.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
     

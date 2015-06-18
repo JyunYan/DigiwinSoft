@@ -19,9 +19,10 @@
 		3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE2E1B32997000143374 /* MTabBarViewController.m */; };
 		3AB4CE331B32A12300143374 /* Button-Favorite-List-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4CE311B32A12300143374 /* Button-Favorite-List-Normal.png */; };
 		3AB4CE341B32A12300143374 /* Button-Favorite-List-Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4CE321B32A12300143374 /* Button-Favorite-List-Pressed.png */; };
+		3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE381B32C0C800143374 /* ASFileManager.m */; };
 		DC0ADF5E1B316E340019236D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF5D1B316E340019236D /* main.m */; };
 		DC0ADF611B316E340019236D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF601B316E340019236D /* AppDelegate.m */; };
-		DC0ADF641B316E340019236D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF631B316E340019236D /* ViewController.m */; };
+		DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF631B316E340019236D /* MSettingViewController.m */; };
 		DC0ADF671B316E340019236D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC0ADF651B316E340019236D /* Main.storyboard */; };
 		DC0ADF691B316E340019236D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC0ADF681B316E340019236D /* Images.xcassets */; };
 		DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC0ADF6A1B316E340019236D /* LaunchScreen.xib */; };
@@ -63,13 +64,15 @@
 		3AB4CE2E1B32997000143374 /* MTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTabBarViewController.m; sourceTree = "<group>"; };
 		3AB4CE311B32A12300143374 /* Button-Favorite-List-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button-Favorite-List-Normal.png"; sourceTree = "<group>"; };
 		3AB4CE321B32A12300143374 /* Button-Favorite-List-Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button-Favorite-List-Pressed.png"; sourceTree = "<group>"; };
+		3AB4CE371B32C0C800143374 /* ASFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFileManager.h; sourceTree = "<group>"; };
+		3AB4CE381B32C0C800143374 /* ASFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFileManager.m; sourceTree = "<group>"; };
 		DC0ADF581B316E340019236D /* DigiwinSoft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigiwinSoft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC0ADF5C1B316E340019236D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC0ADF5D1B316E340019236D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DC0ADF5F1B316E340019236D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DC0ADF601B316E340019236D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DC0ADF621B316E340019236D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		DC0ADF631B316E340019236D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		DC0ADF621B316E340019236D /* MSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSettingViewController.h; sourceTree = "<group>"; };
+		DC0ADF631B316E340019236D /* MSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSettingViewController.m; sourceTree = "<group>"; };
 		DC0ADF661B316E340019236D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC0ADF681B316E340019236D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DC0ADF6B1B316E340019236D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -176,6 +179,15 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		3AB4CE361B32C0AF00143374 /* utilities */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4CE371B32C0C800143374 /* ASFileManager.h */,
+				3AB4CE381B32C0C800143374 /* ASFileManager.m */,
+			);
+			path = utilities;
+			sourceTree = "<group>";
+		};
 		DC0ADF4F1B316E340019236D = {
 			isa = PBXGroup;
 			children = (
@@ -202,11 +214,12 @@
 				3AB4CE0D1B3282ED00143374 /* 看現況 */,
 				3AB4CE0E1B3282ED00143374 /* 監控地圖 */,
 				3AB4CE041B3264B500143374 /* 行業攻略 */,
+				3AB4CE361B32C0AF00143374 /* utilities */,
 				DC1014481B3287D000EF7A6F /* structure */,
 				DC0ADF5F1B316E340019236D /* AppDelegate.h */,
 				DC0ADF601B316E340019236D /* AppDelegate.m */,
-				DC0ADF621B316E340019236D /* ViewController.h */,
-				DC0ADF631B316E340019236D /* ViewController.m */,
+				DC0ADF621B316E340019236D /* MSettingViewController.h */,
+				DC0ADF631B316E340019236D /* MSettingViewController.m */,
 				3AB4CE2D1B32997000143374 /* MTabBarViewController.h */,
 				3AB4CE2E1B32997000143374 /* MTabBarViewController.m */,
 				DC0ADF651B316E340019236D /* Main.storyboard */,
@@ -359,13 +372,14 @@
 				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
 				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
-				DC0ADF641B316E340019236D /* ViewController.m in Sources */,
+				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
 				3AB4CE2A1B32895C00143374 /* MMDrawerController.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
 				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
+				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
 				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,
 				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
