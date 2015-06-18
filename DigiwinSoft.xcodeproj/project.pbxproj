@@ -14,6 +14,7 @@
 		DC0ADF691B316E340019236D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC0ADF681B316E340019236D /* Images.xcassets */; };
 		DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC0ADF6A1B316E340019236D /* LaunchScreen.xib */; };
 		DC0ADF781B316E340019236D /* DigiwinSoftTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF771B316E340019236D /* DigiwinSoftTests.m */; };
+		DC10144B1B32985600EF7A6F /* MUser.m in Sources */ = {isa = PBXBuildFile; fileRef = DC10144A1B32985600EF7A6F /* MUser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		DC0ADF711B316E340019236D /* DigiwinSoftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DigiwinSoftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC0ADF761B316E340019236D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC0ADF771B316E340019236D /* DigiwinSoftTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DigiwinSoftTests.m; sourceTree = "<group>"; };
+		DC1014491B32985600EF7A6F /* MUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUser.h; path = structure/MUser.h; sourceTree = "<group>"; };
+		DC10144A1B32985600EF7A6F /* MUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUser.m; path = structure/MUser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,7 @@
 		DC0ADF5A1B316E340019236D /* DigiwinSoft */ = {
 			isa = PBXGroup;
 			children = (
+				DC1014481B3287D000EF7A6F /* structure */,
 				DC0ADF5F1B316E340019236D /* AppDelegate.h */,
 				DC0ADF601B316E340019236D /* AppDelegate.m */,
 				DC0ADF621B316E340019236D /* ViewController.h */,
@@ -117,6 +121,15 @@
 				DC0ADF761B316E340019236D /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DC1014481B3287D000EF7A6F /* structure */ = {
+			isa = PBXGroup;
+			children = (
+				DC1014491B32985600EF7A6F /* MUser.h */,
+				DC10144A1B32985600EF7A6F /* MUser.m */,
+			);
+			name = structure;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +234,7 @@
 			files = (
 				DC0ADF641B316E340019236D /* ViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
+				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,6 +430,7 @@
 				DC0ADF7D1B316E340019236D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC0ADF7E1B316E340019236D /* Build configuration list for PBXNativeTarget "DigiwinSoftTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +439,7 @@
 				DC0ADF801B316E340019236D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
