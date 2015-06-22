@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MDataBaseManager.h"
 #import "MMDrawerController.h"
 #import "MSettingViewController.h"
 
@@ -19,6 +20,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [MDataBaseManager sharedInstance];
+    
     //123
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
@@ -36,6 +40,10 @@
     self.window.rootViewController = drawer;
     [self.window makeKeyAndVisible];
     
+    
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSLog(@"data_path :%s\n", [documentsDirectory UTF8String]);
     
     return YES;
 }
