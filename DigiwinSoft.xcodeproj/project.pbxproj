@@ -7,9 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */; };
+		3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE101B32831500143374 /* MMonitorMapViewController.m */; };
+		3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE131B32839300143374 /* MSeeStatusViewController.m */; };
+		3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE161B32841100143374 /* MLookingForSolutionsViewController.m */; };
+		3AB4CE1A1B32848B00143374 /* MMyTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE191B32848B00143374 /* MMyTaskViewController.m */; };
+		3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE211B32895C00143374 /* MMDrawerBarButtonItem.m */; };
+		3AB4CE2A1B32895C00143374 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE241B32895C00143374 /* MMDrawerController.m */; };
+		3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE261B32895C00143374 /* MMDrawerVisualState.m */; };
+		3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE281B32895C00143374 /* UIViewController+MMDrawerController.m */; };
+		3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE2E1B32997000143374 /* MTabBarViewController.m */; };
+		3AB4CE331B32A12300143374 /* Button-Favorite-List-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4CE311B32A12300143374 /* Button-Favorite-List-Normal.png */; };
+		3AB4CE341B32A12300143374 /* Button-Favorite-List-Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4CE321B32A12300143374 /* Button-Favorite-List-Pressed.png */; };
+		3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE381B32C0C800143374 /* ASFileManager.m */; };
 		DC0ADF5E1B316E340019236D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF5D1B316E340019236D /* main.m */; };
 		DC0ADF611B316E340019236D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF601B316E340019236D /* AppDelegate.m */; };
-		DC0ADF641B316E340019236D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF631B316E340019236D /* ViewController.m */; };
+		DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF631B316E340019236D /* MSettingViewController.m */; };
 		DC0ADF671B316E340019236D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC0ADF651B316E340019236D /* Main.storyboard */; };
 		DC0ADF691B316E340019236D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC0ADF681B316E340019236D /* Images.xcassets */; };
 		DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC0ADF6A1B316E340019236D /* LaunchScreen.xib */; };
@@ -31,13 +44,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryRaidersViewController.h; sourceTree = "<group>"; };
+		3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIndustryRaidersViewController.m; sourceTree = "<group>"; };
+		3AB4CE0F1B32831500143374 /* MMonitorMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMonitorMapViewController.h; sourceTree = "<group>"; };
+		3AB4CE101B32831500143374 /* MMonitorMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMonitorMapViewController.m; sourceTree = "<group>"; };
+		3AB4CE121B32839300143374 /* MSeeStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSeeStatusViewController.h; sourceTree = "<group>"; };
+		3AB4CE131B32839300143374 /* MSeeStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSeeStatusViewController.m; sourceTree = "<group>"; };
+		3AB4CE151B32841100143374 /* MLookingForSolutionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLookingForSolutionsViewController.h; sourceTree = "<group>"; };
+		3AB4CE161B32841100143374 /* MLookingForSolutionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLookingForSolutionsViewController.m; sourceTree = "<group>"; };
+		3AB4CE181B32848B00143374 /* MMyTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyTaskViewController.h; sourceTree = "<group>"; };
+		3AB4CE191B32848B00143374 /* MMyTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMyTaskViewController.m; sourceTree = "<group>"; };
+		3AB4CE201B32895C00143374 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
+		3AB4CE211B32895C00143374 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
+		3AB4CE221B32895C00143374 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
+		3AB4CE231B32895C00143374 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
+		3AB4CE241B32895C00143374 /* MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerController.m; sourceTree = "<group>"; };
+		3AB4CE251B32895C00143374 /* MMDrawerVisualState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerVisualState.h; sourceTree = "<group>"; };
+		3AB4CE261B32895C00143374 /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
+		3AB4CE271B32895C00143374 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
+		3AB4CE281B32895C00143374 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
+		3AB4CE2D1B32997000143374 /* MTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTabBarViewController.h; sourceTree = "<group>"; };
+		3AB4CE2E1B32997000143374 /* MTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTabBarViewController.m; sourceTree = "<group>"; };
+		3AB4CE311B32A12300143374 /* Button-Favorite-List-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button-Favorite-List-Normal.png"; sourceTree = "<group>"; };
+		3AB4CE321B32A12300143374 /* Button-Favorite-List-Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button-Favorite-List-Pressed.png"; sourceTree = "<group>"; };
+		3AB4CE371B32C0C800143374 /* ASFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFileManager.h; sourceTree = "<group>"; };
+		3AB4CE381B32C0C800143374 /* ASFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFileManager.m; sourceTree = "<group>"; };
 		DC0ADF581B316E340019236D /* DigiwinSoft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigiwinSoft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC0ADF5C1B316E340019236D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC0ADF5D1B316E340019236D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DC0ADF5F1B316E340019236D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DC0ADF601B316E340019236D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DC0ADF621B316E340019236D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		DC0ADF631B316E340019236D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		DC0ADF621B316E340019236D /* MSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSettingViewController.h; sourceTree = "<group>"; };
+		DC0ADF631B316E340019236D /* MSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSettingViewController.m; sourceTree = "<group>"; };
 		DC0ADF661B316E340019236D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC0ADF681B316E340019236D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DC0ADF6B1B316E340019236D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -72,6 +110,93 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3AB4CE041B3264B500143374 /* 行業攻略 */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */,
+				3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */,
+			);
+			path = "行業攻略";
+			sourceTree = "<group>";
+		};
+		3AB4CE0B1B3282ED00143374 /* 我的任務 */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4CE181B32848B00143374 /* MMyTaskViewController.h */,
+				3AB4CE191B32848B00143374 /* MMyTaskViewController.m */,
+			);
+			path = "我的任務";
+			sourceTree = "<group>";
+		};
+		3AB4CE0C1B3282ED00143374 /* 找對策 */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4CE151B32841100143374 /* MLookingForSolutionsViewController.h */,
+				3AB4CE161B32841100143374 /* MLookingForSolutionsViewController.m */,
+			);
+			path = "找對策";
+			sourceTree = "<group>";
+		};
+		3AB4CE0D1B3282ED00143374 /* 看現況 */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4CE121B32839300143374 /* MSeeStatusViewController.h */,
+				3AB4CE131B32839300143374 /* MSeeStatusViewController.m */,
+			);
+			path = "看現況";
+			sourceTree = "<group>";
+		};
+		3AB4CE0E1B3282ED00143374 /* 監控地圖 */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4CE0F1B32831500143374 /* MMonitorMapViewController.h */,
+				3AB4CE101B32831500143374 /* MMonitorMapViewController.m */,
+			);
+			path = "監控地圖";
+			sourceTree = "<group>";
+		};
+		3AB4CE1E1B32895C00143374 /* external */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4CE1F1B32895C00143374 /* MMDrawerController */,
+			);
+			path = external;
+			sourceTree = "<group>";
+		};
+		3AB4CE1F1B32895C00143374 /* MMDrawerController */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4CE201B32895C00143374 /* MMDrawerBarButtonItem.h */,
+				3AB4CE211B32895C00143374 /* MMDrawerBarButtonItem.m */,
+				3AB4CE221B32895C00143374 /* MMDrawerController+Subclass.h */,
+				3AB4CE231B32895C00143374 /* MMDrawerController.h */,
+				3AB4CE241B32895C00143374 /* MMDrawerController.m */,
+				3AB4CE251B32895C00143374 /* MMDrawerVisualState.h */,
+				3AB4CE261B32895C00143374 /* MMDrawerVisualState.m */,
+				3AB4CE271B32895C00143374 /* UIViewController+MMDrawerController.h */,
+				3AB4CE281B32895C00143374 /* UIViewController+MMDrawerController.m */,
+			);
+			path = MMDrawerController;
+			sourceTree = "<group>";
+		};
+		3AB4CE301B32A12300143374 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4CE311B32A12300143374 /* Button-Favorite-List-Normal.png */,
+				3AB4CE321B32A12300143374 /* Button-Favorite-List-Pressed.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		3AB4CE361B32C0AF00143374 /* utilities */ = {
+			isa = PBXGroup;
+			children = (
+				3AB4CE371B32C0C800143374 /* ASFileManager.h */,
+				3AB4CE381B32C0C800143374 /* ASFileManager.m */,
+			);
+			path = utilities;
+			sourceTree = "<group>";
+		};
 		DC0ADF4F1B316E340019236D = {
 			isa = PBXGroup;
 			children = (
@@ -93,14 +218,23 @@
 		DC0ADF5A1B316E340019236D /* DigiwinSoft */ = {
 			isa = PBXGroup;
 			children = (
+				3AB4CE0B1B3282ED00143374 /* 我的任務 */,
+				3AB4CE0C1B3282ED00143374 /* 找對策 */,
+				3AB4CE0D1B3282ED00143374 /* 看現況 */,
+				3AB4CE0E1B3282ED00143374 /* 監控地圖 */,
+				3AB4CE041B3264B500143374 /* 行業攻略 */,
+				3AB4CE361B32C0AF00143374 /* utilities */,
 				DC1014481B3287D000EF7A6F /* structure */,
 				DC0ADF5F1B316E340019236D /* AppDelegate.h */,
 				DC0ADF601B316E340019236D /* AppDelegate.m */,
-				DC0ADF621B316E340019236D /* ViewController.h */,
-				DC0ADF631B316E340019236D /* ViewController.m */,
+				DC0ADF621B316E340019236D /* MSettingViewController.h */,
+				DC0ADF631B316E340019236D /* MSettingViewController.m */,
+				3AB4CE2D1B32997000143374 /* MTabBarViewController.h */,
+				3AB4CE2E1B32997000143374 /* MTabBarViewController.m */,
 				DC0ADF651B316E340019236D /* Main.storyboard */,
 				DC0ADF681B316E340019236D /* Images.xcassets */,
 				DC0ADF6A1B316E340019236D /* LaunchScreen.xib */,
+				3AB4CE1E1B32895C00143374 /* external */,
 				DC0ADF5B1B316E340019236D /* Supporting Files */,
 			);
 			path = DigiwinSoft;
@@ -109,6 +243,7 @@
 		DC0ADF5B1B316E340019236D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3AB4CE301B32A12300143374 /* images */,
 				DC0ADF5C1B316E340019236D /* Info.plist */,
 				DC0ADF5D1B316E340019236D /* main.m */,
 			);
@@ -229,6 +364,8 @@
 			files = (
 				DC0ADF671B316E340019236D /* Main.storyboard in Resources */,
 				DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */,
+				3AB4CE331B32A12300143374 /* Button-Favorite-List-Normal.png in Resources */,
+				3AB4CE341B32A12300143374 /* Button-Favorite-List-Pressed.png in Resources */,
 				DC0ADF691B316E340019236D /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,12 +385,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */,
-				DC0ADF641B316E340019236D /* ViewController.m in Sources */,
+				DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */,
+				DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */,
+				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
+				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
+				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
+				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
+				3AB4CE2A1B32895C00143374 /* MMDrawerController.m in Sources */,
+				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
+				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
-				DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */,
-				DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */,
+				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,
+				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
+				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,
+				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
+				3AB4CE1A1B32848B00143374 /* MMyTaskViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +528,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DigiwinSoft/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -390,6 +539,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DigiwinSoft/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

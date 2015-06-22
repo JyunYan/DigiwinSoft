@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MSettingViewController.h
 //  DigiwinSoft
 //
 //  Created by Jyun on 2015/6/17.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface MSettingViewController : UITableViewController
 
 
 @end
