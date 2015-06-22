@@ -15,6 +15,9 @@
 		DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC0ADF6A1B316E340019236D /* LaunchScreen.xib */; };
 		DC0ADF781B316E340019236D /* DigiwinSoftTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF771B316E340019236D /* DigiwinSoftTests.m */; };
 		DC10144B1B32985600EF7A6F /* MUser.m in Sources */ = {isa = PBXBuildFile; fileRef = DC10144A1B32985600EF7A6F /* MUser.m */; };
+		DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */ = {isa = PBXBuildFile; fileRef = DC10144D1B32B66200EF7A6F /* MGuide.m */; };
+		DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014501B32B67F00EF7A6F /* MActivity.m */; };
+		DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014531B32B69F00EF7A6F /* MWorkItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,12 @@
 		DC0ADF771B316E340019236D /* DigiwinSoftTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DigiwinSoftTests.m; sourceTree = "<group>"; };
 		DC1014491B32985600EF7A6F /* MUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUser.h; path = structure/MUser.h; sourceTree = "<group>"; };
 		DC10144A1B32985600EF7A6F /* MUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUser.m; path = structure/MUser.m; sourceTree = "<group>"; };
+		DC10144C1B32B66200EF7A6F /* MGuide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGuide.h; path = structure/MGuide.h; sourceTree = "<group>"; };
+		DC10144D1B32B66200EF7A6F /* MGuide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGuide.m; path = structure/MGuide.m; sourceTree = "<group>"; };
+		DC10144F1B32B67F00EF7A6F /* MActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MActivity.h; path = structure/MActivity.h; sourceTree = "<group>"; };
+		DC1014501B32B67F00EF7A6F /* MActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MActivity.m; path = structure/MActivity.m; sourceTree = "<group>"; };
+		DC1014521B32B69F00EF7A6F /* MWorkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWorkItem.h; path = structure/MWorkItem.h; sourceTree = "<group>"; };
+		DC1014531B32B69F00EF7A6F /* MWorkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWorkItem.m; path = structure/MWorkItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +137,12 @@
 			children = (
 				DC1014491B32985600EF7A6F /* MUser.h */,
 				DC10144A1B32985600EF7A6F /* MUser.m */,
+				DC10144C1B32B66200EF7A6F /* MGuide.h */,
+				DC10144D1B32B66200EF7A6F /* MGuide.m */,
+				DC10144F1B32B67F00EF7A6F /* MActivity.h */,
+				DC1014501B32B67F00EF7A6F /* MActivity.m */,
+				DC1014521B32B69F00EF7A6F /* MWorkItem.h */,
+				DC1014531B32B69F00EF7A6F /* MWorkItem.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -232,10 +247,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */,
 				DC0ADF641B316E340019236D /* ViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
+				DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */,
+				DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
