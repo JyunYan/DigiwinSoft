@@ -47,7 +47,7 @@
 -(void)clickedBtnSetting:(id)sender
 {
     AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleRight];
+    [delegate toggleLeft];
 }
 
 @end

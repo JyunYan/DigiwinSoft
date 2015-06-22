@@ -16,7 +16,23 @@
 @property (strong, nonatomic) MTabBarViewController* tabBarController;
 
 
-- (void) toggleRight;
+- (void) toggleLeft;
+
+- (void) toggleMonitorMap;
+
+- (void) toggleSeeStatus;
+
+- (void) toggleIndustryRaiders;
+
+- (void) toggleLookingForSolutions;
+
+- (void) toggleMyTask;
+
+- (void) toggleTabBar;
+
+- (void) toggleMyRaiders;
+
+- (void) toggleMyPlan;
 
 @end
 

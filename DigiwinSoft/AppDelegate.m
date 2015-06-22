@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "MMDrawerController.h"
 #import "MSettingViewController.h"
+#import "MMyRaidersViewController.h"
+#import "MMyPlanViewController.h"
 
 @interface AppDelegate ()
 
@@ -25,11 +27,15 @@
     self.tabBarController = [[MTabBarViewController alloc] init];
     
     MSettingViewController* setting = [[MSettingViewController alloc] init];
-    UINavigationController* right = [[UINavigationController alloc] initWithRootViewController:setting];
-    right.navigationBarHidden = YES;
+    UINavigationController* left = [[UINavigationController alloc] initWithRootViewController:setting];
+    left.navigationBarHidden = YES;
 
-    MMDrawerController* drawer = [[MMDrawerController alloc] initWithCenterViewController:self.tabBarController rightDrawerViewController:right];
-    [drawer setMaximumRightDrawerWidth:262];
+    
+    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
+    CGFloat screenWidth = screenFrame.size.width;
+
+    MMDrawerController* drawer = [[MMDrawerController alloc] initWithCenterViewController:self.tabBarController leftDrawerViewController:left];
+    [drawer setMaximumLeftDrawerWidth:screenWidth];
     [drawer setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
     [drawer setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
 
@@ -64,10 +70,88 @@
 
 #pragma mark - MMDrawerController
 
-- (void) toggleRight
+- (void) toggleLeft
 {
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
-    [drawer toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
+    [drawer toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+- (void) toggleMonitorMap
+{
+    _tabBarController.selectedIndex = 0;
+    
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    drawer.centerViewController = _tabBarController;
+    [drawer closeDrawerAnimated:YES completion:nil];
+}
+
+- (void) toggleSeeStatus
+{
+    _tabBarController.selectedIndex = 1;
+    
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    drawer.centerViewController = _tabBarController;
+    [drawer closeDrawerAnimated:YES completion:nil];
+}
+
+- (void) toggleIndustryRaiders
+{
+    _tabBarController.selectedIndex = 2;
+    
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    drawer.centerViewController = _tabBarController;
+    [drawer closeDrawerAnimated:YES completion:nil];
+}
+
+- (void) toggleLookingForSolutions
+{
+    _tabBarController.selectedIndex = 3;
+    
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    drawer.centerViewController = _tabBarController;
+    [drawer closeDrawerAnimated:YES completion:nil];
+}
+
+- (void) toggleMyTask
+{
+    _tabBarController.selectedIndex = 4;
+    
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    drawer.centerViewController = _tabBarController;
+    [drawer closeDrawerAnimated:YES completion:nil];
+}
+
+- (void) toggleTabBar
+{
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    drawer.centerViewController = _tabBarController;
+    [drawer closeDrawerAnimated:YES completion:nil];
+}
+
+- (void) toggleMyRaiders
+{
+    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+
+    MMyRaidersViewController* vc = [[MMyRaidersViewController alloc] init];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    drawer.centerViewController = nav;
+    [drawer closeDrawerAnimated:YES completion:nil];
+}
+
+- (void) toggleMyPlan
+{
+    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    MMyPlanViewController* vc = [[MMyPlanViewController alloc] init];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    drawer.centerViewController = nav;
+    [drawer closeDrawerAnimated:YES completion:nil];
 }
 
 @end

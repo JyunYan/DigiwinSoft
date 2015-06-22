@@ -9,8 +9,10 @@
 #import "MSettingViewController.h"
 #import "ASFileManager.h"
 #import "MUser.h"
+#import "AppDelegate.h"
+#import "UIViewController+MMDrawerController.h"
 
-@interface MSettingViewController ()
+@interface MSettingViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) MUser* userData;
 
@@ -22,11 +24,33 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.tableView.backgroundColor = [UIColor blackColor];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    
     [self createTestData];
+    
+    self.view.backgroundColor = [UIColor grayColor];
+
+    
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+
+    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
+    CGFloat screenWidth = screenFrame.size.width;
+    CGFloat screenHeight = screenFrame.size.height;
+    
+    
+    CGFloat posX = 0;
+    CGFloat posY = 0;
+    CGFloat width = screenWidth - 40;
+    CGFloat height = screenHeight + statusBarHeight;
+    
+    UIView* tableView = [self createTableView:CGRectMake(posX, posY, width, height)];
+    [self.view addSubview:tableView];
+    
+    
+    posX = tableView.frame.origin.x + tableView.frame.size.width;
+    posY = 0;
+    width = 40;
+    
+    UIView* leftView = [self createLeftView:CGRectMake(posX, posY, width, height)];
+    [self.view addSubview:leftView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,6 +74,58 @@
     
     _userData.companyId = @"company123";
     _userData.companyName = @"DC 集團";
+}
+
+#pragma mark - create view
+
+- (UIView*)createLeftView:(CGRect) rect
+{
+    UIView* view = [[UIView alloc] initWithFrame:rect];
+    
+    CGFloat posX = 0;
+    CGFloat posY = 40;
+    CGFloat width = 25;
+    CGFloat height = 25;
+    
+    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:settingbutton];
+    
+    return view;
+}
+
+- (UIView*)createTableView:(CGRect) rect
+{
+    UIView* view = [[UIView alloc] initWithFrame:rect];
+    view.backgroundColor = [UIColor lightGrayColor];
+    
+    CGFloat viewWidth = rect.size.width;
+    CGFloat viewHeight = rect.size.height;
+    
+    CGFloat posX = 0;
+    CGFloat posY = 0;
+    CGFloat width = viewWidth;
+    CGFloat height = viewHeight;
+    
+    UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    tableView.backgroundColor = [UIColor whiteColor];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.backgroundColor = [UIColor blackColor];
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [view addSubview:tableView];
+    
+    return view;
+}
+
+#pragma mark - UIButton
+
+-(void)clickedBtnSetting:(id)sender
+{
+    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
+    [delegate toggleLeft];
 }
 
 #pragma mark - Table view data source
@@ -202,9 +278,11 @@
     NSInteger row = indexPath.row;
     
     if (row == 0) {
-        
+        AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
+        [delegate toggleMyRaiders];
     } else if (row == 1) {
-        
+        AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
+        [delegate toggleMyPlan];
     } else if (row == 2) {
         
     } else if (row == 3) {

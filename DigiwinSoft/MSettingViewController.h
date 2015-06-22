@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MSettingViewController : UITableViewController
+@interface MSettingViewController : UIViewController
 
 
 @end

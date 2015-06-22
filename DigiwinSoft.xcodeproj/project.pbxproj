@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A711B791B37A12900E94211 /* MMyRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B781B37A12900E94211 /* MMyRaidersViewController.m */; };
+		3A711B7C1B37B24E00E94211 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A711B7B1B37B24E00E94211 /* back.png */; };
+		3A711B7F1B37C42D00E94211 /* MMyPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B7E1B37C42D00E94211 /* MMyPlanViewController.m */; };
+		3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B831B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m */; };
+		3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B851B3800C100E94211 /* SWCellScrollView.m */; };
+		3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B871B3800C100E94211 /* SWLongPressGestureRecognizer.m */; };
+		3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B891B3800C100E94211 /* SWTableViewCell.m */; };
+		3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B8B1B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m */; };
+		3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B8D1B3800C100E94211 /* SWUtilityButtonView.m */; };
 		3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */; };
 		3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE101B32831500143374 /* MMonitorMapViewController.m */; };
 		3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE131B32839300143374 /* MSeeStatusViewController.m */; };
@@ -41,6 +50,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A711B771B37A12900E94211 /* MMyRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyRaidersViewController.h; sourceTree = "<group>"; };
+		3A711B781B37A12900E94211 /* MMyRaidersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMyRaidersViewController.m; sourceTree = "<group>"; };
+		3A711B7B1B37B24E00E94211 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		3A711B7D1B37C42D00E94211 /* MMyPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyPlanViewController.h; sourceTree = "<group>"; };
+		3A711B7E1B37C42D00E94211 /* MMyPlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMyPlanViewController.m; sourceTree = "<group>"; };
+		3A711B821B3800C100E94211 /* NSMutableArray+SWUtilityButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+SWUtilityButtons.h"; sourceTree = "<group>"; };
+		3A711B831B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+SWUtilityButtons.m"; sourceTree = "<group>"; };
+		3A711B841B3800C100E94211 /* SWCellScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCellScrollView.h; sourceTree = "<group>"; };
+		3A711B851B3800C100E94211 /* SWCellScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWCellScrollView.m; sourceTree = "<group>"; };
+		3A711B861B3800C100E94211 /* SWLongPressGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWLongPressGestureRecognizer.h; sourceTree = "<group>"; };
+		3A711B871B3800C100E94211 /* SWLongPressGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWLongPressGestureRecognizer.m; sourceTree = "<group>"; };
+		3A711B881B3800C100E94211 /* SWTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTableViewCell.h; sourceTree = "<group>"; };
+		3A711B891B3800C100E94211 /* SWTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTableViewCell.m; sourceTree = "<group>"; };
+		3A711B8A1B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUtilityButtonTapGestureRecognizer.h; sourceTree = "<group>"; };
+		3A711B8B1B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonTapGestureRecognizer.m; sourceTree = "<group>"; };
+		3A711B8C1B3800C100E94211 /* SWUtilityButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUtilityButtonView.h; sourceTree = "<group>"; };
+		3A711B8D1B3800C100E94211 /* SWUtilityButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonView.m; sourceTree = "<group>"; };
 		3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryRaidersViewController.h; sourceTree = "<group>"; };
 		3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIndustryRaidersViewController.m; sourceTree = "<group>"; };
 		3AB4CE0F1B32831500143374 /* MMonitorMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMonitorMapViewController.h; sourceTree = "<group>"; };
@@ -101,6 +127,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A711B811B3800C100E94211 /* SWTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				3A711B821B3800C100E94211 /* NSMutableArray+SWUtilityButtons.h */,
+				3A711B831B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m */,
+				3A711B841B3800C100E94211 /* SWCellScrollView.h */,
+				3A711B851B3800C100E94211 /* SWCellScrollView.m */,
+				3A711B861B3800C100E94211 /* SWLongPressGestureRecognizer.h */,
+				3A711B871B3800C100E94211 /* SWLongPressGestureRecognizer.m */,
+				3A711B881B3800C100E94211 /* SWTableViewCell.h */,
+				3A711B891B3800C100E94211 /* SWTableViewCell.m */,
+				3A711B8A1B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.h */,
+				3A711B8B1B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m */,
+				3A711B8C1B3800C100E94211 /* SWUtilityButtonView.h */,
+				3A711B8D1B3800C100E94211 /* SWUtilityButtonView.m */,
+			);
+			path = SWTableViewCell;
+			sourceTree = "<group>";
+		};
 		3AB4CE041B3264B500143374 /* 行業攻略 */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +194,7 @@
 		3AB4CE1E1B32895C00143374 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				3A711B811B3800C100E94211 /* SWTableViewCell */,
 				3AB4CE1F1B32895C00143374 /* MMDrawerController */,
 			);
 			path = external;
@@ -173,6 +219,7 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3A711B7B1B37B24E00E94211 /* back.png */,
 				3AB4CE311B32A12300143374 /* Button-Favorite-List-Normal.png */,
 				3AB4CE321B32A12300143374 /* Button-Favorite-List-Pressed.png */,
 			);
@@ -218,10 +265,14 @@
 				DC1014481B3287D000EF7A6F /* structure */,
 				DC0ADF5F1B316E340019236D /* AppDelegate.h */,
 				DC0ADF601B316E340019236D /* AppDelegate.m */,
-				DC0ADF621B316E340019236D /* MSettingViewController.h */,
-				DC0ADF631B316E340019236D /* MSettingViewController.m */,
 				3AB4CE2D1B32997000143374 /* MTabBarViewController.h */,
 				3AB4CE2E1B32997000143374 /* MTabBarViewController.m */,
+				DC0ADF621B316E340019236D /* MSettingViewController.h */,
+				DC0ADF631B316E340019236D /* MSettingViewController.m */,
+				3A711B771B37A12900E94211 /* MMyRaidersViewController.h */,
+				3A711B781B37A12900E94211 /* MMyRaidersViewController.m */,
+				3A711B7D1B37C42D00E94211 /* MMyPlanViewController.h */,
+				3A711B7E1B37C42D00E94211 /* MMyPlanViewController.m */,
 				DC0ADF651B316E340019236D /* Main.storyboard */,
 				DC0ADF681B316E340019236D /* Images.xcassets */,
 				DC0ADF6A1B316E340019236D /* LaunchScreen.xib */,
@@ -349,6 +400,7 @@
 			files = (
 				DC0ADF671B316E340019236D /* Main.storyboard in Resources */,
 				DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */,
+				3A711B7C1B37B24E00E94211 /* back.png in Resources */,
 				3AB4CE331B32A12300143374 /* Button-Favorite-List-Normal.png in Resources */,
 				3AB4CE341B32A12300143374 /* Button-Favorite-List-Pressed.png in Resources */,
 				DC0ADF691B316E340019236D /* Images.xcassets in Resources */,
@@ -370,15 +422,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
+				3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */,
+				3A711B791B37A12900E94211 /* MMyRaidersViewController.m in Sources */,
+				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
+				3A711B7F1B37C42D00E94211 /* MMyPlanViewController.m in Sources */,
 				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
+				3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				3AB4CE2A1B32895C00143374 /* MMDrawerController.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
+				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
+				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
 				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
+				3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */,
 				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
 				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,
