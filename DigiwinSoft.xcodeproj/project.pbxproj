@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A40D8C21B38F28900F2079F /* MKeyActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A40D8C11B38F28900F2079F /* MKeyActivitiesViewController.m */; };
+		3A40D8C41B391DE000F2079F /* icon_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40D8C31B391DE000F2079F /* icon_setting.png */; };
 		3A711B791B37A12900E94211 /* MMyRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B781B37A12900E94211 /* MMyRaidersViewController.m */; };
-		3A711B7C1B37B24E00E94211 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A711B7B1B37B24E00E94211 /* back.png */; };
+		3A711B7C1B37B24E00E94211 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A711B7B1B37B24E00E94211 /* icon_back.png */; };
 		3A711B7F1B37C42D00E94211 /* MMyPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B7E1B37C42D00E94211 /* MMyPlanViewController.m */; };
 		3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B831B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m */; };
 		3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B851B3800C100E94211 /* SWCellScrollView.m */; };
@@ -65,9 +67,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A40D8C01B38F28900F2079F /* MKeyActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKeyActivitiesViewController.h; sourceTree = "<group>"; };
+		3A40D8C11B38F28900F2079F /* MKeyActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKeyActivitiesViewController.m; sourceTree = "<group>"; };
+		3A40D8C31B391DE000F2079F /* icon_setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_setting.png; sourceTree = "<group>"; };
 		3A711B771B37A12900E94211 /* MMyRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyRaidersViewController.h; sourceTree = "<group>"; };
 		3A711B781B37A12900E94211 /* MMyRaidersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMyRaidersViewController.m; sourceTree = "<group>"; };
-		3A711B7B1B37B24E00E94211 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		3A711B7B1B37B24E00E94211 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_back.png; sourceTree = "<group>"; };
 		3A711B7D1B37C42D00E94211 /* MMyPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyPlanViewController.h; sourceTree = "<group>"; };
 		3A711B7E1B37C42D00E94211 /* MMyPlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMyPlanViewController.m; sourceTree = "<group>"; };
 		3A711B821B3800C100E94211 /* NSMutableArray+SWUtilityButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+SWUtilityButtons.h"; sourceTree = "<group>"; };
@@ -263,7 +268,8 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				3A711B7B1B37B24E00E94211 /* back.png */,
+				3A40D8C31B391DE000F2079F /* icon_setting.png */,
+				3A711B7B1B37B24E00E94211 /* icon_back.png */,
 				D06C2D321B37FAE9009D2082 /* check_box_off.png */,
 				D06C2D331B37FAE9009D2082 /* check_box_on.png */,
 				D06C2D301B37EFB4009D2082 /* icon_down.png */,
@@ -349,6 +355,8 @@
 				3A711B781B37A12900E94211 /* MMyRaidersViewController.m */,
 				3A711B7D1B37C42D00E94211 /* MMyPlanViewController.h */,
 				3A711B7E1B37C42D00E94211 /* MMyPlanViewController.m */,
+				3A40D8C01B38F28900F2079F /* MKeyActivitiesViewController.h */,
+				3A40D8C11B38F28900F2079F /* MKeyActivitiesViewController.m */,
 				DC0ADF651B316E340019236D /* Main.storyboard */,
 				DC0ADF681B316E340019236D /* Images.xcassets */,
 				DC0ADF6A1B316E340019236D /* LaunchScreen.xib */,
@@ -482,10 +490,11 @@
 			files = (
 				DC0ADF671B316E340019236D /* Main.storyboard in Resources */,
 				D06C2D351B37FAE9009D2082 /* check_box_on.png in Resources */,
+				3A40D8C41B391DE000F2079F /* icon_setting.png in Resources */,
 				D06C2D2F1B37EC27009D2082 /* button_search.png in Resources */,
 				D06C2D311B37EFB4009D2082 /* icon_down.png in Resources */,
 				DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */,
-				3A711B7C1B37B24E00E94211 /* back.png in Resources */,
+				3A711B7C1B37B24E00E94211 /* icon_back.png in Resources */,
 				D06C2D341B37FAE9009D2082 /* check_box_off.png in Resources */,
 				3AB4CE331B32A12300143374 /* Button-Favorite-List-Normal.png in Resources */,
 				3AB4CE341B32A12300143374 /* Button-Favorite-List-Pressed.png in Resources */,
@@ -532,6 +541,7 @@
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
 				D06C2D441B381850009D2082 /* FMDatabaseQueue.m in Sources */,
+				3A40D8C21B38F28900F2079F /* MKeyActivitiesViewController.m in Sources */,
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
 				3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */,
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,

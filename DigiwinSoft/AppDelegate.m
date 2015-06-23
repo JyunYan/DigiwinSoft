@@ -131,6 +131,9 @@
 
 - (void) toggleTabBar
 {
+    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = _tabBarController;
     [drawer closeDrawerAnimated:YES completion:nil];

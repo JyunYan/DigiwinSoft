@@ -8,6 +8,8 @@
 
 #import "MMyRaidersViewController.h"
 #import "AppDelegate.h"
+#import "MKeyActivitiesViewController.h"
+#import "MGuide.h"
 
 #define TAG_BUTTON_SETTING 101
 
@@ -18,6 +20,8 @@
 
 @interface MMyRaidersViewController ()
 
+@property (nonatomic, strong) NSMutableArray* guideArray;
+
 @end
 
 @implementation MMyRaidersViewController
@@ -25,6 +29,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    _guideArray = [[NSMutableArray alloc] init];
+    [self createTestData];
+
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
     [[UINavigationBar appearance] setTranslucent:NO];
@@ -39,14 +47,33 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - create test data
+
+- (void)createTestData {
+    for (int i = 0; i < 2; i++) {
+        MGuide* guide = [[MGuide alloc] init];
+        if (i == 0) {
+            guide.uuid = @"test12345";
+            guide.name = @"防止半成品製造批量浮增";
+        } else {
+            guide.uuid = @"test98765";
+            guide.name = @"推動銷售預測管理";
+        }
+        
+        MUser* user = [[MUser alloc] init];
+        user.name = @"陳又華";
+        
+        guide.manager = user;
+        
+        [_guideArray addObject:guide];
+    }
 }
 
 #pragma mark - create view
@@ -62,7 +89,7 @@
     self.navigationItem.rightBarButtonItem = right_bar_item;
     
     UIButton* backbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [backbutton setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backbutton setBackgroundImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
     [backbutton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* left_bar_item = [[UIBarButtonItem alloc] initWithCustomView:backbutton];
     self.navigationItem.leftBarButtonItem = left_bar_item;
@@ -93,7 +120,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 2;
+    return _guideArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,8 +130,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger row = indexPath.row;
-    
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
@@ -112,52 +137,68 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
 
-        CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-        CGFloat screenWidth = screenFrame.size.width;
+        CGFloat textSize = 15.0f;
+
+        CGFloat tableWidth = tableView.frame.size.width;
         
         CGFloat posX = 30;
         CGFloat posY = 10;
-        CGFloat width = screenWidth - posX * 2;
+        CGFloat width = tableWidth - posX * 2;
         CGFloat height = 30;
 
+        // 對策
         UILabel* countermeasureLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         countermeasureLabel.tag = TAG_LABEL_COUNTERMEASURE;
+        countermeasureLabel.font = [UIFont boldSystemFontOfSize:textSize];
         [cell addSubview:countermeasureLabel];
         
         
         posY = countermeasureLabel.frame.origin.y + countermeasureLabel.frame.size.height;
-        width = screenWidth / 2 - posX;
-        
+        width = tableWidth / 2 - posX;
+        // 指標
         UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         indexLabel.tag = TAG_LABEL_INDEX;
+        indexLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:indexLabel];
         
         
         posX = indexLabel.frame.origin.x + indexLabel.frame.size.width;
-        
+        // 現值
         UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         presentValueLabel.tag = TAG_LABEL_PRESENT_VALUE;
+        presentValueLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:presentValueLabel];
         
         
         posX = countermeasureLabel.frame.origin.x;
         posY = indexLabel.frame.origin.y + indexLabel.frame.size.height;
-        width = screenWidth - posX * 2;
-        
+        width = tableWidth - posX * 2;
+        // 負責人
         UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         personInChargeLabel.tag = TAG_LABEL_PERSON_IN_CHARGE;
+        personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:personInChargeLabel];
     }
+    
+    NSInteger row = indexPath.row;
+    
+    MGuide* guide = [_guideArray objectAtIndex:row];
     
     UILabel* countermeasureLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_COUNTERMEASURE];
     UILabel* indexLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_INDEX];
     UILabel* presentValueLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PRESENT_VALUE];
     UILabel* personInChargeLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PERSON_IN_CHARGE];
     
-    countermeasureLabel.text = @"對策：";
+    NSString* countermeasureStr = [NSString stringWithFormat:@"對策：%@", guide.name];
+    countermeasureLabel.text = countermeasureStr;
+    
     indexLabel.text = @"指標：";
+    
     presentValueLabel.text = @"現值：";
-    personInChargeLabel.text = @"負責人：";
+    
+    MUser* user = guide.manager;
+    NSString* personInChargeStr = [NSString stringWithFormat:@"負責人：%@", user.name];
+    personInChargeLabel.text = personInChargeStr;
 
     return cell;
 }
@@ -168,6 +209,8 @@
 {
     NSInteger row = indexPath.row;
     
+    MKeyActivitiesViewController* vc = [[MKeyActivitiesViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
