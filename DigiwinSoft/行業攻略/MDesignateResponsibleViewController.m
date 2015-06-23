@@ -181,7 +181,6 @@
         
         //
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(50, 20, 60, 60)];
-//        imageView.backgroundColor = [UIColor grayColor];
         imageView.image = nil;
         imageView.clipsToBounds = YES;
         imageView.layer.cornerRadius = imageView.frame.size.width / 2;
