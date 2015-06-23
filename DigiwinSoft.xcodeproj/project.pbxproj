@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3829982F1B3982BE0045B3BD /* MIndustryRaiders2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998281B3982BE0045B3BD /* MIndustryRaiders2ViewController.m */; };
+		382998301B3982BE0045B3BD /* MInventoryTurnoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982A1B3982BE0045B3BD /* MInventoryTurnoverViewController.m */; };
+		382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982C1B3982BE0045B3BD /* MRaidersDescriptionViewController.m */; };
+		382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */; };
+		382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */; };
 		3A40D8C21B38F28900F2079F /* MKeyActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A40D8C11B38F28900F2079F /* MKeyActivitiesViewController.m */; };
 		3A40D8C41B391DE000F2079F /* icon_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40D8C31B391DE000F2079F /* icon_setting.png */; };
 		3A711B791B37A12900E94211 /* MMyRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B781B37A12900E94211 /* MMyRaidersViewController.m */; };
@@ -67,6 +72,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		382998271B3982BE0045B3BD /* MIndustryRaiders2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryRaiders2ViewController.h; sourceTree = "<group>"; };
+		382998281B3982BE0045B3BD /* MIndustryRaiders2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIndustryRaiders2ViewController.m; sourceTree = "<group>"; };
+		382998291B3982BE0045B3BD /* MInventoryTurnoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MInventoryTurnoverViewController.h; sourceTree = "<group>"; };
+		3829982A1B3982BE0045B3BD /* MInventoryTurnoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MInventoryTurnoverViewController.m; sourceTree = "<group>"; };
+		3829982B1B3982BE0045B3BD /* MRaidersDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRaidersDescriptionViewController.h; sourceTree = "<group>"; };
+		3829982C1B3982BE0045B3BD /* MRaidersDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRaidersDescriptionViewController.m; sourceTree = "<group>"; };
+		3829982D1B3982BE0045B3BD /* MRaidersDiagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRaidersDiagramViewController.h; sourceTree = "<group>"; };
+		3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRaidersDiagramViewController.m; sourceTree = "<group>"; };
+		382998331B3983060045B3BD /* MIndustryRaidersTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MIndustryRaidersTableViewCell.h; path = structure/MIndustryRaidersTableViewCell.h; sourceTree = "<group>"; };
+		382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustryRaidersTableViewCell.m; path = structure/MIndustryRaidersTableViewCell.m; sourceTree = "<group>"; };
 		3A40D8C01B38F28900F2079F /* MKeyActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKeyActivitiesViewController.h; sourceTree = "<group>"; };
 		3A40D8C11B38F28900F2079F /* MKeyActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKeyActivitiesViewController.m; sourceTree = "<group>"; };
 		3A40D8C31B391DE000F2079F /* icon_setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_setting.png; sourceTree = "<group>"; };
@@ -195,6 +210,14 @@
 		3AB4CE041B3264B500143374 /* 行業攻略 */ = {
 			isa = PBXGroup;
 			children = (
+				382998271B3982BE0045B3BD /* MIndustryRaiders2ViewController.h */,
+				382998281B3982BE0045B3BD /* MIndustryRaiders2ViewController.m */,
+				382998291B3982BE0045B3BD /* MInventoryTurnoverViewController.h */,
+				3829982A1B3982BE0045B3BD /* MInventoryTurnoverViewController.m */,
+				3829982B1B3982BE0045B3BD /* MRaidersDescriptionViewController.h */,
+				3829982C1B3982BE0045B3BD /* MRaidersDescriptionViewController.m */,
+				3829982D1B3982BE0045B3BD /* MRaidersDiagramViewController.h */,
+				3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */,
 				3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */,
 				3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */,
 				D06C2D2A1B37B58C009D2082 /* MDesignateResponsibleViewController.h */,
@@ -396,6 +419,8 @@
 		DC1014481B3287D000EF7A6F /* structure */ = {
 			isa = PBXGroup;
 			children = (
+				382998331B3983060045B3BD /* MIndustryRaidersTableViewCell.h */,
+				382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */,
 				DC1014491B32985600EF7A6F /* MUser.h */,
 				DC10144A1B32985600EF7A6F /* MUser.m */,
 				DC10144C1B32B66200EF7A6F /* MGuide.h */,
@@ -531,8 +556,10 @@
 				D06C2D421B381850009D2082 /* FMDatabaseAdditions.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
+				382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */,
 				3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */,
+				382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */,
 				3AB4CE2A1B32895C00143374 /* MMDrawerController.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
@@ -540,6 +567,7 @@
 				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
+				382998301B3982BE0045B3BD /* MInventoryTurnoverViewController.m in Sources */,
 				D06C2D441B381850009D2082 /* FMDatabaseQueue.m in Sources */,
 				3A40D8C21B38F28900F2079F /* MKeyActivitiesViewController.m in Sources */,
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
@@ -547,7 +575,9 @@
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,
 				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
+				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
 				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,
+				3829982F1B3982BE0045B3BD /* MIndustryRaiders2ViewController.m in Sources */,
 				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
 				3AB4CE1A1B32848B00143374 /* MMyTaskViewController.m in Sources */,
 			);
