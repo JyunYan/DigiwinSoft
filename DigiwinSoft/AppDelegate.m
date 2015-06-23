@@ -12,6 +12,7 @@
 #import "MSettingViewController.h"
 #import "MMyRaidersViewController.h"
 #import "MMyPlanViewController.h"
+#import "MMyTaskViewController.h"
 
 @interface AppDelegate ()
 
@@ -124,8 +125,14 @@
 {
     _tabBarController.selectedIndex = 4;
     
+    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    MMyTaskViewController* myTask = [[MMyTaskViewController alloc] init];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:myTask];
+    
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
-    drawer.centerViewController = _tabBarController;
+    drawer.centerViewController = nav;
     [drawer closeDrawerAnimated:YES completion:nil];
 }
 

@@ -11,11 +11,40 @@
 
 #define TAG_BUTTON_SETTING  101
 
-@interface MMyTaskViewController ()
+#define TAG_IMAGE_VIEW_TYPE     201
+#define TAG_LABEL_TASK_NAME     202
+
+@interface MMyTaskViewController ()<UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView* tableView;
+
+@property (nonatomic, strong) UISegmentedControl* segmented;
+
+@property (nonatomic, strong) NSMutableArray* taskDataArry;
 
 @end
 
 @implementation MMyTaskViewController
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"我的攻略";
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;    self.title = @"我的任務";
+    
+    UIBarButtonItem* searchBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(actionToSearch:)];
+    self.navigationItem.leftBarButtonItem = searchBtn;
+    
+    _taskDataArry = [[NSMutableArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
+    
+    [self createSegmentedView];
+    [self createTableView];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,12 +71,114 @@
     self.navigationItem.rightBarButtonItem = bar_item;
 }
 
+- (void)createSegmentedView
+{
+    NSArray* array = [[NSArray alloc] initWithObjects:@"待佈署任務", @"進度回報", @"已完成任務", nil];
+    
+    _segmented = [[UISegmentedControl alloc] initWithItems:array];
+    _segmented.frame = CGRectMake(5, 5, self.view.frame.size.width - 10, 40);
+    _segmented.selectedSegmentIndex = 0;
+    _segmented.layer.borderColor = [UIColor clearColor].CGColor;
+    _segmented.layer.borderWidth = 0.0f;
+    [_segmented addTarget:self action:@selector(actionToShowNextPage:) forControlEvents:UIControlEventValueChanged];
+    
+    [self.view addSubview:_segmented];
+    
+    //分隔線
+    UILabel* row_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, 1)];
+    [row_label setBackgroundColor:[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:0.5]];
+    [self.view addSubview:row_label];
+
+}
+
+- (void)createTableView
+{
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 51, self.view.frame.size.width, self.view.frame.size.height - 64)];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    
+    [self.view addSubview:_tableView];
+}
+
+#pragma mark - TableView DataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [_taskDataArry count];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        //
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 20, 20, 20)];
+        imageView.image = [UIImage imageNamed:@"icon_down.png"];
+        imageView.tag = TAG_IMAGE_VIEW_TYPE;
+        [imageView setBackgroundColor:[UIColor clearColor]];
+        [cell addSubview:imageView];
+        
+        //
+        UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(60, 10, 300, 40)];
+        [label setBackgroundColor:[UIColor clearColor]];
+        label.text = @"";
+        label.tag = TAG_LABEL_TASK_NAME;
+        [cell addSubview:label];
+        
+        //分隔線
+        UILabel* row_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.frame.size.width, 1)];
+        [row_label setBackgroundColor:[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:0.5]];
+        [cell addSubview:row_label];
+    }
+    
+    NSString* taskName = [_taskDataArry objectAtIndex:indexPath.row];
+    
+    UILabel* label = (UILabel*) [cell viewWithTag:TAG_LABEL_TASK_NAME];
+    label.text = taskName;
+    
+    return cell;
+}
+
 #pragma mark - UIButton
 
 -(void)clickedBtnSetting:(id)sender
 {
     AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
     [delegate toggleLeft];
+}
+
+- (void)actionToShowNextPage:(id)sender
+{
+    [_taskDataArry removeAllObjects];
+    
+    NSInteger index = _segmented.selectedSegmentIndex;
+    
+    if (index == 0 || index == 2)
+    {
+        [_taskDataArry addObjectsFromArray:[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil]];
+    }else
+    {
+        [_taskDataArry addObjectsFromArray:[[NSArray alloc] initWithObjects:@"瓶頸製程工時計算", @"製定最小製造批量標準", @"縮短達交天數", nil]];
+    }
+    
+    [_tableView reloadData];
 }
 
 @end

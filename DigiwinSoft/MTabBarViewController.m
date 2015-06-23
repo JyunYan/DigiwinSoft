@@ -14,6 +14,8 @@
 #import "MLookingForSolutionsViewController.h"
 #import "MMyTaskViewController.h"
 
+#import "AppDelegate.h"
+
 #define TAG_BUTTON_SETTING  101
 
 @interface MTabBarViewController ()
@@ -67,7 +69,25 @@
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-//    int selectedIndex = tabBarController.selectedIndex;
+    NSInteger selectedIndex = tabBarController.selectedIndex;
+    
+    if (selectedIndex == 0)
+    {
+        
+    }else if (selectedIndex == 1)
+    {
+        
+    }else if (selectedIndex == 2)
+    {
+        
+    }else if (selectedIndex == 3)
+    {
+        
+    }else if (selectedIndex == 4)
+    {
+        AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
+        [delegate toggleMyTask];
+    }
     
 }
 
