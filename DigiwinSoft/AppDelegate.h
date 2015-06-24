@@ -34,5 +34,7 @@
 
 - (void) toggleMyPlan;
 
+- (void) toggleEventList;
+
 @end
 

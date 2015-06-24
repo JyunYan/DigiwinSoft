@@ -34,13 +34,8 @@
     [self createTestData];
 
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
-
-    self.view.backgroundColor = [UIColor whiteColor];
-    
     self.title = @"我的攻略";
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    self.view.backgroundColor = [UIColor whiteColor];
 
     [self addMainMenu];
 }

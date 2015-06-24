@@ -284,7 +284,8 @@
         AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
         [delegate toggleMyPlan];
     } else if (row == 2) {
-        
+        AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
+        [delegate toggleEventList];
     } else if (row == 3) {
         
     } else if (row == 4) {

@@ -13,6 +13,7 @@
 #import "MMyRaidersViewController.h"
 #import "MMyPlanViewController.h"
 #import "MMyTaskViewController.h"
+#import "MEventListViewController.h"
 
 @interface AppDelegate ()
 
@@ -30,7 +31,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     self.tabBarController = [[MTabBarViewController alloc] init];
-    
+
     MSettingViewController* setting = [[MSettingViewController alloc] init];
     UINavigationController* left = [[UINavigationController alloc] initWithRootViewController:setting];
     left.navigationBarHidden = YES;
@@ -46,6 +47,10 @@
 
     self.window.rootViewController = drawer;
     [self.window makeKeyAndVisible];
+    
+
+    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTranslucent:NO];
     
     
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -125,9 +130,6 @@
 {
     _tabBarController.selectedIndex = 4;
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
-    
     MMyTaskViewController* myTask = [[MMyTaskViewController alloc] init];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:myTask];
     
@@ -138,9 +140,6 @@
 
 - (void) toggleTabBar
 {
-    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
-
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = _tabBarController;
     [drawer closeDrawerAnimated:YES completion:nil];
@@ -148,11 +147,9 @@
 
 - (void) toggleMyRaiders
 {
-    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
-
     MMyRaidersViewController* vc = [[MMyRaidersViewController alloc] init];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
 
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = nav;
@@ -161,12 +158,21 @@
 
 - (void) toggleMyPlan
 {
-    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
-    
     MMyPlanViewController* vc = [[MMyPlanViewController alloc] init];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    
+    nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    drawer.centerViewController = nav;
+    [drawer closeDrawerAnimated:YES completion:nil];
+}
+
+- (void) toggleEventList
+{
+    MEventListViewController* vc = [[MEventListViewController alloc] init];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = nav;
     [drawer closeDrawerAnimated:YES completion:nil];
