@@ -51,6 +51,7 @@
 		D06C2D431B381850009D2082 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D3C1B381850009D2082 /* FMDatabasePool.m */; };
 		D06C2D441B381850009D2082 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D3E1B381850009D2082 /* FMDatabaseQueue.m */; };
 		D06C2D451B381850009D2082 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D401B381850009D2082 /* FMResultSet.m */; };
+		D07B390F1B3A39A6007FCBC0 /* MLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = D07B390E1B3A39A6007FCBC0 /* MLineChartView.m */; };
 		DC0ADF5E1B316E340019236D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF5D1B316E340019236D /* main.m */; };
 		DC0ADF611B316E340019236D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF601B316E340019236D /* AppDelegate.m */; };
 		DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF631B316E340019236D /* MSettingViewController.m */; };
@@ -154,6 +155,8 @@
 		D06C2D3E1B381850009D2082 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
 		D06C2D3F1B381850009D2082 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		D06C2D401B381850009D2082 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		D07B390D1B3A39A6007FCBC0 /* MLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLineChartView.h; sourceTree = "<group>"; };
+		D07B390E1B3A39A6007FCBC0 /* MLineChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLineChartView.m; sourceTree = "<group>"; };
 		DC0ADF581B316E340019236D /* DigiwinSoft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigiwinSoft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC0ADF5C1B316E340019236D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC0ADF5D1B316E340019236D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -372,6 +375,15 @@
 			path = FMDatabase;
 			sourceTree = "<group>";
 		};
+		D07B390C1B3A398C007FCBC0 /* Quartz2DView */ = {
+			isa = PBXGroup;
+			children = (
+				D07B390D1B3A39A6007FCBC0 /* MLineChartView.h */,
+				D07B390E1B3A39A6007FCBC0 /* MLineChartView.m */,
+			);
+			path = Quartz2DView;
+			sourceTree = "<group>";
+		};
 		DC0ADF4F1B316E340019236D = {
 			isa = PBXGroup;
 			children = (
@@ -396,6 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				3A03F95E1B3A4F26000F345B /* Settings */,
+				D07B390C1B3A398C007FCBC0 /* Quartz2DView */,
 				D06C2CCC1B379CB3009D2082 /* dataBase */,
 				3AB4CE0B1B3282ED00143374 /* 我的任務 */,
 				3AB4CE0C1B3282ED00143374 /* 找對策 */,
@@ -602,6 +615,7 @@
 				D06C2D441B381850009D2082 /* FMDatabaseQueue.m in Sources */,
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
 				3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */,
+				D07B390F1B3A39A6007FCBC0 /* MLineChartView.m in Sources */,
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,
 				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
