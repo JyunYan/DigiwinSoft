@@ -41,10 +41,11 @@
 - (void)prepareTestData
 {
     //aryList
-    aryList=[[NSMutableArray alloc]initWithObjects:@"MyData1",@"MyData2",@"MyData3", nil];
+    aryList=[[NSMutableArray alloc]initWithObjects:@"MyData1",@"MyData2",@"MyData3",@"MyData4",@"MyData5",@"MyData6", nil];
 }
 -(void) addMainMenu
 {
+    //rightBarButtonItem
    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
     settingbutton.tag = TAG_BUTTON_SETTING;
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
@@ -52,6 +53,14 @@
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = bar_item;
+    
+    //leftBarButtonItem
+    UIButton* btnSearch = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
+    [btnSearch setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
+    [btnSearch setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [btnSearch addTarget:self action:@selector(clickedBtnSearch:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* leftBar_item = [[UIBarButtonItem alloc] initWithCustomView:btnSearch];
+    self.navigationItem.leftBarButtonItem = leftBar_item;
     
     //screenSize
     CGSize screenSize = [[UIScreen mainScreen] bounds].size;
@@ -87,6 +96,7 @@
 - (void)actionSegmented:(id)sender{
     switch ([sender selectedSegmentIndex]) {
         case 0:
+            
             [tbl removeFromSuperview];
             [self.view addSubview:img];
             break;
@@ -102,7 +112,7 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50.0f;
+    return 80.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [aryList count];
@@ -132,5 +142,8 @@
     AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
     [delegate toggleLeft];
 }
-
+-(void)clickedBtnSearch:(id)sender
+{
+    NSLog(@"clickedBtnSearch");
+}
 @end

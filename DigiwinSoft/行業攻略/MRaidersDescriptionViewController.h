@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
-@interface MRaidersDescriptionViewController : UIViewController<UIWebViewDelegate>
+@interface MRaidersDescriptionViewController : UIViewController<UIWebViewDelegate,UITableViewDelegate,UITableViewDataSource>
 {
 UITableView *tbl;
 UIWebView *webViewVideo;

@@ -31,28 +31,43 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-                UIImageView *iconView = [[UIImageView alloc] init];
-        [self.contentView addSubview:iconView];
-        self.iconView = iconView;
         
-        UILabel *nameLabel = [[UILabel alloc] init];
-        nameLabel.textColor=[UIColor redColor];
-        [self.contentView addSubview:nameLabel];
-        self.labName = nameLabel;
-        [self.contentView setBackgroundColor:[UIColor clearColor]];
-        [self settingFrame];
+        UIButton *btnCheck = [[UIButton alloc] init];
+        self.btnCheck = btnCheck;
+        self.btnCheck.backgroundColor=[UIColor lightGrayColor];
+        self.btnCheck.frame=CGRectMake(20, 18,16, 16);
+        [self.contentView addSubview:btnCheck];
+
         
+        UILabel *labName= [[UILabel alloc] init];
+        labName.textColor=[UIColor redColor];
+        labName.backgroundColor=[UIColor greenColor];
+        self.labName = labName;
+        self.labName.frame=CGRectMake(40, 18, 150, 18);
+        [self.contentView addSubview:labName];
+
+        UIButton *btnManager= [[UIButton alloc] init];
+        btnManager.backgroundColor=[UIColor redColor];
+        self.btnManager = btnManager;
+        self.btnManager.frame=CGRectMake(242.5-16,25 , 16, 16);
+        [self.contentView addSubview:btnManager];
+
+        UIButton *btnRaiders= [[UIButton alloc] init];
+        btnRaiders.backgroundColor=[UIColor redColor];
+        self.btnRaiders = btnRaiders;
+        self.btnRaiders.frame=CGRectMake(337.5-16,25 , 16, 16);
+        [self.contentView addSubview:btnRaiders];
         
-        
+        for (int i=0; i<5; i++) {
+            UIImageView *imgStar=[[UIImageView alloc]initWithFrame:CGRectMake(40+(17*i), 36,16,16)];
+            imgStar.backgroundColor=[UIColor blueColor];
+            [self.contentView addSubview:imgStar];
+            
+
+        }
         
     }
     return self;
 }
-//设置相对位置
-- (void)settingFrame
-{
-    self.frame = CGRectMake(0, 0, 320, 120);
-    self.labName.frame=CGRectMake(100, 120/2-25, 200, 50);
-    self.iconView.frame=CGRectMake(10, (120-80)/2, 80, 80);
-}
+
 @end

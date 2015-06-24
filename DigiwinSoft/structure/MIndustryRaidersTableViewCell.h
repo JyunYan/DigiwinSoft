@@ -9,13 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface MIndustryRaidersTableViewCell : UITableViewCell
-@property (nonatomic, weak) UIImageView *iconView;
+
+@property (nonatomic, weak) UIButton *btnCheck;
 @property (nonatomic, weak) UILabel *labName;
-
-
-//@property (nonatomic, weak) UILabel *labTitle;
-//@property (nonatomic, weak) UIButton *btnCheck;
-//@property (nonatomic, weak) UIButton *btnRaiders;
-//@property (nonatomic, weak) UIButton *btnManager;
+@property (nonatomic, weak) UIButton *btnManager;
+@property (nonatomic, weak) UIButton *btnRaiders;
+@property (nonatomic, assign) BOOL isCheck;
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 @end

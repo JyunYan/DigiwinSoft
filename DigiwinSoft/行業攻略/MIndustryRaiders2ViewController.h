@@ -16,6 +16,7 @@
     UIButton *btn;
     UILabel *labTarget;
     UITextField *txtField;
+    UIImageView *imgblueBar;
 }
 @property (nonatomic, weak) NSString *strTitle;
 @end

@@ -9,6 +9,7 @@
 #import "MRaidersDescriptionViewController.h"
 #import "MInventoryTurnoverViewController.h"
 #import "MRaidersDiagramViewController.h"
+#import "MRaidersDescriptionTableViewCell.h"
 #define TAG_BUTTON_SETTING  101
 @interface MRaidersDescriptionViewController ()
 
@@ -43,7 +44,7 @@
 }
 -(void)addMainMenu
 {
-    
+    //rightBarButtonItem
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
     settingbutton.tag = TAG_BUTTON_SETTING;
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
@@ -52,7 +53,14 @@
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = bar_item;
 
-    
+    //leftBarButtonItem
+    UIButton* btnBcak = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
+    [btnBcak setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
+    [btnBcak setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [btnBcak addTarget:self action:@selector(clickedBtnBcak:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* leftBar_item = [[UIBarButtonItem alloc] initWithCustomView:btnBcak];
+    self.navigationItem.leftBarButtonItem = leftBar_item;
+
     //screenSize
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
     CGFloat screenWidth = screenSize.width;
@@ -103,6 +111,30 @@
     btn.titleLabel.textColor=[UIColor whiteColor];
     [btn addTarget:self action:@selector(actionAddMyList:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
+    
+    //imgGray
+    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,textView.frame.origin.y+100,screenWidth, btn.frame.origin.y-
+                                                         (textView.frame.origin.y+textView.frame.size.height))];
+    imgGray.backgroundColor=[UIColor grayColor];
+    [self.view addSubview:imgGray];
+
+    
+    //tblView
+    tbl=[[UITableView alloc]initWithFrame:CGRectMake(20,textView.frame.origin.y+120,screenWidth-40, 160)];
+    tbl.scrollEnabled = NO;
+    tbl.delegate=self;
+    tbl.dataSource = self;
+    [self.view addSubview:tbl];
+}
+#pragma mark - UIButton
+-(void)clickedBtnSetting:(id)sender
+{
+    MRaidersDiagramViewController *MRaidersDiagramVC=[[MRaidersDiagramViewController alloc]init];
+    [self.navigationController pushViewController:MRaidersDiagramVC animated:YES];
+}
+-(void)clickedBtnBcak:(id)sender
+{
+[self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)actionAddMyList:(id)sender{
     NSLog(@"加入對策動作");
@@ -111,14 +143,6 @@
     MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
     [self.navigationController pushViewController:MInventoryTurnoverVC animated:YES];
 }
-
-#pragma mark - UIButton
--(void)clickedBtnSetting:(id)sender
-{
-    MRaidersDiagramViewController *MRaidersDiagramVC=[[MRaidersDiagramViewController alloc]init];
-    [self.navigationController pushViewController:MRaidersDiagramVC animated:YES];
-  }
-
 #pragma UIWebView Delegate
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     
@@ -142,6 +166,87 @@
     }
     return YES;
 }
+#pragma mark - UITableViewDelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50.0f;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    
+    return 60.0f;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 2;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MRaidersDescriptionTableViewCell *cell=[MRaidersDescriptionTableViewCell cellWithTableView:tableView];
+    cell.labRelation.text=@"關聯關聯關聯關聯";
+    cell.labMeasure.text=@"衡量衡量衡量";
+    cell.labMax.text=@"999";
+    cell.labMin.text=@"000";
+
+//    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+    
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *viewSection = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 100, 20)];
+    viewSection.backgroundColor=[UIColor whiteColor];
+
+    UILabel *labRelation = [[UILabel alloc] initWithFrame:CGRectMake(30,20,60,20)];
+    labRelation.text = @"關聯議題";
+    labRelation.textColor =[UIColor grayColor];
+    labRelation.font = [UIFont systemFontOfSize:14.0f];
+    labRelation.backgroundColor=[UIColor clearColor];
+    [viewSection addSubview:labRelation];
+    
+    UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake(140,20, 60,20)];
+    labMeasure.text = @"衡量指標";
+    labMeasure.textColor =[UIColor grayColor];
+    labMeasure.backgroundColor = [UIColor clearColor];
+    labMeasure.font = [UIFont systemFontOfSize:14.0f];
+    [viewSection addSubview:labMeasure];
+
+    
+    UILabel *labGrade = [[UILabel alloc] initWithFrame:CGRectMake(240,10, 75,20)];
+    labGrade.text = @"實績提升率";
+    labGrade.textColor =[UIColor grayColor];
+    labGrade.backgroundColor = [UIColor clearColor];
+    labGrade.font = [UIFont systemFontOfSize:14.0f];
+    [viewSection addSubview:labGrade];
+
+    UILabel *labMin = [[UILabel alloc] initWithFrame:CGRectMake(237,30, 30,20)];
+    labMin.text = @"Min.";
+    labMin.textColor =[UIColor grayColor];
+    labMin.backgroundColor = [UIColor clearColor];
+    labMin.font = [UIFont systemFontOfSize:14.0f];
+    [viewSection addSubview:labMin];
+    
+    UILabel *labMax = [[UILabel alloc] initWithFrame:CGRectMake(285,30, 32,20)];
+    labMax.text = @"Max.";
+    labMax.textColor =[UIColor grayColor];
+    labMax.backgroundColor = [UIColor clearColor];
+    labMax.font = [UIFont systemFontOfSize:14.0f];
+    [viewSection addSubview:labMax];
+
+    //imgGray
+    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,58,tbl.frame.size.width,2)];
+    imgGray.backgroundColor=[UIColor grayColor];
+    [viewSection addSubview:imgGray];
+    
+    return viewSection;
+}
+
 /*
 #pragma mark - Navigation
 

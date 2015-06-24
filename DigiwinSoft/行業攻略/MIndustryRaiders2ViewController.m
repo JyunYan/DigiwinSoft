@@ -14,7 +14,11 @@
 @end
 
 @implementation MIndustryRaiders2ViewController
-
+{
+    //screenSize
+    CGFloat screenWidth;
+    CGFloat screenHeight;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -38,14 +42,13 @@
 - (void)prepareTestData
 {
     //aryList
-    aryList=[[NSMutableArray alloc]initWithObjects:@"MyData1",@"MyData2",@"MyData3",@"MyData3",@"MyData3",@"MyData3",@"MyData3", nil];
+    aryList=[[NSMutableArray alloc]initWithObjects:@"MyData1MyData1",@"MyData2MyData2",@"MyData3MyData3",@"MyData4MyData4",@"MyData5MyData5",@"MyData6MyData6",@"MyData7MyData7", nil];
 }
 -(void) addMainMenu
 {
-    //screenSize
-    CGSize screenSize = [[UIScreen mainScreen]bounds].size;
-    CGFloat screenWidth = screenSize.width;
-    CGFloat screenHeight = screenSize.height;
+    CGSize screenSize =[[UIScreen mainScreen]bounds].size;
+     screenWidth = screenSize.width;
+     screenHeight = screenSize.height;
 
     //Label
     UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(0, 20+44,screenWidth, 40)];
@@ -56,7 +59,7 @@
     [self.view addSubview:labTitle];
     
     //imgGray
-    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0, 20+44+40,screenWidth, 5)];
+    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0, 20+44+40,screenWidth, 10)];
     imgGray.backgroundColor=[UIColor grayColor];
     [self.view addSubview:imgGray];
     
@@ -68,16 +71,20 @@
     [segmentedControl addTarget:self
                          action:@selector(actionSegmented:)
                forControlEvents:UIControlEventValueChanged];
-    segmentedControl.tintColor=[UIColor whiteColor];
+    segmentedControl.tintColor=[UIColor clearColor];
     [self.view addSubview:segmentedControl];
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grayColor]} forState:UIControlStateNormal];
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor greenColor]} forState:UIControlStateSelected];
     
     //imgGray
-    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,screenWidth, 2)];
+    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,39,screenWidth, 1)];
     imgGray.backgroundColor=[UIColor grayColor];
-    [self.view addSubview:imgGray];
+    [segmentedControl addSubview:imgGray];
 
+    //imgblueBar
+    imgblueBar=[[UIImageView alloc]initWithFrame:CGRectMake((screenWidth/8)*5,36,screenWidth/4, 3)];
+    imgblueBar.backgroundColor=[UIColor greenColor];
+    [segmentedControl addSubview:imgblueBar];
     
     //TableView
     tbl=[[UITableView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,screenWidth, screenHeight-(20+44+40+10+40+35+49))];
@@ -126,55 +133,148 @@
 - (void)actionSegmented:(id)sender{
     switch ([sender selectedSegmentIndex]) {
         case 0:
+        {
             [tbl removeFromSuperview];
             [btn removeFromSuperview];
             [self.view addSubview:textView];
             [self.view addSubview:labTarget];
             [self.view addSubview:txtField];
+            
+            
+            //imgblueBar Animation
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:0.5];
+            [UIView setAnimationDelegate:self];
+            
+            //設定動畫開始時的狀態為目前畫面上的樣子
+            [UIView setAnimationBeginsFromCurrentState:YES];
+            imgblueBar.frame=CGRectMake((screenWidth/8)*1,
+                                        imgblueBar.frame.origin.y,
+                                        imgblueBar.frame.size.width,
+                                        imgblueBar.frame.size.height);
+            [UIView commitAnimations];
             break;
+        }
         case 1:
-[self.view addSubview:tbl];
+        {
+            [self.view addSubview:tbl];
             [self.view addSubview:btn];
             [textView removeFromSuperview];
             [txtField removeFromSuperview];
             [labTarget removeFromSuperview];
+            
+            //imgblueBar Animation
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:0.5];
+            [UIView setAnimationDelegate:self];
+            
+            //設定動畫開始時的狀態為目前畫面上的樣子
+            [UIView setAnimationBeginsFromCurrentState:YES];
+            imgblueBar.frame=CGRectMake((screenWidth/8)*5,
+                                        imgblueBar.frame.origin.y,
+                                        imgblueBar.frame.size.width,
+                                        imgblueBar.frame.size.height);
+            [UIView commitAnimations];
+
             break;
+        }
         default:
+        {
             NSLog(@"Error");
             break;
+        }
     }
 }
+#pragma mark - UIButton
 - (void)actionAddMyList:(id)sender{
     NSLog(@"加入我的規劃清單動作");
 }
+- (void)actionCheck:(UIButton *)sender{
+    NSUInteger tt = sender.tag;
+    NSLog(@"%lu",(unsigned long)tt);
+    
+    MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
+    
+    if (cell.isCheck==NO) {
+        cell.btnCheck.backgroundColor=[UIColor redColor];
+        cell.isCheck=YES;
+    }
+    else
+    {
+        cell.btnCheck.backgroundColor=[UIColor grayColor];
+        cell.isCheck=NO;
+    }
+}
+- (void)btnManager:(id)sender{
+    NSLog(@"btnManager");
+}
 
+- (void)btnRaiders:(id)sender{
+    
+    MRaidersDescriptionViewController *MIndustryRaiders2VC = [[MRaidersDescriptionViewController alloc] init];
+    UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MIndustryRaiders2VC];
+    [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
+
+}
 #pragma mark - UITableViewDelegate
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50.0f;
+    return 66.0f;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    
+    return 32.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [aryList count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    
     MIndustryRaidersTableViewCell *cell=[MIndustryRaidersTableViewCell cellWithTableView:tableView];
-
-    cell.textLabel.text=aryList[indexPath.row];
-    cell.labName.text=@"mary";
-    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    cell.labName.text=aryList[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    [cell.btnCheck addTarget:self action:@selector(actionCheck:) forControlEvents:UIControlEventTouchUpInside];
+    cell.btnCheck.tag = indexPath.row;
+    [cell.btnManager addTarget:self action:@selector(btnManager:) forControlEvents:UIControlEventTouchUpInside];
+    cell.btnManager.tag = indexPath.row;
+    [cell.btnRaiders addTarget:self action:@selector(btnRaiders:) forControlEvents:UIControlEventTouchUpInside];
+    cell.btnRaiders.tag = indexPath.row;
+    cell.isCheck=NO;
+    cell.tag=indexPath.row;
     return cell;
-    
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MRaidersDescriptionViewController *MIndustryRaiders2VC = [[MRaidersDescriptionViewController alloc] init];
-    UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MIndustryRaiders2VC];
-    [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
+    
+}
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *viewSection = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 100, 20)];
+    viewSection.backgroundColor=[UIColor grayColor];
+    
+    UILabel *labRelation = [[UILabel alloc] initWithFrame:CGRectMake(90,5,60,20)];
+    labRelation.text = @"對策名稱";
+    labRelation.textColor =[UIColor blackColor];
+    labRelation.font = [UIFont systemFontOfSize:14.0f];
+    labRelation.backgroundColor=[UIColor clearColor];
+    [viewSection addSubview:labRelation];
+    
+    UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake(200,5, 85,20)];
+    labMeasure.text = @"指派負責人";
+    labMeasure.textColor =[UIColor blackColor];
+    labMeasure.backgroundColor = [UIColor clearColor];
+    labMeasure.font = [UIFont systemFontOfSize:14.0f];
+    [viewSection addSubview:labMeasure];
+    
+    
+    UILabel *labGrade = [[UILabel alloc] initWithFrame:CGRectMake(300,5, 75,20)];
+    labGrade.text = @"攻略";
+    labGrade.textColor =[UIColor blackColor];
+    labGrade.backgroundColor = [UIColor clearColor];
+    labGrade.font = [UIFont systemFontOfSize:14.0f];
+    [viewSection addSubview:labGrade];
+    
+    return viewSection;
 }
 
 /*
