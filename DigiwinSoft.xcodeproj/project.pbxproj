@@ -13,11 +13,14 @@
 		382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */; };
 		382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */; };
 		382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */; };
-		3A40D8C21B38F28900F2079F /* MKeyActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A40D8C11B38F28900F2079F /* MKeyActivitiesViewController.m */; };
+		3A03F9651B3A4F26000F345B /* MKeyActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9601B3A4F26000F345B /* MKeyActivitiesViewController.m */; };
+		3A03F9661B3A4F26000F345B /* MMyPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9621B3A4F26000F345B /* MMyPlanViewController.m */; };
+		3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9641B3A4F26000F345B /* MMyRaidersViewController.m */; };
+		3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */; };
+		3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A03F96E1B3A60A0000F345B /* QuartzCore.framework */; };
+		3A03F9731B3A60DB000F345B /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */; };
 		3A40D8C41B391DE000F2079F /* icon_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A40D8C31B391DE000F2079F /* icon_setting.png */; };
-		3A711B791B37A12900E94211 /* MMyRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B781B37A12900E94211 /* MMyRaidersViewController.m */; };
 		3A711B7C1B37B24E00E94211 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A711B7B1B37B24E00E94211 /* icon_back.png */; };
-		3A711B7F1B37C42D00E94211 /* MMyPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B7E1B37C42D00E94211 /* MMyPlanViewController.m */; };
 		3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B831B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m */; };
 		3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B851B3800C100E94211 /* SWCellScrollView.m */; };
 		3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B871B3800C100E94211 /* SWLongPressGestureRecognizer.m */; };
@@ -49,6 +52,7 @@
 		D06C2D431B381850009D2082 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D3C1B381850009D2082 /* FMDatabasePool.m */; };
 		D06C2D441B381850009D2082 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D3E1B381850009D2082 /* FMDatabaseQueue.m */; };
 		D06C2D451B381850009D2082 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D401B381850009D2082 /* FMResultSet.m */; };
+		D07B390F1B3A39A6007FCBC0 /* MLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = D07B390E1B3A39A6007FCBC0 /* MLineChartView.m */; };
 		DC0ADF5E1B316E340019236D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF5D1B316E340019236D /* main.m */; };
 		DC0ADF611B316E340019236D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF601B316E340019236D /* AppDelegate.m */; };
 		DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0ADF631B316E340019236D /* MSettingViewController.m */; };
@@ -85,14 +89,19 @@
 		382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustryRaidersTableViewCell.m; path = structure/MIndustryRaidersTableViewCell.m; sourceTree = "<group>"; };
 		382998361B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaidersDescriptionTableViewCell.h; path = structure/MRaidersDescriptionTableViewCell.h; sourceTree = "<group>"; };
 		382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersDescriptionTableViewCell.m; path = structure/MRaidersDescriptionTableViewCell.m; sourceTree = "<group>"; };
-		3A40D8C01B38F28900F2079F /* MKeyActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKeyActivitiesViewController.h; sourceTree = "<group>"; };
-		3A40D8C11B38F28900F2079F /* MKeyActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKeyActivitiesViewController.m; sourceTree = "<group>"; };
+		3A03F95F1B3A4F26000F345B /* MKeyActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKeyActivitiesViewController.h; sourceTree = "<group>"; };
+		3A03F9601B3A4F26000F345B /* MKeyActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKeyActivitiesViewController.m; sourceTree = "<group>"; };
+		3A03F9611B3A4F26000F345B /* MMyPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyPlanViewController.h; sourceTree = "<group>"; };
+		3A03F9621B3A4F26000F345B /* MMyPlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMyPlanViewController.m; sourceTree = "<group>"; };
+		3A03F9631B3A4F26000F345B /* MMyRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyRaidersViewController.h; sourceTree = "<group>"; };
+		3A03F9641B3A4F26000F345B /* MMyRaidersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMyRaidersViewController.m; sourceTree = "<group>"; };
+		3A03F96B1B3A5B3E000F345B /* MEventListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEventListViewController.h; sourceTree = "<group>"; };
+		3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEventListViewController.m; sourceTree = "<group>"; };
+		3A03F96E1B3A60A0000F345B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3A03F9711B3A60DB000F345B /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
+		3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		3A40D8C31B391DE000F2079F /* icon_setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_setting.png; sourceTree = "<group>"; };
-		3A711B771B37A12900E94211 /* MMyRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyRaidersViewController.h; sourceTree = "<group>"; };
-		3A711B781B37A12900E94211 /* MMyRaidersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMyRaidersViewController.m; sourceTree = "<group>"; };
 		3A711B7B1B37B24E00E94211 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_back.png; sourceTree = "<group>"; };
-		3A711B7D1B37C42D00E94211 /* MMyPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyPlanViewController.h; sourceTree = "<group>"; };
-		3A711B7E1B37C42D00E94211 /* MMyPlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMyPlanViewController.m; sourceTree = "<group>"; };
 		3A711B821B3800C100E94211 /* NSMutableArray+SWUtilityButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+SWUtilityButtons.h"; sourceTree = "<group>"; };
 		3A711B831B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+SWUtilityButtons.m"; sourceTree = "<group>"; };
 		3A711B841B3800C100E94211 /* SWCellScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCellScrollView.h; sourceTree = "<group>"; };
@@ -149,6 +158,8 @@
 		D06C2D3E1B381850009D2082 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
 		D06C2D3F1B381850009D2082 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		D06C2D401B381850009D2082 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		D07B390D1B3A39A6007FCBC0 /* MLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLineChartView.h; sourceTree = "<group>"; };
+		D07B390E1B3A39A6007FCBC0 /* MLineChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLineChartView.m; sourceTree = "<group>"; };
 		DC0ADF581B316E340019236D /* DigiwinSoft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigiwinSoft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC0ADF5C1B316E340019236D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC0ADF5D1B316E340019236D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -177,6 +188,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */,
 				D06C2D291B37AC88009D2082 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -191,6 +203,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A03F95E1B3A4F26000F345B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3A03F9631B3A4F26000F345B /* MMyRaidersViewController.h */,
+				3A03F9641B3A4F26000F345B /* MMyRaidersViewController.m */,
+				3A03F9611B3A4F26000F345B /* MMyPlanViewController.h */,
+				3A03F9621B3A4F26000F345B /* MMyPlanViewController.m */,
+				3A03F95F1B3A4F26000F345B /* MKeyActivitiesViewController.h */,
+				3A03F9601B3A4F26000F345B /* MKeyActivitiesViewController.m */,
+				3A03F96B1B3A5B3E000F345B /* MEventListViewController.h */,
+				3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		3A03F9701B3A60DB000F345B /* HMSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				3A03F9711B3A60DB000F345B /* HMSegmentedControl.h */,
+				3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */,
+			);
+			path = HMSegmentedControl;
+			sourceTree = "<group>";
+		};
 		3A711B811B3800C100E94211 /* SWTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,6 +304,7 @@
 		3AB4CE1E1B32895C00143374 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				3A03F9701B3A60DB000F345B /* HMSegmentedControl */,
 				3A711B811B3800C100E94211 /* SWTableViewCell */,
 				D06C2D361B381850009D2082 /* FMDatabase */,
 				3AB4CE1F1B32895C00143374 /* MMDrawerController */,
@@ -341,9 +378,19 @@
 			path = FMDatabase;
 			sourceTree = "<group>";
 		};
+		D07B390C1B3A398C007FCBC0 /* Quartz2DView */ = {
+			isa = PBXGroup;
+			children = (
+				D07B390D1B3A39A6007FCBC0 /* MLineChartView.h */,
+				D07B390E1B3A39A6007FCBC0 /* MLineChartView.m */,
+			);
+			path = Quartz2DView;
+			sourceTree = "<group>";
+		};
 		DC0ADF4F1B316E340019236D = {
 			isa = PBXGroup;
 			children = (
+				3A03F96E1B3A60A0000F345B /* QuartzCore.framework */,
 				D06C2D281B37AC88009D2082 /* libsqlite3.dylib */,
 				DC0ADF5A1B316E340019236D /* DigiwinSoft */,
 				DC0ADF741B316E340019236D /* DigiwinSoftTests */,
@@ -363,6 +410,8 @@
 		DC0ADF5A1B316E340019236D /* DigiwinSoft */ = {
 			isa = PBXGroup;
 			children = (
+				3A03F95E1B3A4F26000F345B /* Settings */,
+				D07B390C1B3A398C007FCBC0 /* Quartz2DView */,
 				D06C2CCC1B379CB3009D2082 /* dataBase */,
 				3AB4CE0B1B3282ED00143374 /* 我的任務 */,
 				3AB4CE0C1B3282ED00143374 /* 找對策 */,
@@ -377,12 +426,6 @@
 				3AB4CE2E1B32997000143374 /* MTabBarViewController.m */,
 				DC0ADF621B316E340019236D /* MSettingViewController.h */,
 				DC0ADF631B316E340019236D /* MSettingViewController.m */,
-				3A711B771B37A12900E94211 /* MMyRaidersViewController.h */,
-				3A711B781B37A12900E94211 /* MMyRaidersViewController.m */,
-				3A711B7D1B37C42D00E94211 /* MMyPlanViewController.h */,
-				3A711B7E1B37C42D00E94211 /* MMyPlanViewController.m */,
-				3A40D8C01B38F28900F2079F /* MKeyActivitiesViewController.h */,
-				3A40D8C11B38F28900F2079F /* MKeyActivitiesViewController.m */,
 				DC0ADF651B316E340019236D /* Main.storyboard */,
 				DC0ADF681B316E340019236D /* Images.xcassets */,
 				DC0ADF6A1B316E340019236D /* LaunchScreen.xib */,
@@ -547,6 +590,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */,
+				3A03F9731B3A60DB000F345B /* HMSegmentedControl.m in Sources */,
 				DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */,
 				DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */,
 				D06C2D431B381850009D2082 /* FMDatabasePool.m in Sources */,
@@ -554,9 +598,7 @@
 				DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */,
 				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
 				3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */,
-				3A711B791B37A12900E94211 /* MMyRaidersViewController.m in Sources */,
 				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
-				3A711B7F1B37C42D00E94211 /* MMyPlanViewController.m in Sources */,
 				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
 				D06C2D421B381850009D2082 /* FMDatabaseAdditions.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
@@ -567,6 +609,7 @@
 				D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */,
 				382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */,
 				3AB4CE2A1B32895C00143374 /* MMDrawerController.m in Sources */,
+				3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
@@ -574,15 +617,18 @@
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
 				382998301B3982BE0045B3BD /* MInventoryTurnoverViewController.m in Sources */,
+				3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */,
 				D06C2D441B381850009D2082 /* FMDatabaseQueue.m in Sources */,
-				3A40D8C21B38F28900F2079F /* MKeyActivitiesViewController.m in Sources */,
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
 				3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */,
+				D07B390F1B3A39A6007FCBC0 /* MLineChartView.m in Sources */,
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,
 				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
+				3A03F9651B3A4F26000F345B /* MKeyActivitiesViewController.m in Sources */,
 				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,
+				3A03F9661B3A4F26000F345B /* MMyPlanViewController.m in Sources */,
 				3829982F1B3982BE0045B3BD /* MIndustryRaiders2ViewController.m in Sources */,
 				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
 				3AB4CE1A1B32848B00143374 /* MMyTaskViewController.m in Sources */,

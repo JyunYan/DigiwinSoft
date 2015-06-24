@@ -9,6 +9,8 @@
 #import "MMyTaskViewController.h"
 #import "AppDelegate.h"
 
+#import "MLineChartView.h"
+
 #define TAG_BUTTON_SETTING  101
 
 #define TAG_IMAGE_VIEW_TYPE     201
@@ -156,6 +158,11 @@
     return cell;
 }
 
+- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
+{
+//    [self createQuatrz2DView];
+}
+
 #pragma mark - UIButton
 
 -(void)clickedBtnSetting:(id)sender
@@ -179,6 +186,41 @@
     }
     
     [_tableView reloadData];
+}
+
+- (void)createQuatrz2DView
+{
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height - 40)];
+    [view setBackgroundColor:[UIColor whiteColor]];
+    
+    MLineChartView* quartz = [[MLineChartView alloc] initWithPoints:[self loadQuartzData]];
+    quartz.frame = CGRectMake(50, 50, 280, 200);
+    quartz.backgroundColor = [UIColor colorWithRed:212.0/255.0 green:219.0/255.0 blue:227.0/255.0 alpha:1.0];
+    [view addSubview:quartz];
+    
+    [self.view addSubview:view];
+}
+
+
+
+- (NSMutableArray*)loadQuartzData
+{
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < 11; i++)
+    {
+        NSString* x = [NSString stringWithFormat:@"%d", i * 5];
+        NSString* y = [NSString stringWithFormat:@"%d", i * 10];
+        
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
+        [dict setValue:x forKey:@"x"];
+        [dict setValue:y forKey:@"y"];
+        
+        [array addObject:dict];
+    }
+    
+    return array;
+    
 }
 
 @end

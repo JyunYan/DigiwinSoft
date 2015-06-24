@@ -34,12 +34,10 @@
     _guideArray = [[NSMutableArray alloc] init];
     [self createTestData];
     
-
-    self.view.backgroundColor = [UIColor whiteColor];
     
     self.title = @"我的規劃";
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
-    
+    self.view.backgroundColor = [UIColor whiteColor];
+
     [self addMainMenu];
 
     
