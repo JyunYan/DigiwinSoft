@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MIndustryRaidersViewController : UIViewController
+@interface MIndustryRaidersViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+{
+    UITableView *tbl;
+    UIImageView *img;
+    NSMutableArray *aryList;
+}
 
 @end
