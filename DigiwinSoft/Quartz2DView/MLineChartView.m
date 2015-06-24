@@ -56,11 +56,17 @@
     UIColor* color = [UIColor colorWithRed:0.0/255.0 green:61.0/255.0 blue:121.0/255.0 alpha:1.0];
     CGContextSetStrokeColorWithColor(context, color.CGColor);
     
+    NSInteger width = self.frame.size.width * SCALA_FOR_VALUE;
+    NSInteger height = self.frame.size.height * SCALA_FOR_VALUE;
+    
     NSInteger x = 0;
     NSInteger y = 0;
     
     NSInteger point_x = 0;
     NSInteger point_y = 0;
+    
+    NSInteger count = 0;
+    NSInteger day = 0;
     
     NSDictionary* dict;
     
@@ -70,12 +76,17 @@
         
         if (index == 0)
         {
-            point_x = [[dict valueForKey:@"x"] integerValue] * SCALA_FOR_VALUE;
-            point_y = [[dict valueForKey:@"y"] integerValue] * SCALA_FOR_VALUE;
+            count = [[dict valueForKey:@"count"] integerValue];
+            
+            point_y = count * height / 120;
+            
         }else
         {
-            x = [[dict valueForKey:@"x"] integerValue] * SCALA_FOR_VALUE;
-            y = [[dict valueForKey:@"y"] integerValue] * SCALA_FOR_VALUE;
+            count = [[dict valueForKey:@"count"] integerValue];
+            day = [[dict valueForKey:@"day"] integerValue];
+            
+            x = day * width / 12;
+            y = count * height / 120;
             
             CGContextMoveToPoint(context, point_x, point_y);
             CGContextAddLineToPoint(context, x, y);
