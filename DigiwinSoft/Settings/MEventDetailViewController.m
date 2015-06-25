@@ -1,24 +1,27 @@
 //
-//  ASLookingForSolutionsViewController.m
+//  MEventDetailViewController.m
 //  DigiwinSoft
 //
-//  Created by elion chung on 2015/6/18.
+//  Created by elion chung on 2015/6/25.
 //  Copyright (c) 2015年 Jyun. All rights reserved.
 //
 
-#import "MLookingForSolutionsViewController.h"
+#import "MEventDetailViewController.h"
 #import "AppDelegate.h"
 
 
-@interface MLookingForSolutionsViewController ()
+@interface MEventDetailViewController ()
 
 @end
 
-@implementation MLookingForSolutionsViewController
+@implementation MEventDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.title = @"事件清單";
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [self addMainMenu];
 }
@@ -36,8 +39,11 @@
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
-    self.navigationItem.rightBarButtonItem = bar_item;
+    UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
+    self.navigationItem.rightBarButtonItem = right_bar_item;
+    
+    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
 
 #pragma mark - UIButton
@@ -46,6 +52,11 @@
 {
     AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
     [delegate toggleLeft];
+}
+
+-(void)back:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

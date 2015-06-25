@@ -13,6 +13,13 @@
 		382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */; };
 		382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */; };
 		382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */; };
+		3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03AA111B3B9B1900923ABB /* MEventSelectViewController.m */; };
+		3A03AA1B1B3BD5CA00923ABB /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A03AA141B3BD5CA00923ABB /* downArrow.png */; };
+		3A03AA1C1B3BD5CA00923ABB /* downArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A03AA151B3BD5CA00923ABB /* downArrow@2x.png */; };
+		3A03AA1D1B3BD5CA00923ABB /* downArrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A03AA161B3BD5CA00923ABB /* downArrow@3x.png */; };
+		3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03AA181B3BD5CA00923ABB /* DownPicker.m */; };
+		3A03AA1F1B3BD5CA00923ABB /* UIDownPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03AA1A1B3BD5CA00923ABB /* UIDownPicker.m */; };
+		3A03AA231B3BFF0500923ABB /* MEventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03AA221B3BFF0500923ABB /* MEventDetailViewController.m */; };
 		3A03F9651B3A4F26000F345B /* MKeyActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9601B3A4F26000F345B /* MKeyActivitiesViewController.m */; };
 		3A03F9661B3A4F26000F345B /* MMyPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9621B3A4F26000F345B /* MMyPlanViewController.m */; };
 		3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9641B3A4F26000F345B /* MMyRaidersViewController.m */; };
@@ -89,6 +96,17 @@
 		382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustryRaidersTableViewCell.m; path = structure/MIndustryRaidersTableViewCell.m; sourceTree = "<group>"; };
 		382998361B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaidersDescriptionTableViewCell.h; path = structure/MRaidersDescriptionTableViewCell.h; sourceTree = "<group>"; };
 		382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersDescriptionTableViewCell.m; path = structure/MRaidersDescriptionTableViewCell.m; sourceTree = "<group>"; };
+		3A03AA101B3B9B1900923ABB /* MEventSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEventSelectViewController.h; sourceTree = "<group>"; };
+		3A03AA111B3B9B1900923ABB /* MEventSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEventSelectViewController.m; sourceTree = "<group>"; };
+		3A03AA141B3BD5CA00923ABB /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downArrow.png; sourceTree = "<group>"; };
+		3A03AA151B3BD5CA00923ABB /* downArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downArrow@2x.png"; sourceTree = "<group>"; };
+		3A03AA161B3BD5CA00923ABB /* downArrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downArrow@3x.png"; sourceTree = "<group>"; };
+		3A03AA171B3BD5CA00923ABB /* DownPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownPicker.h; sourceTree = "<group>"; };
+		3A03AA181B3BD5CA00923ABB /* DownPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownPicker.m; sourceTree = "<group>"; };
+		3A03AA191B3BD5CA00923ABB /* UIDownPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDownPicker.h; sourceTree = "<group>"; };
+		3A03AA1A1B3BD5CA00923ABB /* UIDownPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDownPicker.m; sourceTree = "<group>"; };
+		3A03AA211B3BFF0500923ABB /* MEventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEventDetailViewController.h; sourceTree = "<group>"; };
+		3A03AA221B3BFF0500923ABB /* MEventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEventDetailViewController.m; sourceTree = "<group>"; };
 		3A03F95F1B3A4F26000F345B /* MKeyActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKeyActivitiesViewController.h; sourceTree = "<group>"; };
 		3A03F9601B3A4F26000F345B /* MKeyActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKeyActivitiesViewController.m; sourceTree = "<group>"; };
 		3A03F9611B3A4F26000F345B /* MMyPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyPlanViewController.h; sourceTree = "<group>"; };
@@ -203,6 +221,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A03AA131B3BD5CA00923ABB /* DownPicker */ = {
+			isa = PBXGroup;
+			children = (
+				3A03AA141B3BD5CA00923ABB /* downArrow.png */,
+				3A03AA151B3BD5CA00923ABB /* downArrow@2x.png */,
+				3A03AA161B3BD5CA00923ABB /* downArrow@3x.png */,
+				3A03AA171B3BD5CA00923ABB /* DownPicker.h */,
+				3A03AA181B3BD5CA00923ABB /* DownPicker.m */,
+				3A03AA191B3BD5CA00923ABB /* UIDownPicker.h */,
+				3A03AA1A1B3BD5CA00923ABB /* UIDownPicker.m */,
+			);
+			path = DownPicker;
+			sourceTree = "<group>";
+		};
 		3A03F95E1B3A4F26000F345B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +246,10 @@
 				3A03F9601B3A4F26000F345B /* MKeyActivitiesViewController.m */,
 				3A03F96B1B3A5B3E000F345B /* MEventListViewController.h */,
 				3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */,
+				3A03AA101B3B9B1900923ABB /* MEventSelectViewController.h */,
+				3A03AA111B3B9B1900923ABB /* MEventSelectViewController.m */,
+				3A03AA211B3BFF0500923ABB /* MEventDetailViewController.h */,
+				3A03AA221B3BFF0500923ABB /* MEventDetailViewController.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -304,6 +340,7 @@
 		3AB4CE1E1B32895C00143374 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				3A03AA131B3BD5CA00923ABB /* DownPicker */,
 				3A03F9701B3A60DB000F345B /* HMSegmentedControl */,
 				3A711B811B3800C100E94211 /* SWTableViewCell */,
 				D06C2D361B381850009D2082 /* FMDatabase */,
@@ -564,12 +601,15 @@
 				DC0ADF671B316E340019236D /* Main.storyboard in Resources */,
 				D06C2D351B37FAE9009D2082 /* check_box_on.png in Resources */,
 				3A40D8C41B391DE000F2079F /* icon_setting.png in Resources */,
+				3A03AA1B1B3BD5CA00923ABB /* downArrow.png in Resources */,
 				D06C2D2F1B37EC27009D2082 /* button_search.png in Resources */,
 				D06C2D311B37EFB4009D2082 /* icon_down.png in Resources */,
 				DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */,
 				3A711B7C1B37B24E00E94211 /* icon_back.png in Resources */,
 				D06C2D341B37FAE9009D2082 /* check_box_off.png in Resources */,
+				3A03AA1C1B3BD5CA00923ABB /* downArrow@2x.png in Resources */,
 				3AB4CE331B32A12300143374 /* Button-Favorite-List-Normal.png in Resources */,
+				3A03AA1D1B3BD5CA00923ABB /* downArrow@3x.png in Resources */,
 				3AB4CE341B32A12300143374 /* Button-Favorite-List-Pressed.png in Resources */,
 				DC0ADF691B316E340019236D /* Images.xcassets in Resources */,
 			);
@@ -590,6 +630,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */,
+				3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */,
 				3A03F9731B3A60DB000F345B /* HMSegmentedControl.m in Sources */,
 				DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */,
 				DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */,
@@ -612,8 +653,10 @@
 				3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
+				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
 				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
+				3A03AA231B3BFF0500923ABB /* MEventDetailViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
 				382998301B3982BE0045B3BD /* MInventoryTurnoverViewController.m in Sources */,
@@ -626,6 +669,7 @@
 				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
+				3A03AA1F1B3BD5CA00923ABB /* UIDownPicker.m in Sources */,
 				3A03F9651B3A4F26000F345B /* MKeyActivitiesViewController.m in Sources */,
 				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,
 				3A03F9661B3A4F26000F345B /* MMyPlanViewController.m in Sources */,

@@ -10,22 +10,22 @@
 #import "AppDelegate.h"
 #import "HMSegmentedControl.h"
 #import "ASFileManager.h"
+#import "MEventSelectViewController.h"
 
-#define TAG_BUTTON_SETTING 101
 
 #define TAG_LABEL_EVENT 200
 #define TAG_LABEL_OCCURRENCE_DATE 201
-#define TAG_LABEL_PRESENT_VALUE 202
+#define TAG_LABEL_PERSON_IN_CHARGE 202
 
-#define TAG_BUTTON_PRESENT_VALUE 300
+#define TAG_BUTTON_PERSON_IN_CHARGE 3000
 
-#define TAG_BUTTON_TELEPHONE 400
-#define TAG_BUTTON_MESSAGE 500
-#define TAG_BUTTON_NOTIFICATION 600
-#define TAG_BUTTON_EMAIL 700
-#define TAG_BUTTON_CALENDAR 800
+#define TAG_BUTTON_TELEPHONE 4000
+#define TAG_BUTTON_MESSAGE 5000
+#define TAG_BUTTON_NOTIFICATION 6000
+#define TAG_BUTTON_EMAIL 7000
+#define TAG_BUTTON_CALENDAR 8000
 
-#define TAG_BAR_VIEW 1000
+#define TAG_BAR_VIEW 9000
 
 
 @interface MEventListViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
@@ -92,14 +92,13 @@
 -(void) addMainMenu
 {
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    settingbutton.tag = TAG_BUTTON_SETTING;
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = right_bar_item;
     
-    UIButton* backbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
+    UIButton* backbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 20, 24)];
     [backbutton setBackgroundImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
     [backbutton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* left_bar_item = [[UIBarButtonItem alloc] initWithCustomView:backbutton];
@@ -187,7 +186,7 @@
 - (void)showCellBar:(UIButton *)button
 {
     NSInteger tag = button.tag;
-    NSInteger index = tag - TAG_BUTTON_PRESENT_VALUE;
+    NSInteger index = tag - TAG_BUTTON_PERSON_IN_CHARGE;
     _showCellBarIndex = (_showCellBarIndex == index) ? -1 : index;
     
     [_tableView reloadData];
@@ -198,6 +197,9 @@
     NSInteger tag = button.tag;
     NSInteger index = tag - TAG_BUTTON_TELEPHONE;
     
+    NSString* telStr = @"123456789";
+    NSString* phoneNumber = [@"tel://" stringByAppendingString:telStr];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 }
 
 - (void)actionMessage:(UIButton *)button
@@ -248,7 +250,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 1;
+    return 2;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -306,26 +308,26 @@
         posX = leftView.frame.origin.x + leftView.frame.size.width;
         
         // 負責人
-        UILabel* presentValueTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, height/2, 60, 25)];
-        presentValueTitleLabel.text = @"負責人：";
-        presentValueTitleLabel.font = [UIFont systemFontOfSize:textSize];
-        [cell addSubview:presentValueTitleLabel];
+        UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, height/2, 60, 25)];
+        personInChargeTitleLabel.text = @"負責人：";
+        personInChargeTitleLabel.font = [UIFont systemFontOfSize:textSize];
+        [cell addSubview:personInChargeTitleLabel];
         
-        posX = presentValueTitleLabel.frame.origin.x + presentValueTitleLabel.frame.size.width;
+        posX = personInChargeTitleLabel.frame.origin.x + personInChargeTitleLabel.frame.size.width;
         
-        UIButton* presentValueButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, height/2, 25, 25)];
-        presentValueButton.tag = TAG_BUTTON_PRESENT_VALUE + row;
-        presentValueButton.backgroundColor = [UIColor clearColor];
-        [presentValueButton addTarget:self action:@selector(showCellBar:) forControlEvents:UIControlEventTouchDown];
-        [cell addSubview:presentValueButton ];
+        UIButton* personInChargeButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, height/2, 25, 25)];
+        personInChargeButton.tag = TAG_BUTTON_PERSON_IN_CHARGE + row;
+        personInChargeButton.backgroundColor = [UIColor clearColor];
+        [personInChargeButton addTarget:self action:@selector(showCellBar:) forControlEvents:UIControlEventTouchDown];
+        [cell addSubview:personInChargeButton ];
 
-        posX = presentValueButton.frame.origin.x + presentValueButton.frame.size.width + 5;
+        posX = personInChargeButton.frame.origin.x + personInChargeButton.frame.size.width + 5;
 
-        UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, height/2, 100, 25)];
-        presentValueLabel.tag = TAG_LABEL_PRESENT_VALUE;
-        presentValueLabel.font = [UIFont systemFontOfSize:textSize];
-        presentValueLabel.textColor = [UIColor blueColor];
-        [cell addSubview:presentValueLabel];
+        UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, height/2, 100, 25)];
+        personInChargeLabel.tag = TAG_LABEL_PERSON_IN_CHARGE;
+        personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
+        personInChargeLabel.textColor = [UIColor blueColor];
+        [cell addSubview:personInChargeLabel];
         
         
         /* bottombar */
@@ -335,7 +337,7 @@
         width = tableWidth;
         
         UIView* barView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        barView.tag = TAG_BAR_VIEW;
+        barView.tag = TAG_BAR_VIEW + row;
         barView.backgroundColor = [UIColor lightGrayColor];
         [cell addSubview:barView];
         
@@ -396,16 +398,16 @@
     
     UILabel* eventLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_EVENT];
     UILabel* occurrenceDateLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_OCCURRENCE_DATE];
-    UILabel* presentValueLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PRESENT_VALUE];
+    UILabel* personInChargeLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PERSON_IN_CHARGE];
     
-    UIButton* presentValueButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_PRESENT_VALUE + row];
+    UIButton* personInChargeButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_PERSON_IN_CHARGE + row];
 
     eventLabel.text = @"事件";
     occurrenceDateLabel.text = @"發生日：";
-    presentValueLabel.text = @"負責人";
+    personInChargeLabel.text = @"負責人";
 
     UIImage* image = [self loadLocationImage:nil];
-    [presentValueButton setImage:image forState:UIControlStateNormal];
+    [personInChargeButton setImage:image forState:UIControlStateNormal];
 
     
     // bottombar
@@ -434,6 +436,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
+    
+    MEventSelectViewController* vc = [[MEventSelectViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(UIImage*)loadLocationImage:(NSString*)urlstr

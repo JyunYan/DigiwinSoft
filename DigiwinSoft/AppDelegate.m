@@ -50,7 +50,9 @@
     
 
     [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:NO];
+    }
     
     
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
