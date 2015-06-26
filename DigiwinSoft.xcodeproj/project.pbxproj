@@ -13,6 +13,7 @@
 		382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */; };
 		382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */; };
 		382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */; };
+		38D1B16D1B3D3DB6007CEC13 /* MRaidersDiagramTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D1B16C1B3D3DB6007CEC13 /* MRaidersDiagramTableViewCell.m */; };
 		3A03F9651B3A4F26000F345B /* MKeyActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9601B3A4F26000F345B /* MKeyActivitiesViewController.m */; };
 		3A03F9661B3A4F26000F345B /* MMyPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9621B3A4F26000F345B /* MMyPlanViewController.m */; };
 		3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9641B3A4F26000F345B /* MMyRaidersViewController.m */; };
@@ -89,6 +90,8 @@
 		382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustryRaidersTableViewCell.m; path = structure/MIndustryRaidersTableViewCell.m; sourceTree = "<group>"; };
 		382998361B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaidersDescriptionTableViewCell.h; path = structure/MRaidersDescriptionTableViewCell.h; sourceTree = "<group>"; };
 		382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersDescriptionTableViewCell.m; path = structure/MRaidersDescriptionTableViewCell.m; sourceTree = "<group>"; };
+		38D1B16B1B3D3DB6007CEC13 /* MRaidersDiagramTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaidersDiagramTableViewCell.h; path = structure/MRaidersDiagramTableViewCell.h; sourceTree = "<group>"; };
+		38D1B16C1B3D3DB6007CEC13 /* MRaidersDiagramTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersDiagramTableViewCell.m; path = structure/MRaidersDiagramTableViewCell.m; sourceTree = "<group>"; };
 		3A03F95F1B3A4F26000F345B /* MKeyActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKeyActivitiesViewController.h; sourceTree = "<group>"; };
 		3A03F9601B3A4F26000F345B /* MKeyActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKeyActivitiesViewController.m; sourceTree = "<group>"; };
 		3A03F9611B3A4F26000F345B /* MMyPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMyPlanViewController.h; sourceTree = "<group>"; };
@@ -249,18 +252,18 @@
 		3AB4CE041B3264B500143374 /* 行業攻略 */ = {
 			isa = PBXGroup;
 			children = (
-				382998291B3982BE0045B3BD /* MInventoryTurnoverViewController.h */,
-				3829982A1B3982BE0045B3BD /* MInventoryTurnoverViewController.m */,
-				382998271B3982BE0045B3BD /* MIndustryRaiders2ViewController.h */,
-				382998281B3982BE0045B3BD /* MIndustryRaiders2ViewController.m */,
-				3829982B1B3982BE0045B3BD /* MRaidersDescriptionViewController.h */,
-				3829982C1B3982BE0045B3BD /* MRaidersDescriptionViewController.m */,
-				3829982D1B3982BE0045B3BD /* MRaidersDiagramViewController.h */,
-				3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */,
-				3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */,
-				3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */,
 				D06C2D2A1B37B58C009D2082 /* MDesignateResponsibleViewController.h */,
 				D06C2D2B1B37B58C009D2082 /* MDesignateResponsibleViewController.m */,
+				382998291B3982BE0045B3BD /* MInventoryTurnoverViewController.h */,
+				3829982A1B3982BE0045B3BD /* MInventoryTurnoverViewController.m */,
+				3829982D1B3982BE0045B3BD /* MRaidersDiagramViewController.h */,
+				3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */,
+				3829982B1B3982BE0045B3BD /* MRaidersDescriptionViewController.h */,
+				3829982C1B3982BE0045B3BD /* MRaidersDescriptionViewController.m */,
+				382998271B3982BE0045B3BD /* MIndustryRaiders2ViewController.h */,
+				382998281B3982BE0045B3BD /* MIndustryRaiders2ViewController.m */,
+				3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */,
+				3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */,
 			);
 			path = "行業攻略";
 			sourceTree = "<group>";
@@ -465,6 +468,8 @@
 		DC1014481B3287D000EF7A6F /* structure */ = {
 			isa = PBXGroup;
 			children = (
+				38D1B16B1B3D3DB6007CEC13 /* MRaidersDiagramTableViewCell.h */,
+				38D1B16C1B3D3DB6007CEC13 /* MRaidersDiagramTableViewCell.m */,
 				382998331B3983060045B3BD /* MIndustryRaidersTableViewCell.h */,
 				382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */,
 				382998361B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.h */,
@@ -601,6 +606,7 @@
 				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
 				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
 				D06C2D421B381850009D2082 /* FMDatabaseAdditions.m in Sources */,
+				38D1B16D1B3D3DB6007CEC13 /* MRaidersDiagramTableViewCell.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
 				382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */,

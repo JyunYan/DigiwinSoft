@@ -46,7 +46,7 @@
 -(void) addMainMenu
 {
     //rightBarButtonItem
-   UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
+    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
     settingbutton.tag = TAG_BUTTON_SETTING;
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
@@ -56,8 +56,8 @@
     
     //leftBarButtonItem
     UIButton* btnSearch = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [btnSearch setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [btnSearch setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [btnSearch setBackgroundImage:[UIImage imageNamed:@"button_search.png"] forState:UIControlStateNormal];
+    [btnSearch setBackgroundImage:[UIImage imageNamed:@"button_search.png"] forState:UIControlStateHighlighted];
     [btnSearch addTarget:self action:@selector(clickedBtnSearch:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* leftBar_item = [[UIBarButtonItem alloc] initWithCustomView:btnSearch];
     self.navigationItem.leftBarButtonItem = leftBar_item;
@@ -74,6 +74,7 @@
                           nil];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
     segmentedControl.frame = CGRectMake(0, 0, 150.0, 24.0);
+    segmentedControl.tintColor=[UIColor colorWithRed:76.0/255.0 green:86.0/255.0 blue:97.0/255.0 alpha:1.0];
     segmentedControl.selectedSegmentIndex = 0;
     [segmentedControl addTarget:self
                          action:@selector(actionSegmented:)
@@ -96,7 +97,6 @@
 - (void)actionSegmented:(id)sender{
     switch ([sender selectedSegmentIndex]) {
         case 0:
-            
             [tbl removeFromSuperview];
             [self.view addSubview:img];
             break;
@@ -133,8 +133,27 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] init];
     [MIndustryRaiders2VC setStrTitle:aryList[indexPath.row]];
+    [MIndustryRaiders2VC setIsFrom:YES];
     [self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
 }
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 #pragma mark - UIButton
 
 -(void)clickedBtnSetting:(id)sender

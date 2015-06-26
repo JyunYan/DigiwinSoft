@@ -36,14 +36,21 @@
 {
     [super viewWillAppear:YES];
     self.automaticallyAdjustsScrollViewInsets = NO;
-}
 
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
+    self.navigationItem.leftBarButtonItem = back;
+    
+//    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+//    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
+}
 #pragma mark - create view
 - (void)prepareTestData
 {
 }
 -(void)addMainMenu
 {
+    
     //rightBarButtonItem
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
     settingbutton.tag = TAG_BUTTON_SETTING;
@@ -52,14 +59,6 @@
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = bar_item;
-
-    //leftBarButtonItem
-    UIButton* btnBcak = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [btnBcak setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [btnBcak setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
-    [btnBcak addTarget:self action:@selector(clickedBtnBcak:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* leftBar_item = [[UIBarButtonItem alloc] initWithCustomView:btnBcak];
-    self.navigationItem.leftBarButtonItem = leftBar_item;
 
     //screenSize
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
@@ -77,22 +76,25 @@
     [self.view addSubview:webViewVideo];
     
     //labTitle
-    UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(10, 20+44+175, screenWidth-100, 44)];
-    labTitle.text=@"我的標題呀！我的標題呀！我的標題呀！";
+    labTitle=[[UILabel alloc]initWithFrame:CGRectMake(10, 20+44+175, screenWidth-100, 44)];
+    labTitle.text=_strTitle;
     labTitle.backgroundColor=[UIColor whiteColor];
-    [labTitle setFont:[UIFont systemFontOfSize:12]];
+    [labTitle setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labTitle];
      
     //btnTargetSet
     UIButton *btnTargetSet=[[UIButton alloc]initWithFrame:CGRectMake(10+(screenWidth-100)+5, 20+44+175+9, 75, 26)];
-    btnTargetSet.backgroundColor=[UIColor greenColor];
+    btnTargetSet.backgroundColor=[UIColor colorWithRed:114.0/255.0 green:198.0/255.0 blue:225.0/255.0 alpha:1.0];
     [btnTargetSet setTitle:@"指標設定" forState:UIControlStateNormal];
+//    UIImage *btnImage = [UIImage imageNamed:@""];
+//    [btnTargetSet setImage:btnImage forState:UIControlStateNormal];
     [btnTargetSet addTarget:self action:@selector(actionTargetSet:) forControlEvents:UIControlEventTouchUpInside];
     btnTargetSet.titleLabel.font = [UIFont systemFontOfSize:12];
     [self.view addSubview:btnTargetSet];
     
     //imgGray
     UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,labTitle.frame.origin.y+44,screenWidth, 1)];
+    imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
     imgGray.backgroundColor=[UIColor grayColor];
     [self.view addSubview:imgGray];
     
@@ -107,6 +109,7 @@
     //btnAdd
     btn=[[UIButton alloc]initWithFrame:CGRectMake(0,screenHeight-35,screenWidth, 35)];
     btn.backgroundColor=[UIColor purpleColor];
+    btn.backgroundColor=[UIColor colorWithRed:245.0/255.0 green:113.0/255.0 blue:116.0/255.0 alpha:1];
     [btn setTitle:@"+加入對策清單" forState:UIControlStateNormal];
     btn.titleLabel.textColor=[UIColor whiteColor];
     [btn addTarget:self action:@selector(actionAddMyList:) forControlEvents:UIControlEventTouchUpInside];
@@ -115,7 +118,8 @@
     //imgGray
     imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,textView.frame.origin.y+100,screenWidth, btn.frame.origin.y-
                                                          (textView.frame.origin.y+textView.frame.size.height))];
-    imgGray.backgroundColor=[UIColor grayColor];
+    imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
+
     [self.view addSubview:imgGray];
 
     
@@ -130,6 +134,7 @@
 -(void)clickedBtnSetting:(id)sender
 {
     MRaidersDiagramViewController *MRaidersDiagramVC=[[MRaidersDiagramViewController alloc]init];
+    MRaidersDiagramVC.strTitle=labTitle.text;
     [self.navigationController pushViewController:MRaidersDiagramVC animated:YES];
 }
 -(void)clickedBtnBcak:(id)sender
@@ -143,6 +148,11 @@
     MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
     [self.navigationController pushViewController:MInventoryTurnoverVC animated:YES];
 }
+- (void)goToBackPage:(id) sender
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma UIWebView Delegate
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     
@@ -190,7 +200,6 @@
     cell.labMax.text=@"999";
     cell.labMin.text=@"000";
 
-//    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     
@@ -241,7 +250,7 @@
 
     //imgGray
     UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,58,tbl.frame.size.width,2)];
-    imgGray.backgroundColor=[UIColor grayColor];
+    imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
     [viewSection addSubview:imgGray];
     
     return viewSection;
