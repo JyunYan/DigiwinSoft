@@ -232,7 +232,7 @@
     CGFloat viewHeight = rect.size.height;
     
     CGFloat posX = 20;
-    CGFloat posY = 10;
+    CGFloat posY = 20;
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = viewHeight - posY * 2;
     

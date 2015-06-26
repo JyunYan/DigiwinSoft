@@ -406,7 +406,8 @@
     occurrenceDateLabel.text = @"發生日：";
     personInChargeLabel.text = @"負責人";
 
-    UIImage* image = [self loadLocationImage:nil];
+//    UIImage* image = [self loadLocationImage:nil];
+    UIImage* image = [UIImage imageNamed:@"Button-Favorite-List-Normal.png"];
     [personInChargeButton setImage:image forState:UIControlStateNormal];
 
     

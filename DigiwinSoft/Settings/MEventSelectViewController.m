@@ -274,12 +274,15 @@
 {
     
 }
-
+/*
 -(void)actionCheckbox:(id)sender
 {
+    UIButton* button = (UIButton*)sender;
+    BOOL isSelected = button.selected;
     
+    [button setSelected: !isSelected];
 }
-
+*/
 #pragma mark - DownPicker
 
 -(void)dp1_Selected:(id)dp {
@@ -401,8 +404,9 @@
         UIButton* checkboxBtn = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         [checkboxBtn setBackgroundImage:[UIImage imageNamed:@"check_box_off.png"] forState:UIControlStateNormal];
         [checkboxBtn setBackgroundImage:[UIImage imageNamed:@"check_box_on.png"] forState:UIControlStateSelected];
-        [checkboxBtn addTarget:self action:@selector(actionCheckbox:) forControlEvents:UIControlEventTouchUpInside];
+//        [checkboxBtn addTarget:self action:@selector(actionCheckbox:) forControlEvents:UIControlEventTouchUpInside];
         checkboxBtn.tag = TAG_CHECKBOX + row;
+        checkboxBtn.userInteractionEnabled = NO;
         [cell addSubview:checkboxBtn];
 
         
