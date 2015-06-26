@@ -12,7 +12,6 @@
 #import "MKeyActivitiesViewController.h"
 #import "MGuide.h"
 
-#define TAG_BUTTON_SETTING 101
 
 #define TAG_LABEL_COUNTERMEASURE 200
 #define TAG_LABEL_INDEX 201
@@ -102,14 +101,13 @@
 -(void) addMainMenu
 {
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    settingbutton.tag = TAG_BUTTON_SETTING;
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = right_bar_item;
     
-    UIButton* backbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
+    UIButton* backbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 20, 24)];
     [backbutton setBackgroundImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
     [backbutton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* left_bar_item = [[UIBarButtonItem alloc] initWithCustomView:backbutton];
@@ -267,14 +265,14 @@
         
         UIView* rightView = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, width/2, height)];
         [view addSubview:rightView];
-        // 現值
+        // 負責人
         UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2, height/2)];
         personInChargeLabel.tag = TAG_LABEL_PERSON_IN_CHARGE;
         personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
         [rightView addSubview:personInChargeLabel];
         
         posY = personInChargeLabel.frame.origin.y + personInChargeLabel.frame.size.height;
-        // 負責人
+        // 現值
         UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, height/2)];
         presentValueLabel.tag = TAG_LABEL_PRESENT_VALUE;
         presentValueLabel.font = [UIFont systemFontOfSize:textSize];

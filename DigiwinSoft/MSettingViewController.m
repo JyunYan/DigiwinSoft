@@ -138,20 +138,25 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 121;
+    return 101;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView* header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 122)];
+    CGFloat tableWidth = tableView.frame.size.width;
+
+    UIView* header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableWidth, 102)];
     header.backgroundColor = [UIColor blackColor];
     
     if (_userData == nil)
         return header;
     
     
+    CGFloat textSize = 15.0f;
+
+    
     CGFloat posX = 30;
-    CGFloat posY = 20;
+    CGFloat posY = 10;
     
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 60, 60)];
     imageView.backgroundColor = [UIColor clearColor];
@@ -160,11 +165,11 @@
     
     
     posX = imageView.frame.origin.x + imageView.frame.size.width + 20;
-    posY = 15;
+    posY = 5;
 
     UILabel* username = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 200, 30)];
     username.backgroundColor = [UIColor clearColor];
-    username.font = [UIFont systemFontOfSize:18];
+    username.font = [UIFont systemFontOfSize:textSize];
     username.text = _userData.name;
     username.textColor = [UIColor whiteColor];
     [header addSubview:username];
@@ -174,7 +179,7 @@
     
     UILabel* companyName = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 200, 20)];
     companyName.backgroundColor = [UIColor clearColor];
-    companyName.font = [UIFont systemFontOfSize:15];
+    companyName.font = [UIFont systemFontOfSize:textSize];
     companyName.text = _userData.companyName;
     companyName.textColor = [UIColor lightGrayColor];
     [header addSubview:companyName];
@@ -184,13 +189,13 @@
     
     UILabel* email = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 200, 20)];
     email.backgroundColor = [UIColor clearColor];
-    email.font = [UIFont systemFontOfSize:15];
+    email.font = [UIFont systemFontOfSize:textSize];
     email.text = _userData.email;
     email.textColor = [UIColor lightGrayColor];
     [header addSubview:email];
 
     
-    UIView* down = [[UIView alloc] initWithFrame:CGRectMake(0, 120, 320, 1)];
+    UIView* down = [[UIView alloc] initWithFrame:CGRectMake(0, 100, tableWidth, 1)];
     down.backgroundColor = [UIColor lightGrayColor];
     [header addSubview:down];
     
@@ -205,7 +210,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 45;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -219,7 +224,9 @@
         
         if (row > 0) {
             // up divider
-            UIView* up = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+            CGFloat tableWidth = tableView.frame.size.width;
+
+            UIView* up = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableWidth, 1)];
             up.backgroundColor = [UIColor lightGrayColor];
             [cell addSubview:up];
         }
@@ -265,6 +272,7 @@
         cell.imageView.image = nil;
         cell.textLabel.text = @"登出";
     }
+    cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
     cell.textLabel.textColor = [UIColor lightGrayColor];
     cell.textLabel.highlightedTextColor = [UIColor whiteColor];
 

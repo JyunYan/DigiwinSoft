@@ -10,7 +10,7 @@
 #import "MInventoryTurnoverViewController.h"
 #import "MRaidersDiagramViewController.h"
 #import "MRaidersDescriptionTableViewCell.h"
-#define TAG_BUTTON_SETTING  101
+
 @interface MRaidersDescriptionViewController ()
 
 @end
@@ -53,7 +53,6 @@
     
     //rightBarButtonItem
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    settingbutton.tag = TAG_BUTTON_SETTING;
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
