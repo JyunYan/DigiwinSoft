@@ -34,33 +34,33 @@
         
         UIButton *btnCheck = [[UIButton alloc] init];
         self.btnCheck = btnCheck;
-        self.btnCheck.backgroundColor=[UIColor lightGrayColor];
-        self.btnCheck.frame=CGRectMake(20, 18,16, 16);
+        [self.btnCheck  setImage:[UIImage imageNamed:@"check_box_off.png"] forState:UIControlStateNormal];
+        self.btnCheck.frame=CGRectMake(20, 16, 20, 20);
         [self.contentView addSubview:btnCheck];
 
         
         UILabel *labName= [[UILabel alloc] init];
-        labName.textColor=[UIColor redColor];
-        labName.backgroundColor=[UIColor greenColor];
+        labName.textColor=[UIColor blackColor];
+        labName.backgroundColor=[UIColor clearColor];
         self.labName = labName;
         self.labName.frame=CGRectMake(40, 18, 150, 18);
         [self.contentView addSubview:labName];
 
         UIButton *btnManager= [[UIButton alloc] init];
-        btnManager.backgroundColor=[UIColor redColor];
+        btnManager.backgroundColor=[UIColor lightGrayColor];
         self.btnManager = btnManager;
         self.btnManager.frame=CGRectMake(242.5-16,25 , 16, 16);
         [self.contentView addSubview:btnManager];
 
         UIButton *btnRaiders= [[UIButton alloc] init];
-        btnRaiders.backgroundColor=[UIColor redColor];
+        btnRaiders.backgroundColor=[UIColor lightGrayColor];
         self.btnRaiders = btnRaiders;
-        self.btnRaiders.frame=CGRectMake(337.5-16,25 , 16, 16);
+        self.btnRaiders.frame=CGRectMake(337.5-30,25 , 16, 16);
         [self.contentView addSubview:btnRaiders];
         
         for (int i=0; i<5; i++) {
             UIImageView *imgStar=[[UIImageView alloc]initWithFrame:CGRectMake(40+(17*i), 36,16,16)];
-            imgStar.backgroundColor=[UIColor blueColor];
+            imgStar.backgroundColor=[UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0];
             [self.contentView addSubview:imgStar];
             
 

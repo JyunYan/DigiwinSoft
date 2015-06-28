@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MRaidersDiagramViewController : UIViewController
-
+@interface MRaidersDiagramViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+{
+    UITableView *tbl;
+}
+@property (nonatomic, weak) NSString *strTitle;
 @end

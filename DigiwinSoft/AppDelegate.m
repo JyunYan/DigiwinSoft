@@ -52,6 +52,7 @@
     
 
     [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     //[[UINavigationBar appearance] setTranslucent:NO];
     
     

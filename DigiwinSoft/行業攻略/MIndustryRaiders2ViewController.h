@@ -17,6 +17,8 @@
     UILabel *labTarget;
     UITextField *txtField;
     UIImageView *imgblueBar;
+    UIImageView *imgGray;
 }
+@property (nonatomic, assign) BOOL isFrom;
 @property (nonatomic, weak) NSString *strTitle;
 @end

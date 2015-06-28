@@ -16,7 +16,6 @@
 
 #import "AppDelegate.h"
 
-#define TAG_BUTTON_SETTING  101
 
 @interface MTabBarViewController ()
 
