@@ -64,6 +64,8 @@
 		DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */ = {isa = PBXBuildFile; fileRef = DC10144D1B32B66200EF7A6F /* MGuide.m */; };
 		DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014501B32B67F00EF7A6F /* MActivity.m */; };
 		DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014531B32B69F00EF7A6F /* MWorkItem.m */; };
+		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
+		DC6A52B61B3D5779001A373F /* dataStore.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DC6A52B51B3D5779001A373F /* dataStore.sqlite */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +183,9 @@
 		DC1014501B32B67F00EF7A6F /* MActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MActivity.m; path = structure/MActivity.m; sourceTree = "<group>"; };
 		DC1014521B32B69F00EF7A6F /* MWorkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWorkItem.h; path = structure/MWorkItem.h; sourceTree = "<group>"; };
 		DC1014531B32B69F00EF7A6F /* MWorkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWorkItem.m; path = structure/MWorkItem.m; sourceTree = "<group>"; };
+		DC6A52B11B3D2E6E001A373F /* MDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDirector.h; sourceTree = "<group>"; };
+		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
+		DC6A52B51B3D5779001A373F /* dataStore.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = dataStore.sqlite; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,6 +353,8 @@
 			children = (
 				3AB4CE371B32C0C800143374 /* ASFileManager.h */,
 				3AB4CE381B32C0C800143374 /* ASFileManager.m */,
+				DC6A52B11B3D2E6E001A373F /* MDirector.h */,
+				DC6A52B21B3D2E6E001A373F /* MDirector.m */,
 			);
 			path = utilities;
 			sourceTree = "<group>";
@@ -438,6 +445,7 @@
 		DC0ADF5B1B316E340019236D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DC6A52B51B3D5779001A373F /* dataStore.sqlite */,
 				3AB4CE301B32A12300143374 /* images */,
 				DC0ADF5C1B316E340019236D /* Info.plist */,
 				DC0ADF5D1B316E340019236D /* main.m */,
@@ -568,6 +576,7 @@
 				D06C2D311B37EFB4009D2082 /* icon_down.png in Resources */,
 				DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */,
 				3A711B7C1B37B24E00E94211 /* icon_back.png in Resources */,
+				DC6A52B61B3D5779001A373F /* dataStore.sqlite in Resources */,
 				D06C2D341B37FAE9009D2082 /* check_box_off.png in Resources */,
 				3AB4CE331B32A12300143374 /* Button-Favorite-List-Normal.png in Resources */,
 				3AB4CE341B32A12300143374 /* Button-Favorite-List-Pressed.png in Resources */,
@@ -616,6 +625,7 @@
 				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
+				DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */,
 				382998301B3982BE0045B3BD /* MInventoryTurnoverViewController.m in Sources */,
 				3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */,
 				D06C2D441B381850009D2082 /* FMDatabaseQueue.m in Sources */,

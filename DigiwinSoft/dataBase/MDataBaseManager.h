@@ -15,5 +15,6 @@
 @property (nonatomic, strong) FMDatabase* db;
 
 +(MDataBaseManager*) sharedInstance;
+- (BOOL) loginWithAccount:(NSString*)account Password:(NSString*)pwd CompanyID:(NSString*)compid;
 
 @end

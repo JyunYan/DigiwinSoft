@@ -15,6 +15,8 @@
 #import "MMyTaskViewController.h"
 #import "MEventListViewController.h"
 
+#import "MDataBaseManager.h"
+
 @interface AppDelegate ()
 
 @end
@@ -50,12 +52,14 @@
     
 
     [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
+    //[[UINavigationBar appearance] setTranslucent:NO];
     
     
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
     NSLog(@"data_path :%s\n", [documentsDirectory UTF8String]);
+    
+    [[MDataBaseManager sharedInstance] loginWithAccount:@"amigo" Password:@"amigo" CompanyID:@"cmp-001"];
     
     return YES;
 }
