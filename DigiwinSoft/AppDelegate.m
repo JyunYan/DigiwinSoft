@@ -201,9 +201,9 @@
     [drawer closeDrawerAnimated:YES completion:nil];
 }
 
-- (void) toggleEventList
+- (void) toggleEventListWithUser:(MUser*) user
 {
-    MEventListViewController* vc = [[MEventListViewController alloc] init];
+    MEventListViewController* vc = [[MEventListViewController alloc] initWithUser:user];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {

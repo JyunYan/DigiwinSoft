@@ -11,6 +11,7 @@
 #import "HMSegmentedControl.h"
 #import "ASFileManager.h"
 #import "MEventSelectViewController.h"
+#import "MDataBaseManager.h"
 
 
 #define TAG_LABEL_EVENT 200
@@ -34,14 +35,24 @@
 
 @property (nonatomic, assign) NSInteger showCellBarIndex;
 
+@property (nonatomic, strong) NSArray* totalEventArray;
+@property (nonatomic, strong) NSMutableArray* eventArray;
+
+@property (nonatomic, strong) MUser* user;
+
 @end
 
 @implementation MEventListViewController
 
-- (id)init {
+- (id)initWithUser:(MUser*) user {
     self = [super init];
     if (self) {
         _showCellBarIndex = -1;
+        _user = user;
+        
+        _eventArray = [NSMutableArray new];
+        _totalEventArray = [[MDataBaseManager sharedInstance] loadEventsWithUser:_user];
+        [self resetEventDataWithStatus:@"0"];
     }
     return self;
 }
@@ -87,6 +98,30 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) resetEventDataWithStatus:(NSString*) status
+{
+    [_eventArray removeAllObjects];
+    
+    for (MEvent* event in _totalEventArray) {
+        if ([event.status isEqualToString:status] || [event.status isEqualToString:@"2"]) {
+            [_eventArray addObject:event];
+        }
+    }
+}
+
+- (int) getEventCountWithStatus:(NSString*) status
+{
+    int count = 0;
+    
+    for (MEvent* event in _totalEventArray) {
+        if ([event.status isEqualToString:status] || [event.status isEqualToString:@"2"]) {
+            count++;
+        }
+    }
+    
+    return count;
+}
+
 #pragma mark - create view
 
 -(void) addMainMenu
@@ -116,9 +151,13 @@
     CGFloat width = viewWidth - posX;
     CGFloat height = 50;
     
-    NSString* item1 = [NSString stringWithFormat:@"待處理（%d）", 2];
-    NSString* item2 = [NSString stringWithFormat:@"已處理（%d）", 1];
-    NSString* item3 = [NSString stringWithFormat:@"全部（%d）", 3];
+    int itemCount1 = [self getEventCountWithStatus:@"0"];
+    int itemCount2 = [self getEventCountWithStatus:@"1"];
+    int itemCount3 = itemCount1 + itemCount2;
+
+    NSString* item1 = [NSString stringWithFormat:@"待處理（%d）", itemCount1];
+    NSString* item2 = [NSString stringWithFormat:@"已處理（%d）", itemCount2];
+    NSString* item3 = [NSString stringWithFormat:@"全部（%d）", itemCount3];
     NSArray *itemArray =[NSArray arrayWithObjects:item1, item2, item3, nil];
     
     HMSegmentedControl *segmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:itemArray];
@@ -194,10 +233,12 @@
 
 - (void)actionTelephone:(UIButton *)button
 {
+    /*
     NSInteger tag = button.tag;
     NSInteger index = tag - TAG_BUTTON_TELEPHONE;
-    
-    NSString* telStr = @"123456789";
+    MEvent* event = [_eventArray objectAtIndex:index];
+     */
+    NSString* telStr = _user.phone;
     NSString* phoneNumber = [@"tel://" stringByAppendingString:telStr];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 }
@@ -236,6 +277,10 @@
 {
     NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);
     
+    NSInteger index = segmentedControl.selectedSegmentIndex;
+    NSString* status = [NSString stringWithFormat:@"%ld", (long)index];
+    [self resetEventDataWithStatus:status];
+
     [_tableView reloadData];
 }
 
@@ -250,7 +295,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 2;
+    return _eventArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -396,15 +441,20 @@
         [cell addSubview:calButton];
    }
     
+    MEvent* event = [_eventArray objectAtIndex:row];
+    
     UILabel* eventLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_EVENT];
     UILabel* occurrenceDateLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_OCCURRENCE_DATE];
     UILabel* personInChargeLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PERSON_IN_CHARGE];
     
     UIButton* personInChargeButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_PERSON_IN_CHARGE + row];
 
-    eventLabel.text = @"事件";
-    occurrenceDateLabel.text = @"發生日：";
-    personInChargeLabel.text = @"負責人";
+    eventLabel.text = event.name;
+
+    NSString* occurrenceDateStr = [NSString stringWithFormat:@"發生日：%@", event.start];
+    occurrenceDateLabel.text = occurrenceDateStr;
+
+    personInChargeLabel.text = _user.name;
 
 //    UIImage* image = [self loadLocationImage:nil];
     UIImage* image = [UIImage imageNamed:@"Button-Favorite-List-Normal.png"];
@@ -437,8 +487,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
-    
-    MEventSelectViewController* vc = [[MEventSelectViewController alloc] init];
+    MEvent* event = [_eventArray objectAtIndex:row];
+
+    MEventSelectViewController* vc = [[MEventSelectViewController alloc] initWithEvent:event];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

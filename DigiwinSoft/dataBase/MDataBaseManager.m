@@ -190,26 +190,4 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
-- (NSMutableArray*) loadGuides
-{
-    NSMutableArray* array = [NSMutableArray new];
-    
-    NSString* sql = @"select g.ID, g.NAME, g.DESCRIPTION, g.REVIEW, t.NAME from M_GUIDE as g inner join M_TARGET as t on g.TARGET_ID = t.ID";
-    
-    FMResultSet* rs = [self.db executeQuery:sql];
-    while ([rs next]) {
-        MGuide* guide = [MGuide new];
-        guide.uuid = [rs stringForColumnIndex:0];
-        guide.name = [rs stringForColumnIndex:1];
-        guide.desc = [rs stringForColumnIndex:2];
-        guide.review = [rs stringForColumnIndex:3];
-        
-        guide.target = [rs stringForColumnIndex:4];
-        
-        [array addObject:guide];
-    }
-    
-    return array;
-}
-
 @end

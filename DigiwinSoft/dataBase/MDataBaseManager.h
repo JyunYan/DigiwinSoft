@@ -26,6 +26,4 @@
 - (NSArray*)loadSituationsWithEvent:(MEvent*)event;
 - (NSArray*)loadTreasureWithActivity:(MActivity*)act;
 
-- (NSMutableArray*) loadGuides;
-
 @end
