@@ -103,7 +103,7 @@
     [_eventArray removeAllObjects];
     
     for (MEvent* event in _totalEventArray) {
-        if ([event.status isEqualToString:status] || [event.status isEqualToString:@"2"]) {
+        if ([event.status isEqualToString:status] || [status isEqualToString:@"2"]) {
             [_eventArray addObject:event];
         }
     }
@@ -114,7 +114,7 @@
     int count = 0;
     
     for (MEvent* event in _totalEventArray) {
-        if ([event.status isEqualToString:status] || [event.status isEqualToString:@"2"]) {
+        if ([event.status isEqualToString:status] || [status isEqualToString:@"2"]) {
             count++;
         }
     }
