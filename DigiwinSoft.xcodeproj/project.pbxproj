@@ -75,12 +75,12 @@
 		DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014501B32B67F00EF7A6F /* MActivity.m */; };
 		DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014531B32B69F00EF7A6F /* MWorkItem.m */; };
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
-		DC6A52B61B3D5779001A373F /* dataStore.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DC6A52B51B3D5779001A373F /* dataStore.sqlite */; };
 		DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AA81B40E04A00C771BB /* MEvent.m */; };
 		DCF46AAC1B41103700C771BB /* MSituation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAB1B41103700C771BB /* MSituation.m */; };
 		DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAE1B4116F000C771BB /* MTreasure.m */; };
 		DCF46AB51B41265800C771BB /* MRaiderCarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AB41B41265800C771BB /* MRaiderCarouselView.m */; };
 		DCF46AB91B41279900C771BB /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AB81B41279900C771BB /* iCarousel.m */; };
+		DCF46ABE1B41504100C771BB /* dataStore.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DCF46ABD1B41504100C771BB /* dataStore.sqlite */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,7 +216,6 @@
 		DC1014531B32B69F00EF7A6F /* MWorkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWorkItem.m; path = structure/MWorkItem.m; sourceTree = "<group>"; };
 		DC6A52B11B3D2E6E001A373F /* MDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDirector.h; sourceTree = "<group>"; };
 		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
-		DC6A52B51B3D5779001A373F /* dataStore.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = dataStore.sqlite; sourceTree = "<group>"; };
 		DCF46AA71B40E04A00C771BB /* MEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEvent.h; path = structure/MEvent.h; sourceTree = "<group>"; };
 		DCF46AA81B40E04A00C771BB /* MEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEvent.m; path = structure/MEvent.m; sourceTree = "<group>"; };
 		DCF46AAA1B41103700C771BB /* MSituation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSituation.h; path = structure/MSituation.h; sourceTree = "<group>"; };
@@ -228,6 +227,7 @@
 		DCF46AB71B41279900C771BB /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iCarousel.h; path = iCarousel/iCarousel.h; sourceTree = "<group>"; };
 		DCF46AB81B41279900C771BB /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iCarousel.m; path = iCarousel/iCarousel.m; sourceTree = "<group>"; };
 		DCF46ABA1B41315200C771BB /* MConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MConfig.h; sourceTree = "<group>"; };
+		DCF46ABD1B41504100C771BB /* dataStore.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = dataStore.sqlite; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -512,7 +512,7 @@
 		DC0ADF5B1B316E340019236D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DC6A52B51B3D5779001A373F /* dataStore.sqlite */,
+				DCF46ABD1B41504100C771BB /* dataStore.sqlite */,
 				3AB4CE301B32A12300143374 /* images */,
 				DC0ADF5C1B316E340019236D /* Info.plist */,
 				DC0ADF5D1B316E340019236D /* main.m */,
@@ -669,8 +669,8 @@
 				D06C2D2F1B37EC27009D2082 /* button_search.png in Resources */,
 				D06C2D311B37EFB4009D2082 /* icon_down.png in Resources */,
 				DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */,
+				DCF46ABE1B41504100C771BB /* dataStore.sqlite in Resources */,
 				3A711B7C1B37B24E00E94211 /* icon_back.png in Resources */,
-				DC6A52B61B3D5779001A373F /* dataStore.sqlite in Resources */,
 				D06C2D341B37FAE9009D2082 /* check_box_off.png in Resources */,
 				3A03AA1C1B3BD5CA00923ABB /* downArrow@2x.png in Resources */,
 				3AB4CE331B32A12300143374 /* Button-Favorite-List-Normal.png in Resources */,
