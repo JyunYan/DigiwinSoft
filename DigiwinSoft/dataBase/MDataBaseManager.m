@@ -8,6 +8,7 @@
 
 #import "MDataBaseManager.h"
 #import "MUser.h"
+#import "MGuide.h"
 
 @implementation MDataBaseManager
 static MDataBaseManager* _director = nil;
@@ -91,6 +92,28 @@ static MDataBaseManager* _director = nil;
     }else{
         return NO;
     }
+}
+
+- (NSMutableArray*) getGuideArray
+{
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+    
+    NSString* sql = @"select g.ID, g.NAME, g.DESCRIPTION, g.REVIEW, t.NAME from M_GUIDE as g inner join M_TARGET as t on g.TARGET_ID = t.ID";
+    
+    FMResultSet* rs = [self.db executeQuery:sql];
+    while ([rs next]) {
+        MGuide* guide = [MGuide new];
+        guide.uuid = [rs stringForColumnIndex:0];
+        guide.name = [rs stringForColumnIndex:1];
+        guide.desc = [rs stringForColumnIndex:2];
+        guide.review = [rs stringForColumnIndex:3];
+        
+        guide.target = [rs stringForColumnIndex:4];
+
+        [array addObject:guide];
+    }
+    
+    return array;
 }
 
 @end

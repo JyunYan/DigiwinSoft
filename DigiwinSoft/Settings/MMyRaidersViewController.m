@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "MKeyActivitiesViewController.h"
 #import "MGuide.h"
+#import "MDataBaseManager.h"
 
 
 #define TAG_LABEL_COUNTERMEASURE 200
@@ -30,8 +31,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _guideArray = [[NSMutableArray alloc] init];
-    [self createTestData];
+    _guideArray = [[MDataBaseManager sharedInstance] getGuideArray];
 
     
     self.title = @"我的攻略";
@@ -47,28 +47,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - create test data
-
-- (void)createTestData {
-    for (int i = 0; i < 2; i++) {
-        MGuide* guide = [[MGuide alloc] init];
-        if (i == 0) {
-            guide.uuid = @"test12345";
-            guide.name = @"防止半成品製造批量浮增";
-        } else {
-            guide.uuid = @"test98765";
-            guide.name = @"推動銷售預測管理";
-        }
-        
-        MUser* user = [[MUser alloc] init];
-        user.name = @"陳又華";
-        
-        guide.manager = user;
-        
-        [_guideArray addObject:guide];
-    }
 }
 
 #pragma mark - create view
@@ -186,7 +164,8 @@
     NSString* countermeasureStr = [NSString stringWithFormat:@"對策：%@", guide.name];
     countermeasureLabel.text = countermeasureStr;
     
-    indexLabel.text = @"指標：";
+    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", guide.target];
+    indexLabel.text = indexStr;
     
     presentValueLabel.text = @"現值：";
     

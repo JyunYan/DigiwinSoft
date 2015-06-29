@@ -17,4 +17,6 @@
 +(MDataBaseManager*) sharedInstance;
 - (BOOL) loginWithAccount:(NSString*)account Password:(NSString*)pwd CompanyID:(NSString*)compid;
 
+- (NSMutableArray*) getGuideArray;
+
 @end
