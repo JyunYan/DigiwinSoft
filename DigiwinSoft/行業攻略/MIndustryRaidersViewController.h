@@ -14,5 +14,5 @@
     UIImageView *img;
     NSMutableArray *aryList;
 }
-
+@property (nonatomic, assign) BOOL isLogin;
 @end

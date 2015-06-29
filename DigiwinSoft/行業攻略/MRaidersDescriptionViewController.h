@@ -14,6 +14,7 @@
     UIWebView *webViewVideo;
     UIButton *btn;
     UILabel *labTitle;
+    NSMutableArray *aryList;
 }
 @property (nonatomic, weak) NSString *strTitle;
 @end

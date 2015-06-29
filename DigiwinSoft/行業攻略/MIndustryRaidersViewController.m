@@ -8,7 +8,7 @@
 
 #import "MIndustryRaidersViewController.h"
 #import "MIndustryRaiders2ViewController.h"
-
+#import "MLoginViewController.h"
 #import "AppDelegate.h"
 
 
@@ -24,6 +24,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self prepareTestData];
     [self addMainMenu];
+
+        MLoginViewController *MLoginVC=[[MLoginViewController alloc]init];
+        [self.navigationController presentViewController:MLoginVC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,6 +37,10 @@
 {
     [super viewWillAppear:YES];
     self.automaticallyAdjustsScrollViewInsets = NO;
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:YES];
+    
 }
 #pragma mark - create view
 
