@@ -80,6 +80,8 @@
 		DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AA81B40E04A00C771BB /* MEvent.m */; };
 		DCF46AAC1B41103700C771BB /* MSituation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAB1B41103700C771BB /* MSituation.m */; };
 		DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAE1B4116F000C771BB /* MTreasure.m */; };
+		DCF46AB51B41265800C771BB /* MRaiderCarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AB41B41265800C771BB /* MRaiderCarouselView.m */; };
+		DCF46AB91B41279900C771BB /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AB81B41279900C771BB /* iCarousel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,6 +225,11 @@
 		DCF46AAB1B41103700C771BB /* MSituation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSituation.m; path = structure/MSituation.m; sourceTree = "<group>"; };
 		DCF46AAD1B4116F000C771BB /* MTreasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTreasure.h; path = structure/MTreasure.h; sourceTree = "<group>"; };
 		DCF46AAE1B4116F000C771BB /* MTreasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTreasure.m; path = structure/MTreasure.m; sourceTree = "<group>"; };
+		DCF46AB31B41265800C771BB /* MRaiderCarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaiderCarouselView.h; path = CustomViews/MRaiderCarouselView.h; sourceTree = "<group>"; };
+		DCF46AB41B41265800C771BB /* MRaiderCarouselView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaiderCarouselView.m; path = CustomViews/MRaiderCarouselView.m; sourceTree = "<group>"; };
+		DCF46AB71B41279900C771BB /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iCarousel.h; path = iCarousel/iCarousel.h; sourceTree = "<group>"; };
+		DCF46AB81B41279900C771BB /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iCarousel.m; path = iCarousel/iCarousel.m; sourceTree = "<group>"; };
+		DCF46ABA1B41315200C771BB /* MConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MConfig.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +374,7 @@
 		3AB4CE1E1B32895C00143374 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				DCF46AB61B41278200C771BB /* iCarousel */,
 				3A03AA131B3BD5CA00923ABB /* DownPicker */,
 				3A03F9701B3A60DB000F345B /* HMSegmentedControl */,
 				3A711B811B3800C100E94211 /* SWTableViewCell */,
@@ -415,6 +423,7 @@
 				3AB4CE381B32C0C800143374 /* ASFileManager.m */,
 				DC6A52B11B3D2E6E001A373F /* MDirector.h */,
 				DC6A52B21B3D2E6E001A373F /* MDirector.m */,
+				DCF46ABA1B41315200C771BB /* MConfig.h */,
 			);
 			path = utilities;
 			sourceTree = "<group>";
@@ -488,6 +497,7 @@
 				3AB4CE041B3264B500143374 /* 行業攻略 */,
 				3AB4CE361B32C0AF00143374 /* utilities */,
 				DC1014481B3287D000EF7A6F /* structure */,
+				DCF46AB21B41258F00C771BB /* CustomViews */,
 				DC0ADF5F1B316E340019236D /* AppDelegate.h */,
 				DC0ADF601B316E340019236D /* AppDelegate.m */,
 				3AB4CE2D1B32997000143374 /* MTabBarViewController.h */,
@@ -556,6 +566,24 @@
 				DCF46AAE1B4116F000C771BB /* MTreasure.m */,
 			);
 			name = structure;
+			sourceTree = "<group>";
+		};
+		DCF46AB21B41258F00C771BB /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				DCF46AB31B41265800C771BB /* MRaiderCarouselView.h */,
+				DCF46AB41B41265800C771BB /* MRaiderCarouselView.m */,
+			);
+			name = CustomViews;
+			sourceTree = "<group>";
+		};
+		DCF46AB61B41278200C771BB /* iCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				DCF46AB71B41279900C771BB /* iCarousel.h */,
+				DCF46AB81B41279900C771BB /* iCarousel.m */,
+			);
+			name = iCarousel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -697,6 +725,7 @@
 				3AB4CE2A1B32895C00143374 /* MMDrawerController.m in Sources */,
 				DCF46AAC1B41103700C771BB /* MSituation.m in Sources */,
 				3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */,
+				DCF46AB91B41279900C771BB /* iCarousel.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
@@ -710,6 +739,7 @@
 				3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */,
 				D06C2D441B381850009D2082 /* FMDatabaseQueue.m in Sources */,
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
+				DCF46AB51B41265800C771BB /* MRaiderCarouselView.m in Sources */,
 				3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */,
 				D07B390F1B3A39A6007FCBC0 /* MLineChartView.m in Sources */,
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,
