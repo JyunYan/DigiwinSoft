@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 Jyun. All rights reserved.
 //
 
+/* 指派負責人*/
+
 #import "MDesignateResponsibleViewController.h"
 
 #define UIBarSystemButtonBackArrow          101
@@ -21,12 +23,25 @@
 
 @property (nonatomic, assign) BOOL checkBtn;
 
-@property (nonatomic, strong) NSMutableArray* array;
+@property (nonatomic, strong) NSMutableArray* array;    // 員工array
 
 @end
 
 @implementation MDesignateResponsibleViewController
 
+- (id)init
+{
+    self = [super init];
+    if(self){
+        _array = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -34,32 +49,25 @@
     
     UINavigationBar* navigationBar = self.navigationController.navigationBar;
     
-    UIView* backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, navigationBar.frame.size.width, 44)];
-    [backgroundView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
-    [backgroundView setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f]];
-    [backgroundView setAlpha:1.0f];
-    [navigationBar insertSubview:backgroundView atIndex:1];
+//    UIView* backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, navigationBar.frame.size.width, 44)];
+//    [backgroundView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
+//    [backgroundView setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f]];
+//    [backgroundView setAlpha:1.0f];
+//    [navigationBar insertSubview:backgroundView atIndex:1];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
    
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     self.title = @"指派負責人";
     
-    UIBarButtonItem* back  =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarSystemButtonBackArrow target:self action:@selector(goToBackPage:)];
+    UIBarButtonItem* back  =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarSystemButtonBackArrow target:self action:@selector(backToPage:)];
     self.navigationItem.leftBarButtonItem = back;
-    
-    _array = [[NSMutableArray alloc] init];
     
     [self loadData];
     
     [self createCountermeasureView];
     [self createSearchView];
     [self createTableView];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -214,8 +222,6 @@
         [cell addSubview:row_label];
     }
     
-    NSDictionary* dict = [_array objectAtIndex:indexPath.row];
-    
     return cell;
 }
 
@@ -236,9 +242,9 @@
 
 #pragma mark - other methods
 
-- (void)goToBackPage:(id) sender
+- (void)backToPage:(id) sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)loadData
@@ -256,7 +262,7 @@
 
 - (void)actionToPopover:(id)sender
 {
-    
+
 }
 
 /*

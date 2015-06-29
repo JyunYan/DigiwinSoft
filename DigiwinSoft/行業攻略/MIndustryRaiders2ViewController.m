@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 Jyun. All rights reserved.
 //
 
+/* 行業攻略 p03/05*/
+
 #import "MIndustryRaiders2ViewController.h"
 #import "MIndustryRaidersTableViewCell.h"
 #import "MRaidersDescriptionViewController.h"
@@ -244,6 +246,7 @@
 - (void)btnManager:(id)sender{
     MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]init];
     UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MDesignateResponsibleVC];
+    MIndustryRaidersNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
 }
 

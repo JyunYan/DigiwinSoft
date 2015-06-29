@@ -7,8 +7,10 @@
 //
 
 #import "MDataBaseManager.h"
+#import "MDirector.h"
 #import "MUser.h"
 #import "MGuide.h"
+#import "MEvent.h"
 
 @implementation MDataBaseManager
 static MDataBaseManager* _director = nil;
@@ -87,11 +89,52 @@ static MDataBaseManager* _director = nil;
         MUser* user = [MUser new];
         user.industryName = [rs stringForColumnIndex:0];
         user.companyName = [rs stringForColumnIndex:1];
+        user.uuid = [rs stringForColumn:@"ID"];
+        user.industryId = [rs stringForColumn:@"IND_ID"];
+        user.companyId = [rs stringForColumn:@"COMP_ID"];
+        user.name = [rs stringForColumnIndex:5];
+        user.phone = [rs stringForColumn:@"PHONE"];
+        user.email = [rs stringForColumn:@"EMAIL"];
+        user.arrive_date = [rs stringForColumn:@"ARRIVE_DATE"];
+        user.thumbnail = [rs stringForColumn:@"THUMBNAIL"];
+        
+        [MDirector sharedInstance].currentUser = user;
         
         return YES;
     }else{
         return NO;
     }
+}
+
+- (NSArray*)loadEventsWithEmpID:(NSString*)empid
+{
+    NSString* sql = @"select e.* from U_ACTIVITY as a inner join U_EVENT as e on a.ID = e.ACT_ID where a.EMP_ID = ?";
+    // select * from U_ACTIVITY as a
+    // inner join U_EVENT as e on a.ID = e.ACT_ID
+    // where a.EMP_ID = 'emp-001'
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, empid];
+    if([rs next]){
+        
+        MEvent* event = [MEvent new];
+        event.uuid = [rs stringForColumn:@"ID"];
+        event.evtId = [rs stringForColumn:@"EVT_ID"];
+        event.actId = [rs stringForColumn:@"ACT_ID"];
+        event.name = [rs stringForColumn:@"NAME"];
+        event.status = [rs stringForColumn:@"STATUS"];
+        event.start = [rs stringForColumn:@"START_DATE"];
+        
+        [array addObject:event];
+    }
+    
+    return array;
+}
+
+- (NSArray*)loadSituationWithEvent:(MEvent*)event
+{
+    return nil;
 }
 
 - (NSMutableArray*) getGuideArray
@@ -109,7 +152,7 @@ static MDataBaseManager* _director = nil;
         guide.review = [rs stringForColumnIndex:3];
         
         guide.target = [rs stringForColumnIndex:4];
-
+        
         [array addObject:guide];
     }
     

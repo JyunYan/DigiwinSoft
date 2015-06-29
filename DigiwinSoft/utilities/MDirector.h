@@ -11,7 +11,7 @@
 
 @interface MDirector : NSObject
 
-@property (nonatomic, strong) MUser* curUser;   // 目前的user
+@property (nonatomic, strong) MUser* currentUser;   // 目前的user
 
 +(MDirector*) sharedInstance;
 
