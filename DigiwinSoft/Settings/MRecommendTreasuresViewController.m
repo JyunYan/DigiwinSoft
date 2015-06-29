@@ -12,6 +12,8 @@
 
 @interface MRecommendTreasuresViewController ()
 
+@property (nonatomic, strong) MPMoviePlayerController *moviePlayerView;
+
 @end
 
 @implementation MRecommendTreasuresViewController
@@ -26,6 +28,7 @@
     [self addMainMenu];
     
     
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
     
     CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
@@ -36,9 +39,9 @@
     CGFloat posX = 0;
     CGFloat posY = 0;
     CGFloat width = screenWidth;
-    CGFloat height = width * 2 / 3;
+    CGFloat height = width * 3 / 4 + statusBarHeight;
     
-    UIView* videoView = [self createVideoView:CGRectMake(posX, posY, width, height)];
+    UIView* videoView = [self createMoviePlayerView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:videoView];
     
     
@@ -70,13 +73,21 @@
     self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
 
-- (UIView*)createVideoView:(CGRect) rect
+- (UIView*)createMoviePlayerView:(CGRect) rect
 {
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor blackColor];
     
-    CGFloat viewWidth = rect.size.width;
     
+    NSURL *movieURL = [NSURL URLWithString:@"http://techslides.com/demos/sample-videos/small.mp4"];
+    _moviePlayerView = [[MPMoviePlayerController alloc] initWithContentURL:movieURL];
+        
+    _moviePlayerView.scalingMode = MPMovieScalingModeAspectFit;
+    
+    [_moviePlayerView.view setFrame:CGRectMake(0, 30, rect.size.width, rect.size.height - 30)];
+    [view addSubview: _moviePlayerView.view];
+    
+    [_moviePlayerView prepareToPlay];
     
     return view;
 }

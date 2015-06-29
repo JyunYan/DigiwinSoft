@@ -24,4 +24,6 @@
 @property (nonatomic, strong) NSString* companyId;      // 企業代號
 @property (nonatomic, strong) NSString* companyName;    // 企業名稱
 
+@property (nonatomic, strong) NSString* arrive_date;    // 到職日
+
 @end

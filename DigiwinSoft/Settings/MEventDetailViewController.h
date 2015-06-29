@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MActivity.h"
 
 @interface MEventDetailViewController : UIViewController
+
+- (id)initWithActivity:(MActivity*) act SituationArray:(NSArray*) situationArray;
 
 @end
