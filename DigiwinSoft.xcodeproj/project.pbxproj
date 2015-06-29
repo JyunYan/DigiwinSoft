@@ -78,6 +78,8 @@
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC6A52B61B3D5779001A373F /* dataStore.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DC6A52B51B3D5779001A373F /* dataStore.sqlite */; };
 		DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AA81B40E04A00C771BB /* MEvent.m */; };
+		DCF46AAC1B41103700C771BB /* MSituation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAB1B41103700C771BB /* MSituation.m */; };
+		DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAE1B4116F000C771BB /* MTreasure.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,6 +219,10 @@
 		DC6A52B51B3D5779001A373F /* dataStore.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = dataStore.sqlite; sourceTree = "<group>"; };
 		DCF46AA71B40E04A00C771BB /* MEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEvent.h; path = structure/MEvent.h; sourceTree = "<group>"; };
 		DCF46AA81B40E04A00C771BB /* MEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEvent.m; path = structure/MEvent.m; sourceTree = "<group>"; };
+		DCF46AAA1B41103700C771BB /* MSituation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSituation.h; path = structure/MSituation.h; sourceTree = "<group>"; };
+		DCF46AAB1B41103700C771BB /* MSituation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSituation.m; path = structure/MSituation.m; sourceTree = "<group>"; };
+		DCF46AAD1B4116F000C771BB /* MTreasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTreasure.h; path = structure/MTreasure.h; sourceTree = "<group>"; };
+		DCF46AAE1B4116F000C771BB /* MTreasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTreasure.m; path = structure/MTreasure.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -544,6 +550,10 @@
 				DC1014531B32B69F00EF7A6F /* MWorkItem.m */,
 				DCF46AA71B40E04A00C771BB /* MEvent.h */,
 				DCF46AA81B40E04A00C771BB /* MEvent.m */,
+				DCF46AAA1B41103700C771BB /* MSituation.h */,
+				DCF46AAB1B41103700C771BB /* MSituation.m */,
+				DCF46AAD1B4116F000C771BB /* MTreasure.h */,
+				DCF46AAE1B4116F000C771BB /* MTreasure.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -685,6 +695,7 @@
 				D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */,
 				382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */,
 				3AB4CE2A1B32895C00143374 /* MMDrawerController.m in Sources */,
+				DCF46AAC1B41103700C771BB /* MSituation.m in Sources */,
 				3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
@@ -711,6 +722,7 @@
 				3A03F9661B3A4F26000F345B /* MMyPlanViewController.m in Sources */,
 				3829982F1B3982BE0045B3BD /* MIndustryRaiders2ViewController.m in Sources */,
 				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
+				DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */,
 				3AB4CE1A1B32848B00143374 /* MMyTaskViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

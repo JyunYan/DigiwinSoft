@@ -13,6 +13,7 @@
 #import "MEvent.h"
 
 @implementation MDataBaseManager
+
 static MDataBaseManager* _director = nil;
 
 +(MDataBaseManager*) sharedInstance
@@ -87,12 +88,12 @@ static MDataBaseManager* _director = nil;
     if([rs next]){
         
         MUser* user = [MUser new];
-        user.industryName = [rs stringForColumnIndex:0];
-        user.companyName = [rs stringForColumnIndex:1];
+        user.industryName = [rs stringForColumnIndex:0];    // industry name
+        user.companyName = [rs stringForColumnIndex:1];     // company name
         user.uuid = [rs stringForColumn:@"ID"];
         user.industryId = [rs stringForColumn:@"IND_ID"];
         user.companyId = [rs stringForColumn:@"COMP_ID"];
-        user.name = [rs stringForColumnIndex:5];
+        user.name = [rs stringForColumnIndex:5];            // user name
         user.phone = [rs stringForColumn:@"PHONE"];
         user.email = [rs stringForColumn:@"EMAIL"];
         user.arrive_date = [rs stringForColumn:@"ARRIVE_DATE"];
@@ -106,16 +107,19 @@ static MDataBaseManager* _director = nil;
     }
 }
 
-- (NSArray*)loadEventsWithEmpID:(NSString*)empid
+#pragma mark - 事件相關
+
+// p16
+- (NSArray*)loadEventsWithUser:(MUser*)user
 {
     NSString* sql = @"select e.* from U_ACTIVITY as a inner join U_EVENT as e on a.ID = e.ACT_ID where a.EMP_ID = ?";
-    // select * from U_ACTIVITY as a
+    // select e.* from U_ACTIVITY as a
     // inner join U_EVENT as e on a.ID = e.ACT_ID
     // where a.EMP_ID = 'emp-001'
     
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, empid];
+    FMResultSet* rs = [self.db executeQuery:sql, user.uuid];
     if([rs next]){
         
         MEvent* event = [MEvent new];
@@ -132,14 +136,63 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
-- (NSArray*)loadSituationWithEvent:(MEvent*)event
+// p18
+- (NSArray*)loadSituationsWithEvent:(MEvent*)event
 {
-    return nil;
+    NSString* sql = @"select s.*, r.NAME from M_EVENT as e inner join R_EVT_SITU as res on e.ID = res.EVT_ID inner join M_SITUATION as s on s.ID = res.SITU_ID inner join R_SITU_REA as rsr on s.ID = rsr.SITU_ID inner join M_REASON as r on r.ID = rsr.REA_ID where e.ID = ?";
+    // select * from M_EVENT as e
+    // inner join R_EVT_SITU as res on e.ID = res.EVT_ID
+    // inner join M_SITUATION as s on s.ID = res.SITU_ID
+    // inner join R_SITU_REA as rsr on s.ID = rsr.SITU_ID
+    // inner join M_REASON as r on r.ID = rsr.REA_ID
+    // where e.ID = 'evt_001'
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, event.uuid];
+    if([rs next]){
+        MSituation* situ = [MSituation new];
+        situ.uuid = [rs stringForColumn:@"ID"];
+        situ.name = [rs stringForColumnIndex:1];    // situ name
+        situ.reason = [rs stringForColumnIndex:2];  // reason name
+        
+        [array addObject:situ];
+    }
+    
+    return array;
 }
 
-- (NSMutableArray*) getGuideArray
+// p19
+- (NSArray*)loadTreasureWithActivity:(MActivity*)act
 {
-    NSMutableArray* array = [[NSMutableArray alloc] init];
+    NSString* sql = @"select t.* from M_WORK_ITEM as wi inner join R_SOR_TRE as rst on wi.ID = rst.SOR_ID inner join M_TREASURE as t on t.ID = rst.TRE_ID where wi.ACT_ID = ? group by t.ID";
+    // select t.* from M_WORK_ITEM as wi
+    // inner join R_SOR_TRE as rst on wi.ID = rst.SOR_ID
+    // inner join M_TREASURE as t on t.ID = rst.TRE_ID
+    // where wi.ACT_ID = 'act-001'
+    // group by t.ID
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, act.uuid];
+    if([rs next]){
+        
+        MTreasure* treasure = [MTreasure new];
+        treasure.uuid = [rs stringForColumn:@"ID"];
+        treasure.name = [rs stringForColumn:@"NAME"];
+        treasure.phone = [rs stringForColumn:@"PHONE"];
+        treasure.url = [rs stringForColumn:@"URL"];
+        treasure.desc = [rs stringForColumn:@"DESCRIPTION"];
+        
+        [array addObject:treasure];
+    }
+    
+    return array;
+}
+
+- (NSMutableArray*) loadGuides
+{
+    NSMutableArray* array = [NSMutableArray new];
     
     NSString* sql = @"select g.ID, g.NAME, g.DESCRIPTION, g.REVIEW, t.NAME from M_GUIDE as g inner join M_TARGET as t on g.TARGET_ID = t.ID";
     

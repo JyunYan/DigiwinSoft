@@ -31,7 +31,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _guideArray = [[MDataBaseManager sharedInstance] getGuideArray];
+    _guideArray = [[MDataBaseManager sharedInstance] loadGuides];
 
     
     self.title = @"我的攻略";

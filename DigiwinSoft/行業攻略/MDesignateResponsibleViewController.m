@@ -41,27 +41,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     
-    UINavigationBar* navigationBar = self.navigationController.navigationBar;
+    self.view.backgroundColor = [UIColor whiteColor];
     
-//    UIView* backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, navigationBar.frame.size.width, 44)];
-//    [backgroundView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
-//    [backgroundView setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f]];
-//    [backgroundView setAlpha:1.0f];
-//    [navigationBar insertSubview:backgroundView atIndex:1];
-    
-    [self.view setBackgroundColor:[UIColor whiteColor]];
-   
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     self.title = @"指派負責人";
     
     UIBarButtonItem* back  =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarSystemButtonBackArrow target:self action:@selector(backToPage:)];
     self.navigationItem.leftBarButtonItem = back;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     [self loadData];
     

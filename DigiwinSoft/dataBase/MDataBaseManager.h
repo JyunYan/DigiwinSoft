@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 
 #import "FMDatabase.h"
+#import "MUser.h"
+#import "MEvent.h"
+#import "MSituation.h"
+#import "MActivity.h"
+#import "MTreasure.h"
 
 @interface MDataBaseManager : NSObject
 
@@ -17,8 +22,10 @@
 +(MDataBaseManager*) sharedInstance;
 - (BOOL)loginWithAccount:(NSString*)account Password:(NSString*)pwd CompanyID:(NSString*)compid;
 
-- (NSArray*)loadEventsWithEmpID:(NSString*)empid;
+- (NSArray*)loadEventsWithUser:(MUser*)user;
+- (NSArray*)loadSituationsWithEvent:(MEvent*)event;
+- (NSArray*)loadTreasureWithActivity:(MActivity*)act;
 
-- (NSMutableArray*) getGuideArray;
+- (NSMutableArray*) loadGuides;
 
 @end
