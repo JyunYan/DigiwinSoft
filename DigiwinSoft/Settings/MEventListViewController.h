@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MUser.h"
+#import "MDataBaseManager.h"
 
 @interface MEventListViewController : UIViewController
 

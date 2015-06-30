@@ -31,9 +31,9 @@
 
 - (void) toggleTabBar;
 
-- (void) toggleMyRaiders;
+- (void) toggleMyRaidersWithUser:(MUser*) user;
 
-- (void) toggleMyPlan;
+- (void) toggleMyPlanWithUser:(MUser*) user;
 
 - (void) toggleEventListWithUser:(MUser*) user;
 

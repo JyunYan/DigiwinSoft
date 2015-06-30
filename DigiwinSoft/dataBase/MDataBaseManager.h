@@ -30,6 +30,8 @@
 - (NSArray*)loadSituationsWithEvent:(MEvent*)event;
 - (NSArray*)loadTreasureWithActivity:(MActivity*)act;
 
+- (NSArray*)loadActivitysWithEvent:(MEvent*)event;
+
 #pragma mark - 行業攻略 相關
 
 // get 現象

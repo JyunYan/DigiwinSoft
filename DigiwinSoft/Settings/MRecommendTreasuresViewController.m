@@ -14,9 +14,19 @@
 
 @property (nonatomic, strong) MPMoviePlayerController *moviePlayerView;
 
+@property (nonatomic, strong) MTreasure* treasure;
+
 @end
 
 @implementation MRecommendTreasuresViewController
+
+- (id)initWithTreasure:(MTreasure*) treasure {
+    self = [super init];
+    if (self) {
+        _treasure = treasure;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,8 +73,7 @@
 -(void) addMainMenu
 {
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = right_bar_item;
@@ -79,6 +88,7 @@
     view.backgroundColor = [UIColor blackColor];
     
     
+//    NSURL *movieURL = [NSURL URLWithString:_treasure.url];
     NSURL *movieURL = [NSURL URLWithString:@"http://techslides.com/demos/sample-videos/small.mp4"];
     _moviePlayerView = [[MPMoviePlayerController alloc] initWithContentURL:movieURL];
         
@@ -111,7 +121,7 @@
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.font = [UIFont systemFontOfSize:textSize];
     titleLabel.textColor = [UIColor blackColor];
-    titleLabel.text = @"標題";
+    titleLabel.text = _treasure.name;
     [view addSubview:titleLabel];
     
     
@@ -135,7 +145,7 @@
     detailLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [view addSubview:detailLabel];
 
-    detailLabel.text = @"詳細";
+    detailLabel.text = _treasure.desc;
     [detailLabel sizeToFit];
 
     
@@ -164,7 +174,7 @@
     UILabel* phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     phoneLabel.textAlignment = NSTextAlignmentLeft;
     phoneLabel.font = [UIFont systemFontOfSize:20.0f];
-    phoneLabel.text = @"電話";
+    phoneLabel.text = _treasure.phone;
     [view addSubview:phoneLabel];
 
 
