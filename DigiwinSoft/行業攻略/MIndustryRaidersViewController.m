@@ -8,11 +8,13 @@
 
 #import "MIndustryRaidersViewController.h"
 #import "MIndustryRaiders2ViewController.h"
+#import "MRaiderCarouselView.h"
 
 #import "AppDelegate.h"
 
-
 @interface MIndustryRaidersViewController ()
+
+@property (nonatomic, strong) MRaiderCarouselView* rcView;
 
 @end
 
@@ -84,23 +86,22 @@
     tbl.backgroundColor=[UIColor whiteColor];
     tbl.delegate=self;
     tbl.dataSource = self;
+    [self.view addSubview:tbl];
     
     
     //MerryGoRound
-    img=[[UIImageView alloc]initWithFrame:CGRectMake(0, 20+44,screenWidth, screenHeight-113)];
-    img.backgroundColor=[UIColor grayColor];
-    [self.view addSubview:img];
+    _rcView = [[MRaiderCarouselView alloc] initWithFrame:CGRectMake(0, 64, screenWidth, screenHeight - 113)];
+    _rcView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_rcView];
 
 }
 - (void)actionSegmented:(id)sender{
     switch ([sender selectedSegmentIndex]) {
         case 0:
-            [tbl removeFromSuperview];
-            [self.view addSubview:img];
+            [self.view bringSubviewToFront:_rcView];
             break;
         case 1:
-            [img removeFromSuperview];
-            [self.view addSubview:tbl];
+            [self.view bringSubviewToFront:tbl];
             break;
         default:
             NSLog(@"Error");

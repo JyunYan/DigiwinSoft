@@ -182,7 +182,6 @@ static MDataBaseManager* _director = nil;
         
         [array addObject:treasure];
     }
-    
     return array;
 }
 

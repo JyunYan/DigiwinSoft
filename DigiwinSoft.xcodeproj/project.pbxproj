@@ -81,6 +81,8 @@
 		DCF46AB51B41265800C771BB /* MRaiderCarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AB41B41265800C771BB /* MRaiderCarouselView.m */; };
 		DCF46AB91B41279900C771BB /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AB81B41279900C771BB /* iCarousel.m */; };
 		DCF46ABE1B41504100C771BB /* dataStore.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DCF46ABD1B41504100C771BB /* dataStore.sqlite */; };
+		DCF46AC11B418E6B00C771BB /* MPhenomenon.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AC01B418E6B00C771BB /* MPhenomenon.m */; };
+		DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AC91B422C0000C771BB /* MCarouselItemView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -228,6 +230,10 @@
 		DCF46AB81B41279900C771BB /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iCarousel.m; path = iCarousel/iCarousel.m; sourceTree = "<group>"; };
 		DCF46ABA1B41315200C771BB /* MConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MConfig.h; sourceTree = "<group>"; };
 		DCF46ABD1B41504100C771BB /* dataStore.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = dataStore.sqlite; sourceTree = SOURCE_ROOT; };
+		DCF46ABF1B418E6B00C771BB /* MPhenomenon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPhenomenon.h; path = structure/MPhenomenon.h; sourceTree = "<group>"; };
+		DCF46AC01B418E6B00C771BB /* MPhenomenon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPhenomenon.m; path = structure/MPhenomenon.m; sourceTree = "<group>"; };
+		DCF46AC81B422C0000C771BB /* MCarouselItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCarouselItemView.h; path = CustomViews/MCarouselItemView.h; sourceTree = "<group>"; };
+		DCF46AC91B422C0000C771BB /* MCarouselItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCarouselItemView.m; path = CustomViews/MCarouselItemView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -560,6 +566,8 @@
 				DCF46AAB1B41103700C771BB /* MSituation.m */,
 				DCF46AAD1B4116F000C771BB /* MTreasure.h */,
 				DCF46AAE1B4116F000C771BB /* MTreasure.m */,
+				DCF46ABF1B418E6B00C771BB /* MPhenomenon.h */,
+				DCF46AC01B418E6B00C771BB /* MPhenomenon.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -569,6 +577,8 @@
 			children = (
 				DCF46AB31B41265800C771BB /* MRaiderCarouselView.h */,
 				DCF46AB41B41265800C771BB /* MRaiderCarouselView.m */,
+				DCF46AC81B422C0000C771BB /* MCarouselItemView.h */,
+				DCF46AC91B422C0000C771BB /* MCarouselItemView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -713,6 +723,7 @@
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
 				382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */,
+				DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */,
 				382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */,
 				3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */,
@@ -731,6 +742,7 @@
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
 				DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */,
+				DCF46AC11B418E6B00C771BB /* MPhenomenon.m in Sources */,
 				382998301B3982BE0045B3BD /* MInventoryTurnoverViewController.m in Sources */,
 				3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */,
 				D06C2D441B381850009D2082 /* FMDatabaseQueue.m in Sources */,
