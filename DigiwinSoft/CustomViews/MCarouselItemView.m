@@ -18,7 +18,7 @@
     NSArray* array = [_content componentsSeparatedByString:@"，"];
     UIFont* font = [UIFont systemFontOfSize:_pointSize];
     UIColor* color = [UIColor colorWithWhite:1.f alpha:_alpha];
-    color = [UIColor colorWithRed:0. green:0. blue:0. alpha:_alpha];
+    //color = [UIColor colorWithRed:0. green:0. blue:0. alpha:_alpha];
     CGFloat x = (self.bounds.size.width - _pointSize * array.count) / 2.;
     
     for (NSString* str in array) {

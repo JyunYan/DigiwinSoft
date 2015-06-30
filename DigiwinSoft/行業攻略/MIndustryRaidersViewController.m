@@ -27,9 +27,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self prepareTestData];
     [self addMainMenu];
-
-        MLoginViewController *MLoginVC=[[MLoginViewController alloc]init];
-        [self.navigationController presentViewController:MLoginVC animated:YES completion:nil];
+    
+    MLoginViewController *MLoginVC=[[MLoginViewController alloc]init];
+    [self presentViewController:MLoginVC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,8 +63,7 @@
     
     //leftBarButtonItem
     UIButton* btnSearch = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [btnSearch setBackgroundImage:[UIImage imageNamed:@"button_search.png"] forState:UIControlStateNormal];
-    [btnSearch setBackgroundImage:[UIImage imageNamed:@"button_search.png"] forState:UIControlStateHighlighted];
+    [btnSearch setBackgroundImage:[UIImage imageNamed:@"icon_search.png"] forState:UIControlStateNormal];
     [btnSearch addTarget:self action:@selector(clickedBtnSearch:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* leftBar_item = [[UIBarButtonItem alloc] initWithCustomView:btnSearch];
     self.navigationItem.leftBarButtonItem = leftBar_item;
@@ -76,11 +75,11 @@
     
     //Segmented
     NSArray *itemArray = [NSArray arrayWithObjects:
-                          [UIImage imageNamed:@"Button-Favorite-List-Normal.png"],
-                          [UIImage imageNamed:@"Button-Favorite-List-Normal.png"],
+                          [UIImage imageNamed:@"icon_cloud_2.png"],
+                          [UIImage imageNamed:@"icon_list_2.png"],
                           nil];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
-    segmentedControl.frame = CGRectMake(0, 0, 150.0, 24.0);
+    segmentedControl.frame = CGRectMake(0, 0, 150.0, 30.);
     segmentedControl.tintColor=[UIColor colorWithRed:76.0/255.0 green:86.0/255.0 blue:97.0/255.0 alpha:1.0];
     segmentedControl.selectedSegmentIndex = 0;
     [segmentedControl addTarget:self

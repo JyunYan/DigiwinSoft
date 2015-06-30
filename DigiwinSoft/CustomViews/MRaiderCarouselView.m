@@ -22,17 +22,27 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    
+    [self addBackgrouondImage];
     [self addCarouselView];
+}
+
+- (void) addBackgrouondImage
+{
+    UIImageView* imageView = (UIImageView*)[self viewWithTag:101];
+    if(!imageView){
+        imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        imageView.image = [UIImage imageNamed:@"bg_industry_raider.jpg"];
+        [self addSubview:imageView];
+    }
 }
 
 - (void) addCarouselView
 {
     if(!_carousel){
-        _carousel = [[iCarousel alloc] initWithFrame:self.bounds];
+        _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 220, DEVICE_SCREEN_WIDTH, 260)];
         _carousel.dataSource = self;
         _carousel.delegate = self;
-        _carousel.type = iCarouselTypeRotary;
+        _carousel.type = iCarouselTypeInvertedCylinder;
         _carousel.bounceDistance = 10.;
         _carousel.backgroundColor = [UIColor clearColor];
         [self addSubview:_carousel];
@@ -50,12 +60,14 @@
 - (UIView*)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     if(!view){
-        view = [[MCarouselItemView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH * .5, 200)];
-        view.backgroundColor = [UIColor lightGrayColor];
+        view = [[MCarouselItemView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH / 3., 260)];
+        view.backgroundColor = [UIColor clearColor];
+        view.alpha = .3;
     }
     
     MCarouselItemView* ciview = (MCarouselItemView*)view;
-    ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
+    //ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
+    ciview.content = @"小批量接單沒好配套，呆滯急遽增加";
     
     if(index == carousel.currentItemIndex){
         ciview.pointSize = 20.;
@@ -74,7 +86,7 @@
 
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel
 {
-    return DEVICE_SCREEN_WIDTH * .5;
+    return DEVICE_SCREEN_WIDTH / 3.;
 }
 
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel

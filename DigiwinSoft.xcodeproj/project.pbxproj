@@ -114,6 +114,8 @@
 		DCF46B161B42AAF300C771BB /* tab_icon_3.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF46AF21B42AAF300C771BB /* tab_icon_3.png */; };
 		DCF46B171B42AAF300C771BB /* tab_icon_4.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF46AF31B42AAF300C771BB /* tab_icon_4.png */; };
 		DCF46B181B42AAF300C771BB /* tab_icon_5.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF46AF41B42AAF300C771BB /* tab_icon_5.png */; };
+		DCF46B1D1B42B4C000C771BB /* icon_cloud_2.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF46B1B1B42B4C000C771BB /* icon_cloud_2.png */; };
+		DCF46B1E1B42B4C000C771BB /* icon_list_2.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF46B1C1B42B4C000C771BB /* icon_list_2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -299,6 +301,8 @@
 		DCF46AF21B42AAF300C771BB /* tab_icon_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_icon_3.png; sourceTree = "<group>"; };
 		DCF46AF31B42AAF300C771BB /* tab_icon_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_icon_4.png; sourceTree = "<group>"; };
 		DCF46AF41B42AAF300C771BB /* tab_icon_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_icon_5.png; sourceTree = "<group>"; };
+		DCF46B1B1B42B4C000C771BB /* icon_cloud_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_cloud_2.png; sourceTree = "<group>"; };
+		DCF46B1C1B42B4C000C771BB /* icon_list_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_list_2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -474,6 +478,8 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				DCF46B1B1B42B4C000C771BB /* icon_cloud_2.png */,
+				DCF46B1C1B42B4C000C771BB /* icon_list_2.png */,
 				DCF46AD11B42AAF300C771BB /* bg_industry_raider.jpg */,
 				DCF46AD21B42AAF300C771BB /* bg_status.png */,
 				DCF46AD31B42AAF300C771BB /* button_search.png */,
@@ -790,6 +796,7 @@
 				DCF46B0E1B42AAF300C771BB /* icon_setting.png in Resources */,
 				3A03AA1B1B3BD5CA00923ABB /* downArrow.png in Resources */,
 				DCF46B181B42AAF300C771BB /* tab_icon_5.png in Resources */,
+				DCF46B1E1B42B4C000C771BB /* icon_list_2.png in Resources */,
 				DCF46B041B42AAF300C771BB /* icon_gray_dot.png in Resources */,
 				DCF46B071B42AAF300C771BB /* icon_manager.png in Resources */,
 				DCF46B151B42AAF300C771BB /* tab_icon_2.png in Resources */,
@@ -807,6 +814,7 @@
 				DCF46B091B42AAF300C771BB /* icon_phone.png in Resources */,
 				DCF46AF51B42AAF300C771BB /* bg_industry_raider.jpg in Resources */,
 				DCF46AF61B42AAF300C771BB /* bg_status.png in Resources */,
+				DCF46B1D1B42B4C000C771BB /* icon_cloud_2.png in Resources */,
 				DCF46AF71B42AAF300C771BB /* button_search.png in Resources */,
 				DCF46B131B42AAF300C771BB /* star_fill.png in Resources */,
 				DCF46B061B42AAF300C771BB /* icon_list.png in Resources */,
