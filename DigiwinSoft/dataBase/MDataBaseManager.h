@@ -16,6 +16,7 @@
 #import "MActivity.h"
 #import "MTreasure.h"
 #import "MPhenomenon.h"
+#import "MIssue.h"
 
 @interface MDataBaseManager : NSObject
 
@@ -28,6 +29,8 @@
 - (NSArray*)loadEventsWithUser:(MUser*)user;
 - (NSArray*)loadSituationsWithEvent:(MEvent*)event;
 - (NSArray*)loadTreasureWithActivity:(MActivity*)act;
+
+- (NSArray*)loadActivitysWithEvent:(MEvent*)event;
 
 #pragma mark - 行業攻略 相關
 

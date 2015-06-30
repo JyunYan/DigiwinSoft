@@ -11,8 +11,11 @@
 #import "MUser.h"
 #import "AppDelegate.h"
 #import "UIViewController+MMDrawerController.h"
+#import "MDirector.h"
 
 @interface MSettingViewController ()<UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView* tableView;
 
 @property (nonatomic, strong) MUser* user;
 
@@ -23,8 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
-    [self createTestData];
     
     self.view.backgroundColor = [UIColor grayColor];
 
@@ -41,11 +42,11 @@
     CGFloat width = screenWidth - 40;
     CGFloat height = screenHeight + statusBarHeight;
     
-    UIView* tableView = [self createTableView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:tableView];
+    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
+    [self.view addSubview:listView];
     
     
-    posX = tableView.frame.origin.x + tableView.frame.size.width;
+    posX = listView.frame.origin.x + listView.frame.size.width;
     posY = 0;
     width = 40;
     
@@ -53,29 +54,16 @@
     [self.view addSubview:leftView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    _user = [MDirector sharedInstance].currentUser;
+    [_tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - create test data
-
-- (void)createTestData {
-    _user = [[MUser alloc] init];
-    _user.uuid = @"emp-001";
-    _user.name = @"李羅";
-    _user.thumbnail = @"";
-    
-    _user.email = @"luoli@digiwin.biz";
-    _user.phone = @"04-23585745";
-    
-    _user.industryId = @"ind-001";
-    _user.industryName = @"industryName";
-    
-    _user.companyId = @"cmp-001";
-    _user.companyName = @"DC 集團";
-    
-    _user.arrive_date = @"2015-06-25";
 }
 
 #pragma mark - create view
@@ -90,15 +78,15 @@
     CGFloat height = 25;
     
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
+    [settingbutton setBackgroundColor:[UIColor colorWithRed:53.0f/255.0f green:167.0f/255.0f blue:191.0f/255.0f alpha:1.0f]];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:settingbutton];
     
     return view;
 }
 
-- (UIView*)createTableView:(CGRect) rect
+- (UIView*)createListView:(CGRect) rect
 {
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor lightGrayColor];
@@ -111,13 +99,13 @@
     CGFloat width = viewWidth;
     CGFloat height = viewHeight;
     
-    UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    tableView.backgroundColor = [UIColor whiteColor];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.backgroundColor = [UIColor blackColor];
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [view addSubview:tableView];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor blackColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [view addSubview:_tableView];
     
     return view;
 }
@@ -162,7 +150,8 @@
     
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 60, 60)];
     imageView.backgroundColor = [UIColor clearColor];
-    imageView.image = [self loadLocationImage:_user.thumbnail];
+//    imageView.image = [self loadLocationImage:_user.thumbnail];
+    imageView.image = [UIImage imageNamed:@"Button-Favorite-List-Normal.png"];
     [header addSubview:imageView];
     
     
@@ -289,10 +278,10 @@
     
     if (row == 0) {
         AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
-        [delegate toggleMyRaiders];
+        [delegate toggleMyRaidersWithUser:_user];
     } else if (row == 1) {
         AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
-        [delegate toggleMyPlan];
+        [delegate toggleMyPlanWithUser:_user];
     } else if (row == 2) {
         AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
         [delegate toggleEventListWithUser:_user];

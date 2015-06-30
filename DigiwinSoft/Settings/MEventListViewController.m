@@ -11,7 +11,6 @@
 #import "HMSegmentedControl.h"
 #import "ASFileManager.h"
 #import "MEventSelectViewController.h"
-#import "MDataBaseManager.h"
 
 
 #define TAG_LABEL_EVENT 200
@@ -89,8 +88,8 @@
     width = screenWidth;
     height = screenHeight - posY - navBarHeight;
     
-    UIView* tableView = [self createTableView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:tableView];
+    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
+    [self.view addSubview:listView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -127,8 +126,7 @@
 -(void) addMainMenu
 {
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = right_bar_item;
@@ -186,7 +184,7 @@
     return view;
 }
 
-- (UIView*)createTableView:(CGRect) rect
+- (UIView*)createListView:(CGRect) rect
 {
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor lightGrayColor];
@@ -345,6 +343,7 @@
         // 發生日
         UILabel* occurrenceDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, height/2)];
         occurrenceDateLabel.tag = TAG_LABEL_OCCURRENCE_DATE;
+        occurrenceDateLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
         occurrenceDateLabel.font = [UIFont systemFontOfSize:textSize];
         [leftView addSubview:occurrenceDateLabel];
         
@@ -355,6 +354,7 @@
         // 負責人
         UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, height/2, 60, 25)];
         personInChargeTitleLabel.text = @"負責人：";
+        personInChargeTitleLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
         personInChargeTitleLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:personInChargeTitleLabel];
         
@@ -370,8 +370,8 @@
 
         UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, height/2, 100, 25)];
         personInChargeLabel.tag = TAG_LABEL_PERSON_IN_CHARGE;
+        personInChargeLabel.textColor = [UIColor colorWithRed:68.0f/255.0f green:166.0f/255.0f blue:193.0f/255.0f alpha:1.0f];
         personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
-        personInChargeLabel.textColor = [UIColor blueColor];
         [cell addSubview:personInChargeLabel];
         
         
@@ -489,7 +489,7 @@
     NSInteger row = indexPath.row;
     MEvent* event = [_eventArray objectAtIndex:row];
 
-    MEventSelectViewController* vc = [[MEventSelectViewController alloc] initWithEvent:event];
+    MEventSelectViewController* vc = [[MEventSelectViewController alloc] initWithEvent:event User:_user];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

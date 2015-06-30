@@ -8,6 +8,7 @@
 
 #import "MRaiderCarouselView.h"
 #import "iCarousel.h"
+#import "MCarouselItemView.h"
 
 @interface MRaiderCarouselView ()<iCarouselDataSource, iCarouselDelegate>
 
@@ -21,26 +22,24 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    
-//    UIColor* color = [UIColor colorWithRed:1. green:1. blue:1. alpha:1.];
-//    UIFont* font = [UIFont systemFontOfSize:20.];
-//    
-//    NSString* str = @"王\n小\n萌";
-//    CGSize size = [str sizeWithAttributes:@{NSFontAttributeName:font}];
-    
-    //NSMutableAttributedString* str = [[NSMutableAttributedString alloc] initWithString:@"王\n小\n萌"];
-    //NSAttributedString* str2 = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:font, NSForegroundColorAttributeName:color}];
-    //[str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:30.] range:NSMakeRange(0, str.length)];
-    //[str addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, str.length)];
-    //[str2 drawInRect:self.bounds];
-    
+    [self addBackgrouondImage];
     [self addCarouselView];
+}
+
+- (void) addBackgrouondImage
+{
+    UIImageView* imageView = (UIImageView*)[self viewWithTag:101];
+    if(!imageView){
+        imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        imageView.image = [UIImage imageNamed:@"bg_industry_raider.jpg"];
+        [self addSubview:imageView];
+    }
 }
 
 - (void) addCarouselView
 {
     if(!_carousel){
-        _carousel = [[iCarousel alloc] initWithFrame:self.bounds];
+        _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 220, DEVICE_SCREEN_WIDTH, 260)];
         _carousel.dataSource = self;
         _carousel.delegate = self;
         _carousel.type = iCarouselTypeInvertedCylinder;
@@ -61,22 +60,25 @@
 - (UIView*)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     if(!view){
-        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH / 3., 200)];
-        view.backgroundColor = [UIColor lightGrayColor];
-        
-        UILabel* label1 = [[UILabel alloc] initWithFrame:CGRectMake(view.center.x - 30., 0, 30, view.frame.size.height)];
-        label1.tag = 101;
-        label1.backgroundColor = [UIColor clearColor];
-        label1.textColor = [UIColor blackColor];
-        [view addSubview:label1];
-        
-        UILabel* label2 = [[UILabel alloc] initWithFrame:CGRectMake(view.center.x, 0, 30, view.frame.size.height)];
-        label2.tag = 102;
-        label2.backgroundColor = [UIColor clearColor];
-        label2.textColor = [UIColor blackColor];
-        [view addSubview:label2];
+        view = [[MCarouselItemView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH / 3., 260)];
+        view.backgroundColor = [UIColor clearColor];
+        view.alpha = .3;
     }
-    return view;
+    
+    MCarouselItemView* ciview = (MCarouselItemView*)view;
+    //ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
+    ciview.content = @"小批量接單沒好配套，呆滯急遽增加";
+    
+    if(index == carousel.currentItemIndex){
+        ciview.pointSize = 20.;
+        ciview.alpha = 1.;
+    }else{
+        ciview.pointSize = 16.;
+        ciview.alpha = 0.5;
+    }
+    [ciview setNeedsDisplay];
+    
+    return ciview;
 }
 
 
@@ -85,6 +87,22 @@
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel
 {
     return DEVICE_SCREEN_WIDTH / 3.;
+}
+
+- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel
+{
+    NSInteger index = carousel.currentItemIndex;
+    
+    NSInteger leftIndex = index - 1;
+    if(leftIndex < 0)
+        leftIndex = 10 - 1;
+    NSInteger rightIndex = index + 1;
+    if(rightIndex == 10)
+        rightIndex = 0;
+    
+    [carousel reloadItemAtIndex:index animated:NO];
+    [carousel reloadItemAtIndex:leftIndex animated:NO];
+    [carousel reloadItemAtIndex:rightIndex animated:NO];
 }
 
 @end
