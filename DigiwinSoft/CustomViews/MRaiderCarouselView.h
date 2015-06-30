@@ -11,4 +11,6 @@
 
 @interface MRaiderCarouselView : UIView
 
+@property (nonatomic, strong) NSArray* phenArray;
+
 @end

@@ -8,9 +8,6 @@
 
 #import "MDataBaseManager.h"
 #import "MDirector.h"
-#import "MUser.h"
-#import "MGuide.h"
-#import "MEvent.h"
 
 @implementation MDataBaseManager
 
@@ -120,7 +117,7 @@ static MDataBaseManager* _director = nil;
     NSMutableArray* array = [NSMutableArray new];
     
     FMResultSet* rs = [self.db executeQuery:sql, user.uuid];
-    if([rs next]){
+    while([rs next]){
         
         MEvent* event = [MEvent new];
         event.uuid = [rs stringForColumn:@"ID"];
@@ -150,7 +147,7 @@ static MDataBaseManager* _director = nil;
     NSMutableArray* array = [NSMutableArray new];
     
     FMResultSet* rs = [self.db executeQuery:sql, event.uuid];
-    if([rs next]){
+    while([rs next]){
         MSituation* situ = [MSituation new];
         situ.uuid = [rs stringForColumn:@"ID"];
         situ.name = [rs stringForColumnIndex:1];    // situ name
@@ -175,7 +172,7 @@ static MDataBaseManager* _director = nil;
     NSMutableArray* array = [NSMutableArray new];
     
     FMResultSet* rs = [self.db executeQuery:sql, act.uuid];
-    if([rs next]){
+    while([rs next]){
         
         MTreasure* treasure = [MTreasure new];
         treasure.uuid = [rs stringForColumn:@"ID"];
@@ -186,7 +183,67 @@ static MDataBaseManager* _director = nil;
         
         [array addObject:treasure];
     }
+    return array;
+}
+
+#pragma mark - 行業攻略相關
+
+// p1, p2, p3
+- (NSArray*)loadPhenArray
+{
+    NSString* uuid = [MDirector sharedInstance].currentUser.industryId;
+    NSString* sql = @"select p.*, t.NAME from M_INDUSTRY as i inner join R_IND_PHEN as rip on i.ID = rip.IND_ID inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID inner join R_PHEN_TAR as rpt on p.ID =  rpt.PHEN_ID inner join M_TARGET as t on t.ID = rpt.TAR_ID where i.ID = ?";
+    // select p.*, t.NAME
+    // from M_INDUSTRY as i
+    // inner join R_IND_PHEN as rip on i.ID = rip.IND_ID
+    // inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID
+    // inner join R_PHEN_TAR as rpt on p.ID =  rpt.PHEN_ID
+    // inner join M_TARGET as t on t.ID = rpt.TAR_ID
+    // where i.ID = 'ind-001'
     
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, uuid];
+    while([rs next]){
+        
+        MPhenomenon* phen = [MPhenomenon new];
+        phen.uuid = [rs stringForColumn:@"ID"];
+        phen.subject = [rs stringForColumn:@"SUBJECT"];
+        phen.desc = [rs stringForColumn:@"DESCRIPTION"];
+        phen.target = [rs stringForColumn:@"NAME"];
+        
+        [array addObject:phen];
+    }
+    return array;
+}
+
+// p5
+- (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen
+{
+    NSString* sql = @"select g.*, t.NAME from R_PHEN_GUIDE as rpg inner join M_GUIDE as g on g.ID = rpg.GUIDE_ID inner join M_TARGET as t on t.ID = g.TAR_ID where rpg.PHEN_ID = ?";
+    // select g.*, t.NAME
+    // from R_PHEN_GUIDE as rpg
+    // inner join M_GUIDE as g on g.ID = rpg.GUIDE_ID
+    // inner join M_TARGET as t on t.ID = g.TAR_ID
+    // where rpg.PHEN_ID = 'phe-001'
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, phen.uuid];
+    while([rs next]){
+        MGuide* guide = [MGuide new];
+        
+        guide.uuid = [rs stringForColumn:@"ID"];
+        guide.name = [rs stringForColumnIndex:2];   // 對策name
+        guide.desc = [rs stringForColumn:@"DESCRIPTION"];
+        guide.review = [rs stringForColumn:@"REVIEW"];
+        
+        MTarget* target = guide.target;
+        target.uuid = [rs stringForColumn:@"TAR_ID"];
+        target.name = [rs stringForColumnIndex:6];
+        
+        [array addObject:guide];
+    }
     return array;
 }
 
