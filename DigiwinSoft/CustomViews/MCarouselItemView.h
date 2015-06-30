@@ -10,4 +10,8 @@
 
 @interface MCarouselItemView : UIView
 
+@property (nonatomic, strong) NSString* content;
+@property (nonatomic, assign) CGFloat pointSize;
+@property (nonatomic, assign) CGFloat alpha;
+
 @end

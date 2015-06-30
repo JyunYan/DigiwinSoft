@@ -137,7 +137,8 @@ static MDataBaseManager* _director = nil;
 - (NSArray*)loadSituationsWithEvent:(MEvent*)event
 {
     NSString* sql = @"select s.*, r.NAME from M_EVENT as e inner join R_EVT_SITU as res on e.ID = res.EVT_ID inner join M_SITUATION as s on s.ID = res.SITU_ID inner join R_SITU_REA as rsr on s.ID = rsr.SITU_ID inner join M_REASON as r on r.ID = rsr.REA_ID where e.ID = ?";
-    // select * from M_EVENT as e
+    // select s.*
+    // from M_EVENT as e
     // inner join R_EVT_SITU as res on e.ID = res.EVT_ID
     // inner join M_SITUATION as s on s.ID = res.SITU_ID
     // inner join R_SITU_REA as rsr on s.ID = rsr.SITU_ID
@@ -163,7 +164,8 @@ static MDataBaseManager* _director = nil;
 - (NSArray*)loadTreasureWithActivity:(MActivity*)act
 {
     NSString* sql = @"select t.* from M_WORK_ITEM as wi inner join R_SOR_TRE as rst on wi.ID = rst.SOR_ID inner join M_TREASURE as t on t.ID = rst.TRE_ID where wi.ACT_ID = ? group by t.ID";
-    // select t.* from M_WORK_ITEM as wi
+    // select t.*
+    // from M_WORK_ITEM as wi
     // inner join R_SOR_TRE as rst on wi.ID = rst.SOR_ID
     // inner join M_TREASURE as t on t.ID = rst.TRE_ID
     // where wi.ACT_ID = 'act-001'
@@ -192,13 +194,12 @@ static MDataBaseManager* _director = nil;
 - (NSArray*)loadPhenArray
 {
     NSString* uuid = [MDirector sharedInstance].currentUser.industryId;
-    NSString* sql = @"select p.*, t.NAME from M_INDUSTRY as i inner join R_IND_PHEN as rip on i.ID = rip.IND_ID inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID inner join R_PHEN_TAR as rpt on p.ID =  rpt.PHEN_ID inner join M_TARGET as t on t.ID = rpt.TAR_ID where i.ID = ?";
+    NSString* sql = @"select p.*, t.NAME from M_INDUSTRY as i inner join R_IND_PHEN as rip on i.ID = rip.IND_ID inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID inner join M_TARGET as t on t.ID = p.TAR_ID where i.ID = ?";
     // select p.*, t.NAME
     // from M_INDUSTRY as i
     // inner join R_IND_PHEN as rip on i.ID = rip.IND_ID
     // inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID
-    // inner join R_PHEN_TAR as rpt on p.ID =  rpt.PHEN_ID
-    // inner join M_TARGET as t on t.ID = rpt.TAR_ID
+    // inner join M_TARGET as t on t.ID = p.TAR_ID
     // where i.ID = 'ind-001'
     
     NSMutableArray* array = [NSMutableArray new];
@@ -217,11 +218,11 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
-// p5
+// p5, p25
 - (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen
 {
-    NSString* sql = @"select g.*, t.NAME from R_PHEN_GUIDE as rpg inner join M_GUIDE as g on g.ID = rpg.GUIDE_ID inner join M_TARGET as t on t.ID = g.TAR_ID where rpg.PHEN_ID = ?";
-    // select g.*, t.NAME
+    NSString* sql = @"select g.*, t.NAME, t.UNIT from R_PHEN_GUIDE as rpg inner join M_GUIDE as g on g.ID = rpg.GUIDE_ID inner join M_TARGET as t on t.ID = g.TAR_ID where rpg.PHEN_ID = ?";
+    // select g.*, t.NAME, t.UNIT
     // from R_PHEN_GUIDE as rpg
     // inner join M_GUIDE as g on g.ID = rpg.GUIDE_ID
     // inner join M_TARGET as t on t.ID = g.TAR_ID
@@ -240,11 +241,53 @@ static MDataBaseManager* _director = nil;
         
         MTarget* target = guide.target;
         target.uuid = [rs stringForColumn:@"TAR_ID"];
-        target.name = [rs stringForColumnIndex:6];
+        target.name = [rs stringForColumnIndex:6];  // 指標name
+        target.unit = [rs stringForColumn:@"UNIT"];
         
         [array addObject:guide];
     }
     return array;
 }
+
+// p25
+- (NSArray*)loadIssueArrayByGudie:(MGuide*)guide
+{
+    NSString* industryId = [MDirector sharedInstance].currentUser.industryId;
+    NSString* sql = @"select iss.*, tar.NAME, tar.UNIT, rit.* from M_ISSUE as iss inner join M_TARGET as tar on iss.TAR_ID = tar.ID inner join R_IND_TAR as rit on rit.TAR_ID = tar.ID inner join R_GUIDE_ISSUE as rgi on iss.ID = rgi.ISSUE_ID where rgi.GUIDE_ID = ? AND rit.IND_ID = ?";
+    // select iss.NAME, tar.NAME, tar.UNIT, rit.*
+    // from M_ISSUE as iss
+    // inner join M_TARGET as tar on iss.TAR_ID = tar.ID
+    // inner join R_IND_TAR as rit on rit.TAR_ID = tar.ID
+    // inner join R_GUIDE_ISSUE as rgi on iss.ID = rgi.ISSUE_ID
+    // where rgi.GUIDE_ID = 'gui-001' AND rit.IND_ID = 'ind-001'
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, guide.uuid, industryId];
+    while([rs next]){
+        
+        MIssue* issue = [MIssue new];
+        issue.uuid = [rs stringForColumn:@"ID"];
+        issue.name = [rs stringForColumnIndex:2];   // 議題name
+        issue.desc = [rs stringForColumn:@"DESCRIPTION"];
+        issue.reads = [rs stringForColumn:@"READS"];
+        
+        MTarget* target = issue.target;
+        target.uuid = [rs stringForColumnIndex:1];  //指標id
+        target.name = [rs stringForColumnIndex:5];   //指標name
+        target.unit = [rs stringForColumn:@"UNIT"];
+        
+        target.top = [rs stringForColumn:@"TOP"];
+        target.avg = [rs stringForColumn:@"AVG"];
+        target.bottom = [rs stringForColumn:@"BOTTOM"];
+        target.upMin = [rs stringForColumn:@"UP_MIN"];
+        target.upMax = [rs stringForColumn:@"UP_MAX"];
+        
+        [array addObject:issue];
+    }
+    return array;
+}
+
+
 
 @end

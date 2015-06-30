@@ -16,6 +16,7 @@
 #import "MActivity.h"
 #import "MTreasure.h"
 #import "MPhenomenon.h"
+#import "MIssue.h"
 
 @interface MDataBaseManager : NSObject
 

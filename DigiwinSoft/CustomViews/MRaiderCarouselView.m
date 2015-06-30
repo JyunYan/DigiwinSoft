@@ -8,6 +8,7 @@
 
 #import "MRaiderCarouselView.h"
 #import "iCarousel.h"
+#import "MCarouselItemView.h"
 
 @interface MRaiderCarouselView ()<iCarouselDataSource, iCarouselDelegate>
 
@@ -22,18 +23,6 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     
-//    UIColor* color = [UIColor colorWithRed:1. green:1. blue:1. alpha:1.];
-//    UIFont* font = [UIFont systemFontOfSize:20.];
-//    
-//    NSString* str = @"王\n小\n萌";
-//    CGSize size = [str sizeWithAttributes:@{NSFontAttributeName:font}];
-    
-    //NSMutableAttributedString* str = [[NSMutableAttributedString alloc] initWithString:@"王\n小\n萌"];
-    //NSAttributedString* str2 = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:font, NSForegroundColorAttributeName:color}];
-    //[str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:30.] range:NSMakeRange(0, str.length)];
-    //[str addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, str.length)];
-    //[str2 drawInRect:self.bounds];
-    
     [self addCarouselView];
 }
 
@@ -43,7 +32,7 @@
         _carousel = [[iCarousel alloc] initWithFrame:self.bounds];
         _carousel.dataSource = self;
         _carousel.delegate = self;
-        _carousel.type = iCarouselTypeInvertedCylinder;
+        _carousel.type = iCarouselTypeRotary;
         _carousel.bounceDistance = 10.;
         _carousel.backgroundColor = [UIColor clearColor];
         [self addSubview:_carousel];
@@ -61,22 +50,23 @@
 - (UIView*)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     if(!view){
-        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH / 3., 200)];
+        view = [[MCarouselItemView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH * .5, 200)];
         view.backgroundColor = [UIColor lightGrayColor];
-        
-        UILabel* label1 = [[UILabel alloc] initWithFrame:CGRectMake(view.center.x - 30., 0, 30, view.frame.size.height)];
-        label1.tag = 101;
-        label1.backgroundColor = [UIColor clearColor];
-        label1.textColor = [UIColor blackColor];
-        [view addSubview:label1];
-        
-        UILabel* label2 = [[UILabel alloc] initWithFrame:CGRectMake(view.center.x, 0, 30, view.frame.size.height)];
-        label2.tag = 102;
-        label2.backgroundColor = [UIColor clearColor];
-        label2.textColor = [UIColor blackColor];
-        [view addSubview:label2];
     }
-    return view;
+    
+    MCarouselItemView* ciview = (MCarouselItemView*)view;
+    ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
+    
+    if(index == carousel.currentItemIndex){
+        ciview.pointSize = 20.;
+        ciview.alpha = 1.;
+    }else{
+        ciview.pointSize = 16.;
+        ciview.alpha = 0.5;
+    }
+    [ciview setNeedsDisplay];
+    
+    return ciview;
 }
 
 
@@ -84,7 +74,23 @@
 
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel
 {
-    return DEVICE_SCREEN_WIDTH / 3.;
+    return DEVICE_SCREEN_WIDTH * .5;
+}
+
+- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel
+{
+    NSInteger index = carousel.currentItemIndex;
+    
+    NSInteger leftIndex = index - 1;
+    if(leftIndex < 0)
+        leftIndex = 10 - 1;
+    NSInteger rightIndex = index + 1;
+    if(rightIndex == 10)
+        rightIndex = 0;
+    
+    [carousel reloadItemAtIndex:index animated:NO];
+    [carousel reloadItemAtIndex:leftIndex animated:NO];
+    [carousel reloadItemAtIndex:rightIndex animated:NO];
 }
 
 @end
