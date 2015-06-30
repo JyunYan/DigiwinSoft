@@ -36,8 +36,8 @@
     [[UINavigationBar appearance] setTranslucent:NO];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"我的攻略";
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;    self.title = @"我的任務";
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    self.title = @"我的任務";
     
     UIBarButtonItem* searchBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(actionToSearch:)];
     self.navigationItem.leftBarButtonItem = searchBtn;
@@ -77,13 +77,23 @@
     NSArray* array = [[NSArray alloc] initWithObjects:@"待佈署任務", @"進度回報", @"已完成任務", nil];
     
     _segmented = [[UISegmentedControl alloc] initWithItems:array];
-    _segmented.frame = CGRectMake(5, 5, self.view.frame.size.width - 10, 40);
+    _segmented.frame = CGRectMake(0, 64, self.view.frame.size.width - 10, 40);
     _segmented.selectedSegmentIndex = 0;
     _segmented.layer.borderColor = [UIColor clearColor].CGColor;
     _segmented.layer.borderWidth = 0.0f;
+    _segmented.tintColor=[UIColor clearColor];
+    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grayColor]} forState:UIControlStateNormal];
+    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0]} forState:UIControlStateSelected];
     [_segmented addTarget:self action:@selector(actionToShowNextPage:) forControlEvents:UIControlEventValueChanged];
-    
     [self.view addSubview:_segmented];
+    
+    
+    //imgGray
+    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,39,self.view.frame.size.width, 1)];
+    imgGray.backgroundColor=[UIColor colorWithRed:194.0/255.0 green:194.0/255.0 blue:194.0/255.0 alpha:1.0];
+    [_segmented addSubview:imgGray];
+
+    
     
     //分隔線
     UILabel* row_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, 1)];
@@ -98,7 +108,7 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
-    [self.view addSubview:_tableView];
+//    [self.view addSubview:_tableView];
 }
 
 #pragma mark - TableView DataSource
