@@ -9,6 +9,7 @@
 #import "MEventDetailViewController.h"
 #import "AppDelegate.h"
 #import "MRecommendTreasuresViewController.h"
+#import "MDataBaseManager.h"
 
 
 #define TAG_LABEL_CELL 100
@@ -18,9 +19,21 @@
 
 @interface MEventDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic, strong) NSArray* treasureArray;
+@property (nonatomic, strong) NSArray* situationArray;
+
 @end
 
 @implementation MEventDetailViewController
+
+- (id)initWithActivity:(MActivity*) act SituationArray:(NSArray*) situationArray {
+    self = [super init];
+    if (self) {
+        _treasureArray = [[MDataBaseManager sharedInstance] loadTreasureWithActivity:act];
+        _situationArray = situationArray;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -166,9 +179,9 @@
 {
     // Return the number of rows in the section.
     if (section < 2)
-        return 2;
+        return _situationArray.count;
     if (section == 2)
-        return 1;
+        return _treasureArray.count;
     return 0;
 }
 
@@ -237,7 +250,9 @@
     UIButton* recommendButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_RECOMMEND];
     
     if (section == 0) {
-        label.text = @"原因";
+        MSituation* situation = [_situationArray objectAtIndex:row];
+        label.text = situation.reason;
+        
         imageViewAddTask.hidden = YES;
         recommendButton.hidden = YES;
     } else if (section == 1) {
@@ -245,7 +260,9 @@
         imageViewAddTask.hidden = NO;
         recommendButton.hidden = YES;
     } else if (section == 2) {
-        label.text = @"建議寶物";
+        MTreasure* treasure = [_treasureArray objectAtIndex:row];
+        
+        label.text = treasure.name;
         imageViewAddTask.hidden = YES;
         recommendButton.hidden = NO;
     }

@@ -33,37 +33,21 @@
     if (self) {
         
         UILabel *labRelation = [[UILabel alloc] init];
-        labRelation.backgroundColor=[UIColor clearColor];
-        labRelation.font = [UIFont systemFontOfSize:14];
-        labRelation.textColor=[UIColor blackColor];
-        [self.contentView addSubview:labRelation];
         self.labRelation = labRelation;
-        self.labRelation.frame=CGRectMake(10, 17, 115, 16);
+        [self.contentView addSubview:labRelation];
         
         UILabel *labMeasure = [[UILabel alloc] init];
-        labMeasure.textColor=[UIColor blackColor];
-        labMeasure.backgroundColor=[UIColor clearColor];
-        labMeasure.font = [UIFont systemFontOfSize:14];
-        [self.contentView addSubview:labMeasure];
         self.labMeasure = labMeasure;
-        self.labMeasure.frame=CGRectMake(130, 17, 90, 16);
-        
+        [self.contentView addSubview:labMeasure];
+
         UILabel *labMin = [[UILabel alloc] init];
-        labMin.textColor=[UIColor blackColor];
-        labMin.backgroundColor=[UIColor clearColor];
-        labMin.font = [UIFont systemFontOfSize:14];
-        [self.contentView addSubview:labMin];
         self.labMin = labMin;
-        self.labMin.frame=CGRectMake(235, 17, 30, 16);
+        [self.contentView addSubview:labMin];
+
         
         UILabel *labMax = [[UILabel alloc] init];
-        labMax.textColor=[UIColor blackColor];
-        labMax.backgroundColor=[UIColor clearColor];
-        labMax.font = [UIFont systemFontOfSize:14];
-        [self.contentView addSubview:labMax];
         self.labMax = labMax;
-        self.labMax.frame=CGRectMake(285, 17, 30, 16);
-
+        [self.contentView addSubview:labMax];
     }
     return self;
 }

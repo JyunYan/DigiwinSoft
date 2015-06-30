@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "DownPicker.h"
 #import "MEventDetailViewController.h"
+#import "MDataBaseManager.h"
 
 
 #define TAG_LABEL_PHENOMENON_STATUS 200
@@ -23,9 +24,22 @@
 @property (strong, nonatomic) DownPicker *downPicker1;
 @property (strong, nonatomic) DownPicker *downPicker2;
 
+@property (nonatomic, strong) MEvent* event;
+
+@property (nonatomic, strong) NSArray* situationArray;
+
 @end
 
 @implementation MEventSelectViewController
+
+- (id)initWithEvent:(MEvent*) event {
+    self = [super init];
+    if (self) {
+        _event = event;
+        _situationArray = [[MDataBaseManager sharedInstance] loadSituationsWithEvent:event];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -112,7 +126,7 @@
     CGFloat height = 30;
     // 事件
     UILabel* eventLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    eventLabel.text = @"事件";
+    eventLabel.text = _event.name;
     eventLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [view addSubview:eventLabel];
     
@@ -139,14 +153,15 @@
     [bottomView addSubview:leftView];
     // 事件碼
     UILabel* eventCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2, 30)];
-    eventCodeLabel.text = @"事件碼：";
+    eventCodeLabel.text = _event.uuid;
     eventCodeLabel.font = [UIFont systemFontOfSize:textSize];
     [leftView addSubview:eventCodeLabel];
     
     posY = eventCodeLabel.frame.origin.y + eventCodeLabel.frame.size.height;
     // 發生日
+    NSString* occurrenceDateStr = [NSString stringWithFormat:@"發生日：%@", _event.start];
     UILabel* occurrenceDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, 30)];
-    occurrenceDateLabel.text = @"發生日：";
+    occurrenceDateLabel.text = occurrenceDateStr;
     occurrenceDateLabel.font = [UIFont systemFontOfSize:textSize];
     [leftView addSubview:occurrenceDateLabel];
     
@@ -266,7 +281,20 @@
 
 -(void)actionNext:(id)sender
 {
-    MEventDetailViewController* vc = [[MEventDetailViewController alloc] init];
+    MActivity* act = [MActivity new];
+    
+    NSMutableArray* situationArray = [NSMutableArray new];
+    for (int index = 0; index < _situationArray.count; index++) {
+        UIButton* button = (UIButton*)[self.view viewWithTag:TAG_CHECKBOX + index];
+        BOOL isSelected = button.selected;
+
+        if (isSelected) {
+            MSituation* situation = [_situationArray objectAtIndex:index];
+            [situationArray addObject:situation];
+        }
+    }
+    
+    MEventDetailViewController* vc = [[MEventDetailViewController alloc] initWithActivity:act SituationArray:situationArray];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -373,7 +401,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 4;
+    return _situationArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -448,11 +476,16 @@
         [cell addSubview:possibleCausesLabel];
     }
     
+    MSituation* situation = [_situationArray objectAtIndex:row];
+    
     UILabel* phenomenonStatusLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PHENOMENON_STATUS];
     UILabel* possibleCausesLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_POSSIBLE_CAUSES];
 
-    phenomenonStatusLabel.text = @"現象狀況";
-    possibleCausesLabel.text = @"可能原因";
+    NSString* phenomenonStatusStr = [NSString stringWithFormat:@"現象狀況: %@", situation.name];
+    phenomenonStatusLabel.text = phenomenonStatusStr;
+    
+    NSString* possibleCausesStr = [NSString stringWithFormat:@"可能原因: %@", situation.reason];
+    possibleCausesLabel.text = possibleCausesStr;
     
     return cell;
 }

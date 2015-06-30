@@ -50,8 +50,17 @@
 #pragma mark - create view
 - (void)prepareTestData
 {
-    //aryList
-    aryList=[[NSMutableArray alloc]initWithObjects:@"MyData1MyData1",@"MyData2MyData2",@"MyData3MyData3",@"MyData4MyData4",@"MyData5MyData5",@"MyData6MyData6",@"MyData7MyData7", nil];
+    
+    NSDictionary *dis1=[[NSDictionary alloc]initWithObjectsAndKeys:@"防止半成品製造批量浮增",@"Name",
+                        [NSNumber numberWithInteger:3],@"iStar", nil];
+    NSDictionary *dis2=[[NSDictionary alloc]initWithObjectsAndKeys:@"推動滾動式預測",@"Name",
+                        [NSNumber numberWithInteger:3],@"iStar", nil];
+    NSDictionary *dis3=[[NSDictionary alloc]initWithObjectsAndKeys:@"提升製程生產良率",@"Name",
+                        [NSNumber numberWithInteger:3],@"iStar", nil];
+    NSDictionary *dis4=[[NSDictionary alloc]initWithObjectsAndKeys:@"減少填補產能預產呆滯",@"Name",
+                        [NSNumber numberWithInteger:5],@"iStar", nil];
+
+    aryList=[[NSMutableArray alloc]initWithObjects:dis1,dis2,dis3,dis4,nil];
 }
 -(void) addMainMenu
 {
@@ -60,7 +69,7 @@
      screenHeight = screenSize.height;
 
     //Label
-    UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(0, 20+44,screenWidth, 40)];
+    UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(0, 64,screenWidth, 40)];
     labTitle.text=_strTitle;
     labTitle.backgroundColor=[UIColor whiteColor];
     labTitle.textAlignment=NSTextAlignmentCenter;
@@ -68,7 +77,7 @@
     [self.view addSubview:labTitle];
     
     //imgGray
-    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0, 20+44+40,screenWidth, 10)];
+    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64+40,screenWidth, 10)];
     imgGray.backgroundColor=[UIColor colorWithRed:193.0/255.0 green:193.0/255.0 blue:193.0/255.0 alpha:1.0];
     [self.view addSubview:imgGray];
     
@@ -96,7 +105,7 @@
     
     //TableView
     tbl=[[UITableView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,screenWidth, screenHeight-(20+44+40+10+40+35+49))];
-    tbl.backgroundColor=[UIColor blackColor];
+    tbl.backgroundColor=[UIColor whiteColor];
     tbl.bounces=NO;
     tbl.delegate=self;
     tbl.dataSource = self;
@@ -278,16 +287,46 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MIndustryRaidersTableViewCell *cell=[MIndustryRaidersTableViewCell cellWithTableView:tableView];
-    cell.labName.text=aryList[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    //對策名稱
+    cell.labName.text=[aryList[indexPath.row]objectForKey:@"Name"];
+    cell.labName.font=[UIFont systemFontOfSize:12];
+    cell.labName.frame=CGRectMake(30, 16, 140, 18);
+    cell.labName.backgroundColor=[UIColor clearColor];
+    
+    //Check
+    [cell.btnCheck  setImage:[UIImage imageNamed:@"check_box_off.png"] forState:UIControlStateNormal];
+    cell.btnCheck.frame=CGRectMake(cell.labName.frame.origin.x-22, 13, 25, 25);
     [cell.btnCheck addTarget:self action:@selector(actionCheck:) forControlEvents:UIControlEventTouchUpInside];
-    cell.btnCheck.tag = indexPath.row;
+    
+    //指派負責人
+    cell.btnManager.backgroundColor=[UIColor lightGrayColor];
+    cell.btnManager.frame=CGRectMake(((screenWidth/4)*3)-43,25 , 16, 16);
     [cell.btnManager addTarget:self action:@selector(btnManager:) forControlEvents:UIControlEventTouchUpInside];
-    cell.btnManager.tag = indexPath.row;
+    
+    //攻略
+    cell.btnRaiders.backgroundColor=[UIColor lightGrayColor];
+    cell.btnRaiders.frame=CGRectMake(((screenWidth/4)*3)+34,25 , 16, 16);
     [cell.btnRaiders addTarget:self action:@selector(btnRaiders:) forControlEvents:UIControlEventTouchUpInside];
-    cell.btnRaiders.tag = indexPath.row;
+    
+    //星星數量
+    NSInteger iStarNum=[[aryList[indexPath.row]objectForKey:@"iStar"]integerValue];
+    for (int i=0; i<5; i++){
+        UIImageView *imgStar=[[UIImageView alloc]initWithFrame:CGRectMake(30+(17*i), 36,16,16)];
+        if(i<iStarNum){
+        imgStar.backgroundColor=[UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0];
+        }else
+        {
+        imgStar.backgroundColor=[UIColor grayColor];
+        }
+        [cell addSubview:imgStar];
+    }
+    
+    //取消勾選
     cell.isCheck=NO;
-    cell.tag=indexPath.row;
+    
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -299,26 +338,26 @@
     UIView *viewSection = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 100, 20)];
     viewSection.backgroundColor=[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1];
     
-    UILabel *labRelation = [[UILabel alloc] initWithFrame:CGRectMake(90,5,60,20)];
+    UILabel *labRelation = [[UILabel alloc] initWithFrame:CGRectMake((screenWidth/4)-30,5,60,20)];
     labRelation.text = @"對策名稱";
     labRelation.textColor =[UIColor grayColor];
-    labRelation.font = [UIFont systemFontOfSize:14.0f];
+    labRelation.font = [UIFont systemFontOfSize:12.0f];
     labRelation.backgroundColor=[UIColor clearColor];
     [viewSection addSubview:labRelation];
     
-    UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake(200,5, 85,20)];
+    UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake(((screenWidth/4)*3)-70,5, 70,20)];
     labMeasure.text = @"指派負責人";
     labMeasure.textColor =[UIColor grayColor];
     labMeasure.backgroundColor = [UIColor clearColor];
-    labMeasure.font = [UIFont systemFontOfSize:14.0f];
+    labMeasure.font = [UIFont systemFontOfSize:12.0f];
     [viewSection addSubview:labMeasure];
     
     
-    UILabel *labGrade = [[UILabel alloc] initWithFrame:CGRectMake(300,5, 75,20)];
+    UILabel *labGrade = [[UILabel alloc] initWithFrame:CGRectMake(((screenWidth/4)*3)+30,5, 30,20)];
     labGrade.text = @"攻略";
     labGrade.textColor =[UIColor grayColor];
     labGrade.backgroundColor = [UIColor clearColor];
-    labGrade.font = [UIFont systemFontOfSize:14.0f];
+    labGrade.font = [UIFont systemFontOfSize:12.0f];
     [viewSection addSubview:labGrade];
     
     return viewSection;

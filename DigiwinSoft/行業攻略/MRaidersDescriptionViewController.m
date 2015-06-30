@@ -14,7 +14,10 @@
 #import "MRaidersDescriptionTableViewCell.h"
 
 @interface MRaidersDescriptionViewController ()
-
+{
+    CGFloat screenWidth;
+    CGFloat screenHeight;
+}
 @end
 
 @implementation MRaidersDescriptionViewController
@@ -49,6 +52,21 @@
 #pragma mark - create view
 - (void)prepareTestData
 {
+    
+    NSDictionary *dis1=[[NSDictionary alloc]initWithObjectsAndKeys:
+                        @"最適化存貨週轉",@"Relation",
+                        @"存貨週轉天數",@"Measure",
+                        @"40",@"Min",
+                        @"50",@"Max", nil];
+    
+    NSDictionary *dis2=[[NSDictionary alloc]initWithObjectsAndKeys:
+                        @"資金積壓",@"Relation",
+                        @"資金積壓天數",@"Measure",
+                        @"10",@"Min",
+                        @"20",@"Max", nil];
+
+    
+    aryList=[[NSMutableArray alloc]initWithObjects:dis1,dis2,nil];
 }
 -(void)addMainMenu
 {
@@ -63,8 +81,8 @@
 
     //screenSize
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
-    CGFloat screenWidth = screenSize.width;
-    CGFloat screenHeight = screenSize.height;
+    screenWidth = screenSize.width;
+    screenHeight = screenSize.height;
     
     webViewVideo = [[UIWebView alloc] initWithFrame:CGRectMake(0.0, 20+44,screenWidth, 175.0)];
     webViewVideo.delegate=self;
@@ -125,10 +143,11 @@
 
     
     //tblView
-    tbl=[[UITableView alloc]initWithFrame:CGRectMake(20,textView.frame.origin.y+120,screenWidth-40, 160)];
+    tbl=[[UITableView alloc]initWithFrame:CGRectMake(10,textView.frame.origin.y+110,screenWidth-20, 120)];
     tbl.scrollEnabled = NO;
     tbl.delegate=self;
     tbl.dataSource = self;
+    tbl.separatorStyle=UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tbl];
 }
 #pragma mark - UIButton
@@ -184,11 +203,11 @@
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50.0f;
+    return 40.0f;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    return 60.0f;
+    return 40.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 2;
@@ -196,11 +215,34 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MRaidersDescriptionTableViewCell *cell=[MRaidersDescriptionTableViewCell cellWithTableView:tableView];
-    cell.labRelation.text=@"關聯關聯關聯關聯";
-    cell.labMeasure.text=@"衡量衡量衡量";
-    cell.labMax.text=@"999";
-    cell.labMin.text=@"000";
+    cell.labRelation.text=[aryList[indexPath.row]objectForKey:@"Relation"];
+    cell.labRelation.backgroundColor=[UIColor clearColor];
+    cell.labRelation.font = [UIFont systemFontOfSize:12];
+    cell.labRelation.textColor=[UIColor blackColor];
+    cell.labRelation.frame=CGRectMake((tbl.frame.size.width/4)-65, 14, 115, 16);
 
+
+    cell.labMeasure.text=[aryList[indexPath.row]objectForKey:@"Measure"];
+    cell.labMeasure.textColor=[UIColor blackColor];
+    cell.labMeasure.backgroundColor=[UIColor clearColor];
+    cell.labMeasure.font = [UIFont systemFontOfSize:12];
+    cell.labMeasure.frame=CGRectMake((tbl.frame.size.width/2)-42, 14, 90, 16);
+    
+
+    cell.labMax.text=[aryList[indexPath.row]objectForKey:@"Max"];
+    cell.labMax.textColor=[UIColor blackColor];
+    cell.labMax.backgroundColor=[UIColor clearColor];
+    cell.labMax.font = [UIFont systemFontOfSize:12];
+    cell.labMax.frame=CGRectMake(((tbl.frame.size.width/4)*3)+34, 14, 30, 16);
+
+    
+    cell.labMin.text=[aryList[indexPath.row]objectForKey:@"Min"];
+    cell.labMin.textColor=[UIColor blackColor];
+    cell.labMin.backgroundColor=[UIColor clearColor];
+    cell.labMin.font = [UIFont systemFontOfSize:12];
+    cell.labMin.frame=CGRectMake(((tbl.frame.size.width/4)*3)-16, 14, 30, 16);
+
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     
@@ -213,44 +255,44 @@
     UIView *viewSection = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 100, 20)];
     viewSection.backgroundColor=[UIColor whiteColor];
 
-    UILabel *labRelation = [[UILabel alloc] initWithFrame:CGRectMake(30,20,60,20)];
+    UILabel *labRelation = [[UILabel alloc] initWithFrame:CGRectMake((tbl.frame.size.width/4)-45,10,60,20)];
     labRelation.text = @"關聯議題";
     labRelation.textColor =[UIColor grayColor];
-    labRelation.font = [UIFont systemFontOfSize:14.0f];
+    labRelation.font = [UIFont systemFontOfSize:12.0f];
     labRelation.backgroundColor=[UIColor clearColor];
     [viewSection addSubview:labRelation];
     
-    UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake(140,20, 60,20)];
+    UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake((tbl.frame.size.width/2)-30,10, 60,20)];
     labMeasure.text = @"衡量指標";
     labMeasure.textColor =[UIColor grayColor];
     labMeasure.backgroundColor = [UIColor clearColor];
-    labMeasure.font = [UIFont systemFontOfSize:14.0f];
+    labMeasure.font = [UIFont systemFontOfSize:12.0f];
     [viewSection addSubview:labMeasure];
 
     
-    UILabel *labGrade = [[UILabel alloc] initWithFrame:CGRectMake(240,10, 75,20)];
+    UILabel *labGrade = [[UILabel alloc] initWithFrame:CGRectMake(((tbl.frame.size.width/4)*3)-10,0, 75,20)];
     labGrade.text = @"實績提升率";
     labGrade.textColor =[UIColor grayColor];
     labGrade.backgroundColor = [UIColor clearColor];
-    labGrade.font = [UIFont systemFontOfSize:14.0f];
+    labGrade.font = [UIFont systemFontOfSize:12.0f];
     [viewSection addSubview:labGrade];
 
-    UILabel *labMin = [[UILabel alloc] initWithFrame:CGRectMake(237,30, 30,20)];
+    UILabel *labMin = [[UILabel alloc] initWithFrame:CGRectMake(labGrade.frame.origin.x-5,20, 30,20)];
     labMin.text = @"Min.";
     labMin.textColor =[UIColor grayColor];
     labMin.backgroundColor = [UIColor clearColor];
-    labMin.font = [UIFont systemFontOfSize:14.0f];
+    labMin.font = [UIFont systemFontOfSize:12.0f];
     [viewSection addSubview:labMin];
     
-    UILabel *labMax = [[UILabel alloc] initWithFrame:CGRectMake(285,30, 32,20)];
+    UILabel *labMax = [[UILabel alloc] initWithFrame:CGRectMake(labGrade.frame.origin.x+(labGrade.frame.size.width/2)+8,20, 32,20)];
     labMax.text = @"Max.";
     labMax.textColor =[UIColor grayColor];
     labMax.backgroundColor = [UIColor clearColor];
-    labMax.font = [UIFont systemFontOfSize:14.0f];
+    labMax.font = [UIFont systemFontOfSize:12.0f];
     [viewSection addSubview:labMax];
 
     //imgGray
-    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,58,tbl.frame.size.width,2)];
+    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,40,tbl.frame.size.width,2)];
     imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
     [viewSection addSubview:imgGray];
     

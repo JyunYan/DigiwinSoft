@@ -14,7 +14,7 @@
 
 @interface MSettingViewController ()<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) MUser* userData;
+@property (nonatomic, strong) MUser* user;
 
 @end
 
@@ -61,19 +61,21 @@
 #pragma mark - create test data
 
 - (void)createTestData {
-    _userData = [[MUser alloc] init];
-    _userData.uuid = @"test12345";
-    _userData.name = @"李羅";
-    _userData.thumbnail = @"";
+    _user = [[MUser alloc] init];
+    _user.uuid = @"emp-001";
+    _user.name = @"李羅";
+    _user.thumbnail = @"";
     
-    _userData.email = @"luoli@digiwin.biz";
-    _userData.phone = @"123456789";
+    _user.email = @"luoli@digiwin.biz";
+    _user.phone = @"04-23585745";
     
-    _userData.industryId = @"industry123";
-    _userData.industryName = @"industryName";
+    _user.industryId = @"ind-001";
+    _user.industryName = @"industryName";
     
-    _userData.companyId = @"company123";
-    _userData.companyName = @"DC 集團";
+    _user.companyId = @"cmp-001";
+    _user.companyName = @"DC 集團";
+    
+    _user.arrive_date = @"2015-06-25";
 }
 
 #pragma mark - create view
@@ -148,7 +150,7 @@
     UIView* header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableWidth, 102)];
     header.backgroundColor = [UIColor blackColor];
     
-    if (_userData == nil)
+    if (_user == nil)
         return header;
     
     
@@ -160,7 +162,7 @@
     
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 60, 60)];
     imageView.backgroundColor = [UIColor clearColor];
-    imageView.image = [self loadLocationImage:_userData.thumbnail];
+    imageView.image = [self loadLocationImage:_user.thumbnail];
     [header addSubview:imageView];
     
     
@@ -170,7 +172,7 @@
     UILabel* username = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 200, 30)];
     username.backgroundColor = [UIColor clearColor];
     username.font = [UIFont systemFontOfSize:textSize];
-    username.text = _userData.name;
+    username.text = _user.name;
     username.textColor = [UIColor whiteColor];
     [header addSubview:username];
     
@@ -180,7 +182,7 @@
     UILabel* companyName = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 200, 20)];
     companyName.backgroundColor = [UIColor clearColor];
     companyName.font = [UIFont systemFontOfSize:textSize];
-    companyName.text = _userData.companyName;
+    companyName.text = _user.companyName;
     companyName.textColor = [UIColor lightGrayColor];
     [header addSubview:companyName];
     
@@ -190,7 +192,7 @@
     UILabel* email = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 200, 20)];
     email.backgroundColor = [UIColor clearColor];
     email.font = [UIFont systemFontOfSize:textSize];
-    email.text = _userData.email;
+    email.text = _user.email;
     email.textColor = [UIColor lightGrayColor];
     [header addSubview:email];
 
@@ -293,7 +295,7 @@
         [delegate toggleMyPlan];
     } else if (row == 2) {
         AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
-        [delegate toggleEventList];
+        [delegate toggleEventListWithUser:_user];
     } else if (row == 3) {
         
     } else if (row == 4) {

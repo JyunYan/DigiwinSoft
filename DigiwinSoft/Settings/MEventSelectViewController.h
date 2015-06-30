@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MEvent.h"
 
 @interface MEventSelectViewController : UIViewController
+
+- (id)initWithEvent:(MEvent*) event;
 
 @end

@@ -42,6 +42,19 @@
 #pragma mark - create view
 - (void)prepareTestData
 {
+    NSDictionary *dis1=[[NSDictionary alloc]initWithObjectsAndKeys:
+                        @"制定最小製造批量標準",@"Activity",
+                        @"指標:半成品週轉天數",@"SubActivity",
+                        @"瓶頸製程工時計算",@"WorkItem",
+                        @"指標:半成品週轉天數",@"SubWorkItem", nil];
+    
+    NSDictionary *dis2=[[NSDictionary alloc]initWithObjectsAndKeys:
+                        @"使用標準需求指導計畫",@"Activity",
+                        @"指標:半成品週轉天數",@"SubActivity",
+                        @"決定換線損失計數值",@"WorkItem",
+                        @"指標:半成品週轉天數",@"SubWorkItem", nil];
+
+    aryList=[[NSMutableArray alloc]initWithObjects:dis1,dis2,nil];
 }
 -(void)addMainMenu
 {
@@ -148,19 +161,19 @@
     MRaidersDiagramTableViewCell *cell=[MRaidersDiagramTableViewCell cellWithTableView:tableView];
     
     
-    cell.labActivity.text=@"制定最小製造批量標準";
+    cell.labActivity.text=[aryList[indexPath.row]objectForKey:@"Activity"];
     cell.labActivity.frame=CGRectMake(10,15,(tbl.frame.size.width/2)-15,20);
-    cell.labActivity.font=[UIFont systemFontOfSize:14];
+    cell.labActivity.font=[UIFont systemFontOfSize:12];
     
-    cell.labSubActivity.text=@"指標:半成品週轉天數";
+    cell.labSubActivity.text=[aryList[indexPath.row]objectForKey:@"SubActivity"];
     cell.labSubActivity.frame=CGRectMake(10,40,(tbl.frame.size.width/2)-15,20);
     cell.labSubActivity.font=[UIFont systemFontOfSize:12];
     
-    cell.labWorkItem.text=@"瓶頸製程工時計算";
+    cell.labWorkItem.text=[aryList[indexPath.row]objectForKey:@"WorkItem"];
     cell.labWorkItem.frame=CGRectMake((tbl.frame.size.width/2)+5,15,(tbl.frame.size.width/2)-15,20);
-    cell.labWorkItem.font=[UIFont systemFontOfSize:14];
+    cell.labWorkItem.font=[UIFont systemFontOfSize:12];
     
-    cell.labSubWorkItem.text=@"指標:半成品週轉天數";
+    cell.labSubWorkItem.text=[aryList[indexPath.row]objectForKey:@"SubWorkItem"];
     cell.labSubWorkItem.frame=CGRectMake((tbl.frame.size.width/2)+5,40,(tbl.frame.size.width/2)-15,20);
     cell.labSubWorkItem.font=[UIFont systemFontOfSize:12];
 
@@ -177,7 +190,7 @@
     UIView *viewSection = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 100, 20)];
     viewSection.backgroundColor=[UIColor whiteColor];
     
-    UILabel *labRelation = [[UILabel alloc] initWithFrame:CGRectMake(tbl.frame.size.width/5,5,60,20)];
+    UILabel *labRelation = [[UILabel alloc] initWithFrame:CGRectMake(30,5,60,20)];
     labRelation.text = @"關聯議題";
     labRelation.textColor =[UIColor grayColor];
     labRelation.font = [UIFont systemFontOfSize:14.0f];
@@ -185,7 +198,7 @@
     [viewSection addSubview:labRelation];
     
     UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake((tbl.frame.size.width/5)*3,5, 60,20)];
-    labMeasure.text = @"衡量指標";
+    labMeasure.text = @"工作項目";
     labMeasure.textColor =[UIColor grayColor];
     labMeasure.backgroundColor = [UIColor clearColor];
     labMeasure.font = [UIFont systemFontOfSize:14.0f];

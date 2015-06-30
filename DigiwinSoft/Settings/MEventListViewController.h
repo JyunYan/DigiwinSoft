@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MUser.h"
 
 @interface MEventListViewController : UIViewController
+
+- (id)initWithUser:(MUser*) user;
 
 @end

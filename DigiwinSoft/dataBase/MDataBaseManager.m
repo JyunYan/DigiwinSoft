@@ -8,8 +8,12 @@
 
 #import "MDataBaseManager.h"
 #import "MDirector.h"
+#import "MUser.h"
+#import "MGuide.h"
+#import "MEvent.h"
 
 @implementation MDataBaseManager
+
 static MDataBaseManager* _director = nil;
 
 +(MDataBaseManager*) sharedInstance
