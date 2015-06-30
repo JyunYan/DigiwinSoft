@@ -143,10 +143,17 @@
         label.tag = TAG_LABEL_TASK_NAME;
         [cell addSubview:label];
         
-        //分隔線
-        UILabel* row_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.frame.size.width, 1)];
-        [row_label setBackgroundColor:[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:0.5]];
-        [cell addSubview:row_label];
+        /* 補齊分隔線缺口 */
+        // IOS 7
+        if([cell respondsToSelector:@selector(setSeparatorInset:)])
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+        
+        // IOS 8
+        if([cell respondsToSelector:@selector(setLayoutMargins:)])
+            [cell setLayoutMargins:UIEdgeInsetsZero];
+        if([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]){
+            [cell setPreservesSuperviewLayoutMargins:NO];
+        }
     }
     
     NSString* taskName = [_taskDataArry objectAtIndex:indexPath.row];

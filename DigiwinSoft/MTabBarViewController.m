@@ -76,25 +76,6 @@
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    NSInteger selectedIndex = tabBarController.selectedIndex;
-    
-    if (selectedIndex == 0)
-    {
-        
-    }else if (selectedIndex == 1)
-    {
-        
-    }else if (selectedIndex == 2)
-    {
-        
-    }else if (selectedIndex == 3)
-    {
-        
-    }else if (selectedIndex == 4)
-    {
-        AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
-        [delegate toggleMyTask];
-    }
     
 }
 

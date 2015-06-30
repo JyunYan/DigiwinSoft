@@ -12,7 +12,8 @@
 @interface MPhenomenon : NSObject
 
 @property (nonatomic, strong) NSString* uuid;
-@property (nonatomic, strong) NSString* subject;
-@property (nonatomic, strong) NSString* desc;
+@property (nonatomic, strong) NSString* subject;    //標題
+@property (nonatomic, strong) NSString* desc;       //描述
+@property (nonatomic, strong) NSString* target;     //指標項目
 
 @end

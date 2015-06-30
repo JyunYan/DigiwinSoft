@@ -85,6 +85,7 @@
 		DCF46ABE1B41504100C771BB /* dataStore.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DCF46ABD1B41504100C771BB /* dataStore.sqlite */; };
 		DCF46AC11B418E6B00C771BB /* MPhenomenon.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AC01B418E6B00C771BB /* MPhenomenon.m */; };
 		DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AC91B422C0000C771BB /* MCarouselItemView.m */; };
+		DCF46ACD1B4236CB00C771BB /* MTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46ACC1B4236CB00C771BB /* MTarget.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -239,6 +240,8 @@
 		DCF46AC01B418E6B00C771BB /* MPhenomenon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPhenomenon.m; path = structure/MPhenomenon.m; sourceTree = "<group>"; };
 		DCF46AC81B422C0000C771BB /* MCarouselItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCarouselItemView.h; path = CustomViews/MCarouselItemView.h; sourceTree = "<group>"; };
 		DCF46AC91B422C0000C771BB /* MCarouselItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCarouselItemView.m; path = CustomViews/MCarouselItemView.m; sourceTree = "<group>"; };
+		DCF46ACB1B4236CB00C771BB /* MTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarget.h; path = structure/MTarget.h; sourceTree = "<group>"; };
+		DCF46ACC1B4236CB00C771BB /* MTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarget.m; path = structure/MTarget.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -577,6 +580,8 @@
 				DCF46AAE1B4116F000C771BB /* MTreasure.m */,
 				DCF46ABF1B418E6B00C771BB /* MPhenomenon.h */,
 				DCF46AC01B418E6B00C771BB /* MPhenomenon.m */,
+				DCF46ACB1B4236CB00C771BB /* MTarget.h */,
+				DCF46ACC1B4236CB00C771BB /* MTarget.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -762,6 +767,7 @@
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,
 				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
+				DCF46ACD1B4236CB00C771BB /* MTarget.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
 				3A03AA1F1B3BD5CA00923ABB /* UIDownPicker.m in Sources */,
 				3A03F9651B3A4F26000F345B /* MKeyActivitiesViewController.m in Sources */,
