@@ -8,10 +8,6 @@
 
 #import "MDataBaseManager.h"
 #import "MDirector.h"
-#import "MUser.h"
-#import "MGuide.h"
-#import "MEvent.h"
-#import "MPhenomenon.h"
 
 @implementation MDataBaseManager
 
@@ -189,6 +185,8 @@ static MDataBaseManager* _director = nil;
     }
     return array;
 }
+
+#pragma mark - 行業攻略相關
 
 // p1, p2, p3
 - (NSArray*)loadPhenArray
