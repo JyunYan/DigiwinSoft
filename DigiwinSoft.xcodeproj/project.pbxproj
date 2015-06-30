@@ -52,6 +52,10 @@
 		3AB4CE331B32A12300143374 /* Button-Favorite-List-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4CE311B32A12300143374 /* Button-Favorite-List-Normal.png */; };
 		3AB4CE341B32A12300143374 /* Button-Favorite-List-Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4CE321B32A12300143374 /* Button-Favorite-List-Pressed.png */; };
 		3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE381B32C0C800143374 /* ASFileManager.m */; };
+		3AFF75551B429A35006E5CDB /* checkbox_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF75531B429A35006E5CDB /* checkbox_empty.png */; };
+		3AFF75561B429A35006E5CDB /* checkbox_fill.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF75541B429A35006E5CDB /* checkbox_fill.png */; };
+		3AFF75591B429FA5006E5CDB /* icon_info.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF75571B429FA5006E5CDB /* icon_info.png */; };
+		3AFF755A1B429FA5006E5CDB /* icon_list.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF75581B429FA5006E5CDB /* icon_list.png */; };
 		D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */; };
 		D06C2D291B37AC88009D2082 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D06C2D281B37AC88009D2082 /* libsqlite3.dylib */; };
 		D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D2B1B37B58C009D2082 /* MDesignateResponsibleViewController.m */; };
@@ -180,6 +184,10 @@
 		3AB4CE321B32A12300143374 /* Button-Favorite-List-Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button-Favorite-List-Pressed.png"; sourceTree = "<group>"; };
 		3AB4CE371B32C0C800143374 /* ASFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFileManager.h; sourceTree = "<group>"; };
 		3AB4CE381B32C0C800143374 /* ASFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFileManager.m; sourceTree = "<group>"; };
+		3AFF75531B429A35006E5CDB /* checkbox_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_empty.png; sourceTree = "<group>"; };
+		3AFF75541B429A35006E5CDB /* checkbox_fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_fill.png; sourceTree = "<group>"; };
+		3AFF75571B429FA5006E5CDB /* icon_info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_info.png; sourceTree = "<group>"; };
+		3AFF75581B429FA5006E5CDB /* icon_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_list.png; sourceTree = "<group>"; };
 		D06C2D251B37A5CD009D2082 /* MDataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDataBaseManager.h; sourceTree = "<group>"; };
 		D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDataBaseManager.m; sourceTree = "<group>"; };
 		D06C2D281B37AC88009D2082 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -417,6 +425,10 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3AFF75571B429FA5006E5CDB /* icon_info.png */,
+				3AFF75581B429FA5006E5CDB /* icon_list.png */,
+				3AFF75531B429A35006E5CDB /* checkbox_empty.png */,
+				3AFF75541B429A35006E5CDB /* checkbox_fill.png */,
 				3AA9D8061B3D256E00B68690 /* icon_phone.png */,
 				3A40D8C31B391DE000F2079F /* icon_setting.png */,
 				3A711B7B1B37B24E00E94211 /* icon_back.png */,
@@ -686,11 +698,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AFF755A1B429FA5006E5CDB /* icon_list.png in Resources */,
 				DC0ADF671B316E340019236D /* Main.storyboard in Resources */,
 				D06C2D351B37FAE9009D2082 /* check_box_on.png in Resources */,
 				3A40D8C41B391DE000F2079F /* icon_setting.png in Resources */,
 				3A03AA1B1B3BD5CA00923ABB /* downArrow.png in Resources */,
+				3AFF75591B429FA5006E5CDB /* icon_info.png in Resources */,
 				D06C2D2F1B37EC27009D2082 /* button_search.png in Resources */,
+				3AFF75561B429A35006E5CDB /* checkbox_fill.png in Resources */,
+				3AFF75551B429A35006E5CDB /* checkbox_empty.png in Resources */,
 				D06C2D311B37EFB4009D2082 /* icon_down.png in Resources */,
 				DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */,
 				DCF46ABE1B41504100C771BB /* dataStore.sqlite in Resources */,

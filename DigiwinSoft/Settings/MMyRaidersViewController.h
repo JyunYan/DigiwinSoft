@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MDataBaseManager.h"
 
 @interface MMyRaidersViewController : UITableViewController
+
+- (id)initWithUser:(MUser*) user;
 
 @end

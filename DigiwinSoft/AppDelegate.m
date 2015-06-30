@@ -173,9 +173,9 @@
     [drawer closeDrawerAnimated:YES completion:nil];
 }
 
-- (void) toggleMyRaiders
+- (void) toggleMyRaidersWithUser:(MUser*) user
 {
-    MMyRaidersViewController* vc = [[MMyRaidersViewController alloc] init];
+    MMyRaidersViewController* vc = [[MMyRaidersViewController alloc] initWithUser:user];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
@@ -187,9 +187,9 @@
     [drawer closeDrawerAnimated:YES completion:nil];
 }
 
-- (void) toggleMyPlan
+- (void) toggleMyPlanWithUser:(MUser*) user
 {
-    MMyPlanViewController* vc = [[MMyPlanViewController alloc] init];
+    MMyPlanViewController* vc = [[MMyPlanViewController alloc] initWithUser:user];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {

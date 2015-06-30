@@ -10,7 +10,6 @@
 #import "AppDelegate.h"
 #import "DownPicker.h"
 #import "MEventDetailViewController.h"
-#import "MDataBaseManager.h"
 
 
 #define TAG_LABEL_PHENOMENON_STATUS 200
@@ -25,6 +24,7 @@
 @property (strong, nonatomic) DownPicker *downPicker2;
 
 @property (nonatomic, strong) MEvent* event;
+@property (nonatomic, strong) MUser* user;
 
 @property (nonatomic, strong) NSArray* situationArray;
 
@@ -32,10 +32,11 @@
 
 @implementation MEventSelectViewController
 
-- (id)initWithEvent:(MEvent*) event {
+- (id)initWithEvent:(MEvent*) event User:(MUser*) user {
     self = [super init];
     if (self) {
         _event = event;
+        _user = user;
         _situationArray = [[MDataBaseManager sharedInstance] loadSituationsWithEvent:event];
     }
     return self;
@@ -87,8 +88,8 @@
     width = screenWidth;
     height = screenHeight - posY - navBarHeight - bottomView.frame.size.height;
     
-    UIView* tableView = [self createTableView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:tableView];
+    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
+    [self.view addSubview:listView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -101,8 +102,7 @@
 -(void) addMainMenu
 {
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = right_bar_item;
@@ -152,8 +152,10 @@
     UIView* leftView = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, width/2, height)];
     [bottomView addSubview:leftView];
     // 事件碼
+    NSString* eventCodeStr = [NSString stringWithFormat:@"事件碼：%@", _event.uuid];
     UILabel* eventCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2, 30)];
-    eventCodeLabel.text = _event.uuid;
+    eventCodeLabel.text = eventCodeStr;
+    eventCodeLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
     eventCodeLabel.font = [UIFont systemFontOfSize:textSize];
     [leftView addSubview:eventCodeLabel];
     
@@ -162,6 +164,7 @@
     NSString* occurrenceDateStr = [NSString stringWithFormat:@"發生日：%@", _event.start];
     UILabel* occurrenceDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, 30)];
     occurrenceDateLabel.text = occurrenceDateStr;
+    occurrenceDateLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
     occurrenceDateLabel.font = [UIFont systemFontOfSize:textSize];
     [leftView addSubview:occurrenceDateLabel];
     
@@ -169,6 +172,7 @@
     // 發生期間
     UILabel* duringHappenLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, 30)];
     duringHappenLabel.text = @"發生期間：";
+    duringHappenLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
     duringHappenLabel.font = [UIFont systemFontOfSize:textSize];
     [leftView addSubview:duringHappenLabel];
     
@@ -184,14 +188,15 @@
 
     UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 30)];
     personInChargeTitleLabel.text = @"負 責 人 ：";
+    personInChargeTitleLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
     personInChargeTitleLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:personInChargeTitleLabel];
 
     posX = personInChargeTitleLabel.frame.origin.x + personInChargeTitleLabel.frame.size.width;
 
     UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 75, 30)];
-    personInChargeLabel.text = @"負責人";
-    personInChargeLabel.textColor = [UIColor blueColor];
+    personInChargeLabel.text = _user.name;
+    personInChargeLabel.textColor = [UIColor colorWithRed:68.0f/255.0f green:166.0f/255.0f blue:193.0f/255.0f alpha:1.0f];
     personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:personInChargeLabel];
     
@@ -201,6 +206,7 @@
 
     UILabel* reportingHierarchyTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 30)];
     reportingHierarchyTitleLabel.text = @"上報層級：";
+    reportingHierarchyTitleLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
     reportingHierarchyTitleLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:reportingHierarchyTitleLabel];
 
@@ -208,7 +214,7 @@
 
     UILabel* reportingHierarchyLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 75, 30)];
     reportingHierarchyLabel.text = @"上報層級";
-    reportingHierarchyLabel.textColor = [UIColor blueColor];
+    reportingHierarchyLabel.textColor = [UIColor colorWithRed:68.0f/255.0f green:166.0f/255.0f blue:193.0f/255.0f alpha:1.0f];
     reportingHierarchyLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:reportingHierarchyLabel];
     
@@ -228,7 +234,7 @@
     CGFloat height = viewHeight - 1;
 
     UIButton* nextButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    nextButton.backgroundColor = [UIColor magentaColor];
+    nextButton.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:137.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
     [nextButton setTitle:@"下一步" forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(actionNext:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:nextButton];
@@ -244,7 +250,7 @@
     return view;
 }
 
-- (UIView*)createTableView:(CGRect) rect
+- (UIView*)createListView:(CGRect) rect
 {
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor lightGrayColor];
@@ -281,7 +287,7 @@
 
 -(void)actionNext:(id)sender
 {
-    MActivity* act = [MActivity new];
+    NSArray* actArray = [[MDataBaseManager sharedInstance] loadActivitysWithEvent:_event];
     
     NSMutableArray* situationArray = [NSMutableArray new];
     for (int index = 0; index < _situationArray.count; index++) {
@@ -294,7 +300,7 @@
         }
     }
     
-    MEventDetailViewController* vc = [[MEventDetailViewController alloc] initWithActivity:act SituationArray:situationArray];
+    MEventDetailViewController* vc = [[MEventDetailViewController alloc] initWithActArray:actArray SituationArray:situationArray];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -430,8 +436,8 @@
         CGFloat height = 25;
         
         UIButton* checkboxBtn = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        [checkboxBtn setBackgroundImage:[UIImage imageNamed:@"check_box_off.png"] forState:UIControlStateNormal];
-        [checkboxBtn setBackgroundImage:[UIImage imageNamed:@"check_box_on.png"] forState:UIControlStateSelected];
+        [checkboxBtn setBackgroundImage:[UIImage imageNamed:@"checkbox_empty.png"] forState:UIControlStateNormal];
+        [checkboxBtn setBackgroundImage:[UIImage imageNamed:@"checkbox_fill.png"] forState:UIControlStateSelected];
 //        [checkboxBtn addTarget:self action:@selector(actionCheckbox:) forControlEvents:UIControlEventTouchUpInside];
         checkboxBtn.tag = TAG_CHECKBOX + row;
         checkboxBtn.userInteractionEnabled = NO;
@@ -481,11 +487,8 @@
     UILabel* phenomenonStatusLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PHENOMENON_STATUS];
     UILabel* possibleCausesLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_POSSIBLE_CAUSES];
 
-    NSString* phenomenonStatusStr = [NSString stringWithFormat:@"現象狀況: %@", situation.name];
-    phenomenonStatusLabel.text = phenomenonStatusStr;
-    
-    NSString* possibleCausesStr = [NSString stringWithFormat:@"可能原因: %@", situation.reason];
-    possibleCausesLabel.text = possibleCausesStr;
+    phenomenonStatusLabel.text = situation.name;    
+    possibleCausesLabel.text = situation.reason;
     
     return cell;
 }

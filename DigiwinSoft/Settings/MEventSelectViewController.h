@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MEvent.h"
+#import "MDataBaseManager.h"
 
 @interface MEventSelectViewController : UIViewController
 
-- (id)initWithEvent:(MEvent*) event;
+- (id)initWithEvent:(MEvent*) event User:(MUser*) user;
 
 @end

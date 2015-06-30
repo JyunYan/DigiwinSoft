@@ -9,7 +9,6 @@
 #import "MMyRaidersViewController.h"
 #import "AppDelegate.h"
 #import "MKeyActivitiesViewController.h"
-#import "MGuide.h"
 
 
 #define TAG_LABEL_COUNTERMEASURE 200
@@ -26,14 +25,19 @@
 
 @implementation MMyRaidersViewController
 
+- (id)initWithUser:(MUser*) user {
+    self = [super init];
+    if (self) {
+        _guideArray = [[NSMutableArray alloc] init];
+        [self createTestData];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    _guideArray = [[NSMutableArray alloc] init];
-    [self createTestData];
-
-    
+        
     self.title = @"我的攻略";
     self.view.backgroundColor = [UIColor whiteColor];
 
@@ -76,8 +80,7 @@
 -(void) addMainMenu
 {
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = right_bar_item;

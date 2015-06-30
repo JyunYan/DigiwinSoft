@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "MTreasure.h"
 
 @interface MRecommendTreasuresViewController : UIViewController
+
+- (id)initWithTreasure:(MTreasure*) treasure;
 
 @end

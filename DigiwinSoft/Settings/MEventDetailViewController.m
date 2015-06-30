@@ -9,27 +9,35 @@
 #import "MEventDetailViewController.h"
 #import "AppDelegate.h"
 #import "MRecommendTreasuresViewController.h"
-#import "MDataBaseManager.h"
 
 
 #define TAG_LABEL_CELL 100
 #define TAG_IMAGEVIEW_ADD_TASK 200
-#define TAG_BUTTON_RECOMMEND 300
+
+#define TAG_BUTTON_RECOMMEND 1000
 
 
 @interface MEventDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSArray* treasureArray;
+@property (nonatomic, strong) NSMutableArray* treasureArray;
+
 @property (nonatomic, strong) NSArray* situationArray;
+@property (nonatomic, strong) NSArray* actArray;
 
 @end
 
 @implementation MEventDetailViewController
 
-- (id)initWithActivity:(MActivity*) act SituationArray:(NSArray*) situationArray {
+- (id)initWithActArray:(NSArray*) actArray SituationArray:(NSArray*) situationArray {
     self = [super init];
     if (self) {
-        _treasureArray = [[MDataBaseManager sharedInstance] loadTreasureWithActivity:act];
+        _treasureArray = [NSMutableArray new];
+        for (MActivity* act in actArray) {
+            NSArray* array = [[MDataBaseManager sharedInstance] loadTreasureWithActivity:act];
+            [_treasureArray addObjectsFromArray:array];
+        }
+        
+        _actArray = actArray;
         _situationArray = situationArray;
     }
     return self;
@@ -57,8 +65,8 @@
     CGFloat width = screenWidth;
     CGFloat height = screenHeight - navBarHeight;
     
-    UIView* tableView = [self createTableView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:tableView];
+    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
+    [self.view addSubview:listView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,9 +78,8 @@
 
 -(void) addMainMenu
 {
-    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 66, 66)];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = right_bar_item;
@@ -81,7 +88,7 @@
     self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
 
-- (UIView*)createTableView:(CGRect) rect
+- (UIView*)createListView:(CGRect) rect
 {
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor lightGrayColor];
@@ -119,7 +126,13 @@
 
 -(void)actionGoRecommend:(id)sender
 {
-    MRecommendTreasuresViewController* vc = [[MRecommendTreasuresViewController alloc] init];
+    UIButton* button = (UIButton*)sender;
+    NSInteger tag = button.tag;
+    NSInteger index = tag - TAG_BUTTON_RECOMMEND;
+    
+    MTreasure* treasure = [_treasureArray objectAtIndex:index];
+
+    MRecommendTreasuresViewController* vc = [[MRecommendTreasuresViewController alloc] initWithTreasure:treasure];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -178,8 +191,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if (section < 2)
+    if (section == 0)
         return _situationArray.count;
+    if (section == 1)
+        return _actArray.count;
     if (section == 2)
         return _treasureArray.count;
     return 0;
@@ -192,6 +207,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
+    
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
@@ -229,25 +247,22 @@
         
         UIImageView* imageViewAddTask = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 20, 20)];
         imageViewAddTask.tag = TAG_IMAGEVIEW_ADD_TASK;
-        imageViewAddTask.image = [UIImage imageNamed:@"Button-Favorite-List-Normal.png"];
+        imageViewAddTask.image = [UIImage imageNamed:@"icon_info.png"];
         [view addSubview:imageViewAddTask];
         
         
         UIButton* recommendButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, 20, 20)];
-        recommendButton.tag = TAG_BUTTON_RECOMMEND;
+        recommendButton.tag = TAG_BUTTON_RECOMMEND + row;
         [recommendButton setImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
         [recommendButton addTarget:self action:@selector(actionGoRecommend:) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:recommendButton];
     }
     
-    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
-    
     UILabel* label = (UILabel*)[cell viewWithTag:TAG_LABEL_CELL];
     
     UIImageView* imageViewAddTask = (UIImageView*)[cell viewWithTag:TAG_IMAGEVIEW_ADD_TASK];
     
-    UIButton* recommendButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_RECOMMEND];
+    UIButton* recommendButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_RECOMMEND + row];
     
     if (section == 0) {
         MSituation* situation = [_situationArray objectAtIndex:row];
@@ -256,13 +271,15 @@
         imageViewAddTask.hidden = YES;
         recommendButton.hidden = YES;
     } else if (section == 1) {
-        label.text = @"建議加入任務";
+        MActivity* act = [_actArray objectAtIndex:row];
+        label.text = act.name;
+        
         imageViewAddTask.hidden = NO;
         recommendButton.hidden = YES;
     } else if (section == 2) {
         MTreasure* treasure = [_treasureArray objectAtIndex:row];
-        
         label.text = treasure.name;
+        
         imageViewAddTask.hidden = YES;
         recommendButton.hidden = NO;
     }

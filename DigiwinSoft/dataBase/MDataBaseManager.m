@@ -142,11 +142,11 @@ static MDataBaseManager* _director = nil;
     // inner join M_SITUATION as s on s.ID = res.SITU_ID
     // inner join R_SITU_REA as rsr on s.ID = rsr.SITU_ID
     // inner join M_REASON as r on r.ID = rsr.REA_ID
-    // where e.ID = 'evt_001'
+    // where e.ID = 'evt-001'
     
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, event.uuid];
+    FMResultSet* rs = [self.db executeQuery:sql, event.evtId];
     while([rs next]){
         MSituation* situ = [MSituation new];
         situ.uuid = [rs stringForColumn:@"ID"];
@@ -154,6 +154,32 @@ static MDataBaseManager* _director = nil;
         situ.reason = [rs stringForColumnIndex:2];  // reason name
         
         [array addObject:situ];
+    }
+    
+    return array;
+}
+
+- (NSArray*)loadActivitysWithEvent:(MEvent*)event
+{
+    NSString* sql = @"select a.* from U_ACTIVITY as a where a.ID = ?";
+    // select e.* from U_ACTIVITY as a
+    // where a.ID = 'a-001'
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, event.actId];
+    while([rs next]){
+        MActivity* act = [MActivity new];
+        act.uuid = [rs stringForColumn:@"ID"];
+        act.name = [rs stringForColumn:@"NAME"];
+        act.comp_id = [rs stringForColumn:@"COMP_ID"];
+        act.guide_id = [rs stringForColumn:@"GUIDE_ID"];
+        act.act_m_id = [rs stringForColumn:@"ACT_M_ID"];
+        act.desc = [rs stringForColumn:@"DESCRIPTION"];
+        act.emp_id = [rs stringForColumn:@"EMP_ID"];
+        act.status = [rs stringForColumn:@"STATUS"];
+        
+        [array addObject:act];
     }
     
     return array;
@@ -171,7 +197,7 @@ static MDataBaseManager* _director = nil;
     
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, act.uuid];
+    FMResultSet* rs = [self.db executeQuery:sql, act.act_m_id];
     while([rs next]){
         
         MTreasure* treasure = [MTreasure new];
