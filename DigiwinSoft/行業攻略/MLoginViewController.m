@@ -7,9 +7,13 @@
 //
 
 #import "MLoginViewController.h"
-
+#import "MDataBaseManager.h"
 @interface MLoginViewController ()
-
+{
+    UITextField *txtAccount;
+    UITextField *txtPwd;
+    UITextField *txtCompany;
+}
 @end
 
 @implementation MLoginViewController
@@ -39,11 +43,10 @@
 {
     CGSize screenSize =[[UIScreen mainScreen]bounds].size;
     CGFloat screenWidth = screenSize.width;
-    CGFloat screenHeight = screenSize.height;
+//    CGFloat screenHeight = screenSize.height;
 
     
     //Account
-    UITextField *txtAccount;
     txtAccount=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,150,160,24)];
     txtAccount.backgroundColor=[UIColor whiteColor];
     txtAccount.borderStyle=UITextBorderStyleLine;
@@ -60,7 +63,6 @@
     
     
     //Password
-    UITextField *txtPwd;
     txtPwd=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,180,160,24)];
     txtPwd.backgroundColor=[UIColor whiteColor];
     txtPwd.borderStyle=UITextBorderStyleLine;
@@ -77,7 +79,6 @@
 
 
     //CompanyCode
-    UITextField *txtCompany;
     txtCompany=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,210,160,24)];
     txtCompany.backgroundColor=[UIColor whiteColor];
     txtCompany.borderStyle=UITextBorderStyleLine;
@@ -105,7 +106,16 @@
 }
 #pragma mark - UIButton
 - (void)actionLogin:(id)sender{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    BOOL isLogin=[[MDataBaseManager sharedInstance]loginWithAccount:txtAccount.text Password:txtPwd.text CompanyID:txtCompany.text];
+    if (isLogin==YES) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else
+    {
+        UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:@"" message:@"查無此會員" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [theAlert show];
+    }
+    
 }
 /*
 #pragma mark - Navigation

@@ -9,7 +9,7 @@
 #import "MIndustryRaidersViewController.h"
 #import "MIndustryRaiders2ViewController.h"
 #import "MLoginViewController.h"
-
+#import "MDataBaseManager.h"
 #import "MRaiderCarouselView.h"
 #import "AppDelegate.h"
 
@@ -45,12 +45,26 @@
     [super viewDidAppear:YES];
     
 }
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    // Force your tableview margins (this may be a bad idea)
+    if ([tbl respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tbl setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([tbl respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tbl setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 #pragma mark - create view
 
 - (void)prepareTestData
 {
     //aryList
-    aryList=[[NSMutableArray alloc]initWithObjects:@"MyData1",@"MyData2",@"MyData3",@"MyData4",@"MyData5",@"MyData6", nil];
+    aryList=[[NSMutableArray alloc]initWithArray:[MDataBaseManager sharedInstance].loadPhenArray];
 }
 -(void) addMainMenu
 {
@@ -131,7 +145,7 @@
     if (cell==nil) {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.textLabel.text=aryList[indexPath.row];
+    cell.textLabel.text=[aryList[indexPath.row]subject];
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -139,7 +153,9 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] init];
-    [MIndustryRaiders2VC setStrTitle:aryList[indexPath.row]];
+    [MIndustryRaiders2VC setStrTitle:[aryList[indexPath.row]subject]];
+    [MIndustryRaiders2VC setStrDesc:[aryList[indexPath.row]desc]];
+    [MIndustryRaiders2VC setPhen:aryList[indexPath.row]];
     [MIndustryRaiders2VC setIsFrom:YES];
     [self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
 }

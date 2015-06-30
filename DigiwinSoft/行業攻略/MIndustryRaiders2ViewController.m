@@ -12,6 +12,7 @@
 #import "MIndustryRaidersTableViewCell.h"
 #import "MRaidersDescriptionViewController.h"
 #import "MDesignateResponsibleViewController.h"
+#import "MDataBaseManager.h"
 @interface MIndustryRaiders2ViewController ()
 
 @end
@@ -46,21 +47,23 @@
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
     self.navigationItem.leftBarButtonItem = back;
 }
-
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    // Force your tableview margins (this may be a bad idea)
+    if ([tbl respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tbl setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([tbl respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tbl setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 #pragma mark - create view
 - (void)prepareTestData
 {
-    
-    NSDictionary *dis1=[[NSDictionary alloc]initWithObjectsAndKeys:@"防止半成品製造批量浮增",@"Name",
-                        [NSNumber numberWithInteger:3],@"iStar", nil];
-    NSDictionary *dis2=[[NSDictionary alloc]initWithObjectsAndKeys:@"推動滾動式預測",@"Name",
-                        [NSNumber numberWithInteger:3],@"iStar", nil];
-    NSDictionary *dis3=[[NSDictionary alloc]initWithObjectsAndKeys:@"提升製程生產良率",@"Name",
-                        [NSNumber numberWithInteger:3],@"iStar", nil];
-    NSDictionary *dis4=[[NSDictionary alloc]initWithObjectsAndKeys:@"減少填補產能預產呆滯",@"Name",
-                        [NSNumber numberWithInteger:5],@"iStar", nil];
-
-    aryList=[[NSMutableArray alloc]initWithObjects:dis1,dis2,dis3,dis4,nil];
+    aryList=[[NSMutableArray alloc]initWithArray:[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen]];
 }
 -(void) addMainMenu
 {
@@ -123,7 +126,7 @@
     //textView
     textView=[[UITextView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,screenWidth, screenHeight-320)];
     textView.backgroundColor=[UIColor whiteColor];
-    textView.text=@"Apple News將登場 蘋果深耕新聞業\n\n（中央社華盛頓20日綜合外電報導）美國科技巨擘蘋果公司（Apple）即將以新推出的應用程式App更深入新聞產業，往後在新聞業扮演的角色，可能更加舉足輕重。法新社報導，「蘋果新聞」（Apple News）將隨著蘋果應用程式iOS 9推出，主要是想成為iPhone與iPad用戶的主要新聞來源，可能受到影響的包括「臉書」（Facebook）、谷歌（Google）與Flipboard等新聞App。蘋果還出人意表地披露，將招募有經驗的新聞工作者來管理新聞內容，與對手們運用演算法來做新聞的方式有所不同。密蘇里大學行動新聞教授史利夫卡（Judd Slivka）表示：「蘋果很希望讓人類來做新聞，而不是用演算法來做，這與蘋果一直以來所做的品牌宣言不謀而合。」「預期他們會把廣及新聞界與特殊內容領域的人才，整合為1支聰明的團隊。」蘋果雖未詳述其計畫，但該公司招募網頁寫道，「徵求有熱情、知識淵博的編輯，來幫忙找出國內外與地方新聞，並發送出去」。招募頁面寫道，編輯群「對於突發新聞應有很棒的直覺，在辨識演算法無法發掘、原創又有說服力的故事方面，也應該同樣傑出」。（譯者：中央社鄭詩韻）1040621\n";
+    textView.text=_strDesc;
     textView.font=[UIFont systemFontOfSize:16];
     textView.editable=NO;
     
@@ -290,7 +293,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     //對策名稱
-    cell.labName.text=[aryList[indexPath.row]objectForKey:@"Name"];
+    cell.labName.text=[aryList[indexPath.row]name];
     cell.labName.font=[UIFont systemFontOfSize:12];
     cell.labName.frame=CGRectMake(30, 16, 140, 18);
     cell.labName.backgroundColor=[UIColor clearColor];
@@ -311,7 +314,7 @@
     [cell.btnRaiders addTarget:self action:@selector(btnRaiders:) forControlEvents:UIControlEventTouchUpInside];
     
     //星星數量
-    NSInteger iStarNum=[[aryList[indexPath.row]objectForKey:@"iStar"]integerValue];
+    NSInteger iStarNum=[[aryList[indexPath.row]review]integerValue];
     for (int i=0; i<5; i++){
         UIImageView *imgStar=[[UIImageView alloc]initWithFrame:CGRectMake(30+(17*i), 36,16,16)];
         if(i<iStarNum){
@@ -379,6 +382,8 @@
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+
+
 /*
 #pragma mark - Navigation
 
