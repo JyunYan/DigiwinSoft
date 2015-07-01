@@ -9,6 +9,7 @@
 #import "MEventDetailViewController.h"
 #import "AppDelegate.h"
 #import "MRecommendTreasuresViewController.h"
+#import "MDirector.h"
 
 
 #define TAG_LABEL_CELL 100
@@ -78,8 +79,8 @@
 
 -(void) addMainMenu
 {
-    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 66, 66)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
+    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = right_bar_item;
@@ -170,7 +171,7 @@
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     label.textAlignment = NSTextAlignmentLeft;
     label.font = [UIFont systemFontOfSize:textSize];
-    label.textColor = [UIColor lightGrayColor];
+    label.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     if (section == 0)
         label.text = @"原因";
     else if (section == 1)

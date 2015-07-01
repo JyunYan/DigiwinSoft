@@ -11,6 +11,7 @@
 #import "HMSegmentedControl.h"
 #import "ASFileManager.h"
 #import "MEventSelectViewController.h"
+#import "MDirector.h"
 
 
 #define TAG_LABEL_EVENT 200
@@ -126,7 +127,7 @@
 -(void) addMainMenu
 {
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = right_bar_item;
@@ -343,7 +344,7 @@
         // 發生日
         UILabel* occurrenceDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, height/2)];
         occurrenceDateLabel.tag = TAG_LABEL_OCCURRENCE_DATE;
-        occurrenceDateLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
+        occurrenceDateLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         occurrenceDateLabel.font = [UIFont systemFontOfSize:textSize];
         [leftView addSubview:occurrenceDateLabel];
         
@@ -354,7 +355,7 @@
         // 負責人
         UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, height/2, 60, 25)];
         personInChargeTitleLabel.text = @"負責人：";
-        personInChargeTitleLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
+        personInChargeTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         personInChargeTitleLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:personInChargeTitleLabel];
         
@@ -370,7 +371,7 @@
 
         UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, height/2, 100, 25)];
         personInChargeLabel.tag = TAG_LABEL_PERSON_IN_CHARGE;
-        personInChargeLabel.textColor = [UIColor colorWithRed:68.0f/255.0f green:166.0f/255.0f blue:193.0f/255.0f alpha:1.0f];
+        personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomBlueColor];
         personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:personInChargeLabel];
         

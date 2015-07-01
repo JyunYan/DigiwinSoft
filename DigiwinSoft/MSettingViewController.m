@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "UIViewController+MMDrawerController.h"
 #import "MDirector.h"
+#import "MSettingTableViewCell.h"
 
 @interface MSettingViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -38,9 +39,9 @@
     
     
     CGFloat posX = 0;
-    CGFloat posY = 0;
+    CGFloat posY = statusBarHeight;
     CGFloat width = screenWidth - 40;
-    CGFloat height = screenHeight + statusBarHeight;
+    CGFloat height = screenHeight;
     
     UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:listView];
@@ -70,18 +71,32 @@
 
 - (UIView*)createLeftView:(CGRect) rect
 {
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    
     UIView* view = [[UIView alloc] initWithFrame:rect];
     
-    CGFloat posX = 0;
-    CGFloat posY = 40;
+    
     CGFloat width = 25;
     CGFloat height = 25;
+    CGFloat posX = (rect.size.width - 25) / 2;
+    CGFloat posY = (rect.size.width - 25) / 2;
     
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
-    [settingbutton setBackgroundColor:[UIColor colorWithRed:53.0f/255.0f green:167.0f/255.0f blue:191.0f/255.0f alpha:1.0f]];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:settingbutton];
+
+    
+    width = rect.size.width;
+    height = width;
+    posX = 0;
+    posY = statusBarHeight;
+    
+    UIView* bgView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    [bgView setBackgroundColor:[UIColor colorWithRed:53.0f/255.0f green:167.0f/255.0f blue:191.0f/255.0f alpha:1.0f]];
+    [bgView addSubview:settingbutton];
+    
+    [view addSubview:bgView];
+
     
     return view;
 }
@@ -209,9 +224,9 @@
     NSInteger row = indexPath.row;
     
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    MSettingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[MSettingTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
         if (row > 0) {
             // up divider
@@ -225,45 +240,46 @@
     cell.backgroundColor = [UIColor blackColor];
     
     UIView* bgSelectionView = [[UIView alloc] init];
-    bgSelectionView.backgroundColor = [UIColor colorWithRed:72.0f/255.0f green:186.0f/255.0f blue:199.0f/255.0f alpha:1.0f];
+    bgSelectionView.backgroundColor = [UIColor colorWithRed:53.0f/255.0f green:166.0f/255.0f blue:190.0f/255.0f alpha:1.0f];
     bgSelectionView.layer.masksToBounds = YES;
     cell.selectedBackgroundView = bgSelectionView;
     
 
     if (row == 0) {
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_1.png"];
         cell.textLabel.text = @"我的攻略";
     } else if (row == 1) {
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_2.png"];
         cell.textLabel.text = @"我的規劃";
     } else if (row == 2) {
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_3.png"];
         cell.textLabel.text = @"事件清單";
     } else if (row == 3) {
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_4.png"];
         cell.textLabel.text = @"我的商業社群";
     } else if (row == 4) {
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_5.png"];
         cell.textLabel.text = @"會員帳戶";
     } else if (row == 5) {
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_6.png"];
         cell.textLabel.text = @"線上諮詢";
     } else if (row == 6) {
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_7.png"];
         cell.textLabel.text = @"兌換";
     } else if (row == 7) {
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_8.png"];
         cell.textLabel.text = @"設定";
     } else if (row == 8) {
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_9.png"];
         cell.textLabel.text = @"說明與意見回饋";
     } else if (row == 9) {
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_10.png"];
         cell.textLabel.text = @"操作導引";
     } else if (row == 10) {
-        cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_11.png"];
         cell.textLabel.text = @"登出";
     }
-    cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:15.0f];
     cell.textLabel.textColor = [UIColor lightGrayColor];
     cell.textLabel.highlightedTextColor = [UIColor whiteColor];
 

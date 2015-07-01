@@ -151,14 +151,12 @@
 {
     _tabBarController.selectedIndex = 4;
     
-    MMyTaskViewController* myTask = [[MMyTaskViewController alloc] init];
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:myTask];
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
         [[UINavigationBar appearance] setTranslucent:YES];
     }
-
+    
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
-    drawer.centerViewController = nav;
+    drawer.centerViewController = _tabBarController;
     [drawer closeDrawerAnimated:YES completion:nil];
 }
 

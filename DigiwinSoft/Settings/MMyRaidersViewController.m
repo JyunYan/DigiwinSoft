@@ -9,6 +9,7 @@
 #import "MMyRaidersViewController.h"
 #import "AppDelegate.h"
 #import "MKeyActivitiesViewController.h"
+#import "MDirector.h"
 
 
 #define TAG_LABEL_COUNTERMEASURE 200
@@ -80,7 +81,7 @@
 -(void) addMainMenu
 {
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = right_bar_item;
@@ -155,6 +156,7 @@
         // 指標
         UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         indexLabel.tag = TAG_LABEL_INDEX;
+        indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         indexLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:indexLabel];
         
@@ -163,6 +165,7 @@
         // 現值
         UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         presentValueLabel.tag = TAG_LABEL_PRESENT_VALUE;
+        presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         presentValueLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:presentValueLabel];
         
@@ -173,6 +176,7 @@
         // 負責人
         UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         personInChargeLabel.tag = TAG_LABEL_PERSON_IN_CHARGE;
+        personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:personInChargeLabel];
     }
