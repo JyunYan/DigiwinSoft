@@ -121,7 +121,6 @@
     imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,textView.frame.origin.y+100,screenWidth, btn.frame.origin.y-
                                                          (textView.frame.origin.y+textView.frame.size.height))];
     imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
-
     [self.view addSubview:imgGray];
 
     
@@ -143,6 +142,7 @@
 }
 - (void)actionTargetSet:(id)sender{
     MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
+    MInventoryTurnoverVC.target=_guide.target;
     [self.navigationController pushViewController:MInventoryTurnoverVC animated:YES];
 }
 - (void)goToBackPage:(id) sender
@@ -198,8 +198,8 @@
     cell.labRelation.textColor=[UIColor blackColor];
     cell.labRelation.frame=CGRectMake((tbl.frame.size.width/4)-65, 14, 115, 16);
 
-    MTarget *target=[aryList[indexPath.row]target];
     
+    MTarget *target=[aryList[indexPath.row]target];
     
     cell.labMeasure.text=target.name;
     cell.labMeasure.textColor=[UIColor blackColor];
