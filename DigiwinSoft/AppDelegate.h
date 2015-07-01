@@ -31,11 +31,11 @@
 
 - (void) toggleTabBar;
 
-- (void) toggleMyRaidersWithUser:(MUser*) user;
+- (void) toggleMyRaiders;
 
-- (void) toggleMyPlanWithUser:(MUser*) user;
+- (void) toggleMyPlan;
 
-- (void) toggleEventListWithUser:(MUser*) user;
+- (void) toggleEventList;
 
 @end
 

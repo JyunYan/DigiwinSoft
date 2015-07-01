@@ -9,6 +9,7 @@
 #import "MMyRaidersViewController.h"
 #import "AppDelegate.h"
 #import "MKeyActivitiesViewController.h"
+#import "MDirector.h"
 
 
 #define TAG_LABEL_COUNTERMEASURE 200
@@ -19,17 +20,16 @@
 
 @interface MMyRaidersViewController ()
 
-@property (nonatomic, strong) NSMutableArray* guideArray;
+@property (nonatomic, strong) NSArray* guideArray;
 
 @end
 
 @implementation MMyRaidersViewController
 
-- (id)initWithUser:(MUser*) user {
+- (id)init {
     self = [super init];
     if (self) {
-        _guideArray = [[NSMutableArray alloc] init];
-        [self createTestData];
+        _guideArray = [[MDataBaseManager sharedInstance] loadCustomGuideArrayByRelease:YES];
     }
     return self;
 }
@@ -53,38 +53,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - create test data
-
-- (void)createTestData {
-    for (int i = 0; i < 2; i++) {
-        MGuide* guide = [[MGuide alloc] init];
-        if (i == 0) {
-            guide.uuid = @"test12345";
-            guide.name = @"防止半成品製造批量浮增";
-        } else {
-            guide.uuid = @"test98765";
-            guide.name = @"推動銷售預測管理";
-        }
-        
-        MUser* user = [[MUser alloc] init];
-        user.name = @"陳又華";
-        
-        guide.manager = user;
-        
-        [_guideArray addObject:guide];
-    }
-}
-
 #pragma mark - create view
 
 -(void) addMainMenu
 {
-    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
-    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
-    self.navigationItem.rightBarButtonItem = right_bar_item;
-    
     UIButton* backbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 20, 24)];
     [backbutton setBackgroundImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
     [backbutton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
@@ -93,12 +65,6 @@
 }
 
 #pragma mark - UIButton
-
--(void)clickedBtnSetting:(id)sender
-{
-    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleLeft];
-}
 
 -(void)back:(id)sender
 {
@@ -155,6 +121,7 @@
         // 指標
         UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         indexLabel.tag = TAG_LABEL_INDEX;
+        indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         indexLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:indexLabel];
         
@@ -163,6 +130,7 @@
         // 現值
         UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         presentValueLabel.tag = TAG_LABEL_PRESENT_VALUE;
+        presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         presentValueLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:presentValueLabel];
         
@@ -173,13 +141,15 @@
         // 負責人
         UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         personInChargeLabel.tag = TAG_LABEL_PERSON_IN_CHARGE;
+        personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:personInChargeLabel];
     }
     
     NSInteger row = indexPath.row;
     
-    MGuide* guide = [_guideArray objectAtIndex:row];
+    MCustGuide* guide = [_guideArray objectAtIndex:row];
+    MCustTarget* target = guide.target;
     
     UILabel* countermeasureLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_COUNTERMEASURE];
     UILabel* indexLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_INDEX];
@@ -189,9 +159,11 @@
     NSString* countermeasureStr = [NSString stringWithFormat:@"對策：%@", guide.name];
     countermeasureLabel.text = countermeasureStr;
     
-    indexLabel.text = @"指標：";
+    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", target.name];
+    indexLabel.text = indexStr;
     
-    presentValueLabel.text = @"現值：";
+    NSString* presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", target.valueR, target.unit];
+    presentValueLabel.text = presentValueStr;
     
     MUser* user = guide.manager;
     NSString* personInChargeStr = [NSString stringWithFormat:@"負責人：%@", user.name];

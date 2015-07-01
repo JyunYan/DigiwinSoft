@@ -77,6 +77,7 @@
     //UITextField
     UITextField *txtName=[[UITextField alloc]initWithFrame:CGRectMake(105,118, 160, 29)];
     txtName.borderStyle=UITextBorderStyleLine;
+    txtName.enabled=NO;
     [self.view addSubview:txtName];
     
     
@@ -91,6 +92,7 @@
     //UITextField
     UITextField *txtInit=[[UITextField alloc]initWithFrame:CGRectMake(105,163, 50, 29)];
     txtInit.borderStyle=UITextBorderStyleLine;
+    txtInit.enabled=NO;
     [self.view addSubview:txtInit];
     
     //Label
@@ -124,9 +126,9 @@
     [self.view addSubview:labDay];
     
     //btn
-    UIButton *btnShowImg=[[UIButton alloc]initWithFrame:CGRectMake(195, 215, 20, 20)];
+    UIButton *btnShowImg=[[UIButton alloc]initWithFrame:CGRectMake(195, 212.5, 20, 20)];
     [btnShowImg addTarget:self action:@selector(btnShowImg:) forControlEvents:UIControlEventTouchUpInside];
-    btnShowImg.backgroundColor=[UIColor grayColor];
+    [btnShowImg setImage:[UIImage imageNamed:@"icon_info.png"] forState:UIControlStateNormal];
     [self.view addSubview:btnShowImg];
     
     //imgGray

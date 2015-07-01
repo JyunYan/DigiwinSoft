@@ -12,7 +12,9 @@
 #import "MInventoryTurnoverViewController.h"
 #import "MRaidersDiagramViewController.h"
 #import "MRaidersDescriptionTableViewCell.h"
-
+#import "MDataBaseManager.h"
+#import "MGuide.h"
+#import "MTarget.h"
 @interface MRaidersDescriptionViewController ()
 {
     CGFloat screenWidth;
@@ -28,7 +30,7 @@
     self.title=@"對策說明";
     self.view.backgroundColor = [UIColor whiteColor];
 
-    [self prepareTestData];
+    [self loadData];
     [self addMainMenu];
 
 }
@@ -50,40 +52,19 @@
 //    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
 #pragma mark - create view
-- (void)prepareTestData
+- (void)loadData
 {
-    
-    NSDictionary *dis1=[[NSDictionary alloc]initWithObjectsAndKeys:
-                        @"最適化存貨週轉",@"Relation",
-                        @"存貨週轉天數",@"Measure",
-                        @"40",@"Min",
-                        @"50",@"Max", nil];
-    
-    NSDictionary *dis2=[[NSDictionary alloc]initWithObjectsAndKeys:
-                        @"資金積壓",@"Relation",
-                        @"資金積壓天數",@"Measure",
-                        @"10",@"Min",
-                        @"20",@"Max", nil];
-
-    
-    aryList=[[NSMutableArray alloc]initWithObjects:dis1,dis2,nil];
+    aryList=[[MDataBaseManager sharedInstance]loadIssueArrayByGudie:_guide];
 }
 -(void)addMainMenu
 {
-    
-    //rightBarButtonItem
-    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
-    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
-    self.navigationItem.rightBarButtonItem = bar_item;
-
     //screenSize
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
     screenWidth = screenSize.width;
     screenHeight = screenSize.height;
     
-    webViewVideo = [[UIWebView alloc] initWithFrame:CGRectMake(0.0, 20+44,screenWidth, 175.0)];
+    //webView
+    webViewVideo = [[UIWebView alloc] initWithFrame:CGRectMake(0.0, 20+44,screenWidth, 100.0)];
     webViewVideo.delegate=self;
     webViewVideo.backgroundColor=[UIColor redColor];
     webViewVideo.scalesPageToFit = YES;
@@ -94,20 +75,23 @@
     [self.view addSubview:webViewVideo];
     
     //labTitle
-    labTitle=[[UILabel alloc]initWithFrame:CGRectMake(10, 20+44+175, screenWidth-100, 44)];
-    labTitle.text=_strTitle;
+    labTitle=[[UILabel alloc]initWithFrame:CGRectMake(10,webViewVideo.frame.size.height+webViewVideo.frame.origin.y, screenWidth-100, 44)];
+    labTitle.text=_guide.name;
     labTitle.backgroundColor=[UIColor whiteColor];
     [labTitle setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labTitle];
      
     //btnTargetSet
-    UIButton *btnTargetSet=[[UIButton alloc]initWithFrame:CGRectMake(10+(screenWidth-100)+5, 20+44+175+9, 75, 26)];
-    btnTargetSet.backgroundColor=[UIColor colorWithRed:114.0/255.0 green:198.0/255.0 blue:225.0/255.0 alpha:1.0];
-    [btnTargetSet setTitle:@"指標設定" forState:UIControlStateNormal];
-//    UIImage *btnImage = [UIImage imageNamed:@""];
+    UIButton *btnTargetSet=[[UIButton alloc]initWithFrame:CGRectMake(10+(screenWidth-100)+5,labTitle.frame.origin.y+10, 75, 24)];
+    btnTargetSet.backgroundColor=[UIColor colorWithRed:116.0/255.0 green:192.0/255.0 blue:222.0/255.0 alpha:1];
+//之後有圖取消註解，換圖即可
+//    btnTargetSet.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
+//    UIImage *btnImage = [UIImage imageNamed:@"icon_setting.png"];
 //    [btnTargetSet setImage:btnImage forState:UIControlStateNormal];
+//    btnTargetSet.titleEdgeInsets = UIEdgeInsetsMake(-10, -156, -10, -60);
+    [btnTargetSet setTitle:@"指標設定" forState:UIControlStateNormal];
     [btnTargetSet addTarget:self action:@selector(actionTargetSet:) forControlEvents:UIControlEventTouchUpInside];
-    btnTargetSet.titleLabel.font = [UIFont systemFontOfSize:12];
+    btnTargetSet.titleLabel.font = [UIFont systemFontOfSize:11];
     [self.view addSubview:btnTargetSet];
     
     //imgGray
@@ -119,7 +103,7 @@
     //textView
     UITextView *textView=[[UITextView alloc]initWithFrame:CGRectMake(0,labTitle.frame.origin.y+labTitle.frame.size.height+2,screenWidth, 100)];
     textView.backgroundColor=[UIColor whiteColor];
-    textView.text=@"Apple News將登場 蘋果深耕新聞業\n\n（中央社華盛頓20日綜合外電報導）美國科技巨擘蘋果公司（Apple）即將以新推出的應用程式App更深入新聞產業，往後在新聞業扮演的角色，可能更加舉足輕重。法新社報導，「蘋果新聞」（Apple News）將隨著蘋果應用程式iOS 9推出，主要是想成為iPhone與iPad用戶的主要新聞來源，可能受到影響的包括「臉書」（Facebook）、谷歌（Google）與Flipboard等新聞App。蘋果還出人意表地披露，將招募有經驗的新聞工作者來管理新聞內容，與對手們運用演算法來做新聞的方式有所不同。密蘇里大學行動新聞教授史利夫卡（Judd Slivka）表示：「蘋果很希望讓人類來做新聞，而不是用演算法來做，這與蘋果一直以來所做的品牌宣言不謀而合。」「預期他們會把廣及新聞界與特殊內容領域的人才，整合為1支聰明的團隊。」蘋果雖未詳述其計畫，但該公司招募網頁寫道，「徵求有熱情、知識淵博的編輯，來幫忙找出國內外與地方新聞，並發送出去」。招募頁面寫道，編輯群「對於突發新聞應有很棒的直覺，在辨識演算法無法發掘、原創又有說服力的故事方面，也應該同樣傑出」。（譯者：中央社鄭詩韻）1040621\n";
+    textView.text=_guide.desc;
     textView.font=[UIFont systemFontOfSize:12];
     textView.editable=NO;
     [self.view addSubview:textView];
@@ -143,19 +127,13 @@
     
     //tblView
     tbl=[[UITableView alloc]initWithFrame:CGRectMake(10,textView.frame.origin.y+110,screenWidth-20, 120)];
-    tbl.scrollEnabled = NO;
     tbl.delegate=self;
     tbl.dataSource = self;
     tbl.separatorStyle=UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tbl];
 }
 #pragma mark - UIButton
--(void)clickedBtnSetting:(id)sender
-{
-    MRaidersDiagramViewController *MRaidersDiagramVC=[[MRaidersDiagramViewController alloc]init];
-    MRaidersDiagramVC.strTitle=labTitle.text;
-    [self.navigationController pushViewController:MRaidersDiagramVC animated:YES];
-}
+
 -(void)clickedBtnBcak:(id)sender
 {
 [self dismissViewControllerAnimated:YES completion:nil];
@@ -209,33 +187,35 @@
     return 40.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return [aryList count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MRaidersDescriptionTableViewCell *cell=[MRaidersDescriptionTableViewCell cellWithTableView:tableView];
-    cell.labRelation.text=[aryList[indexPath.row]objectForKey:@"Relation"];
+    cell.labRelation.text=[aryList[indexPath.row]name];
     cell.labRelation.backgroundColor=[UIColor clearColor];
     cell.labRelation.font = [UIFont systemFontOfSize:12];
     cell.labRelation.textColor=[UIColor blackColor];
     cell.labRelation.frame=CGRectMake((tbl.frame.size.width/4)-65, 14, 115, 16);
 
-
-    cell.labMeasure.text=[aryList[indexPath.row]objectForKey:@"Measure"];
+    MTarget *target=[aryList[indexPath.row]target];
+    
+    
+    cell.labMeasure.text=target.name;
     cell.labMeasure.textColor=[UIColor blackColor];
     cell.labMeasure.backgroundColor=[UIColor clearColor];
     cell.labMeasure.font = [UIFont systemFontOfSize:12];
     cell.labMeasure.frame=CGRectMake((tbl.frame.size.width/2)-42, 14, 90, 16);
     
 
-    cell.labMax.text=[aryList[indexPath.row]objectForKey:@"Max"];
+    cell.labMax.text=target.upMax;
     cell.labMax.textColor=[UIColor blackColor];
     cell.labMax.backgroundColor=[UIColor clearColor];
     cell.labMax.font = [UIFont systemFontOfSize:12];
     cell.labMax.frame=CGRectMake(((tbl.frame.size.width/4)*3)+34, 14, 30, 16);
 
     
-    cell.labMin.text=[aryList[indexPath.row]objectForKey:@"Min"];
+    cell.labMin.text=target.upMin;
     cell.labMin.textColor=[UIColor blackColor];
     cell.labMin.backgroundColor=[UIColor clearColor];
     cell.labMin.font = [UIFont systemFontOfSize:12];

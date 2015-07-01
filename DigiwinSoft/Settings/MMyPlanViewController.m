@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "SWTableViewCell.h"
 #import "MKeyActivitiesViewController.h"
+#import "MDirector.h"
 
 
 #define TAG_LABEL_COUNTERMEASURE 200
@@ -19,17 +20,18 @@
 
 @interface MMyPlanViewController ()<UITableViewDelegate, UITableViewDataSource, SWTableViewCellDelegate>
 
-@property (nonatomic, strong) NSMutableArray* guideArray;
+@property (nonatomic, strong) UITableView* tableView;
+
+@property (nonatomic, strong) NSArray* guideArray;
 
 @end
 
 @implementation MMyPlanViewController
 
-- (id)initWithUser:(MUser*) user {
+- (id)init {
     self = [super init];
     if (self) {
-        _guideArray = [[NSMutableArray alloc] init];
-        [self createTestData];
+        _guideArray = [[MDataBaseManager sharedInstance] loadCustomGuideArrayByRelease:NO];
     }
     return self;
 }
@@ -65,8 +67,8 @@
     width = screenWidth;
     height = screenHeight - posY - navBarHeight;
 
-    UIView* tableView = [self createTableView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:tableView];
+    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
+    [self.view addSubview:listView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -78,38 +80,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - create test data
-
-- (void)createTestData {
-    for (int i = 0; i < 2; i++) {
-        MGuide* guide = [[MGuide alloc] init];
-        if (i == 0) {
-            guide.uuid = @"test12345";
-            guide.name = @"防止半成品製造批量浮增";
-        } else {
-            guide.uuid = @"test98765";
-            guide.name = @"推動銷售預測管理";
-        }
-        
-        MUser* user = [[MUser alloc] init];
-        user.name = @"陳又華";
-        
-        guide.manager = user;
-        
-        [_guideArray addObject:guide];
-    }
-}
-
 #pragma mark - create view
 
 -(void) addMainMenu
 {
-    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
-    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
-    self.navigationItem.rightBarButtonItem = right_bar_item;
-    
     UIButton* backbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 20, 24)];
     [backbutton setBackgroundImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
     [backbutton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
@@ -151,6 +125,7 @@
     //指標
     UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     indexLabel.text = @"指標：";
+    indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     indexLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:indexLabel];
     
@@ -159,13 +134,14 @@
     // 現值
     UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     presentValueLabel.text = @"現值：";
+    presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     presentValueLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:presentValueLabel];
 
     return view;
 }
 
-- (UIView*)createTableView:(CGRect) rect
+- (UIView*)createListView:(CGRect) rect
 {
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor lightGrayColor];
@@ -178,22 +154,16 @@
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = viewHeight - posY * 2;
 
-    UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    tableView.backgroundColor = [UIColor whiteColor];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [view addSubview:tableView];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [view addSubview:_tableView];
     
     return view;
 }
 
 #pragma mark - UIButton
-
--(void)clickedBtnSetting:(id)sender
-{
-    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleLeft];
-}
 
 -(void)back:(id)sender
 {
@@ -259,6 +229,7 @@
         // 指標
         UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, height/2)];
         indexLabel.tag = TAG_LABEL_INDEX;
+        indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         indexLabel.font = [UIFont systemFontOfSize:textSize];
         [leftView addSubview:indexLabel];
 
@@ -271,6 +242,7 @@
         // 負責人
         UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2, height/2)];
         personInChargeLabel.tag = TAG_LABEL_PERSON_IN_CHARGE;
+        personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
         [rightView addSubview:personInChargeLabel];
         
@@ -278,13 +250,14 @@
         // 現值
         UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, height/2)];
         presentValueLabel.tag = TAG_LABEL_PRESENT_VALUE;
+        presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         presentValueLabel.font = [UIFont systemFontOfSize:textSize];
         [rightView addSubview:presentValueLabel];
     }
     
     NSInteger row = indexPath.row;
     
-    MGuide* guide = [_guideArray objectAtIndex:row];
+    MCustGuide* guide = [_guideArray objectAtIndex:row];
     
     UILabel* countermeasureLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_COUNTERMEASURE];
     UILabel* indexLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_INDEX];
@@ -318,9 +291,12 @@
 #pragma mark - SWTableViewDelegate
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    NSIndexPath *cellIndexPath = [_tableView indexPathForCell:cell];
+    NSInteger row = cellIndexPath.row;
+    
     switch (index) {
         case 0:
-            NSLog(@"check button was pressed");
+            NSLog(@"clock button was pressed");
             break;
         case 1:
             NSLog(@"clock button was pressed");
@@ -334,10 +310,10 @@
 {
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:20.0f/255.0f green:206.0f/255.0f blue:209.0f/255.0f alpha:1.0]
+     [UIColor colorWithRed:141.0f/255.0f green:206.0f/255.0f blue:231.0f/255.0f alpha:1.0]
                                                 title:@"轉攻略"];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:0.0f/255.0f green:206.0f/255.0f blue:209.0f/255.0f alpha:1.0]
+     [UIColor colorWithRed:140.0f/255.0f green:205.0f/255.0f blue:230.0f/255.0f alpha:1.0]
                                                 title:@"刪除"];
     
     return rightUtilityButtons;

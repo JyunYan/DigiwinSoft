@@ -13,6 +13,7 @@
 #import "MRaidersDescriptionViewController.h"
 #import "MDesignateResponsibleViewController.h"
 #import "MDataBaseManager.h"
+#import "AppDelegate.h"
 @interface MIndustryRaiders2ViewController ()
 
 @end
@@ -28,7 +29,7 @@
     // Do any additional setup after loading the view.
     self.title=@"行業攻略";
     self.view.backgroundColor = [UIColor whiteColor];
-    [self prepareTestData];
+    [self loadData];
     [self addMainMenu];
 }
 
@@ -40,9 +41,14 @@
 {
     [super viewWillAppear:YES];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
-//    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-//    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
+ 
+    //rightBarButtonItem
+    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
+    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
+    self.navigationItem.rightBarButtonItem = bar_item;
+
     
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
     self.navigationItem.leftBarButtonItem = back;
@@ -61,9 +67,9 @@
     }
 }
 #pragma mark - create view
-- (void)prepareTestData
+- (void)loadData
 {
-    aryList=[[NSMutableArray alloc]initWithArray:[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen]];
+    aryList=[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen];
 }
 -(void) addMainMenu
 {
@@ -73,7 +79,7 @@
 
     //Label
     UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(0, 64,screenWidth, 40)];
-    labTitle.text=_strTitle;
+    labTitle.text=self.phen.subject;
     labTitle.backgroundColor=[UIColor whiteColor];
     labTitle.textAlignment=NSTextAlignmentCenter;
     [labTitle setFont:[UIFont systemFontOfSize:16]];
@@ -126,8 +132,8 @@
     //textView
     textView=[[UITextView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,screenWidth, screenHeight-320)];
     textView.backgroundColor=[UIColor whiteColor];
-    textView.text=_strDesc;
-    textView.font=[UIFont systemFontOfSize:16];
+    textView.text=self.phen.desc;
+    textView.font=[UIFont systemFontOfSize:12];
     textView.editable=NO;
     
     
@@ -140,29 +146,19 @@
     labTarget.text=@"指標項目";
     labTarget.backgroundColor=[UIColor whiteColor];
     labTarget.textAlignment=NSTextAlignmentCenter;
-    [labTarget setFont:[UIFont systemFontOfSize:18]];
+    [labTarget setFont:[UIFont systemFontOfSize:12]];
     
 
     //TextField
     txtField=[[UITextField alloc]initWithFrame:CGRectMake(labTarget.frame.origin.x+labTarget.frame.size.width+3,textView.frame.origin.y+textView.frame.size.height+27,200,26)];
     txtField.backgroundColor=[UIColor whiteColor];
     txtField.borderStyle=UITextBorderStyleLine;
-    txtField.font=[UIFont systemFontOfSize:18];
+    txtField.text=self.phen.target.name;
+    txtField.enabled=NO;
+    txtField.font=[UIFont systemFontOfSize:12];
     txtField.delegate = self;
     
-    if(_isFrom==YES)
-    {
-        segmentedControl.selectedSegmentIndex = 1;
-        [self.view addSubview:tbl];
-        [self.view addSubview:btn];
-        imgblueBar.frame=CGRectMake((screenWidth/8)*5,
-                                    imgblueBar.frame.origin.y,
-                                    imgblueBar.frame.size.width,
-                                    imgblueBar.frame.size.height);
-    }
-    else
-    {
-        segmentedControl.selectedSegmentIndex = 0;
+           segmentedControl.selectedSegmentIndex = 0;
         [self.view addSubview:imgGray];
         [self.view addSubview:textView];
         [self.view addSubview:labTarget];
@@ -171,8 +167,6 @@
                                     imgblueBar.frame.origin.y,
                                     imgblueBar.frame.size.width,
                                     imgblueBar.frame.size.height);
-    }
-    
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -236,24 +230,26 @@
     }
 }
 #pragma mark - UIButton
+-(void)clickedBtnSetting:(id)sender
+{
+    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
+    [delegate toggleLeft];
+}
 - (void)actionAddMyList:(id)sender{
     NSLog(@"加入我的規劃清單動作");
 }
 - (void)actionCheck:(UIButton *)sender{
-    NSUInteger tt = sender.tag;
-    NSLog(@"%lu",(unsigned long)tt);
-    
+   
     MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
     
     if (cell.isCheck==NO) {
-        [cell.btnCheck setImage:[UIImage imageNamed:@"check_box_on.png"] forState:UIControlStateNormal];
-        cell.isCheck=YES;
+        [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_fill.png"] forState:UIControlStateNormal];
     }
     else
     {
-        [cell.btnCheck setImage:[UIImage imageNamed:@"check_box_off.png"] forState:UIControlStateNormal];
-        cell.isCheck=NO;
+        [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_empty.png"] forState:UIControlStateNormal];
     }
+    cell.isCheck=!cell.isCheck;
 }
 - (void)btnManager:(id)sender{
     MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]init];
@@ -266,7 +262,9 @@
     
     MRaidersDescriptionViewController *MIndustryRaiders2VC = [[MRaidersDescriptionViewController alloc] init];
     MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
-    MIndustryRaiders2VC.strTitle=cell.labName.text;
+    NSIndexPath* indexPath = [tbl indexPathForCell:cell];
+    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    MIndustryRaiders2VC.guide=guide;
     UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MIndustryRaiders2VC];
     MIndustryRaidersNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
@@ -299,17 +297,19 @@
     cell.labName.backgroundColor=[UIColor clearColor];
     
     //Check
-    [cell.btnCheck  setImage:[UIImage imageNamed:@"check_box_off.png"] forState:UIControlStateNormal];
-    cell.btnCheck.frame=CGRectMake(cell.labName.frame.origin.x-22, 13, 25, 25);
+    [cell.btnCheck  setImage:[UIImage imageNamed:@"checkbox_empty.png"] forState:UIControlStateNormal];
+    cell.btnCheck.frame=CGRectMake(12, 16, 16, 16);
     [cell.btnCheck addTarget:self action:@selector(actionCheck:) forControlEvents:UIControlEventTouchUpInside];
     
     //指派負責人
-    cell.btnManager.backgroundColor=[UIColor lightGrayColor];
-    cell.btnManager.frame=CGRectMake(((screenWidth/4)*3)-43,25 , 16, 16);
+    UIImage *imgManager = [UIImage imageNamed:@"icon_manager.png"];
+    [cell.btnManager setBackgroundImage:imgManager forState:UIControlStateNormal];
+    cell.btnManager.frame=CGRectMake(((screenWidth/4)*3)-44,25 , 16, 16);
     [cell.btnManager addTarget:self action:@selector(btnManager:) forControlEvents:UIControlEventTouchUpInside];
     
     //攻略
-    cell.btnRaiders.backgroundColor=[UIColor lightGrayColor];
+    UIImage *imgRaiders = [UIImage imageNamed:@"icon_raider.png"];
+    [cell.btnRaiders setBackgroundImage:imgRaiders forState:UIControlStateNormal];
     cell.btnRaiders.frame=CGRectMake(((screenWidth/4)*3)+34,25 , 16, 16);
     [cell.btnRaiders addTarget:self action:@selector(btnRaiders:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -318,10 +318,10 @@
     for (int i=0; i<5; i++){
         UIImageView *imgStar=[[UIImageView alloc]initWithFrame:CGRectMake(30+(17*i), 36,16,16)];
         if(i<iStarNum){
-        imgStar.backgroundColor=[UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0];
+            imgStar.image=[UIImage imageNamed:@"star_fill.png"];
         }else
         {
-        imgStar.backgroundColor=[UIColor grayColor];
+            imgStar.image=[UIImage imageNamed:@"star_empty.png"];
         }
         [cell addSubview:imgStar];
     }

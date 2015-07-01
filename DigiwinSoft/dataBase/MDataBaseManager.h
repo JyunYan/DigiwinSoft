@@ -43,6 +43,7 @@
 // get 對策Sample
 - (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen;
 
+
 // get 議題Sample By 對策
 - (NSArray*)loadIssueArrayByGudie:(MGuide*)guide;
 
