@@ -68,20 +68,13 @@
 }
 -(void) addMainMenu
 {
-    //rightBarButtonItem
+    //leftBarButtonItem
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
-    self.navigationItem.rightBarButtonItem = bar_item;
-    
-    //leftBarButtonItem
-    UIButton* btnSearch = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [btnSearch setBackgroundImage:[UIImage imageNamed:@"icon_search.png"] forState:UIControlStateNormal];
-    [btnSearch addTarget:self action:@selector(clickedBtnSearch:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* leftBar_item = [[UIBarButtonItem alloc] initWithCustomView:btnSearch];
-    self.navigationItem.leftBarButtonItem = leftBar_item;
-    
+    self.navigationItem.leftBarButtonItem = bar_item;
+
     //screenSize
     CGSize screenSize = [[UIScreen mainScreen] bounds].size;
     CGFloat screenWidth = screenSize.width;
@@ -185,8 +178,5 @@
     AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
     [delegate toggleLeft];
 }
--(void)clickedBtnSearch:(id)sender
-{
-    NSLog(@"clickedBtnSearch");
-}
+
 @end

@@ -11,6 +11,4 @@
 
 @interface MMyRaidersViewController : UITableViewController
 
-- (id)initWithUser:(MUser*) user;
-
 @end

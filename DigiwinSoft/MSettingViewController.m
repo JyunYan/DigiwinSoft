@@ -28,7 +28,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = [UIColor blackColor];
 
     
     CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
@@ -40,19 +40,11 @@
     
     CGFloat posX = 0;
     CGFloat posY = statusBarHeight;
-    CGFloat width = screenWidth - 40;
+    CGFloat width = screenWidth - 60;
     CGFloat height = screenHeight;
     
     UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:listView];
-    
-    
-    posX = listView.frame.origin.x + listView.frame.size.width;
-    posY = 0;
-    width = 40;
-    
-    UIView* leftView = [self createLeftView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:leftView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -69,42 +61,9 @@
 
 #pragma mark - create view
 
-- (UIView*)createLeftView:(CGRect) rect
-{
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    
-    UIView* view = [[UIView alloc] initWithFrame:rect];
-    
-    
-    CGFloat width = 25;
-    CGFloat height = 25;
-    CGFloat posX = (rect.size.width - 25) / 2;
-    CGFloat posY = (rect.size.width - 25) / 2;
-    
-    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
-    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
-
-    
-    width = rect.size.width;
-    height = width;
-    posX = 0;
-    posY = statusBarHeight;
-    
-    UIView* bgView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    [bgView setBackgroundColor:[UIColor colorWithRed:53.0f/255.0f green:167.0f/255.0f blue:191.0f/255.0f alpha:1.0f]];
-    [bgView addSubview:settingbutton];
-    
-    [view addSubview:bgView];
-
-    
-    return view;
-}
-
 - (UIView*)createListView:(CGRect) rect
 {
     UIView* view = [[UIView alloc] initWithFrame:rect];
-    view.backgroundColor = [UIColor lightGrayColor];
     
     CGFloat viewWidth = rect.size.width;
     CGFloat viewHeight = rect.size.height;
@@ -125,13 +84,6 @@
     return view;
 }
 
-#pragma mark - UIButton
-
--(void)clickedBtnSetting:(id)sender
-{
-    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleLeft];
-}
 
 #pragma mark - Table view data source
 
@@ -294,13 +246,13 @@
     
     if (row == 0) {
         AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
-        [delegate toggleMyRaidersWithUser:_user];
+        [delegate toggleMyRaiders];
     } else if (row == 1) {
         AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
-        [delegate toggleMyPlanWithUser:_user];
+        [delegate toggleMyPlan];
     } else if (row == 2) {
         AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
-        [delegate toggleEventListWithUser:_user];
+        [delegate toggleEventList];
     } else if (row == 3) {
         
     } else if (row == 4) {

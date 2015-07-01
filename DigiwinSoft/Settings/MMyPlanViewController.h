@@ -11,6 +11,4 @@
 
 @interface MMyPlanViewController : UIViewController
 
-- (id)initWithUser:(MUser*) user;
-
 @end

@@ -79,12 +79,6 @@
 
 -(void) addMainMenu
 {
-    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
-    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
-    self.navigationItem.rightBarButtonItem = right_bar_item;
-    
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
     self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
@@ -113,12 +107,6 @@
 }
 
 #pragma mark - UIButton
-
--(void)clickedBtnSetting:(id)sender
-{
-    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleLeft];
-}
 
 -(void)back:(id)sender
 {
