@@ -44,8 +44,8 @@
     
     /* 開始繪製矩形 */
     CGContextBeginPath(context);
-    CGContextSetRGBFillColor(context, 0, 0, 0, 0.0);// CGContextSetRGBFillColor(CGContextRef ,r,g,h,alpha)
-    CGContextAddRect( context , CGRectMake(0, 0, rect.size.width, rect.size.height));//CGRectMake(CGFloat x,CGFloat y,CGFloat width,CGFloat height)
+    CGContextSetRGBFillColor(context, 0, 0, 0, 0.0);
+    CGContextAddRect( context , CGRectMake(0, 0, rect.size.width, rect.size.height));
     CGContextClosePath(context);
     CGContextDrawPath(context,kCGPathFill);
     //
