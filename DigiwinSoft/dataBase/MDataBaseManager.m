@@ -378,7 +378,7 @@ static MDataBaseManager* _director = nil;
         guide.status = [rs stringForColumn:@"STATUS"];
         
         NSString* tarID = [rs stringForColumn:@"TAR_ID"];
-        guide.target = [self loadCustTargetWithID:target];
+        guide.target = [self loadCustTargetWithID:tarID];
         
         NSString* phenId = [rs stringForColumn:@"FROM_PHEN_ID"];
         guide.fromPhen = [self loadPhenWithID:phenId];
