@@ -21,5 +21,9 @@
 @property (nonatomic, strong) NSString* upMin;  //實績提升率min
 @property (nonatomic, strong) NSString* upMax;  //實績提升率max
 
+@property (nonatomic, strong) NSString* valueR; //實際值;
+@property (nonatomic, strong) NSString* valueT; //目標值;
+@property (nonatomic, strong) NSString* completeDate; //預計達成日
+
 
 @end

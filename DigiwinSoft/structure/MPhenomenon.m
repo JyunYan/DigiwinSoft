@@ -10,4 +10,13 @@
 
 @implementation MPhenomenon
 
+- (id)init
+{
+    if(self = [super init]){
+    
+        _target = [MTarget new];
+    }
+    return self;
+}
+
 @end
