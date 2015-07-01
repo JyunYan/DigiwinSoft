@@ -363,9 +363,13 @@ static MDataBaseManager* _director = nil;
     // where g.RELEASE = false
     // order by CREATE_DATE
     
+    NSString* releaseStr = @"0";
+    if (release)
+        releaseStr = @"1";
+    
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, release];
+    FMResultSet* rs = [self.db executeQuery:sql, releaseStr];
     while([rs next]){
         
         MCustGuide* guide = [MCustGuide new];

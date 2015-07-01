@@ -20,7 +20,7 @@
 
 @interface MMyRaidersViewController ()
 
-@property (nonatomic, strong) NSMutableArray* guideArray;
+@property (nonatomic, strong) NSArray* guideArray;
 
 @end
 
@@ -29,8 +29,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _guideArray = [[NSMutableArray alloc] init];
-        [self createTestData];
+        _guideArray = [[MDataBaseManager sharedInstance] loadCustomGuideArrayByRelease:YES];
     }
     return self;
 }
@@ -52,28 +51,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - create test data
-
-- (void)createTestData {
-    for (int i = 0; i < 2; i++) {
-        MGuide* guide = [[MGuide alloc] init];
-        if (i == 0) {
-            guide.uuid = @"test12345";
-            guide.name = @"防止半成品製造批量浮增";
-        } else {
-            guide.uuid = @"test98765";
-            guide.name = @"推動銷售預測管理";
-        }
-        
-        MUser* user = [[MUser alloc] init];
-        user.name = @"陳又華";
-        
-        guide.manager = user;
-        
-        [_guideArray addObject:guide];
-    }
 }
 
 #pragma mark - create view
@@ -171,7 +148,8 @@
     
     NSInteger row = indexPath.row;
     
-    MGuide* guide = [_guideArray objectAtIndex:row];
+    MCustGuide* guide = [_guideArray objectAtIndex:row];
+    MCustTarget* target = guide.target;
     
     UILabel* countermeasureLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_COUNTERMEASURE];
     UILabel* indexLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_INDEX];
@@ -181,9 +159,11 @@
     NSString* countermeasureStr = [NSString stringWithFormat:@"對策：%@", guide.name];
     countermeasureLabel.text = countermeasureStr;
     
-    indexLabel.text = @"指標：";
+    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", target.name];
+    indexLabel.text = indexStr;
     
-    presentValueLabel.text = @"現值：";
+    NSString* presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", target.valueR, target.unit];
+    presentValueLabel.text = presentValueStr;
     
     MUser* user = guide.manager;
     NSString* personInChargeStr = [NSString stringWithFormat:@"負責人：%@", user.name];
