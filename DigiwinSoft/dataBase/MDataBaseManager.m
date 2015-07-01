@@ -129,7 +129,6 @@ static MDataBaseManager* _director = nil;
         
         [array addObject:event];
     }
-    
     return array;
 }
 
@@ -220,13 +219,12 @@ static MDataBaseManager* _director = nil;
 - (NSArray*)loadPhenArray
 {
     NSString* uuid = [MDirector sharedInstance].currentUser.industryId;
-    NSString* sql = @"select p.*, t.NAME, t.UNIT from M_INDUSTRY as i inner join R_IND_PHEN as rip on i.ID = rip.IND_ID inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID inner join M_TARGET as t on t.ID = p.TAR_ID where i.ID = ?";
+    NSString* sql = @"select p.*, t.NAME, t.UNIT from R_IND_PHEN as rip inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID inner join M_TARGET as t on t.ID = p.TAR_ID where rip.IND_ID = ?";
     // select p.*, t.NAME, t.UNIT
-    // from M_INDUSTRY as i
-    // inner join R_IND_PHEN as rip on i.ID = rip.IND_ID
+    // from R_IND_PHEN as rip
     // inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID
     // inner join M_TARGET as t on t.ID = p.TAR_ID
-    // where i.ID = 'ind-001'
+    // where rip.IND_ID = 'ind-001'
     
     NSMutableArray* array = [NSMutableArray new];
     
@@ -237,16 +235,31 @@ static MDataBaseManager* _director = nil;
         phen.uuid = [rs stringForColumn:@"ID"];
         phen.subject = [rs stringForColumn:@"SUBJECT"];
         phen.desc = [rs stringForColumn:@"DESCRIPTION"];
-        //phen.target = [rs stringForColumn:@"NAME"];
         
         MTarget* target = phen.target;
         target.uuid = [rs stringForColumn:@"TAR_ID"];
         target.name = [rs stringForColumn:@"NAME"];
         target.unit = [rs stringForColumn:@"UNIT"];
         
+        [self loadTargetDetailWithTarget:target];
+        
         [array addObject:phen];
     }
     return array;
+}
+
+- (BOOL)loadTargetDetailWithTarget:(MTarget*)target
+{
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select * from R_COMP_TAR where TAR_ID = ? and COMP_ID = ? order by DATETIME limit 1";
+    
+    FMResultSet* rs = [self.db executeQuery:sql, target.uuid, compid];
+    if([rs next]){
+        
+        target.valueR = [rs stringForColumn:@"VALUE_R"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+    }
+    return NO;
 }
 
 // p5, p25
@@ -275,6 +288,8 @@ static MDataBaseManager* _director = nil;
         target.name = [rs stringForColumnIndex:6];  // 指標name
         target.unit = [rs stringForColumn:@"UNIT"];
         
+        [self loadTargetDetailWithTarget:target];
+        
         [array addObject:guide];
     }
     return array;
@@ -284,12 +299,12 @@ static MDataBaseManager* _director = nil;
 - (NSArray*)loadIssueArrayByGudie:(MGuide*)guide
 {
     NSString* industryId = [MDirector sharedInstance].currentUser.industryId;
-    NSString* sql = @"select iss.*, tar.NAME, tar.UNIT, rit.* from M_ISSUE as iss inner join M_TARGET as tar on iss.TAR_ID = tar.ID inner join R_IND_TAR as rit on rit.TAR_ID = tar.ID inner join R_GUIDE_ISSUE as rgi on iss.ID = rgi.ISSUE_ID where rgi.GUIDE_ID = ? AND rit.IND_ID = ?";
+    NSString* sql = @"select tar.NAME, tar.UNIT, iss.*, rit.* from R_GUIDE_ISSUE as rgi inner join M_ISSUE as iss on iss.ID = rgi.ISSUE_ID inner join M_TARGET as tar on iss.TAR_ID = tar.ID inner join R_IND_TAR as rit on rit.TAR_ID = tar.ID where rgi.GUIDE_ID = ? AND rit.IND_ID = ?";
     // select iss.NAME, tar.NAME, tar.UNIT, rit.*
-    // from M_ISSUE as iss
+    // from R_GUIDE_ISSUE as rgi
+    // inner join M_ISSUE as iss on iss.ID = rgi.ISSUE_ID
     // inner join M_TARGET as tar on iss.TAR_ID = tar.ID
     // inner join R_IND_TAR as rit on rit.TAR_ID = tar.ID
-    // inner join R_GUIDE_ISSUE as rgi on iss.ID = rgi.ISSUE_ID
     // where rgi.GUIDE_ID = 'gui-001' AND rit.IND_ID = 'ind-001'
     
     NSMutableArray* array = [NSMutableArray new];
@@ -299,13 +314,13 @@ static MDataBaseManager* _director = nil;
         
         MIssue* issue = [MIssue new];
         issue.uuid = [rs stringForColumn:@"ID"];
-        issue.name = [rs stringForColumnIndex:2];   // 議題name
+        issue.name = [rs stringForColumnIndex:4];   // 議題name
         issue.desc = [rs stringForColumn:@"DESCRIPTION"];
         issue.reads = [rs stringForColumn:@"READS"];
         
         MTarget* target = issue.target;
-        target.uuid = [rs stringForColumnIndex:1];  //指標id
-        target.name = [rs stringForColumnIndex:5];   //指標name
+        target.uuid = [rs stringForColumnIndex:3];  //指標id
+        target.name = [rs stringForColumnIndex:0];   //指標name
         target.unit = [rs stringForColumn:@"UNIT"];
         
         target.top = [rs stringForColumn:@"TOP"];
@@ -313,6 +328,8 @@ static MDataBaseManager* _director = nil;
         target.bottom = [rs stringForColumn:@"BOTTOM"];
         target.upMin = [rs stringForColumn:@"UP_MIN"];
         target.upMax = [rs stringForColumn:@"UP_MAX"];
+        
+        [self loadTargetDetailWithTarget:target];
         
         [array addObject:issue];
     }
@@ -349,6 +366,9 @@ static MDataBaseManager* _director = nil;
         return NO;
     }
 }
+
+// p29
+//- (void)loadHistoryTargetArrayWithTarget:(MTarget*)target
 
 #pragma mark - 我的規劃/我的攻略
 
