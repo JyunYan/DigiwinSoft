@@ -11,6 +11,7 @@
 #import "ASFileManager.h"
 #import "MActivity.h"
 #import "MWorkItem.h"
+#import "MDirector.h"
 
 
 #define TAG_LABEL_WORK_ITEM 200
@@ -138,12 +139,6 @@
 
 -(void) addMainMenu
 {
-    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
-    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
-    self.navigationItem.rightBarButtonItem = right_bar_item;
-    
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
     self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
@@ -191,6 +186,7 @@
     // 指標
     UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     indexLabel.text = @"指標：";
+    indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     indexLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:indexLabel];
     
@@ -199,6 +195,7 @@
     // 現值
     UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 25, height)];
     presentValueLabel.text = @"現值：";
+    presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     presentValueLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:presentValueLabel];
     
@@ -207,6 +204,7 @@
     // 負責人
     UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 25, height)];
     personInChargeLabel.text = @"負責人：";
+    personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:personInChargeLabel];
     
@@ -215,7 +213,8 @@
 
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 25, 25)];
     imageView.backgroundColor = [UIColor clearColor];
-    imageView.image = [self loadLocationImage:nil];;
+//    imageView.image = [self loadLocationImage:nil];;
+    imageView.image = [UIImage imageNamed:@"Button-Favorite-List-Normal.png"];
     [view addSubview:imageView];
 
     
@@ -245,12 +244,6 @@
 }
 
 #pragma mark - UIButton
-
--(void)clickedBtnSetting:(id)sender
-{
-    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleLeft];
-}
 
 -(void)back:(id)sender
 {
@@ -310,6 +303,7 @@
     // 關鍵活動
     UILabel* keyActivitiesLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     keyActivitiesLabel.text = keyActivitiesStr;
+    keyActivitiesLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     keyActivitiesLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [infoView addSubview:keyActivitiesLabel];
     
@@ -319,6 +313,7 @@
     // 負責人
     UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     personInChargeLabel.text = personInChargeStr;
+    personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
     [infoView addSubview:personInChargeLabel];
     
@@ -327,6 +322,7 @@
     // 截止日
     UILabel* deadlineLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     deadlineLabel.text = @"截止日：";
+    deadlineLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     deadlineLabel.font = [UIFont systemFontOfSize:textSize];
     [infoView addSubview:deadlineLabel];
 
@@ -358,6 +354,7 @@
     UILabel* workItemLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     workItemLabel.text = @"工作項目";
     workItemLabel.textAlignment = NSTextAlignmentCenter;
+    workItemLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     workItemLabel.font = [UIFont systemFontOfSize:textSize];
     [titleView addSubview:workItemLabel];
     
@@ -367,6 +364,7 @@
     // 指派負責人
     UILabel* appointResponsibleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     appointResponsibleLabel.text = @"指派負責人";
+    appointResponsibleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     appointResponsibleLabel.textAlignment = NSTextAlignmentCenter;
     appointResponsibleLabel.font = [UIFont systemFontOfSize:textSize];
     [titleView addSubview:appointResponsibleLabel];
@@ -377,6 +375,7 @@
     // 截止日
     UILabel* deadlineTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     deadlineTitleLabel.text = @"截止日";
+    deadlineTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     deadlineTitleLabel.textAlignment = NSTextAlignmentCenter;
     deadlineTitleLabel.font = [UIFont systemFontOfSize:textSize];
     [titleView addSubview:deadlineTitleLabel];
@@ -428,6 +427,7 @@
         workItemLabel.text = @"工作項目";
         workItemLabel.tag = TAG_LABEL_WORK_ITEM;
         workItemLabel.textAlignment = NSTextAlignmentCenter;
+        workItemLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         workItemLabel.font = [UIFont systemFontOfSize:textSize];
         [view addSubview:workItemLabel];
         
@@ -438,6 +438,7 @@
         UILabel* appointResponsibleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         appointResponsibleLabel.tag = TAG_LABEL_APPOINT_RESPONSIBLE;
         appointResponsibleLabel.textAlignment = NSTextAlignmentCenter;
+        appointResponsibleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         appointResponsibleLabel.font = [UIFont systemFontOfSize:textSize];
         [view addSubview:appointResponsibleLabel];
         
@@ -448,6 +449,7 @@
         UILabel* deadlineLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         deadlineLabel.tag = TAG_LABEL_DEADLINE;
         deadlineLabel.textAlignment = NSTextAlignmentCenter;
+        deadlineLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         deadlineLabel.font = [UIFont systemFontOfSize:textSize];
         [view addSubview:deadlineLabel];
     }

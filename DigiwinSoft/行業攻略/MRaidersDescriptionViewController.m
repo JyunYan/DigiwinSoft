@@ -58,14 +58,6 @@
 }
 -(void)addMainMenu
 {
-    
-    //rightBarButtonItem
-    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
-    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
-    self.navigationItem.rightBarButtonItem = bar_item;
-
     //screenSize
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
     screenWidth = screenSize.width;
@@ -141,12 +133,7 @@
     [self.view addSubview:tbl];
 }
 #pragma mark - UIButton
--(void)clickedBtnSetting:(id)sender
-{
-    MRaidersDiagramViewController *MRaidersDiagramVC=[[MRaidersDiagramViewController alloc]init];
-    MRaidersDiagramVC.strTitle=labTitle.text;
-    [self.navigationController pushViewController:MRaidersDiagramVC animated:YES];
-}
+
 -(void)clickedBtnBcak:(id)sender
 {
 [self dismissViewControllerAnimated:YES completion:nil];

@@ -8,6 +8,7 @@
 
 #import "MInventoryTurnoverViewController.h"
 #import "MRaidersDiagramViewController.h"
+#import "MLineChartView.h"
 @interface MInventoryTurnoverViewController ()
 {
     UITextField *txtTargetDay;
@@ -200,7 +201,119 @@
 #pragma mark - UIButton
 -(void)btnShowImg:(id)sender
 {
-    NSLog(@"pushTo29");
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height - 40)];
+    [view setBackgroundColor:[UIColor whiteColor]];
+    
+    MLineChartView* quartz = [[MLineChartView alloc] initWithPoints:[self loadQuartzData]];
+    quartz.frame = CGRectMake(50, 50, 280, 200);
+    quartz.backgroundColor = [UIColor colorWithRed:212.0/255.0 green:219.0/255.0 blue:227.0/255.0 alpha:1.0];
+    [view addSubview:quartz];
+    
+    [self.view addSubview:view];
+}
+
+- (NSMutableArray*)loadQuartzData
+{
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+    
+    NSString* count = @"22";
+    NSString* day = @"01";
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"65";
+    day = @"02";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"60";
+    day = @"03";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"40";
+    day = @"04";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"70";
+    day = @"05";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"85";
+    day = @"06";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"60";
+    day = @"07";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"90";
+    day = @"08";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"110";
+    day = @"09";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"82";
+    day = @"10";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"51";
+    day = @"11";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"30";
+    day = @"12";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    return array;
+    
 }
 /*
 #pragma mark - Navigation

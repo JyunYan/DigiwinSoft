@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "DownPicker.h"
 #import "MEventDetailViewController.h"
+#import "MDirector.h"
 
 
 #define TAG_LABEL_PHENOMENON_STATUS 200
@@ -72,7 +73,7 @@
     height = 10;
     
     UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    lineView.backgroundColor = [UIColor colorWithRed:214.0f/255.0f green:214.0f/255.0f blue:214.0f/255.0f alpha:1.0f];
+    lineView.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     [self.view addSubview:lineView];
   
   
@@ -101,12 +102,6 @@
 
 -(void) addMainMenu
 {
-    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
-    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
-    self.navigationItem.rightBarButtonItem = right_bar_item;
-    
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
     self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
@@ -155,7 +150,7 @@
     NSString* eventCodeStr = [NSString stringWithFormat:@"事件碼：%@", _event.uuid];
     UILabel* eventCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2, 30)];
     eventCodeLabel.text = eventCodeStr;
-    eventCodeLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
+    eventCodeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     eventCodeLabel.font = [UIFont systemFontOfSize:textSize];
     [leftView addSubview:eventCodeLabel];
     
@@ -164,7 +159,7 @@
     NSString* occurrenceDateStr = [NSString stringWithFormat:@"發生日：%@", _event.start];
     UILabel* occurrenceDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, 30)];
     occurrenceDateLabel.text = occurrenceDateStr;
-    occurrenceDateLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
+    occurrenceDateLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     occurrenceDateLabel.font = [UIFont systemFontOfSize:textSize];
     [leftView addSubview:occurrenceDateLabel];
     
@@ -172,7 +167,7 @@
     // 發生期間
     UILabel* duringHappenLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, 30)];
     duringHappenLabel.text = @"發生期間：";
-    duringHappenLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
+    duringHappenLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     duringHappenLabel.font = [UIFont systemFontOfSize:textSize];
     [leftView addSubview:duringHappenLabel];
     
@@ -188,7 +183,7 @@
 
     UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 30)];
     personInChargeTitleLabel.text = @"負 責 人 ：";
-    personInChargeTitleLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
+    personInChargeTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     personInChargeTitleLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:personInChargeTitleLabel];
 
@@ -196,7 +191,7 @@
 
     UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 75, 30)];
     personInChargeLabel.text = _user.name;
-    personInChargeLabel.textColor = [UIColor colorWithRed:68.0f/255.0f green:166.0f/255.0f blue:193.0f/255.0f alpha:1.0f];
+    personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomBlueColor];
     personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:personInChargeLabel];
     
@@ -206,7 +201,7 @@
 
     UILabel* reportingHierarchyTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 30)];
     reportingHierarchyTitleLabel.text = @"上報層級：";
-    reportingHierarchyTitleLabel.textColor = [UIColor colorWithRed:168.0f/255.0f green:168.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
+    reportingHierarchyTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     reportingHierarchyTitleLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:reportingHierarchyTitleLabel];
 
@@ -214,7 +209,7 @@
 
     UILabel* reportingHierarchyLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 75, 30)];
     reportingHierarchyLabel.text = @"上報層級";
-    reportingHierarchyLabel.textColor = [UIColor colorWithRed:68.0f/255.0f green:166.0f/255.0f blue:193.0f/255.0f alpha:1.0f];
+    reportingHierarchyLabel.textColor = [[MDirector sharedInstance] getCustomBlueColor];
     reportingHierarchyLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:reportingHierarchyLabel];
     
@@ -234,7 +229,7 @@
     CGFloat height = viewHeight - 1;
 
     UIButton* nextButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    nextButton.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:137.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
+    nextButton.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
     [nextButton setTitle:@"下一步" forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(actionNext:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:nextButton];
@@ -273,12 +268,6 @@
 }
 
 #pragma mark - UIButton
-
--(void)clickedBtnSetting:(id)sender
-{
-    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleLeft];
-}
 
 -(void)back:(id)sender
 {
@@ -453,7 +442,7 @@
         UILabel* phenomenonStatusTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, height)];
         phenomenonStatusTitleLabel.text = @"現象狀況：";
         phenomenonStatusTitleLabel.font = [UIFont systemFontOfSize:textSize];
-        phenomenonStatusTitleLabel.textColor = [UIColor lightGrayColor];
+        phenomenonStatusTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         [cell addSubview:phenomenonStatusTitleLabel];
         
         posX = phenomenonStatusTitleLabel.frame.origin.x + phenomenonStatusTitleLabel.frame.size.width;
@@ -471,7 +460,7 @@
         UILabel* possibleCausesTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 30)];
         possibleCausesTitleLabel.text = @"可能原因：";
         possibleCausesTitleLabel.font = [UIFont systemFontOfSize:textSize];
-        possibleCausesTitleLabel.textColor = [UIColor lightGrayColor];
+        possibleCausesTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         [cell addSubview:possibleCausesTitleLabel];
         
         posX = possibleCausesTitleLabel.frame.origin.x + possibleCausesTitleLabel.frame.size.width;

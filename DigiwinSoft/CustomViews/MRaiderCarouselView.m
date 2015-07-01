@@ -9,6 +9,7 @@
 #import "MRaiderCarouselView.h"
 #import "iCarousel.h"
 #import "MCarouselItemView.h"
+#import "MPhenomenon.h"
 
 @interface MRaiderCarouselView ()<iCarouselDataSource, iCarouselDelegate>
 
@@ -53,7 +54,6 @@
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    return 10;
     return _phenArray.count;
 }
 
@@ -65,9 +65,12 @@
         view.alpha = .3;
     }
     
+    MPhenomenon* phen = [_phenArray objectAtIndex:index];
+    
     MCarouselItemView* ciview = (MCarouselItemView*)view;
+    ciview.content = phen.subject;
     //ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
-    ciview.content = @"小批量接單沒好配套，呆滯急遽增加";
+    //ciview.content = @"小批量接單沒好配套，呆滯急遽增加";
     
     if(index == carousel.currentItemIndex){
         ciview.pointSize = 20.;

@@ -153,7 +153,7 @@
     txtField=[[UITextField alloc]initWithFrame:CGRectMake(labTarget.frame.origin.x+labTarget.frame.size.width+3,textView.frame.origin.y+textView.frame.size.height+27,200,26)];
     txtField.backgroundColor=[UIColor whiteColor];
     txtField.borderStyle=UITextBorderStyleLine;
-    txtField.text=self.phen.target;
+    txtField.text=self.phen.target.name;
     txtField.enabled=NO;
     txtField.font=[UIFont systemFontOfSize:12];
     txtField.delegate = self;
