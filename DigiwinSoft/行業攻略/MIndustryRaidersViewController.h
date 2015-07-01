@@ -13,7 +13,7 @@
 {
     UITableView *tbl;
     UIImageView *img;
-    NSMutableArray *aryList;
+    NSArray *aryList;
     NSArray *ary;
 }
 @property (nonatomic, assign) BOOL isLogin;

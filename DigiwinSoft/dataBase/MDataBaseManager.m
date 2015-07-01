@@ -220,8 +220,8 @@ static MDataBaseManager* _director = nil;
 - (NSArray*)loadPhenArray
 {
     NSString* uuid = [MDirector sharedInstance].currentUser.industryId;
-    NSString* sql = @"select p.*, t.NAME from M_INDUSTRY as i inner join R_IND_PHEN as rip on i.ID = rip.IND_ID inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID inner join M_TARGET as t on t.ID = p.TAR_ID where i.ID = ?";
-    // select p.*, t.NAME
+    NSString* sql = @"select p.*, t.NAME, t.UNIT from M_INDUSTRY as i inner join R_IND_PHEN as rip on i.ID = rip.IND_ID inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID inner join M_TARGET as t on t.ID = p.TAR_ID where i.ID = ?";
+    // select p.*, t.NAME, t.UNIT
     // from M_INDUSTRY as i
     // inner join R_IND_PHEN as rip on i.ID = rip.IND_ID
     // inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID
@@ -237,7 +237,12 @@ static MDataBaseManager* _director = nil;
         phen.uuid = [rs stringForColumn:@"ID"];
         phen.subject = [rs stringForColumn:@"SUBJECT"];
         phen.desc = [rs stringForColumn:@"DESCRIPTION"];
-        phen.target = [rs stringForColumn:@"NAME"];
+        //phen.target = [rs stringForColumn:@"NAME"];
+        
+        MTarget* target = phen.target;
+        target.uuid = [rs stringForColumn:@"TAR_ID"];
+        target.name = [rs stringForColumn:@"NAME"];
+        target.unit = [rs stringForColumn:@"UNIT"];
         
         [array addObject:phen];
     }
@@ -314,6 +319,173 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
+// p27
+- (BOOL)loadTargetSettingsSampleIntoGuide:(MGuide*)guide
+{
+    if(!guide)
+        return NO;
+    
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select rct.* from M_GUIDE as g inner join M_TARGET as t on g.TAR_ID = t.ID inner join R_COMP_TAR as rct on t.ID = rct.TAR_ID where g.ID = 'gui-001' and rct.COMP_ID = 'cmp-001' order by rct.DATETIME desc";
+    // select rct.*
+    // from M_GUIDE as g
+    // inner join M_TARGET as t on g.TAR_ID = t.ID
+    // inner join R_COMP_TAR as rct on t.ID = rct.TAR_ID
+    // where g.ID = 'gui-001' and rct.COMP_ID = 'cmp-001'
+    // order by rct.DATETIME desc
+    // limit 1
+    
+    FMResultSet* rs = [self.db executeQuery:sql, guide.uuid, compid];
+    if([rs next]){
+        
+        MTarget* target = guide.target;
+        target.valueR = [rs stringForColumn:@"VALUE_R"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+        
+        return YES;
+        
+    }else{
+        NSLog(@"no match target settings sample !!");
+        return NO;
+    }
+}
+
+#pragma mark - 我的規劃/我的攻略
+
+// No:規劃(未發佈) Yes:攻略(發佈)
+- (NSArray*)loadCustomGuideArrayByRelease:(BOOL)release
+{
+    NSString* sql = @"select * from U_GUIDE where RELEASE = ? order by CREATE_DATE";
+    // select mt.NAME, g.*, ut.*
+    // from U_GUIDE as g
+    // inner join U_TARGET as ut on g.TAR_ID = ut.ID
+    // inner join M_TARGET as mt on ut.TAR_M_ID = mt.ID
+    // where g.RELEASE = false
+    // order by CREATE_DATE
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, release];
+    while([rs next]){
+        
+        MCustGuide* guide = [MCustGuide new];
+        guide.uuid = [rs stringForColumn:@"ID"];
+        guide.companyID = [rs stringForColumn:@"COMP_ID"];
+        guide.gui_uuid = [rs stringForColumn:@"GUI_M_ID"];
+        guide.name = [rs stringForColumn:@"NAME"];
+        guide.desc = [rs stringForColumn:@"DESCRIPTION"];
+        guide.bRelease = [rs boolForColumn:@"RELEASE"];
+        guide.status = [rs stringForColumn:@"STATUS"];
+        
+        NSString* tarID = [rs stringForColumn:@"TAR_ID"];
+        guide.target = [self loadCustTargetWithID:target];
+        
+        NSString* phenId = [rs stringForColumn:@"FROM_PHEN_ID"];
+        guide.fromPhen = [self loadPhenWithID:phenId];
+        
+        NSString* issueId = [rs stringForColumn:@"FROM_ISS_ID"];
+        guide.fromIssue = [self loadIssueWithID:issueId];
+        
+        [array addObject:guide];
+        
+    }
+    
+    return array;
+}
+
+- (MCustTarget*)loadCustTargetWithID:(NSString*)tarid
+{
+    if(!tarid)
+        return nil;
+    
+    NSString* sql = @"select * from U_TARGET where ID = ?";
+    
+    FMResultSet* rs = [self.db executeQuery:sql, tarid];
+    if([rs next]){
+        MCustTarget* target = [MCustTarget new];
+        
+        target.uuid = [rs stringForColumn:@"ID"];
+        target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
+        target.name = [rs stringForColumn:@"NAME"];
+        target.valueR = [rs stringForColumn:@"VALUE_R"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.startDate = [rs stringForColumn:@"START_DATE"];
+        target.completeDate = [rs stringForColumn:@"COMPLETED"];
+        
+        return target;
+    }
+    return nil;
+}
+
+- (MPhenomenon*)loadPhenWithID:(NSString*)phenid
+{
+    if(!phenid)
+        return nil;
+    
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select * from M_PHENOMENON as p inner join M_TARGET as t on p.TAR_ID = t.ID inner join R_COMP_TAR as rct on rct.TAR_ID = t.ID where rct.COMP_ID = ? and p.ID = ? order by DATETIME desc limit 1";
+    // select *
+    // from M_PHENOMENON as p
+    // inner join M_TARGET as t on p.TAR_ID = t.ID
+    // inner join R_COMP_TAR as rct on rct.TAR_ID = t.ID
+    // where rct.COMP_ID = 'cmp-001' and p.ID = 'phe-001'
+    // order by DATETIME desc
+    // limit 1
+    
+    FMResultSet* rs = [self.db executeQuery:sql, compid, phenid];
+    if([rs next]){
+        MPhenomenon* phen = [MPhenomenon new];
+        phen.uuid = [rs stringForColumnIndex:0];
+        phen.subject = [rs stringForColumn:@"SUBJECT"];
+        phen.desc = [rs stringForColumn:@"DESCRIPTION"];
+        
+        MTarget* target = phen.target;
+        target.uuid = [rs stringForColumnIndex:4];
+        target.name = [rs stringForColumn:@"NAME"];
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.valueR = [rs stringForColumn:@"VALUE_R"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+        
+        return phen;
+    }
+    return nil;
+}
+
+- (MIssue*)loadIssueWithID:(NSString*)issueid
+{
+    if(!issueid)
+        return nil;
+    
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select * from M_ISSUE as iss inner join M_TARGET as t on iss.TAR_ID = t.ID inner join R_COMP_TAR as rct on rct.TAR_ID = t.ID where rct.COMP_ID = 'cmp-001' and iss.ID = 'iss-001' order by DATETIME desc limit 1";
+    // select *
+    // from M_ISSUE as iss
+    // inner join M_TARGET as t on iss.TAR_ID = t.ID
+    // inner join R_COMP_TAR as rct on rct.TAR_ID = t.ID
+    // where rct.COMP_ID = 'cmp-001' and iss.ID = 'iss-001'
+    // order by DATETIME desc
+    // limit 1
+    
+    FMResultSet* rs = [self.db executeQuery:sql, compid, issueid];
+    if([rs next]){
+        MIssue* issue = [MIssue new];
+        issue.uuid = [rs stringForColumnIndex:0];
+        issue.name = [rs stringForColumnIndex:2];
+        issue.desc = [rs stringForColumn:@"DESCRIPTION"];
+        issue.reads = [rs stringForColumn:@"READS"];
+        
+        MTarget* target = issue.target;
+        target.uuid = [rs stringForColumnIndex:5];
+        target.name = [rs stringForColumnIndex:6];
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.valueR = [rs stringForColumn:@"VALUE_R"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+        
+        return issue;
+    }
+    return nil;
+}
 
 
 @end

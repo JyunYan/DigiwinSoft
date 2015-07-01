@@ -64,13 +64,13 @@
 - (void)prepareTestData
 {
     //aryList
-    aryList=[[NSMutableArray alloc]initWithArray:[MDataBaseManager sharedInstance].loadPhenArray];
+    aryList=[[MDataBaseManager sharedInstance] loadPhenArray];
 }
 -(void) addMainMenu
 {
     //rightBarButtonItem
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = bar_item;
@@ -111,6 +111,7 @@
     
     //MerryGoRound
     _rcView = [[MRaiderCarouselView alloc] initWithFrame:CGRectMake(0, 64, screenWidth, screenHeight - 113)];
+    _rcView.phenArray = aryList;
     _rcView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_rcView];
 
@@ -131,7 +132,7 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80.0f;
+    return 72.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [aryList count];
@@ -142,10 +143,12 @@
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell==nil) {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.font = [UIFont systemFontOfSize:14.];
     }
     cell.textLabel.text=[aryList[indexPath.row]subject];
-    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
     
 }

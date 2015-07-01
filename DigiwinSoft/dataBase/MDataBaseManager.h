@@ -18,6 +18,9 @@
 #import "MPhenomenon.h"
 #import "MIssue.h"
 
+#import "MCustGuide.h"
+#import "MCustTarget.h"
+
 @interface MDataBaseManager : NSObject
 
 @property (nonatomic, strong) FMDatabase* db;
@@ -39,5 +42,16 @@
 
 // get 對策Sample
 - (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen;
+
+// get 議題Sample By 對策
+- (NSArray*)loadIssueArrayByGudie:(MGuide*)guide;
+
+// get 對策的指標設定Sample
+- (BOOL)loadTargetSettingsSampleIntoGuide:(MGuide*)guide;
+
+#pragma mark -
+
+// get 我的規劃/我的攻略, No:規劃(未發佈) Yes:攻略(發佈)
+- (NSArray*)loadCustomGuideArrayByRelease:(BOOL)release;
 
 @end

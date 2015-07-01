@@ -116,6 +116,8 @@
 		DCF46B181B42AAF300C771BB /* tab_icon_5.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF46AF41B42AAF300C771BB /* tab_icon_5.png */; };
 		DCF46B1D1B42B4C000C771BB /* icon_cloud_2.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF46B1B1B42B4C000C771BB /* icon_cloud_2.png */; };
 		DCF46B1E1B42B4C000C771BB /* icon_list_2.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF46B1C1B42B4C000C771BB /* icon_list_2.png */; };
+		DCF46B211B43A34F00C771BB /* MCustGuide.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B201B43A34F00C771BB /* MCustGuide.m */; };
+		DCF46B241B43C2F400C771BB /* MCustTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B231B43C2F400C771BB /* MCustTarget.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -303,6 +305,10 @@
 		DCF46AF41B42AAF300C771BB /* tab_icon_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_icon_5.png; sourceTree = "<group>"; };
 		DCF46B1B1B42B4C000C771BB /* icon_cloud_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_cloud_2.png; sourceTree = "<group>"; };
 		DCF46B1C1B42B4C000C771BB /* icon_list_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_list_2.png; sourceTree = "<group>"; };
+		DCF46B1F1B43A34F00C771BB /* MCustGuide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustGuide.h; path = structure/MCustGuide.h; sourceTree = "<group>"; };
+		DCF46B201B43A34F00C771BB /* MCustGuide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustGuide.m; path = structure/MCustGuide.m; sourceTree = "<group>"; };
+		DCF46B221B43C2F400C771BB /* MCustTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustTarget.h; path = structure/MCustTarget.h; sourceTree = "<group>"; };
+		DCF46B231B43C2F400C771BB /* MCustTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustTarget.m; path = structure/MCustTarget.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -674,6 +680,10 @@
 				DCF46ACC1B4236CB00C771BB /* MTarget.m */,
 				DCF46ACE1B428F1400C771BB /* MIssue.h */,
 				DCF46ACF1B428F1400C771BB /* MIssue.m */,
+				DCF46B1F1B43A34F00C771BB /* MCustGuide.h */,
+				DCF46B201B43A34F00C771BB /* MCustGuide.m */,
+				DCF46B221B43C2F400C771BB /* MCustTarget.h */,
+				DCF46B231B43C2F400C771BB /* MCustTarget.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -850,6 +860,7 @@
 				D06C2D411B381850009D2082 /* FMDatabase.m in Sources */,
 				DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */,
 				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
+				DCF46B211B43A34F00C771BB /* MCustGuide.m in Sources */,
 				3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */,
 				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
 				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
@@ -870,6 +881,7 @@
 				3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */,
 				DCF46AB91B41279900C771BB /* iCarousel.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
+				DCF46B241B43C2F400C771BB /* MCustTarget.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
