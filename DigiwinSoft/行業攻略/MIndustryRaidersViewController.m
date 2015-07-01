@@ -25,11 +25,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    [self prepareTestData];
+    [self loadData];
     [self addMainMenu];
     
-    MLoginViewController *MLoginVC=[[MLoginViewController alloc]init];
-    [self presentViewController:MLoginVC animated:YES completion:nil];
+//    MLoginViewController *MLoginVC=[[MLoginViewController alloc]init];
+//    [self presentViewController:MLoginVC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,16 +61,16 @@
 
 #pragma mark - create view
 
-- (void)prepareTestData
+- (void)loadData
 {
     //aryList
-    aryList=[[NSMutableArray alloc]initWithArray:[MDataBaseManager sharedInstance].loadPhenArray];
+    aryList=[[MDataBaseManager sharedInstance] loadPhenArray];
 }
 -(void) addMainMenu
 {
     //rightBarButtonItem
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = bar_item;
@@ -151,10 +151,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] init];
-    [MIndustryRaiders2VC setStrTitle:[aryList[indexPath.row]subject]];
-    [MIndustryRaiders2VC setStrDesc:[aryList[indexPath.row]desc]];
     [MIndustryRaiders2VC setPhen:aryList[indexPath.row]];
-    [MIndustryRaiders2VC setIsFrom:YES];
     [self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

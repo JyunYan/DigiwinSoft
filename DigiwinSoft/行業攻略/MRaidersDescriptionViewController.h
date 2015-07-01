@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "MGuide.h"
 @interface MRaidersDescriptionViewController : UIViewController<UIWebViewDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *tbl;
     UIWebView *webViewVideo;
     UIButton *btn;
     UILabel *labTitle;
-    NSMutableArray *aryList;
+    NSArray *aryList;
 }
-@property (nonatomic, weak) NSString *strTitle;
+@property (nonatomic, weak) MGuide *guide;
 @end

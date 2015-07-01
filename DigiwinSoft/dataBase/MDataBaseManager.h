@@ -40,4 +40,6 @@
 // get 對策Sample
 - (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen;
 
+
+- (NSArray*)loadIssueArrayByGudie:(MGuide*)guide;
 @end
