@@ -20,6 +20,8 @@
 
 @interface MMyPlanViewController ()<UITableViewDelegate, UITableViewDataSource, SWTableViewCellDelegate>
 
+@property (nonatomic, strong) UITableView* tableView;
+
 @property (nonatomic, strong) NSMutableArray* guideArray;
 
 @end
@@ -66,8 +68,8 @@
     width = screenWidth;
     height = screenHeight - posY - navBarHeight;
 
-    UIView* tableView = [self createTableView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:tableView];
+    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
+    [self.view addSubview:listView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -168,7 +170,7 @@
     return view;
 }
 
-- (UIView*)createTableView:(CGRect) rect
+- (UIView*)createListView:(CGRect) rect
 {
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor lightGrayColor];
@@ -181,11 +183,11 @@
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = viewHeight - posY * 2;
 
-    UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    tableView.backgroundColor = [UIColor whiteColor];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [view addSubview:tableView];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [view addSubview:_tableView];
     
     return view;
 }
@@ -324,9 +326,12 @@
 #pragma mark - SWTableViewDelegate
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    NSIndexPath *cellIndexPath = [_tableView indexPathForCell:cell];
+    NSInteger row = cellIndexPath.row;
+    
     switch (index) {
         case 0:
-            NSLog(@"check button was pressed");
+            NSLog(@"clock button was pressed");
             break;
         case 1:
             NSLog(@"clock button was pressed");
@@ -340,7 +345,7 @@
 {
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:140.0f/255.0f green:205.0f/255.0f blue:235.0f/255.0f alpha:1.0]
+     [UIColor colorWithRed:141.0f/255.0f green:206.0f/255.0f blue:231.0f/255.0f alpha:1.0]
                                                 title:@"轉攻略"];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:140.0f/255.0f green:205.0f/255.0f blue:230.0f/255.0f alpha:1.0]

@@ -16,6 +16,7 @@
 +(MDirector*) sharedInstance;
 
 - (UIColor *)getCustomGrayColor;
+- (UIColor *)getCustomLightGrayColor;
 - (UIColor *)getCustomBlueColor;
 - (UIColor *)getCustomRedColor;
 

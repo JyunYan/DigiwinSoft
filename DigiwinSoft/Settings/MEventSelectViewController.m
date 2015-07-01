@@ -73,7 +73,7 @@
     height = 10;
     
     UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    lineView.backgroundColor = [[MDirector sharedInstance] getCustomGrayColor];
+    lineView.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     [self.view addSubview:lineView];
   
   
