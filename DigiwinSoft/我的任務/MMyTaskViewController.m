@@ -160,7 +160,7 @@
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-//    [self createQuatrz2DView];
+    [self createQuatrz2DView];
 }
 
 #pragma mark - UIButton
@@ -201,23 +201,105 @@
     [self.view addSubview:view];
 }
 
-
-
 - (NSMutableArray*)loadQuartzData
 {
     NSMutableArray* array = [[NSMutableArray alloc] init];
     
-    for (int i = 0; i < 11; i++)
-    {
-        NSString* x = [NSString stringWithFormat:@"%d", i * 5];
-        NSString* y = [NSString stringWithFormat:@"%d", i * 10];
-        
-        NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
-        [dict setValue:x forKey:@"x"];
-        [dict setValue:y forKey:@"y"];
-        
-        [array addObject:dict];
-    }
+    NSString* count = @"22";
+    NSString* day = @"01";
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"65";
+    day = @"02";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"60";
+    day = @"03";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"40";
+    day = @"04";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"70";
+    day = @"05";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"85";
+    day = @"06";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"60";
+    day = @"07";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"90";
+    day = @"08";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"110";
+    day = @"09";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"82";
+    day = @"10";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"51";
+    day = @"11";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
+    
+    count = @"30";
+    day = @"12";
+    dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:count forKey:@"count"];
+    [dict setValue:day forKey:@"day"];
+    
+    [array addObject:dict];
     
     return array;
     
