@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MPhenomenon.h"
 @interface MIndustryRaiders2ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     NSMutableArray *aryList;
@@ -16,6 +16,11 @@
     UIButton *btn;
     UILabel *labTarget;
     UITextField *txtField;
+    UIImageView *imgblueBar;
+    UIImageView *imgGray;
 }
+@property (nonatomic, assign) BOOL isFrom;
 @property (nonatomic, weak) NSString *strTitle;
+@property (nonatomic, weak) NSString *strDesc;
+@property (nonatomic, weak) MPhenomenon *phen;
 @end

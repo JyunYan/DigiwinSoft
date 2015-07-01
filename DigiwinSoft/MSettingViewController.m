@@ -11,10 +11,13 @@
 #import "MUser.h"
 #import "AppDelegate.h"
 #import "UIViewController+MMDrawerController.h"
+#import "MDirector.h"
 
 @interface MSettingViewController ()<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) MUser* userData;
+@property (nonatomic, strong) UITableView* tableView;
+
+@property (nonatomic, strong) MUser* user;
 
 @end
 
@@ -23,8 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
-    [self createTestData];
     
     self.view.backgroundColor = [UIColor grayColor];
 
@@ -41,11 +42,11 @@
     CGFloat width = screenWidth - 40;
     CGFloat height = screenHeight + statusBarHeight;
     
-    UIView* tableView = [self createTableView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:tableView];
+    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
+    [self.view addSubview:listView];
     
     
-    posX = tableView.frame.origin.x + tableView.frame.size.width;
+    posX = listView.frame.origin.x + listView.frame.size.width;
     posY = 0;
     width = 40;
     
@@ -53,27 +54,16 @@
     [self.view addSubview:leftView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    _user = [MDirector sharedInstance].currentUser;
+    [_tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - create test data
-
-- (void)createTestData {
-    _userData = [[MUser alloc] init];
-    _userData.uuid = @"test12345";
-    _userData.name = @"李羅";
-    _userData.thumbnail = @"";
-    
-    _userData.email = @"luoli@digiwin.biz";
-    _userData.phone = @"123456789";
-    
-    _userData.industryId = @"industry123";
-    _userData.industryName = @"industryName";
-    
-    _userData.companyId = @"company123";
-    _userData.companyName = @"DC 集團";
 }
 
 #pragma mark - create view
@@ -88,15 +78,15 @@
     CGFloat height = 25;
     
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
+    [settingbutton setBackgroundColor:[UIColor colorWithRed:53.0f/255.0f green:167.0f/255.0f blue:191.0f/255.0f alpha:1.0f]];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:settingbutton];
     
     return view;
 }
 
-- (UIView*)createTableView:(CGRect) rect
+- (UIView*)createListView:(CGRect) rect
 {
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor lightGrayColor];
@@ -109,13 +99,13 @@
     CGFloat width = viewWidth;
     CGFloat height = viewHeight;
     
-    UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    tableView.backgroundColor = [UIColor whiteColor];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.backgroundColor = [UIColor blackColor];
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [view addSubview:tableView];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor blackColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [view addSubview:_tableView];
     
     return view;
 }
@@ -138,34 +128,40 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 121;
+    return 101;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView* header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 122)];
+    CGFloat tableWidth = tableView.frame.size.width;
+
+    UIView* header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableWidth, 102)];
     header.backgroundColor = [UIColor blackColor];
     
-    if (_userData == nil)
+    if (_user == nil)
         return header;
     
     
+    CGFloat textSize = 15.0f;
+
+    
     CGFloat posX = 30;
-    CGFloat posY = 20;
+    CGFloat posY = 10;
     
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 60, 60)];
     imageView.backgroundColor = [UIColor clearColor];
-    imageView.image = [self loadLocationImage:_userData.thumbnail];
+//    imageView.image = [self loadLocationImage:_user.thumbnail];
+    imageView.image = [UIImage imageNamed:@"Button-Favorite-List-Normal.png"];
     [header addSubview:imageView];
     
     
     posX = imageView.frame.origin.x + imageView.frame.size.width + 20;
-    posY = 15;
+    posY = 5;
 
     UILabel* username = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 200, 30)];
     username.backgroundColor = [UIColor clearColor];
-    username.font = [UIFont systemFontOfSize:18];
-    username.text = _userData.name;
+    username.font = [UIFont systemFontOfSize:textSize];
+    username.text = _user.name;
     username.textColor = [UIColor whiteColor];
     [header addSubview:username];
     
@@ -174,8 +170,8 @@
     
     UILabel* companyName = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 200, 20)];
     companyName.backgroundColor = [UIColor clearColor];
-    companyName.font = [UIFont systemFontOfSize:15];
-    companyName.text = _userData.companyName;
+    companyName.font = [UIFont systemFontOfSize:textSize];
+    companyName.text = _user.companyName;
     companyName.textColor = [UIColor lightGrayColor];
     [header addSubview:companyName];
     
@@ -184,13 +180,13 @@
     
     UILabel* email = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 200, 20)];
     email.backgroundColor = [UIColor clearColor];
-    email.font = [UIFont systemFontOfSize:15];
-    email.text = _userData.email;
+    email.font = [UIFont systemFontOfSize:textSize];
+    email.text = _user.email;
     email.textColor = [UIColor lightGrayColor];
     [header addSubview:email];
 
     
-    UIView* down = [[UIView alloc] initWithFrame:CGRectMake(0, 120, 320, 1)];
+    UIView* down = [[UIView alloc] initWithFrame:CGRectMake(0, 100, tableWidth, 1)];
     down.backgroundColor = [UIColor lightGrayColor];
     [header addSubview:down];
     
@@ -205,7 +201,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 45;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -219,7 +215,9 @@
         
         if (row > 0) {
             // up divider
-            UIView* up = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+            CGFloat tableWidth = tableView.frame.size.width;
+
+            UIView* up = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableWidth, 1)];
             up.backgroundColor = [UIColor lightGrayColor];
             [cell addSubview:up];
         }
@@ -265,6 +263,7 @@
         cell.imageView.image = nil;
         cell.textLabel.text = @"登出";
     }
+    cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
     cell.textLabel.textColor = [UIColor lightGrayColor];
     cell.textLabel.highlightedTextColor = [UIColor whiteColor];
 
@@ -279,12 +278,13 @@
     
     if (row == 0) {
         AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
-        [delegate toggleMyRaiders];
+        [delegate toggleMyRaidersWithUser:_user];
     } else if (row == 1) {
         AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
-        [delegate toggleMyPlan];
+        [delegate toggleMyPlanWithUser:_user];
     } else if (row == 2) {
-        
+        AppDelegate* delegate = (AppDelegate*) [UIApplication sharedApplication].delegate;
+        [delegate toggleEventListWithUser:_user];
     } else if (row == 3) {
         
     } else if (row == 4) {

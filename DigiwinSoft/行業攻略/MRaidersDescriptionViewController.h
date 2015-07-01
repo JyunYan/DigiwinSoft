@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
-@interface MRaidersDescriptionViewController : UIViewController<UIWebViewDelegate>
+@interface MRaidersDescriptionViewController : UIViewController<UIWebViewDelegate,UITableViewDelegate,UITableViewDataSource>
 {
-UITableView *tbl;
-UIWebView *webViewVideo;
-UIButton *btn;
+    UITableView *tbl;
+    UIWebView *webViewVideo;
+    UIButton *btn;
+    UILabel *labTitle;
+    NSMutableArray *aryList;
 }
+@property (nonatomic, weak) NSString *strTitle;
 @end

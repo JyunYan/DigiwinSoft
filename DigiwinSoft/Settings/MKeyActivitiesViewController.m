@@ -12,7 +12,6 @@
 #import "MActivity.h"
 #import "MWorkItem.h"
 
-#define TAG_BUTTON_SETTING 101
 
 #define TAG_LABEL_WORK_ITEM 200
 #define TAG_LABEL_APPOINT_RESPONSIBLE 201
@@ -140,18 +139,13 @@
 -(void) addMainMenu
 {
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    settingbutton.tag = TAG_BUTTON_SETTING;
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* right_bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = right_bar_item;
     
-    UIButton* backbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [backbutton setBackgroundImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
-    [backbutton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* left_bar_item = [[UIBarButtonItem alloc] initWithCustomView:backbutton];
-    self.navigationItem.leftBarButtonItem = left_bar_item;
+    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
 
 - (UIView*)createTopView:(CGRect) rect
@@ -237,7 +231,7 @@
     CGFloat viewHeight = rect.size.height;
     
     CGFloat posX = 20;
-    CGFloat posY = 10;
+    CGFloat posY = 20;
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = viewHeight - posY * 2;
     

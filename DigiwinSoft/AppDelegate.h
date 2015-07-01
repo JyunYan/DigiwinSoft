@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MTabBarViewController.h"
+#import "MUser.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
 
@@ -30,9 +31,11 @@
 
 - (void) toggleTabBar;
 
-- (void) toggleMyRaiders;
+- (void) toggleMyRaidersWithUser:(MUser*) user;
 
-- (void) toggleMyPlan;
+- (void) toggleMyPlanWithUser:(MUser*) user;
+
+- (void) toggleEventListWithUser:(MUser*) user;
 
 @end
 

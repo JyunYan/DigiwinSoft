@@ -9,7 +9,13 @@
 #import "MInventoryTurnoverViewController.h"
 #import "MRaidersDiagramViewController.h"
 @interface MInventoryTurnoverViewController ()
-
+{
+    UITextField *txtTargetDay;
+    UIDatePicker *datePicker;
+    NSLocale *datelocale;
+    CGFloat screenWidth;
+    CGFloat screenHeight;
+}
 @end
 
 @implementation MInventoryTurnoverViewController
@@ -44,8 +50,8 @@
     
     //screenSize
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
-    CGFloat screenWidth = screenSize.width;
-//    CGFloat screenHeight = screenSize.height;
+    screenWidth = screenSize.width;
+    screenHeight = screenSize.height;
     
     //Label
     UILabel *labAvgTarget=[[UILabel alloc]initWithFrame:CGRectMake(20,80, 85, 15)];
@@ -56,7 +62,7 @@
     
     //imgGray
     UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(15,105,screenWidth-30, 1)];
-    imgGray.backgroundColor=[UIColor grayColor];
+    imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
     [self.view addSubview:imgGray];
     
     //Label
@@ -87,6 +93,15 @@
     [self.view addSubview:txtInit];
     
     //Label
+    UILabel *labDay=[[UILabel alloc]initWithFrame:CGRectMake(170, 170, 20, 15)];
+    labDay.text=@"天";
+    labDay.backgroundColor=[UIColor whiteColor];
+    [labDay setFont:[UIFont systemFontOfSize:14]];
+    labDay.textAlignment = NSTextAlignmentJustified;
+    [self.view addSubview:labDay];
+
+    
+    //Label
     UILabel *labTarget=[[UILabel alloc]initWithFrame:CGRectMake(20,215, 85, 15)];
     labTarget.text=@"目標值";
     labTarget.backgroundColor=[UIColor whiteColor];
@@ -99,9 +114,23 @@
     txtTarget.borderStyle=UITextBorderStyleLine;
     [self.view addSubview:txtTarget];
 
+    //Label
+    labDay=[[UILabel alloc]initWithFrame:CGRectMake(170, 215, 20, 15)];
+    labDay.text=@"天";
+    labDay.backgroundColor=[UIColor whiteColor];
+    [labDay setFont:[UIFont systemFontOfSize:14]];
+    labDay.textAlignment = NSTextAlignmentJustified;
+    [self.view addSubview:labDay];
+    
+    //btn
+    UIButton *btnShowImg=[[UIButton alloc]initWithFrame:CGRectMake(195, 215, 20, 20)];
+    [btnShowImg addTarget:self action:@selector(btnShowImg:) forControlEvents:UIControlEventTouchUpInside];
+    btnShowImg.backgroundColor=[UIColor grayColor];
+    [self.view addSubview:btnShowImg];
+    
     //imgGray
     imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,250,screenWidth, 5)];
-    imgGray.backgroundColor=[UIColor grayColor];
+    imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
     [self.view addSubview:imgGray];
     
     //Label
@@ -114,11 +143,11 @@
     
     //imgGray
     imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(15,295,screenWidth-30, 1)];
-    imgGray.backgroundColor=[UIColor grayColor];
+    imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
     [self.view addSubview:imgGray];
     
     //Label
-    UILabel *labTargetDay=[[UILabel alloc]initWithFrame:CGRectMake(20,315, 85, 15)];
+    UILabel *labTargetDay=[[UILabel alloc]initWithFrame:CGRectMake(20,315, 120, 15)];
     labTargetDay.text=@"預計達成日";
     labTargetDay.backgroundColor=[UIColor whiteColor];
     [labTargetDay setFont:[UIFont systemFontOfSize:14]];
@@ -126,9 +155,50 @@
     [self.view addSubview:labTargetDay];
 
     //UITextField
-    UITextField *txtTargetDay=[[UITextField alloc]initWithFrame:CGRectMake(105,308, 100, 29)];
+    txtTargetDay=[[UITextField alloc]initWithFrame:CGRectMake(105,308, 120, 29)];
     txtTargetDay.borderStyle=UITextBorderStyleLine;
+    txtTargetDay.tag=101;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(textFieldChanged)
+                                                 name:UITextFieldTextDidBeginEditingNotification
+                                               object:txtTargetDay];
+    txtTargetDay.rightViewMode = UITextFieldViewModeAlways;
+    txtTargetDay.rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
     [self.view addSubview:txtTargetDay];
+}
+-(void)textFieldChanged
+{
+    datePicker=[[UIDatePicker alloc]init];//WithFrame:CGRectMake(0,screenHeight-70,screenWidth, 70)];
+    datelocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];
+    datePicker.locale = datelocale;
+    datePicker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    datePicker.datePickerMode = UIDatePickerModeDate;
+       txtTargetDay.inputView = datePicker;
+    
+    // 建立 UIToolbar
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelPicker)];
+    toolBar.items = [NSArray arrayWithObject:right];
+      txtTargetDay.inputAccessoryView = toolBar;
+    
+}
+-(void) cancelPicker {
+    if ([self.view endEditing:NO]) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"yyyy-MM-dd" options:0 locale:datelocale];
+        [formatter setDateFormat:dateFormat];
+        [formatter setLocale:datelocale];
+        
+        //將選取後的日期填入UITextField
+        txtTargetDay.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
+    }
+}
+
+
+#pragma mark - UIButton
+-(void)btnShowImg:(id)sender
+{
+    NSLog(@"pushTo29");
 }
 /*
 #pragma mark - Navigation

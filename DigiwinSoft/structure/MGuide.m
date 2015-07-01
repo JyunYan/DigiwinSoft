@@ -10,4 +10,14 @@
 
 @implementation MGuide
 
+- (id)init
+{
+    if(self = [super init]){
+        
+        _manager = [MUser new];
+        _target = [MTarget new];
+    }
+    return self;
+}
+
 @end

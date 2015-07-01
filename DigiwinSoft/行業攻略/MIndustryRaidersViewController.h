@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MConfig.h"
 
 @interface MIndustryRaidersViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *tbl;
     UIImageView *img;
     NSMutableArray *aryList;
+    NSArray *ary;
 }
-
+@property (nonatomic, assign) BOOL isLogin;
 @end

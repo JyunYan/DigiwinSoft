@@ -13,6 +13,9 @@
 #import "MMyRaidersViewController.h"
 #import "MMyPlanViewController.h"
 #import "MMyTaskViewController.h"
+#import "MEventListViewController.h"
+
+#import "MDataBaseManager.h"
 
 @interface AppDelegate ()
 
@@ -30,7 +33,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     self.tabBarController = [[MTabBarViewController alloc] init];
-    
+
     MSettingViewController* setting = [[MSettingViewController alloc] init];
     UINavigationController* left = [[UINavigationController alloc] initWithRootViewController:setting];
     left.navigationBarHidden = YES;
@@ -47,10 +50,17 @@
     self.window.rootViewController = drawer;
     [self.window makeKeyAndVisible];
     
+
+    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    //[[UINavigationBar appearance] setTranslucent:NO];
+    
     
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
     NSLog(@"data_path :%s\n", [documentsDirectory UTF8String]);
+    
+    [[MDataBaseManager sharedInstance] loginWithAccount:@"amigo" Password:@"amigo" CompanyID:@"cmp-001"];
     
     return YES;
 }
@@ -89,6 +99,10 @@
 {
     _tabBarController.selectedIndex = 0;
     
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:YES];
+    }
+    
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = _tabBarController;
     [drawer closeDrawerAnimated:YES completion:nil];
@@ -97,6 +111,10 @@
 - (void) toggleSeeStatus
 {
     _tabBarController.selectedIndex = 1;
+    
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:YES];
+    }
     
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = _tabBarController;
@@ -107,6 +125,10 @@
 {
     _tabBarController.selectedIndex = 2;
     
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:YES];
+    }
+    
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = _tabBarController;
     [drawer closeDrawerAnimated:YES completion:nil];
@@ -115,6 +137,10 @@
 - (void) toggleLookingForSolutions
 {
     _tabBarController.selectedIndex = 3;
+    
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:YES];
+    }
     
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = _tabBarController;
@@ -125,12 +151,12 @@
 {
     _tabBarController.selectedIndex = 4;
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
-    
     MMyTaskViewController* myTask = [[MMyTaskViewController alloc] init];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:myTask];
-    
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:YES];
+    }
+
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = nav;
     [drawer closeDrawerAnimated:YES completion:nil];
@@ -138,35 +164,52 @@
 
 - (void) toggleTabBar
 {
-    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:YES];
+    }
 
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = _tabBarController;
     [drawer closeDrawerAnimated:YES completion:nil];
 }
 
-- (void) toggleMyRaiders
+- (void) toggleMyRaidersWithUser:(MUser*) user
 {
-    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
-
-    MMyRaidersViewController* vc = [[MMyRaidersViewController alloc] init];
+    MMyRaidersViewController* vc = [[MMyRaidersViewController alloc] initWithUser:user];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:NO];
+    }
 
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = nav;
     [drawer closeDrawerAnimated:YES completion:nil];
 }
 
-- (void) toggleMyPlan
+- (void) toggleMyPlanWithUser:(MUser*) user
 {
-    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
-    
-    MMyPlanViewController* vc = [[MMyPlanViewController alloc] init];
+    MMyPlanViewController* vc = [[MMyPlanViewController alloc] initWithUser:user];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    
+    nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:NO];
+    }
+
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    drawer.centerViewController = nav;
+    [drawer closeDrawerAnimated:YES completion:nil];
+}
+
+- (void) toggleEventListWithUser:(MUser*) user
+{
+    MEventListViewController* vc = [[MEventListViewController alloc] initWithUser:user];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:NO];
+    }
+
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     drawer.centerViewController = nav;
     [drawer closeDrawerAnimated:YES completion:nil];

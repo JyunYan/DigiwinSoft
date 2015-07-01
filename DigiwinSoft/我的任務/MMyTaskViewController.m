@@ -11,13 +11,15 @@
 
 #import "MLineChartView.h"
 
-#define TAG_BUTTON_SETTING  101
 
 #define TAG_IMAGE_VIEW_TYPE     201
 #define TAG_LABEL_TASK_NAME     202
 
-@interface MMyTaskViewController ()<UITableViewDelegate, UITableViewDataSource>
 
+@interface MMyTaskViewController ()<UITableViewDelegate, UITableViewDataSource>
+{
+    UIImageView *imgblueBar;
+}
 @property (nonatomic, strong) UITableView* tableView;
 
 @property (nonatomic, strong) UISegmentedControl* segmented;
@@ -31,16 +33,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UINavigationBar appearance] setTranslucent:NO];
-    
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"我的攻略";
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent;    self.title = @"我的任務";
+     self.title = @"我的任務";
     
     UIBarButtonItem* searchBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(actionToSearch:)];
     self.navigationItem.leftBarButtonItem = searchBtn;
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     _taskDataArry = [[NSMutableArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
     
@@ -59,15 +57,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    // Force your tableview margins (this may be a bad idea)
+    if ([_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([_tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 #pragma mark - create view
 
 -(void) addMainMenu
 {
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    settingbutton.tag = TAG_BUTTON_SETTING;
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = bar_item;
@@ -78,13 +87,27 @@
     NSArray* array = [[NSArray alloc] initWithObjects:@"待佈署任務", @"進度回報", @"已完成任務", nil];
     
     _segmented = [[UISegmentedControl alloc] initWithItems:array];
-    _segmented.frame = CGRectMake(5, 5, self.view.frame.size.width - 10, 40);
+    _segmented.frame = CGRectMake(0, 64, self.view.frame.size.width - 10, 40);
     _segmented.selectedSegmentIndex = 0;
     _segmented.layer.borderColor = [UIColor clearColor].CGColor;
     _segmented.layer.borderWidth = 0.0f;
+    _segmented.tintColor=[UIColor clearColor];
+    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grayColor]} forState:UIControlStateNormal];
+    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0]} forState:UIControlStateSelected];
     [_segmented addTarget:self action:@selector(actionToShowNextPage:) forControlEvents:UIControlEventValueChanged];
-    
     [self.view addSubview:_segmented];
+    
+    //imgblueBar
+    imgblueBar=[[UIImageView alloc]initWithFrame:CGRectMake(5,36,(self.view.frame.size.width/3)-20, 3)];
+    imgblueBar.backgroundColor=[UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0];
+    [_segmented addSubview:imgblueBar];
+    
+    //imgGray
+    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,39,self.view.frame.size.width, 1)];
+    imgGray.backgroundColor=[UIColor colorWithRed:194.0/255.0 green:194.0/255.0 blue:194.0/255.0 alpha:1.0];
+    [_segmented addSubview:imgGray];
+
+    
     
     //分隔線
     UILabel* row_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, 1)];
@@ -95,7 +118,7 @@
 
 - (void)createTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 51, self.view.frame.size.width, self.view.frame.size.height - 64)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,_segmented.frame.origin.y+_segmented.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - 64)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
@@ -144,11 +167,9 @@
         label.tag = TAG_LABEL_TASK_NAME;
         [cell addSubview:label];
         
-        //分隔線
-        UILabel* row_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.frame.size.width, 1)];
-        [row_label setBackgroundColor:[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:0.5]];
-        [cell addSubview:row_label];
-    }
+        /* 補齊分隔線缺口 */
+        // IOS 7
+        }
     
     NSString* taskName = [_taskDataArry objectAtIndex:indexPath.row];
     
@@ -175,16 +196,68 @@
 {
     [_taskDataArry removeAllObjects];
     
-    NSInteger index = _segmented.selectedSegmentIndex;
-    
-    if (index == 0 || index == 2)
-    {
-        [_taskDataArry addObjectsFromArray:[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil]];
-    }else
-    {
-        [_taskDataArry addObjectsFromArray:[[NSArray alloc] initWithObjects:@"瓶頸製程工時計算", @"製定最小製造批量標準", @"縮短達交天數", nil]];
+    switch ([sender selectedSegmentIndex]) {
+        case 0:
+        {
+            [_taskDataArry addObjectsFromArray:[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil]];
+            //imgblueBar Animation
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:0.5];
+            [UIView setAnimationDelegate:self];
+            
+            //設定動畫開始時的狀態為目前畫面上的樣子
+            [UIView setAnimationBeginsFromCurrentState:YES];
+            imgblueBar.frame=CGRectMake(5,
+                                        imgblueBar.frame.origin.y,
+                                        imgblueBar.frame.size.width,
+                                        imgblueBar.frame.size.height);
+            [UIView commitAnimations];
+
+            break;
+        }
+        case 1:
+        {
+            [_taskDataArry addObjectsFromArray:[[NSArray alloc] initWithObjects:@"瓶頸製程工時計算", @"製定最小製造批量標準", @"縮短達交天數", nil]];
+            //imgblueBar Animation
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:0.5];
+            [UIView setAnimationDelegate:self];
+            
+            //設定動畫開始時的狀態為目前畫面上的樣子
+            [UIView setAnimationBeginsFromCurrentState:YES];
+            imgblueBar.frame=CGRectMake((self.view.frame.size.width/3)+5,
+                                        imgblueBar.frame.origin.y,
+                                        imgblueBar.frame.size.width,
+                                        imgblueBar.frame.size.height);
+            [UIView commitAnimations];
+            break;
+        }
+        case 2:
+        {
+            [_taskDataArry addObjectsFromArray:[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil]];
+            //imgblueBar Animation
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:0.5];
+            [UIView setAnimationDelegate:self];
+            
+            //設定動畫開始時的狀態為目前畫面上的樣子
+            [UIView setAnimationBeginsFromCurrentState:YES];
+            imgblueBar.frame=CGRectMake(((self.view.frame.size.width/3)*2)+5,
+                                        imgblueBar.frame.origin.y,
+                                        imgblueBar.frame.size.width,
+                                        imgblueBar.frame.size.height);
+            [UIView commitAnimations];
+            
+
+            break;
+        }
+        default:
+        {
+            NSLog(@"Error");
+            break;
+        }
     }
-    
+
     [_tableView reloadData];
 }
 
@@ -200,7 +273,6 @@
     
     [self.view addSubview:view];
 }
-
 - (NSMutableArray*)loadQuartzData
 {
     NSMutableArray* array = [[NSMutableArray alloc] init];
@@ -303,6 +375,23 @@
     
     return array;
     
+}
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 @end

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MDataBaseManager.h"
 
 @interface MMyPlanViewController : UIViewController
+
+- (id)initWithUser:(MUser*) user;
 
 @end

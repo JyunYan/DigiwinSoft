@@ -31,28 +31,26 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-                UIImageView *iconView = [[UIImageView alloc] init];
-        [self.contentView addSubview:iconView];
-        self.iconView = iconView;
         
-        UILabel *nameLabel = [[UILabel alloc] init];
-        nameLabel.textColor=[UIColor redColor];
-        [self.contentView addSubview:nameLabel];
-        self.labName = nameLabel;
-        [self.contentView setBackgroundColor:[UIColor clearColor]];
-        [self settingFrame];
+        UILabel *labName= [[UILabel alloc] init];
+        self.labName = labName;
+        [self.contentView addSubview:labName];
         
-        
-        
+        UIButton *btnCheck = [[UIButton alloc] init];
+        self.btnCheck = btnCheck;
+        [self.contentView addSubview:btnCheck];
+
+
+        UIButton *btnManager= [[UIButton alloc] init];
+        self.btnManager = btnManager;
+        [self.contentView addSubview:btnManager];
+
+        UIButton *btnRaiders= [[UIButton alloc] init];
+        self.btnRaiders = btnRaiders;
+        [self.contentView addSubview:btnRaiders];
         
     }
     return self;
 }
-//设置相对位置
-- (void)settingFrame
-{
-    self.frame = CGRectMake(0, 0, 320, 120);
-    self.labName.frame=CGRectMake(100, 120/2-25, 200, 50);
-    self.iconView.frame=CGRectMake(10, (120-80)/2, 80, 80);
-}
+
 @end

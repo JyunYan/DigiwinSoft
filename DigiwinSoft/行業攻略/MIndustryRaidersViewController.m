@@ -8,12 +8,14 @@
 
 #import "MIndustryRaidersViewController.h"
 #import "MIndustryRaiders2ViewController.h"
-
+#import "MLoginViewController.h"
+#import "MDataBaseManager.h"
+#import "MRaiderCarouselView.h"
 #import "AppDelegate.h"
 
-#define TAG_BUTTON_SETTING  101
-
 @interface MIndustryRaidersViewController ()
+
+@property (nonatomic, strong) MRaiderCarouselView* rcView;
 
 @end
 
@@ -25,6 +27,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self prepareTestData];
     [self addMainMenu];
+    
+    MLoginViewController *MLoginVC=[[MLoginViewController alloc]init];
+    [self presentViewController:MLoginVC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,22 +41,46 @@
     [super viewWillAppear:YES];
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:YES];
+    
+}
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    // Force your tableview margins (this may be a bad idea)
+    if ([tbl respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tbl setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([tbl respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tbl setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 #pragma mark - create view
 
 - (void)prepareTestData
 {
     //aryList
-    aryList=[[NSMutableArray alloc]initWithObjects:@"MyData1",@"MyData2",@"MyData3", nil];
+    aryList=[[NSMutableArray alloc]initWithArray:[MDataBaseManager sharedInstance].loadPhenArray];
 }
 -(void) addMainMenu
 {
-   UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    settingbutton.tag = TAG_BUTTON_SETTING;
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Pressed.png"] forState:UIControlStateHighlighted];
+    //rightBarButtonItem
+    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = bar_item;
+    
+    //leftBarButtonItem
+    UIButton* btnSearch = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
+    [btnSearch setBackgroundImage:[UIImage imageNamed:@"icon_search.png"] forState:UIControlStateNormal];
+    [btnSearch addTarget:self action:@selector(clickedBtnSearch:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* leftBar_item = [[UIBarButtonItem alloc] initWithCustomView:btnSearch];
+    self.navigationItem.leftBarButtonItem = leftBar_item;
     
     //screenSize
     CGSize screenSize = [[UIScreen mainScreen] bounds].size;
@@ -60,11 +89,12 @@
     
     //Segmented
     NSArray *itemArray = [NSArray arrayWithObjects:
-                          [UIImage imageNamed:@"Button-Favorite-List-Normal.png"],
-                          [UIImage imageNamed:@"Button-Favorite-List-Normal.png"],
+                          [UIImage imageNamed:@"icon_cloud_2.png"],
+                          [UIImage imageNamed:@"icon_list_2.png"],
                           nil];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
-    segmentedControl.frame = CGRectMake(0, 0, 150.0, 24.0);
+    segmentedControl.frame = CGRectMake(0, 0, 150.0, 30.);
+    segmentedControl.tintColor=[UIColor colorWithRed:76.0/255.0 green:86.0/255.0 blue:97.0/255.0 alpha:1.0];
     segmentedControl.selectedSegmentIndex = 0;
     [segmentedControl addTarget:self
                          action:@selector(actionSegmented:)
@@ -76,23 +106,22 @@
     tbl.backgroundColor=[UIColor whiteColor];
     tbl.delegate=self;
     tbl.dataSource = self;
+    [self.view addSubview:tbl];
     
     
     //MerryGoRound
-    img=[[UIImageView alloc]initWithFrame:CGRectMake(0, 20+44,screenWidth, screenHeight-113)];
-    img.backgroundColor=[UIColor grayColor];
-    [self.view addSubview:img];
+    _rcView = [[MRaiderCarouselView alloc] initWithFrame:CGRectMake(0, 64, screenWidth, screenHeight - 113)];
+    _rcView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_rcView];
 
 }
 - (void)actionSegmented:(id)sender{
     switch ([sender selectedSegmentIndex]) {
         case 0:
-            [tbl removeFromSuperview];
-            [self.view addSubview:img];
+            [self.view bringSubviewToFront:_rcView];
             break;
         case 1:
-            [img removeFromSuperview];
-            [self.view addSubview:tbl];
+            [self.view bringSubviewToFront:tbl];
             break;
         default:
             NSLog(@"Error");
@@ -102,7 +131,7 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50.0f;
+    return 80.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [aryList count];
@@ -114,7 +143,7 @@
     if (cell==nil) {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.textLabel.text=aryList[indexPath.row];
+    cell.textLabel.text=[aryList[indexPath.row]subject];
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -122,9 +151,30 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] init];
-    [MIndustryRaiders2VC setStrTitle:aryList[indexPath.row]];
+    [MIndustryRaiders2VC setStrTitle:[aryList[indexPath.row]subject]];
+    [MIndustryRaiders2VC setStrDesc:[aryList[indexPath.row]desc]];
+    [MIndustryRaiders2VC setPhen:aryList[indexPath.row]];
+    [MIndustryRaiders2VC setIsFrom:YES];
     [self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
 }
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 #pragma mark - UIButton
 
 -(void)clickedBtnSetting:(id)sender
@@ -132,5 +182,8 @@
     AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
     [delegate toggleLeft];
 }
-
+-(void)clickedBtnSearch:(id)sender
+{
+    NSLog(@"clickedBtnSearch");
+}
 @end
