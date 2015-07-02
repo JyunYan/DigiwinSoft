@@ -47,9 +47,7 @@
 		3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE281B32895C00143374 /* UIViewController+MMDrawerController.m */; };
 		3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE2E1B32997000143374 /* MTabBarViewController.m */; };
 		3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE381B32C0C800143374 /* ASFileManager.m */; };
-<<<<<<< HEAD
 		509160991B4510330065C176 /* icon_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 509160981B4510330065C176 /* icon_close.png */; };
-=======
 		3AFF62551B438A46005B6238 /* icon_menu_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624A1B438A46005B6238 /* icon_menu_1.png */; };
 		3AFF62561B438A46005B6238 /* icon_menu_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624B1B438A46005B6238 /* icon_menu_2.png */; };
 		3AFF62571B438A46005B6238 /* icon_menu_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624C1B438A46005B6238 /* icon_menu_3.png */; };
@@ -62,7 +60,6 @@
 		3AFF625E1B438A46005B6238 /* icon_menu_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF62531B438A46005B6238 /* icon_menu_10.png */; };
 		3AFF625F1B438A46005B6238 /* icon_menu_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF62541B438A46005B6238 /* icon_menu_11.png */; };
 		3AFF62621B438D08005B6238 /* MSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */; };
->>>>>>> 75e42a8120c9971bf43a28a994f755812a4d455c
 		D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */; };
 		D06C2D291B37AC88009D2082 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D06C2D281B37AC88009D2082 /* libsqlite3.dylib */; };
 		D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D2B1B37B58C009D2082 /* MDesignateResponsibleViewController.m */; };
@@ -223,9 +220,8 @@
 		3AB4CE2E1B32997000143374 /* MTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTabBarViewController.m; sourceTree = "<group>"; };
 		3AB4CE371B32C0C800143374 /* ASFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFileManager.h; sourceTree = "<group>"; };
 		3AB4CE381B32C0C800143374 /* ASFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFileManager.m; sourceTree = "<group>"; };
-<<<<<<< HEAD
+
 		509160981B4510330065C176 /* icon_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_close.png; sourceTree = "<group>"; };
-=======
 		3AFF624A1B438A46005B6238 /* icon_menu_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_1.png; sourceTree = "<group>"; };
 		3AFF624B1B438A46005B6238 /* icon_menu_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_2.png; sourceTree = "<group>"; };
 		3AFF624C1B438A46005B6238 /* icon_menu_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_3.png; sourceTree = "<group>"; };
@@ -239,7 +235,6 @@
 		3AFF62541B438A46005B6238 /* icon_menu_11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_11.png; sourceTree = "<group>"; };
 		3AFF62601B438D08005B6238 /* MSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSettingTableViewCell.h; path = CustomViews/MSettingTableViewCell.h; sourceTree = "<group>"; };
 		3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSettingTableViewCell.m; path = CustomViews/MSettingTableViewCell.m; sourceTree = "<group>"; };
->>>>>>> 75e42a8120c9971bf43a28a994f755812a4d455c
 		D06C2D251B37A5CD009D2082 /* MDataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDataBaseManager.h; sourceTree = "<group>"; };
 		D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDataBaseManager.m; sourceTree = "<group>"; };
 		D06C2D281B37AC88009D2082 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
