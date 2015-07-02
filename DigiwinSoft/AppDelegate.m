@@ -51,6 +51,9 @@
     [self.window makeKeyAndVisible];
     
     
+    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
     NSLog(@"data_path :%s\n", [documentsDirectory UTF8String]);

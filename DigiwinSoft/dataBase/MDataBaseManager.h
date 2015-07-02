@@ -47,12 +47,11 @@
 // get 議題Sample By 對策
 - (NSArray*)loadIssueArrayByGudie:(MGuide*)guide;
 
-// get 對策的指標設定Sample
-- (BOOL)loadTargetSettingsSampleIntoGuide:(MGuide*)guide;
-
-#pragma mark -
 
 // get 我的規劃/我的攻略, No:規劃(未發佈) Yes:攻略(發佈)
 - (NSArray*)loadCustomGuideArrayByRelease:(BOOL)release;
+
+// get 某企業指標實際值的歷史資料
+- (NSArray*)loadHistoryTargetArrayWithTarget:(MTarget*)target;
 
 @end

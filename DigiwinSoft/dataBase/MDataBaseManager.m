@@ -336,64 +336,65 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
-// p27
-- (BOOL)loadTargetSettingsSampleIntoGuide:(MGuide*)guide
+// p29
+- (NSArray*)loadHistoryTargetArrayWithTarget:(MTarget*)target
 {
-    if(!guide)
-        return NO;
-    
+    NSString* indid = [MDirector sharedInstance].currentUser.industryId;
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* sql = @"select rct.* from M_GUIDE as g inner join M_TARGET as t on g.TAR_ID = t.ID inner join R_COMP_TAR as rct on t.ID = rct.TAR_ID where g.ID = 'gui-001' and rct.COMP_ID = 'cmp-001' order by rct.DATETIME desc";
-    // select rct.*
-    // from M_GUIDE as g
-    // inner join M_TARGET as t on g.TAR_ID = t.ID
-    // inner join R_COMP_TAR as rct on t.ID = rct.TAR_ID
-    // where g.ID = 'gui-001' and rct.COMP_ID = 'cmp-001'
+    NSString* sql = @"select * from R_IND_TAR as rit inner join M_TARGET as tar on tar.ID = rit.TAR_ID inner join R_COMP_TAR as rct on tar.ID = rct.TAR_ID where rit.IND_ID = ? and tar.ID = ? and rct.COMP_ID = ? order by rct.DATETIME limit 12";
+    // select *
+    // from R_IND_TAR as rit
+    // inner join M_TARGET as tar on tar.ID = rit.TAR_ID
+    // inner join R_COMP_TAR as rct on tar.ID = rct.TAR_ID
+    // where rit.IND_ID = 'ind-001' and tar.ID = 'tar-001' and rct.COMP_ID = 'cmp-001'
     // order by rct.DATETIME desc
-    // limit 1
     
-    FMResultSet* rs = [self.db executeQuery:sql, guide.uuid, compid];
-    if([rs next]){
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, indid, target.uuid, compid];
+    while([rs next]){
+        MTarget* target = [MTarget new];
+        target.uuid = [rs stringForColumn:@"ID"];
+        target.name = [rs stringForColumn:@"NAME"];
+        target.unit = [rs stringForColumn:@"UNIT"];
         
-        MTarget* target = guide.target;
         target.valueR = [rs stringForColumn:@"VALUE_R"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
+        target.datetime = [rs stringForColumn:@"DATETIME"];
         
-        return YES;
+        target.top = [rs stringForColumn:@"TOP"];
+        target.avg = [rs stringForColumn:@"AVG"];
+        target.bottom = [rs stringForColumn:@"BOTTOM"];
+        target.upMin = [rs stringForColumn:@"UP_MIN"];
+        target.upMax = [rs stringForColumn:@"UP_MAX"];
         
-    }else{
-        NSLog(@"no match target settings sample !!");
-        return NO;
+        [array addObject:target];
     }
+    return array;
 }
-
-// p29
-//- (void)loadHistoryTargetArrayWithTarget:(MTarget*)target
 
 #pragma mark - 我的規劃/我的攻略
 
 // No:規劃(未發佈) Yes:攻略(發佈)
 - (NSArray*)loadCustomGuideArrayByRelease:(BOOL)release
 {
-    NSString* sql = @"select * from U_GUIDE where RELEASE = ? order by CREATE_DATE";
-    // select mt.NAME, g.*, ut.*
-    // from U_GUIDE as g
-    // inner join U_TARGET as ut on g.TAR_ID = ut.ID
-    // inner join M_TARGET as mt on ut.TAR_M_ID = mt.ID
-    // where g.RELEASE = false
-    // order by CREATE_DATE
+    NSString* releaseStr = release ? @"1" : @"0";
+    NSString* owner = [MDirector sharedInstance].currentUser.uuid;
     
-    NSString* releaseStr = @"0";
-    if (release)
-        releaseStr = @"1";
+    NSString* sql = @"select * from U_GUIDE as ug inner join U_TARGET as ut on ug.TAR_ID = ut.ID  where ug.RELEASE = ? and ug.OWNER = ? order by CREATE_DATE";
+    // select mt.NAME, gu.*, ut.*
+    // from U_GUIDE as ug
+    // inner join U_TARGET as ut on g.TAR_ID = ut.ID
+    // where ug.RELEASE = false and ug.OWNER = 'emp-001'
+    // order by CREATE_DATE
     
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, releaseStr];
+    FMResultSet* rs = [self.db executeQuery:sql, releaseStr, owner];
     while([rs next]){
         
         MCustGuide* guide = [MCustGuide new];
-        guide.uuid = [rs stringForColumn:@"ID"];
+        guide.uuid = [rs stringForColumnIndex:0];
         guide.companyID = [rs stringForColumn:@"COMP_ID"];
         guide.gui_uuid = [rs stringForColumn:@"GUI_M_ID"];
         guide.name = [rs stringForColumn:@"NAME"];
@@ -401,8 +402,15 @@ static MDataBaseManager* _director = nil;
         guide.bRelease = [rs boolForColumn:@"RELEASE"];
         guide.status = [rs stringForColumn:@"STATUS"];
         
-        NSString* tarID = [rs stringForColumn:@"TAR_ID"];
-        guide.target = [self loadCustTargetWithID:tarID];
+        MCustTarget* target = guide.target;
+        target.uuid = [rs stringForColumn:@"TAR_ID"];
+        target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
+        target.name = [rs stringForColumnIndex:16];
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.valueR = [rs stringForColumn:@"VALUE_R"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+        target.startDate = [rs stringForColumn:@"START_DATE"];
+        target.completeDate = [rs stringForColumn:@"COMPLETED"];
         
         NSString* phenId = [rs stringForColumn:@"FROM_PHEN_ID"];
         guide.fromPhen = [self loadPhenWithID:phenId];
@@ -410,36 +418,14 @@ static MDataBaseManager* _director = nil;
         NSString* issueId = [rs stringForColumn:@"FROM_ISS_ID"];
         guide.fromIssue = [self loadIssueWithID:issueId];
         
+        NSString* empid = [rs stringForColumn:@"EMP_ID"];
+        guide.manager = [self loadEmployeeWithID:empid];
+        
         [array addObject:guide];
         
     }
     
     return array;
-}
-
-- (MCustTarget*)loadCustTargetWithID:(NSString*)tarid
-{
-    if(!tarid)
-        return nil;
-    
-    NSString* sql = @"select * from U_TARGET where ID = ?";
-    
-    FMResultSet* rs = [self.db executeQuery:sql, tarid];
-    if([rs next]){
-        MCustTarget* target = [MCustTarget new];
-        
-        target.uuid = [rs stringForColumn:@"ID"];
-        target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
-        target.name = [rs stringForColumn:@"NAME"];
-        target.valueR = [rs stringForColumn:@"VALUE_R"];
-        target.valueT = [rs stringForColumn:@"VALUE_T"];
-        target.unit = [rs stringForColumn:@"UNIT"];
-        target.startDate = [rs stringForColumn:@"START_DATE"];
-        target.completeDate = [rs stringForColumn:@"COMPLETED"];
-        
-        return target;
-    }
-    return nil;
 }
 
 - (MPhenomenon*)loadPhenWithID:(NSString*)phenid
@@ -511,5 +497,38 @@ static MDataBaseManager* _director = nil;
     return nil;
 }
 
+- (MUser*)loadEmployeeWithID:(NSString*)empid
+{
+    if(!empid || [empid isEqualToString:@""])
+        return nil;
+    
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select * from M_USER as u inner join M_EMPLOYEE as emp on u.EMP_ID = emp.ID where u.EMP_ID = 'emp-001' and u.COMP_ID = 'cmp-001' limit 1";
+    // select *
+    // from M_USER as u
+    // inner join M_EMPLOYEE as emp on u.EMP_ID = emp.ID
+    // where u.EMP_ID = 'emp-001' and u.COMP_ID = 'cmp-001'
+    // limit 1
+    
+    FMResultSet* rs = [self.db executeQuery:sql, empid, compid];
+    if([rs next]){
+        
+        MUser* employee = [MUser new];
+        employee.industryName = [rs stringForColumnIndex:0];    // industry name
+        employee.companyName = [rs stringForColumnIndex:1];     // company name
+        employee.uuid = [rs stringForColumn:@"ID"];
+        employee.industryId = [rs stringForColumn:@"IND_ID"];
+        employee.companyId = [rs stringForColumn:@"COMP_ID"];
+        employee.name = [rs stringForColumnIndex:5];            // user name
+        employee.phone = [rs stringForColumn:@"PHONE"];
+        employee.email = [rs stringForColumn:@"EMAIL"];
+        employee.arrive_date = [rs stringForColumn:@"ARRIVE_DATE"];
+        employee.thumbnail = [rs stringForColumn:@"THUMBNAIL"];
+        
+        return employee;
+    }
+    
+    return nil;
+}
 
 @end
