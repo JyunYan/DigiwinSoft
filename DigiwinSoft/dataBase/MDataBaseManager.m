@@ -428,6 +428,57 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
+- (NSArray*)loadMyPlanArray
+{
+    NSString* owner = [MDirector sharedInstance].currentUser.uuid;
+    
+    NSString* sql = @"select * from U_GUIDE as ug inner join U_TARGET as ut on ug.TAR_ID = ut.ID  where ug.RELEASE = ? and ug.OWNER = ? order by CREATE_DATE";
+    // select mt.NAME, gu.*, ut.*
+    // from U_GUIDE as ug
+    // inner join U_TARGET as ut on g.TAR_ID = ut.ID
+    // where ug.RELEASE = false and ug.OWNER = 'emp-001'
+    // order by CREATE_DATE
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, @"0", owner];
+    while([rs next]){
+        
+        MCustGuide* guide = [MCustGuide new];
+        guide.uuid = [rs stringForColumnIndex:0];
+        guide.companyID = [rs stringForColumn:@"COMP_ID"];
+        guide.gui_uuid = [rs stringForColumn:@"GUI_M_ID"];
+        guide.name = [rs stringForColumn:@"NAME"];
+        guide.desc = [rs stringForColumn:@"DESCRIPTION"];
+        guide.bRelease = [rs boolForColumn:@"RELEASE"];
+        guide.status = [rs stringForColumn:@"STATUS"];
+        
+        MCustTarget* target = guide.target;
+        target.uuid = [rs stringForColumn:@"TAR_ID"];
+        target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
+        target.name = [rs stringForColumnIndex:16];
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.valueR = [rs stringForColumn:@"VALUE_R"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+        target.startDate = [rs stringForColumn:@"START_DATE"];
+        target.completeDate = [rs stringForColumn:@"COMPLETED"];
+        
+        NSString* phenId = [rs stringForColumn:@"FROM_PHEN_ID"];
+        guide.fromPhen = [self loadPhenWithID:phenId];
+        
+        NSString* issueId = [rs stringForColumn:@"FROM_ISS_ID"];
+        guide.fromIssue = [self loadIssueWithID:issueId];
+        
+        NSString* empid = [rs stringForColumn:@"EMP_ID"];
+        guide.manager = [self loadEmployeeWithID:empid];
+        
+        [array addObject:guide];
+        
+    }
+    
+    return array;
+}
+
 - (MPhenomenon*)loadPhenWithID:(NSString*)phenid
 {
     if(!phenid)

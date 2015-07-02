@@ -50,6 +50,7 @@
 
 // get 我的規劃/我的攻略, No:規劃(未發佈) Yes:攻略(發佈)
 - (NSArray*)loadCustomGuideArrayByRelease:(BOOL)release;
+- (NSArray*)loadMyPlanArray;
 
 // get 某企業指標實際值的歷史資料
 - (NSArray*)loadHistoryTargetArrayWithTarget:(MTarget*)target;

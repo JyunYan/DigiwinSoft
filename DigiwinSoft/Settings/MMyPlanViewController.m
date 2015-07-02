@@ -31,7 +31,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _guideArray = [[MDataBaseManager sharedInstance] loadCustomGuideArrayByRelease:NO];
+        _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
     }
     return self;
 }
