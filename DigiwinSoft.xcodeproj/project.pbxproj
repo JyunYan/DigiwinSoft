@@ -47,6 +47,7 @@
 		3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE281B32895C00143374 /* UIViewController+MMDrawerController.m */; };
 		3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE2E1B32997000143374 /* MTabBarViewController.m */; };
 		3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE381B32C0C800143374 /* ASFileManager.m */; };
+		509160991B4510330065C176 /* icon_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 509160981B4510330065C176 /* icon_close.png */; };
 		D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */; };
 		D06C2D291B37AC88009D2082 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D06C2D281B37AC88009D2082 /* libsqlite3.dylib */; };
 		D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D2B1B37B58C009D2082 /* MDesignateResponsibleViewController.m */; };
@@ -207,6 +208,7 @@
 		3AB4CE2E1B32997000143374 /* MTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTabBarViewController.m; sourceTree = "<group>"; };
 		3AB4CE371B32C0C800143374 /* ASFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFileManager.h; sourceTree = "<group>"; };
 		3AB4CE381B32C0C800143374 /* ASFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFileManager.m; sourceTree = "<group>"; };
+		509160981B4510330065C176 /* icon_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_close.png; sourceTree = "<group>"; };
 		D06C2D251B37A5CD009D2082 /* MDataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDataBaseManager.h; sourceTree = "<group>"; };
 		D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDataBaseManager.m; sourceTree = "<group>"; };
 		D06C2D281B37AC88009D2082 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -503,6 +505,7 @@
 				DCF46ADF1B42AAF300C771BB /* icon_gray_circle.png */,
 				DCF46AE01B42AAF300C771BB /* icon_gray_dot.png */,
 				DCF46AE11B42AAF300C771BB /* icon_info.png */,
+				509160981B4510330065C176 /* icon_close.png */,
 				DCF46AE21B42AAF300C771BB /* icon_list.png */,
 				DCF46AE31B42AAF300C771BB /* icon_manager.png */,
 				DCF46AE41B42AAF300C771BB /* icon_more.png */,
@@ -809,6 +812,7 @@
 				DCF46B1E1B42B4C000C771BB /* icon_list_2.png in Resources */,
 				DCF46B041B42AAF300C771BB /* icon_gray_dot.png in Resources */,
 				DCF46B071B42AAF300C771BB /* icon_manager.png in Resources */,
+				509160991B4510330065C176 /* icon_close.png in Resources */,
 				DCF46B151B42AAF300C771BB /* tab_icon_2.png in Resources */,
 				DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */,
 				DCF46ABE1B41504100C771BB /* dataStore.sqlite in Resources */,
