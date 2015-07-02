@@ -439,7 +439,7 @@ static MDataBaseManager* _director = nil;
     // where ug.RELEASE = false and ug.OWNER = 'emp-001'
     // order by CREATE_DATE
     
-    NSMutableArray* array = [NSMutableArray new];
+    NSMutableArray* all = [NSMutableArray new];
     
     FMResultSet* rs = [self.db executeQuery:sql, @"0", owner];
     while([rs next]){
@@ -472,11 +472,45 @@ static MDataBaseManager* _director = nil;
         NSString* empid = [rs stringForColumn:@"EMP_ID"];
         guide.manager = [self loadEmployeeWithID:empid];
         
-        [array addObject:guide];
+        //[all addObject:guide];
         
+        // filter for section
+        BOOL isExist = NO;
+        NSInteger index = 0;
+        for (NSMutableArray* array in all) {
+            
+            MCustGuide* cg = [array objectAtIndex:0];
+            if([phenId isEqualToString:cg.fromPhen.uuid]){
+                isExist = YES;
+                break;
+            }
+            if([issueId isEqualToString:cg.fromIssue.uuid]){
+                isExist = YES;
+                break;
+            }
+            index++;
+        }
+        
+        if(isExist){
+            NSMutableArray* array = [all objectAtIndex:index];
+            [array addObject:guide];
+        }else{
+            NSMutableArray* array = [NSMutableArray new];
+            [array addObject:guide];
+            [all addObject:array];
+        }
     }
     
-    return array;
+    return all;
+}
+
+- (void)loadMyRaidersArray
+{
+    NSString* sql = @"select * from U_GUIDE as ug inner join U_ACTIVITY as ua on ug.ID = ua.GUIDE_ID";
+    // select *
+    // from U_GUIDE as ug
+    // inner join U_ACTIVITY as ua on ug.ID = ua.GUIDE_ID
+    // inner join U_WORK_ITEM as
 }
 
 - (MPhenomenon*)loadPhenWithID:(NSString*)phenid
