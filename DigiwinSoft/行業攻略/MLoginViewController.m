@@ -22,7 +22,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title=@"登入";
-    [self prepareTestData];
     [self addMainMenu];
 }
 
@@ -36,9 +35,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor=[UIColor lightGrayColor];
 }
-- (void)prepareTestData
-{
-}
+
 - (void)addMainMenu
 {
     CGSize screenSize =[[UIScreen mainScreen]bounds].size;
@@ -47,14 +44,14 @@
 
     
     //Account
-    txtAccount=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,150,160,24)];
+    txtAccount=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,100,160,24)];
     txtAccount.backgroundColor=[UIColor whiteColor];
     txtAccount.borderStyle=UITextBorderStyleLine;
     txtAccount.font=[UIFont systemFontOfSize:18];
     txtAccount.delegate = self;
     [self.view addSubview:txtAccount];
 
-    UILabel *labAccount=[[UILabel alloc]initWithFrame:CGRectMake(txtAccount.frame.origin.x-50, 150,40,24)];
+    UILabel *labAccount=[[UILabel alloc]initWithFrame:CGRectMake(txtAccount.frame.origin.x-50, 100,40,24)];
     labAccount.text=@"帳號";
     labAccount.backgroundColor=[UIColor clearColor];
     labAccount.textAlignment=NSTextAlignmentCenter;
@@ -63,14 +60,14 @@
     
     
     //Password
-    txtPwd=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,180,160,24)];
+    txtPwd=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,130,160,24)];
     txtPwd.backgroundColor=[UIColor whiteColor];
     txtPwd.borderStyle=UITextBorderStyleLine;
     txtPwd.font=[UIFont systemFontOfSize:18];
     txtPwd.delegate = self;
     [self.view addSubview:txtPwd];
     
-    UILabel *labPwd=[[UILabel alloc]initWithFrame:CGRectMake(txtPwd.frame.origin.x-50, 180,40,24)];
+    UILabel *labPwd=[[UILabel alloc]initWithFrame:CGRectMake(txtPwd.frame.origin.x-50, 130,40,24)];
     labPwd.text=@"密碼";
     labPwd.backgroundColor=[UIColor clearColor];
     labPwd.textAlignment=NSTextAlignmentCenter;
@@ -79,14 +76,14 @@
 
 
     //CompanyCode
-    txtCompany=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,210,160,24)];
+    txtCompany=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,160,160,24)];
     txtCompany.backgroundColor=[UIColor whiteColor];
     txtCompany.borderStyle=UITextBorderStyleLine;
     txtCompany.font=[UIFont systemFontOfSize:18];
     txtCompany.delegate = self;
     [self.view addSubview:txtCompany];
     
-    UILabel *labCompany=[[UILabel alloc]initWithFrame:CGRectMake(txtCompany.frame.origin.x-90, 210,80,24)];
+    UILabel *labCompany=[[UILabel alloc]initWithFrame:CGRectMake(txtCompany.frame.origin.x-90, 160,80,24)];
     labCompany.text=@"企業代碼";
     labCompany.backgroundColor=[UIColor clearColor];
     labCompany.textAlignment=NSTextAlignmentCenter;
@@ -95,7 +92,7 @@
     
     
     //btnLogin
-    UIButton *btnLogin=[[UIButton alloc]initWithFrame:CGRectMake((screenWidth/2)-60,250,160,26)];
+    UIButton *btnLogin=[[UIButton alloc]initWithFrame:CGRectMake((screenWidth/2)-60,200,160,26)];
     btnLogin.backgroundColor=[UIColor brownColor];
     btnLogin.layer.cornerRadius=5;
     btnLogin.layer.borderWidth=1;
@@ -106,7 +103,6 @@
 }
 #pragma mark - UIButton
 - (void)actionLogin:(id)sender{
-    
     BOOL isLogin=[[MDataBaseManager sharedInstance]loginWithAccount:txtAccount.text Password:txtPwd.text CompanyID:txtCompany.text];
     if (isLogin==YES) {
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -115,7 +111,6 @@
         UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:@"" message:@"查無此會員" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [theAlert show];
     }
-    
 }
 /*
 #pragma mark - Navigation

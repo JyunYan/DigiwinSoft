@@ -34,7 +34,6 @@
 {
     [super viewWillAppear:YES];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
     self.navigationItem.leftBarButtonItem = back;
 }

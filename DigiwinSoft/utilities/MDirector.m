@@ -35,4 +35,26 @@ static MDirector* _director = nil;
     return self;
 }
 
+#pragma mark - get color methods
+
+- (UIColor *)getCustomGrayColor
+{
+    return [UIColor colorWithRed:120.0f/255.0f green:120.0f/255.0f blue:120.0f/255.0f alpha:1.0f];
+}
+
+- (UIColor *)getCustomLightGrayColor
+{
+    return [UIColor colorWithRed:190.0f/255.0f green:190.0f/255.0f blue:190.0f/255.0f alpha:1.0f];
+}
+
+- (UIColor *)getCustomBlueColor
+{
+    return [UIColor colorWithRed:68.0f/255.0f green:166.0f/255.0f blue:193.0f/255.0f alpha:1.0f];
+}
+
+- (UIColor *)getCustomRedColor
+{
+    return [UIColor colorWithRed:243.0f/255.0f green:137.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
+}
+
 @end

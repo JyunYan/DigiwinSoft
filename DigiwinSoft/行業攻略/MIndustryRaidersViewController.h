@@ -14,7 +14,6 @@
     UITableView *tbl;
     UIImageView *img;
     NSArray *aryList;
-    NSArray *ary;
 }
 @property (nonatomic, assign) BOOL isLogin;
 @end

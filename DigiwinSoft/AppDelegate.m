@@ -43,18 +43,16 @@
     CGFloat screenWidth = screenFrame.size.width;
 
     MMDrawerController* drawer = [[MMDrawerController alloc] initWithCenterViewController:self.tabBarController leftDrawerViewController:left];
-    [drawer setMaximumLeftDrawerWidth:screenWidth];
+    [drawer setMaximumLeftDrawerWidth:screenWidth - 60];
     [drawer setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
     [drawer setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
 
     self.window.rootViewController = drawer;
     [self.window makeKeyAndVisible];
     
-
+    
     [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    //[[UINavigationBar appearance] setTranslucent:NO];
-    
     
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
@@ -151,14 +149,12 @@
 {
     _tabBarController.selectedIndex = 4;
     
-    MMyTaskViewController* myTask = [[MMyTaskViewController alloc] init];
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:myTask];
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
         [[UINavigationBar appearance] setTranslucent:YES];
     }
-
+    
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
-    drawer.centerViewController = nav;
+    drawer.centerViewController = _tabBarController;
     [drawer closeDrawerAnimated:YES completion:nil];
 }
 
@@ -173,9 +169,9 @@
     [drawer closeDrawerAnimated:YES completion:nil];
 }
 
-- (void) toggleMyRaidersWithUser:(MUser*) user
+- (void) toggleMyRaiders
 {
-    MMyRaidersViewController* vc = [[MMyRaidersViewController alloc] initWithUser:user];
+    MMyRaidersViewController* vc = [[MMyRaidersViewController alloc] init];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
@@ -187,9 +183,9 @@
     [drawer closeDrawerAnimated:YES completion:nil];
 }
 
-- (void) toggleMyPlanWithUser:(MUser*) user
+- (void) toggleMyPlan
 {
-    MMyPlanViewController* vc = [[MMyPlanViewController alloc] initWithUser:user];
+    MMyPlanViewController* vc = [[MMyPlanViewController alloc] init];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
@@ -201,9 +197,9 @@
     [drawer closeDrawerAnimated:YES completion:nil];
 }
 
-- (void) toggleEventListWithUser:(MUser*) user
+- (void) toggleEventList
 {
-    MEventListViewController* vc = [[MEventListViewController alloc] initWithUser:user];
+    MEventListViewController* vc = [[MEventListViewController alloc] init];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {

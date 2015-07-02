@@ -11,6 +11,4 @@
 
 @interface MEventListViewController : UIViewController
 
-- (id)initWithUser:(MUser*) user;
-
 @end

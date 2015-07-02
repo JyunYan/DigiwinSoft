@@ -45,7 +45,7 @@
     self.title=@"最適化存貨周轉";
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self prepareTestData];
+    [self loadData];
     [self addMainMenu];
 
 }
@@ -61,7 +61,7 @@
 }
 
 #pragma mark - create view
-- (void)prepareTestData
+- (void)loadData
 {
     self.target = [[MTarget alloc] init];
     self.target.valueR = @"80";
@@ -102,6 +102,8 @@
     //UITextField
     UITextField *txtName=[[UITextField alloc]initWithFrame:CGRectMake(105,118, 160, 29)];
     txtName.borderStyle=UITextBorderStyleLine;
+    txtName.text=_target.name;
+    txtName.enabled=NO;
     [self.view addSubview:txtName];
     
     
@@ -116,6 +118,8 @@
     //UITextField
     UITextField *txtInit=[[UITextField alloc]initWithFrame:CGRectMake(105,163, 50, 29)];
     txtInit.borderStyle=UITextBorderStyleLine;
+    txtInit.text=_target.valueR;
+    txtInit.enabled=NO;
     [self.view addSubview:txtInit];
     
     //Label
@@ -138,20 +142,21 @@
     //UITextField
     UITextField *txtTarget=[[UITextField alloc]initWithFrame:CGRectMake(105,209, 50, 29)];
     txtTarget.borderStyle=UITextBorderStyleLine;
+    txtTarget.text=_target.valueT;
     [self.view addSubview:txtTarget];
 
     //Label
     labDay=[[UILabel alloc]initWithFrame:CGRectMake(170, 215, 20, 15)];
-    labDay.text=@"天";
+    labDay.text=_target.unit;
     labDay.backgroundColor=[UIColor whiteColor];
     [labDay setFont:[UIFont systemFontOfSize:14]];
     labDay.textAlignment = NSTextAlignmentJustified;
     [self.view addSubview:labDay];
     
     //btn
-    UIButton *btnShowImg=[[UIButton alloc]initWithFrame:CGRectMake(195, 215, 20, 20)];
+    UIButton *btnShowImg=[[UIButton alloc]initWithFrame:CGRectMake(195, 212.5, 20, 20)];
     [btnShowImg addTarget:self action:@selector(btnShowImg:) forControlEvents:UIControlEventTouchUpInside];
-    btnShowImg.backgroundColor=[UIColor grayColor];
+    [btnShowImg setImage:[UIImage imageNamed:@"icon_info.png"] forState:UIControlStateNormal];
     [self.view addSubview:btnShowImg];
     
     //imgGray

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 Jyun. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "MUser.h"
 
 @interface MDirector : NSObject
@@ -14,5 +14,10 @@
 @property (nonatomic, strong) MUser* currentUser;   // 目前的user
 
 +(MDirector*) sharedInstance;
+
+- (UIColor *)getCustomGrayColor;
+- (UIColor *)getCustomLightGrayColor;
+- (UIColor *)getCustomBlueColor;
+- (UIColor *)getCustomRedColor;
 
 @end
