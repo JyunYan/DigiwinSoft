@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "MUser.h"
+#import "MPhenomenon.h"
+#import "MIssue.h"
 
 @interface MDirector : NSObject
 
 @property (nonatomic, strong) MUser* currentUser;   // 目前的user
+
+@property (nonatomic, strong) MPhenomenon* selectedPhen;
+@property (nonatomic, strong) MIssue* selectedIssue;
 
 +(MDirector*) sharedInstance;
 

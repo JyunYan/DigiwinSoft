@@ -260,7 +260,7 @@
         imageViewAddTask.hidden = YES;
         recommendButton.hidden = YES;
     } else if (section == 1) {
-        MActivity* act = [_actArray objectAtIndex:row];
+        MCustActivity* act = [_actArray objectAtIndex:row];
         label.text = act.name;
         
         imageViewAddTask.hidden = NO;

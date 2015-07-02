@@ -10,16 +10,20 @@
 
 #import "FMDatabase.h"
 #import "MUser.h"
-#import "MEvent.h"
-#import "MGuide.h"
-#import "MSituation.h"
-#import "MActivity.h"
-#import "MTreasure.h"
 #import "MPhenomenon.h"
+#import "MGuide.h"
+#import "MActivity.h"
+#import "MWorkItem.h"
 #import "MIssue.h"
+#import "MEvent.h"
+#import "MSituation.h"
+#import "MTreasure.h"
 
 #import "MCustGuide.h"
+#import "MCustActivity.h"
 #import "MCustTarget.h"
+
+#import "MConfig.h"
 
 @interface MDataBaseManager : NSObject
 
@@ -31,7 +35,7 @@
 #pragma mark - 事件 相關
 - (NSArray*)loadEventsWithUser:(MUser*)user;
 - (NSArray*)loadSituationsWithEvent:(MEvent*)event;
-- (NSArray*)loadTreasureWithActivity:(MActivity*)act;
+- (NSArray*)loadTreasureWithActivity:(MCustActivity*)act;
 
 - (NSArray*)loadActivitysWithEvent:(MEvent*)event;
 

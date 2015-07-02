@@ -130,6 +130,8 @@
 		DCF46B1E1B42B4C000C771BB /* icon_list_2.png in Resources */ = {isa = PBXBuildFile; fileRef = DCF46B1C1B42B4C000C771BB /* icon_list_2.png */; };
 		DCF46B211B43A34F00C771BB /* MCustGuide.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B201B43A34F00C771BB /* MCustGuide.m */; };
 		DCF46B241B43C2F400C771BB /* MCustTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B231B43C2F400C771BB /* MCustTarget.m */; };
+		DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B261B454A0800C771BB /* MCustActivity.m */; };
+		DCF46B2A1B454FA800C771BB /* MCustWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B291B454FA800C771BB /* MCustWorkItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -334,6 +336,10 @@
 		DCF46B201B43A34F00C771BB /* MCustGuide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustGuide.m; path = structure/MCustGuide.m; sourceTree = "<group>"; };
 		DCF46B221B43C2F400C771BB /* MCustTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustTarget.h; path = structure/MCustTarget.h; sourceTree = "<group>"; };
 		DCF46B231B43C2F400C771BB /* MCustTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustTarget.m; path = structure/MCustTarget.m; sourceTree = "<group>"; };
+		DCF46B251B454A0800C771BB /* MCustActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustActivity.h; path = structure/MCustActivity.h; sourceTree = "<group>"; };
+		DCF46B261B454A0800C771BB /* MCustActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustActivity.m; path = structure/MCustActivity.m; sourceTree = "<group>"; };
+		DCF46B281B454FA800C771BB /* MCustWorkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustWorkItem.h; path = structure/MCustWorkItem.h; sourceTree = "<group>"; };
+		DCF46B291B454FA800C771BB /* MCustWorkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustWorkItem.m; path = structure/MCustWorkItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -720,6 +726,10 @@
 				DCF46B201B43A34F00C771BB /* MCustGuide.m */,
 				DCF46B221B43C2F400C771BB /* MCustTarget.h */,
 				DCF46B231B43C2F400C771BB /* MCustTarget.m */,
+				DCF46B251B454A0800C771BB /* MCustActivity.h */,
+				DCF46B261B454A0800C771BB /* MCustActivity.m */,
+				DCF46B281B454FA800C771BB /* MCustWorkItem.h */,
+				DCF46B291B454FA800C771BB /* MCustWorkItem.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -934,6 +944,7 @@
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
+				DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */,
 				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
 				3A03AA231B3BFF0500923ABB /* MEventDetailViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
@@ -950,6 +961,7 @@
 				D07B390F1B3A39A6007FCBC0 /* MLineChartView.m in Sources */,
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,
 				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,
+				DCF46B2A1B454FA800C771BB /* MCustWorkItem.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
 				DCF46ACD1B4236CB00C771BB /* MTarget.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,

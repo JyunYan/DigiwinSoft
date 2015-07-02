@@ -149,7 +149,7 @@
     NSInteger row = indexPath.row;
     
     MCustGuide* guide = [_guideArray objectAtIndex:row];
-    MCustTarget* target = guide.target;
+    MCustTarget* target = guide.custTaregt;
     
     UILabel* countermeasureLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_COUNTERMEASURE];
     UILabel* indexLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_INDEX];

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MUser.h"
+#import "MTarget.h"
 
 /* 關鍵活動 */
 
@@ -15,15 +16,15 @@
 
 @property (nonatomic, strong) NSString* uuid;   //代號
 @property (nonatomic, strong) NSString* name;   //名稱
-
-@property (nonatomic, strong) NSString* comp_id;
-@property (nonatomic, strong) NSString* guide_id;
-@property (nonatomic, strong) NSString* act_m_id;
 @property (nonatomic, strong) NSString* desc;
-@property (nonatomic, strong) NSString* emp_id;
-@property (nonatomic, strong) NSString* status;   
+@property (nonatomic, strong) NSString* index;  //順序
+@property (nonatomic, strong) NSString* previos;    //前置
 
+@property (nonatomic, strong) NSString* guide_id;
+
+@property (nonatomic, strong) MTarget* target;
 @property (nonatomic, strong) MUser* manager;   //負責人
+
 @property (nonatomic, strong) NSMutableArray* workItemArray;    //工作項目array
 
 @end

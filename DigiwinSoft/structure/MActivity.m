@@ -10,4 +10,13 @@
 
 @implementation MActivity
 
+- (id)init
+{
+    if(self = [super init]){
+        
+        _target = [MTarget new];
+    }
+    return self;
+}
+
 @end
