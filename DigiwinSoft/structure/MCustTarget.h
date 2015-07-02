@@ -7,19 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MTarget.h"
 
-@interface MCustTarget : NSObject
-
-@property (nonatomic, strong) NSString* uuid;
-@property (nonatomic, strong) NSString* name;
-@property (nonatomic, strong) NSString* unit;
+@interface MCustTarget : MTarget
 
 @property (nonatomic, strong) NSString* tar_uuid;
 
-@property (nonatomic, strong) NSString* valueR; //實際值;
-@property (nonatomic, strong) NSString* valueT; //目標值;
-
-@property (nonatomic, strong) NSString* startDate;
-@property (nonatomic, strong) NSString* completeDate; //預計達成日
+- (void)copyFromTarget:(MTarget*)target;
 
 @end

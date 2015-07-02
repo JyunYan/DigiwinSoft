@@ -29,7 +29,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _guideArray = [[MDataBaseManager sharedInstance] loadCustomGuideArrayByRelease:YES];
+        _guideArray = [[MDataBaseManager sharedInstance] loadMyRaidersArray];
     }
     return self;
 }

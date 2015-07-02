@@ -23,6 +23,8 @@
 
 @property (nonatomic, strong) NSString* valueR; //實際值;
 @property (nonatomic, strong) NSString* valueT; //目標值;
+
+@property (nonatomic, strong) NSString* startDate;  //開始執行日
 @property (nonatomic, strong) NSString* completeDate; //預計達成日
 
 @property (nonatomic, strong) NSString* datetime;   //history記錄點
