@@ -18,9 +18,10 @@
     NSLocale *datelocale;
     CGFloat screenWidth;
     CGFloat screenHeight;
+    //MTarget* target;
 }
 
-@property (nonatomic) MTarget* target;
+//
 
 @property (nonatomic) UIView* targetChatView;
 
@@ -32,7 +33,7 @@
 @property (nonatomic) UIColor* yellowColor;
 @property (nonatomic) UIColor* redColor;
 
-
+@property (nonatomic) MTarget* mTarget;
 
 
 @end
@@ -63,12 +64,12 @@
 #pragma mark - create view
 - (void)loadData
 {
-    self.target = [[MTarget alloc] init];
-    self.target.valueR = @"80";
-    self.target.top = @"25";
-    self.target.avg = @"30";
-    self.target.bottom = @"40";
-    self.target.name = @"庫存周轉天數(天)";
+    self.mTarget = [[MTarget alloc] init];
+    self.mTarget.valueR = @"80";
+    self.mTarget.top = @"25";
+    self.mTarget.avg = @"30";
+    self.mTarget.bottom = @"40";
+    self.mTarget.name = @"庫存周轉天數(天)";
     
 }
 -(void)addMainMenu
@@ -312,7 +313,7 @@
     [self createRectAtView:view frame:CGRectMake(579, 702, 37,37) color:self.grayColor];
     [self createRectAtView:view frame:CGRectMake(772, 702, 37,37) color:self.yellowColor];
     
-    label = [self createTextAtView:view frame:CGRectMake(230,155,620,55) text:self.target.name color:self.darkGrayColor fontSize:18];
+    label = [self createTextAtView:view frame:CGRectMake(230,155,620,55) text:self.mTarget.name color:self.darkGrayColor fontSize:18];
     label.textAlignment = NSTextAlignmentCenter;
     
     [self createTextAtView:view frame:CGRectMake(242,702, 104,37) text:@"自己" color:self.grayColor fontSize:12];
@@ -344,14 +345,14 @@
     
     
     
-    label = [self createTextAtView:view frame:CGRectMake(259,290,64,58) text:self.target.valueR color:self.redColor fontSize:16];
+    label = [self createTextAtView:view frame:CGRectMake(259,290,64,58) text:self.mTarget.valueR color:self.redColor fontSize:16];
     label.textAlignment = NSTextAlignmentCenter;
     
-    label = [self createTextAtView:view frame:CGRectMake(421,290,64,58) text:self.target.bottom color:self.redColor fontSize:16];
+    label = [self createTextAtView:view frame:CGRectMake(421,290,64,58) text:self.mTarget.bottom color:self.redColor fontSize:16];
     label.textAlignment = NSTextAlignmentCenter;
-    label = [self createTextAtView:view frame:CGRectMake(595,290,64,58) text:self.target.avg color:self.redColor fontSize:16];
+    label = [self createTextAtView:view frame:CGRectMake(595,290,64,58) text:self.mTarget.avg color:self.redColor fontSize:16];
     label.textAlignment = NSTextAlignmentCenter;
-    label = [self createTextAtView:view frame:CGRectMake(759,290,64,58) text:self.target.top color:self.redColor fontSize:16];
+    label = [self createTextAtView:view frame:CGRectMake(759,290,64,58) text:self.mTarget.top color:self.redColor fontSize:16];
     label.textAlignment = NSTextAlignmentCenter;
     
     
@@ -367,7 +368,7 @@
     
     if(true)
     {
-        int value = [self.target.valueR intValue];
+        int value = [self.mTarget.valueR intValue];
         int i = 0;
         while( value > 0)
         {
@@ -382,7 +383,7 @@
     }
     if(true)
     {
-        int value = [self.target.bottom intValue];
+        int value = [self.mTarget.bottom intValue];
         int i = 0;
         while( value > 0)
         {
@@ -397,7 +398,7 @@
     }
     if(true)
     {
-        int value = [self.target.avg intValue];
+        int value = [self.mTarget.avg intValue];
         int i = 0;
         while( value > 0)
         {
@@ -412,7 +413,7 @@
     }
     if(true)
     {
-        int value = [self.target.top intValue];
+        int value = [self.mTarget.top intValue];
         int i = 0;
         while( value > 0)
         {
