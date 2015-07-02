@@ -50,4 +50,6 @@ typedef NS_ENUM(NSInteger, SWCellState)
 
 - (BOOL)isUtilityButtonsHidden;
 
+- (void)resetLayoutSubviewsWithOffsetX:(CGFloat) offsetX;
+
 @end

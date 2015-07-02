@@ -8,7 +8,7 @@
 
 #import "MMyPlanViewController.h"
 #import "AppDelegate.h"
-#import "SWTableViewCell.h"
+#import "MMyPlanTableViewCell.h"
 #import "MKeyActivitiesViewController.h"
 #import "MDirector.h"
 
@@ -41,31 +41,19 @@
     // Do any additional setup after loading the view.
     
     self.title = @"我的規劃";
-    self.view.backgroundColor = [UIColor whiteColor];
-
+    self.view.backgroundColor = [UIColor lightGrayColor];
+    
     [self addMainMenu];
+    
 
-    
-    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    
     CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
     CGFloat screenWidth = screenFrame.size.width;
     CGFloat screenHeight = screenFrame.size.height;
     
-    
     CGFloat posX = 0;
     CGFloat posY = 0;
     CGFloat width = screenWidth;
-    CGFloat height = 100;
-
-    UIView* topView = [self createTopView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:topView];
-    
-    
-    posX = 0;
-    posY = topView.frame.origin.y + topView.frame.size.height;
-    width = screenWidth;
-    height = screenHeight - posY - navBarHeight;
+    CGFloat height = screenHeight;
 
     UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:listView];
@@ -91,71 +79,20 @@
     self.navigationItem.leftBarButtonItem = left_bar_item;
 }
 
-- (UIView*)createTopView:(CGRect) rect
-{
-    CGFloat textSize = 15.0f;
-    
-    
-    UIView* view = [[UIView alloc] initWithFrame:rect];
-    
-    CGFloat viewWidth = rect.size.width;
-    
-    CGFloat posX = 30;
-    CGFloat posY = 10;
-    CGFloat width = viewWidth - posX * 2;
-    CGFloat height = 30;
-    // 緣起
-    UILabel* originLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    originLabel.text = @"緣起：";
-    originLabel.font = [UIFont boldSystemFontOfSize:textSize];
-    [view addSubview:originLabel];
-    
-    
-    posY = originLabel.frame.origin.y + originLabel.frame.size.height + 10;
-    height = 1;
-
-    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    lineView.backgroundColor = [UIColor lightGrayColor];
-    [view addSubview:lineView];
-    
-    
-    posY = lineView.frame.origin.y + lineView.frame.size.height + 10;
-    width = (viewWidth - posX) / 2;
-    height = 30;
-    //指標
-    UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    indexLabel.text = @"指標：";
-    indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    indexLabel.font = [UIFont systemFontOfSize:textSize];
-    [view addSubview:indexLabel];
-    
-    
-    posX = indexLabel.frame.origin.x + indexLabel.frame.size.width;
-    // 現值
-    UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    presentValueLabel.text = @"現值：";
-    presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    presentValueLabel.font = [UIFont systemFontOfSize:textSize];
-    [view addSubview:presentValueLabel];
-
-    return view;
-}
-
 - (UIView*)createListView:(CGRect) rect
 {
     UIView* view = [[UIView alloc] initWithFrame:rect];
-    view.backgroundColor = [UIColor lightGrayColor];
     
     CGFloat viewWidth = rect.size.width;
     CGFloat viewHeight = rect.size.height;
 
-    CGFloat posX = 20;
-    CGFloat posY = 20;
+    CGFloat posX = 0;
+    CGFloat posY = 0;
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = viewHeight - posY * 2;
 
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height) style:UITableViewStyleGrouped];
+    _tableView.backgroundColor = [UIColor clearColor];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [view addSubview:_tableView];
@@ -176,13 +113,98 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return _guideArray.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 110;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    CGFloat tableWidth = _tableView.frame.size.width;
+    
+    CGFloat textSize = 15.0f;
+    
+    CGFloat posX = 20;
+    CGFloat posY = 0;
+    CGFloat width = tableWidth - posX * 2;
+    CGFloat height = 30;
+    
+    UIView* header = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    header.backgroundColor = [UIColor whiteColor];
+    
+    
+    NSMutableArray* array = [_guideArray objectAtIndex:section];
+    MCustGuide* guide = [array objectAtIndex:0];
+    NSString* name = @"";
+    NSString* tname = @"";
+    NSString* value = @"";
+    if(guide.fromPhen){
+        name = guide.fromPhen.subject;
+        tname = guide.fromPhen.target.name;
+        value = [NSString stringWithFormat:@"%@ %@", guide.fromPhen.target.valueR, guide.fromPhen.target.unit];
+    }else if (guide.fromIssue){
+        name = guide.fromIssue.name;
+        tname = guide.fromIssue.target.name;
+        value = [NSString stringWithFormat:@"%@ %@", guide.fromIssue.target.valueR, guide.fromIssue.target.unit];
+    }
+    
+
+    posY = 10;
+
+    // 緣起
+    NSString* subjectStr = [NSString stringWithFormat:@"緣起：%@", name];
+    UILabel* subjectLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    subjectLabel.text = subjectStr;
+    subjectLabel.font = [UIFont boldSystemFontOfSize:textSize];
+    [header addSubview:subjectLabel];
+    
+    
+    posY = subjectLabel.frame.origin.y + subjectLabel.frame.size.height + 10;
+    height = 1;
+    
+    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    [header addSubview:lineView];
+    
+    
+    posY = lineView.frame.origin.y + lineView.frame.size.height + 10;
+    width = (tableWidth - posX) / 2;
+    height = 30;
+    //指標
+    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", tname];
+    UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    indexLabel.text = indexStr;
+    indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    indexLabel.font = [UIFont systemFontOfSize:textSize];
+    [header addSubview:indexLabel];
+    
+    
+    posX = indexLabel.frame.origin.x + indexLabel.frame.size.width;
+    // 現值
+    NSString* presentValueStr = [NSString stringWithFormat:@"現值：%@", value];
+    UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    presentValueLabel.text = presentValueStr;
+    presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    presentValueLabel.font = [UIFont systemFontOfSize:textSize];
+    [header addSubview:presentValueLabel];
+    
+    
+    UIView* down = [[UIView alloc] initWithFrame:CGRectMake(0, 100, tableWidth, 10)];
+    down.backgroundColor = [UIColor lightGrayColor];
+    [header addSubview:down];
+
+    
+    return header;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return _guideArray.count;
+    NSMutableArray* array = [_guideArray objectAtIndex:section];
+    return array.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -193,10 +215,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    SWTableViewCell *cell = (SWTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    MMyPlanTableViewCell *cell = (MMyPlanTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
-        cell = [[SWTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.backgroundColor = [UIColor whiteColor];
+        cell = [[MMyPlanTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.rightUtilityButtons = [self rightButtons];
         cell.delegate = self;
@@ -206,28 +227,30 @@
         
         CGFloat tableWidth = tableView.frame.size.width;
         
-        CGFloat posX = 10;
+        CGFloat offsetX = 20;
+        
+        CGFloat posX = 0 - offsetX;
         CGFloat posY = 10;
         CGFloat width = tableWidth - posX * 2;
         CGFloat height = 60;
         
         UIView* view = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        [cell addSubview:view];
+        [cell.contentView addSubview:view];
         
         // left
-        posX = 10;
+        posX = 20;
         
-        UIView* leftView = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, width/2, height)];
+        UIView* leftView = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, width/2 - offsetX * 2, height)];
         [view addSubview:leftView];
         // 對策
-        UILabel* countermeasureLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2, height/2)];
+        UILabel* countermeasureLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2 - offsetX * 2, height/2)];
         countermeasureLabel.tag = TAG_LABEL_COUNTERMEASURE;
         countermeasureLabel.font = [UIFont boldSystemFontOfSize:textSize];
         [leftView addSubview:countermeasureLabel];
         
         posY = countermeasureLabel.frame.origin.y + countermeasureLabel.frame.size.height;
         // 指標
-        UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, height/2)];
+        UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2 - offsetX * 2, height/2)];
         indexLabel.tag = TAG_LABEL_INDEX;
         indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         indexLabel.font = [UIFont systemFontOfSize:textSize];
@@ -237,10 +260,10 @@
         // right
         posX = leftView.frame.origin.x + leftView.frame.size.width;
         
-        UIView* rightView = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, width/2, height)];
+        UIView* rightView = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, width/2 - offsetX, height)];
         [view addSubview:rightView];
         // 負責人
-        UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2, height/2)];
+        UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2 - offsetX, height/2)];
         personInChargeLabel.tag = TAG_LABEL_PERSON_IN_CHARGE;
         personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
@@ -248,17 +271,20 @@
         
         posY = personInChargeLabel.frame.origin.y + personInChargeLabel.frame.size.height;
         // 現值
-        UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, height/2)];
+        UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2 - offsetX, height/2)];
         presentValueLabel.tag = TAG_LABEL_PRESENT_VALUE;
         presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         presentValueLabel.font = [UIFont systemFontOfSize:textSize];
         [rightView addSubview:presentValueLabel];
     }
     
+    NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     
-    MCustGuide* guide = [_guideArray objectAtIndex:row];
-    
+    NSMutableArray* array = [_guideArray objectAtIndex:section];
+    MCustGuide* guide = [array objectAtIndex:row];
+    MCustTarget* target = guide.target;
+
     UILabel* countermeasureLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_COUNTERMEASURE];
     UILabel* indexLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_INDEX];
     UILabel* presentValueLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PRESENT_VALUE];
@@ -267,9 +293,11 @@
     NSString* countermeasureStr = [NSString stringWithFormat:@"對策：%@", guide.name];
     countermeasureLabel.text = countermeasureStr;
     
-    indexLabel.text = @"指標：";
+    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", target.name];
+    indexLabel.text = indexStr;
     
-    presentValueLabel.text = @"現值：";
+    NSString* presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", target.valueR, target.unit];
+    presentValueLabel.text = presentValueStr;
     
     MUser* user = guide.manager;
     NSString* personInChargeStr = [NSString stringWithFormat:@"負責人：%@", user.name];
@@ -282,9 +310,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     
-    MKeyActivitiesViewController* vc = [[MKeyActivitiesViewController alloc] init];
+    NSMutableArray* array = [_guideArray objectAtIndex:section];
+    MCustGuide* guide = [array objectAtIndex:row];
+
+    MKeyActivitiesViewController* vc = [[MKeyActivitiesViewController alloc] initWithCustGuide:guide];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -292,8 +324,12 @@
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
     NSIndexPath *cellIndexPath = [_tableView indexPathForCell:cell];
+    NSInteger section = cellIndexPath.section;
     NSInteger row = cellIndexPath.row;
     
+    NSMutableArray* array = [_guideArray objectAtIndex:section];
+    MCustGuide* guide = [array objectAtIndex:row];
+
     switch (index) {
         case 0:
             NSLog(@"clock button was pressed");

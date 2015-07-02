@@ -178,7 +178,9 @@
 {
     NSInteger row = indexPath.row;
     
-    MKeyActivitiesViewController* vc = [[MKeyActivitiesViewController alloc] init];
+    MCustGuide* guide = [_guideArray objectAtIndex:row];
+
+    MKeyActivitiesViewController* vc = [[MKeyActivitiesViewController alloc] initWithCustGuide:guide];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

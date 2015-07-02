@@ -24,17 +24,29 @@
 
 @property (nonatomic, strong) NSMutableArray* activityArray;
 
+@property (nonatomic, strong) MCustGuide* guide;
+
 @end
 
 @implementation MKeyActivitiesViewController
 
+- (id)initWithCustGuide:(MCustGuide*) guide {
+    self = [super init];
+    if (self) {
+        _activityArray = guide.activityArray;
+        if (_activityArray == nil) {
+            _activityArray = [NSMutableArray new];
+//            [self createTestData];
+        }
+
+        _guide = guide;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    _activityArray = [[NSMutableArray alloc] init];
-    [self createTestData];
-    
     
     self.view.backgroundColor = [UIColor whiteColor];
 
@@ -62,15 +74,15 @@
     width = screenWidth;
     height = screenHeight - posY - navBarHeight;
     
-    UIView* tableView = [self createTableView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:tableView];
+    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
+    [self.view addSubview:listView];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+/*
 #pragma mark - create test data
 
 - (void)createTestData {
@@ -134,7 +146,7 @@
         [_activityArray addObject:activity];
     }
 }
-
+*/
 #pragma mark - create view
 
 -(void) addMainMenu
@@ -156,14 +168,14 @@
     CGFloat posY = 10;
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = 30;
-    // 緣起
-    UILabel* originLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 30, height)];
-    originLabel.text = @"緣起：";
-    originLabel.font = [UIFont boldSystemFontOfSize:textSize];
-    [view addSubview:originLabel];
+    // 標題
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 30, height)];
+    titleLabel.text = _guide.name;
+    titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
+    [view addSubview:titleLabel];
 
     
-    posX = originLabel.frame.origin.x + originLabel.frame.size.width;
+    posX = titleLabel.frame.origin.x + titleLabel.frame.size.width;
     
     UIButton* goMyTaskButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, 25, 25)];
     [goMyTaskButton setBackgroundImage:[UIImage imageNamed:@"icon_setting.png"] forState:UIControlStateNormal];
@@ -172,7 +184,7 @@
 
     
     posX = 30;
-    posY = originLabel.frame.origin.y + originLabel.frame.size.height + 10;
+    posY = titleLabel.frame.origin.y + titleLabel.frame.size.height + 10;
     height = 1;
     
     UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
@@ -184,8 +196,9 @@
     width = (viewWidth - posX) / 2;
     height = 30;
     // 指標
+    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", _guide.target.name];
     UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    indexLabel.text = @"指標：";
+    indexLabel.text = indexStr;
     indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     indexLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:indexLabel];
@@ -193,8 +206,9 @@
     
     posY = indexLabel.frame.origin.y + indexLabel.frame.size.height;
     // 現值
+    NSString* presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", _guide.target.valueR, _guide.target.unit];
     UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 25, height)];
-    presentValueLabel.text = @"現值：";
+    presentValueLabel.text = presentValueStr;
     presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     presentValueLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:presentValueLabel];
@@ -202,8 +216,9 @@
     
     posX = presentValueLabel.frame.origin.x + presentValueLabel.frame.size.width;
     // 負責人
+    NSString* personInChargeStr = [NSString stringWithFormat:@"負責人：%@", _guide.manager.name];
     UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 25, height)];
-    personInChargeLabel.text = @"負責人：";
+    personInChargeLabel.text = personInChargeStr;
     personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:personInChargeLabel];
@@ -221,7 +236,7 @@
     return view;
 }
 
-- (UIView*)createTableView:(CGRect) rect
+- (UIView*)createListView:(CGRect) rect
 {
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor lightGrayColor];
@@ -333,11 +348,11 @@
     height = 1;
     
     UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    lineView.backgroundColor = [UIColor colorWithRed:214.0f/255.0f green:214.0f/255.0f blue:214.0f/255.0f alpha:1.0f];
+    lineView.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     [infoView addSubview:lineView];
 
     
-    // title
+    /* title */
     posX = 0;
     posY = infoView.frame.origin.y + infoView.frame.size.height;
     width = infoView.frame.size.width;
@@ -351,26 +366,26 @@
     posY = 0;
     width = titleView.frame.size.width * 5 / 12;
     // 工作項目
-    UILabel* workItemLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    workItemLabel.text = @"工作項目";
-    workItemLabel.textAlignment = NSTextAlignmentCenter;
-    workItemLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    workItemLabel.font = [UIFont systemFontOfSize:textSize];
-    [titleView addSubview:workItemLabel];
+    UILabel* workItemTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    workItemTitleLabel.text = @"工作項目";
+    workItemTitleLabel.textAlignment = NSTextAlignmentCenter;
+    workItemTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    workItemTitleLabel.font = [UIFont systemFontOfSize:textSize];
+    [titleView addSubview:workItemTitleLabel];
     
     
-    posX = workItemLabel.frame.origin.x + workItemLabel.frame.size.width;
+    posX = workItemTitleLabel.frame.origin.x + workItemTitleLabel.frame.size.width;
     width = titleView.frame.size.width * 3 / 12;
     // 指派負責人
-    UILabel* appointResponsibleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    appointResponsibleLabel.text = @"指派負責人";
-    appointResponsibleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    appointResponsibleLabel.textAlignment = NSTextAlignmentCenter;
-    appointResponsibleLabel.font = [UIFont systemFontOfSize:textSize];
-    [titleView addSubview:appointResponsibleLabel];
+    UILabel* appointResponsibleTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    appointResponsibleTitleLabel.text = @"指派負責人";
+    appointResponsibleTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    appointResponsibleTitleLabel.textAlignment = NSTextAlignmentCenter;
+    appointResponsibleTitleLabel.font = [UIFont systemFontOfSize:textSize];
+    [titleView addSubview:appointResponsibleTitleLabel];
     
     
-    posX = appointResponsibleLabel.frame.origin.x + appointResponsibleLabel.frame.size.width;
+    posX = appointResponsibleTitleLabel.frame.origin.x + appointResponsibleTitleLabel.frame.size.width;
     width = titleView.frame.size.width * 4 / 12;
     // 截止日
     UILabel* deadlineTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
@@ -388,8 +403,7 @@
 {
     // Return the number of rows in the section.
     MActivity* activity = [_activityArray objectAtIndex:section];
-    NSMutableArray* workItemArray = activity.workItemArray;
-    return workItemArray.count;
+    return activity.workItemArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -424,7 +438,6 @@
         width = view.frame.size.width * 5 / 12;
         // 工作項目
         UILabel* workItemLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        workItemLabel.text = @"工作項目";
         workItemLabel.tag = TAG_LABEL_WORK_ITEM;
         workItemLabel.textAlignment = NSTextAlignmentCenter;
         workItemLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
@@ -460,6 +473,7 @@
     MActivity* activity = [_activityArray objectAtIndex:section];
     NSMutableArray* workItemArray = activity.workItemArray;
     MWorkItem* workItem = [workItemArray objectAtIndex:row];
+    
     
     UILabel* workItemLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_WORK_ITEM];
     UILabel* appointResponsibleLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_APPOINT_RESPONSIBLE];

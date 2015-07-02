@@ -36,6 +36,7 @@
 		3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B891B3800C100E94211 /* SWTableViewCell.m */; };
 		3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B8B1B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m */; };
 		3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B8D1B3800C100E94211 /* SWUtilityButtonView.m */; };
+		3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */; };
 		3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */; };
 		3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE101B32831500143374 /* MMonitorMapViewController.m */; };
 		3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE131B32839300143374 /* MSeeStatusViewController.m */; };
@@ -47,6 +48,7 @@
 		3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE281B32895C00143374 /* UIViewController+MMDrawerController.m */; };
 		3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE2E1B32997000143374 /* MTabBarViewController.m */; };
 		3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE381B32C0C800143374 /* ASFileManager.m */; };
+		509160991B4510330065C176 /* icon_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 509160981B4510330065C176 /* icon_close.png */; };
 		3AFF62551B438A46005B6238 /* icon_menu_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624A1B438A46005B6238 /* icon_menu_1.png */; };
 		3AFF62561B438A46005B6238 /* icon_menu_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624B1B438A46005B6238 /* icon_menu_2.png */; };
 		3AFF62571B438A46005B6238 /* icon_menu_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624C1B438A46005B6238 /* icon_menu_3.png */; };
@@ -198,6 +200,8 @@
 		3A711B8B1B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonTapGestureRecognizer.m; sourceTree = "<group>"; };
 		3A711B8C1B3800C100E94211 /* SWUtilityButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUtilityButtonView.h; sourceTree = "<group>"; };
 		3A711B8D1B3800C100E94211 /* SWUtilityButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonView.m; sourceTree = "<group>"; };
+		3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMyPlanTableViewCell.h; path = CustomViews/MMyPlanTableViewCell.h; sourceTree = "<group>"; };
+		3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMyPlanTableViewCell.m; path = CustomViews/MMyPlanTableViewCell.m; sourceTree = "<group>"; };
 		3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryRaidersViewController.h; sourceTree = "<group>"; };
 		3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIndustryRaidersViewController.m; sourceTree = "<group>"; };
 		3AB4CE0F1B32831500143374 /* MMonitorMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMonitorMapViewController.h; sourceTree = "<group>"; };
@@ -221,6 +225,8 @@
 		3AB4CE2E1B32997000143374 /* MTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTabBarViewController.m; sourceTree = "<group>"; };
 		3AB4CE371B32C0C800143374 /* ASFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFileManager.h; sourceTree = "<group>"; };
 		3AB4CE381B32C0C800143374 /* ASFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFileManager.m; sourceTree = "<group>"; };
+
+		509160981B4510330065C176 /* icon_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_close.png; sourceTree = "<group>"; };
 		3AFF624A1B438A46005B6238 /* icon_menu_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_1.png; sourceTree = "<group>"; };
 		3AFF624B1B438A46005B6238 /* icon_menu_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_2.png; sourceTree = "<group>"; };
 		3AFF624C1B438A46005B6238 /* icon_menu_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_3.png; sourceTree = "<group>"; };
@@ -545,6 +551,7 @@
 				DCF46ADF1B42AAF300C771BB /* icon_gray_circle.png */,
 				DCF46AE01B42AAF300C771BB /* icon_gray_dot.png */,
 				DCF46AE11B42AAF300C771BB /* icon_info.png */,
+				509160981B4510330065C176 /* icon_close.png */,
 				DCF46AE21B42AAF300C771BB /* icon_list.png */,
 				DCF46AE31B42AAF300C771BB /* icon_manager.png */,
 				DCF46AE41B42AAF300C771BB /* icon_more.png */,
@@ -743,6 +750,8 @@
 				DCF46AC91B422C0000C771BB /* MCarouselItemView.m */,
 				3AFF62601B438D08005B6238 /* MSettingTableViewCell.h */,
 				3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */,
+				3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */,
+				3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -862,6 +871,7 @@
 				DCF46B041B42AAF300C771BB /* icon_gray_dot.png in Resources */,
 				3AFF625C1B438A46005B6238 /* icon_menu_8.png in Resources */,
 				DCF46B071B42AAF300C771BB /* icon_manager.png in Resources */,
+				509160991B4510330065C176 /* icon_close.png in Resources */,
 				DCF46B151B42AAF300C771BB /* tab_icon_2.png in Resources */,
 				DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */,
 				DCF46ABE1B41504100C771BB /* dataStore.sqlite in Resources */,
@@ -927,6 +937,7 @@
 				38D1B16D1B3D3DB6007CEC13 /* MRaidersDiagramTableViewCell.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
+				3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */,
 				382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */,
 				DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */,
 				382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */,
