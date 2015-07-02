@@ -36,6 +36,7 @@
 		3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B891B3800C100E94211 /* SWTableViewCell.m */; };
 		3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B8B1B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m */; };
 		3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B8D1B3800C100E94211 /* SWUtilityButtonView.m */; };
+		3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */; };
 		3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */; };
 		3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE101B32831500143374 /* MMonitorMapViewController.m */; };
 		3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE131B32839300143374 /* MSeeStatusViewController.m */; };
@@ -196,6 +197,8 @@
 		3A711B8B1B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonTapGestureRecognizer.m; sourceTree = "<group>"; };
 		3A711B8C1B3800C100E94211 /* SWUtilityButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUtilityButtonView.h; sourceTree = "<group>"; };
 		3A711B8D1B3800C100E94211 /* SWUtilityButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonView.m; sourceTree = "<group>"; };
+		3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMyPlanTableViewCell.h; path = CustomViews/MMyPlanTableViewCell.h; sourceTree = "<group>"; };
+		3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMyPlanTableViewCell.m; path = CustomViews/MMyPlanTableViewCell.m; sourceTree = "<group>"; };
 		3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryRaidersViewController.h; sourceTree = "<group>"; };
 		3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIndustryRaidersViewController.m; sourceTree = "<group>"; };
 		3AB4CE0F1B32831500143374 /* MMonitorMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMonitorMapViewController.h; sourceTree = "<group>"; };
@@ -733,6 +736,8 @@
 				DCF46AC91B422C0000C771BB /* MCarouselItemView.m */,
 				3AFF62601B438D08005B6238 /* MSettingTableViewCell.h */,
 				3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */,
+				3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */,
+				3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -917,6 +922,7 @@
 				38D1B16D1B3D3DB6007CEC13 /* MRaidersDiagramTableViewCell.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
+				3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */,
 				382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */,
 				DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */,
 				382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */,

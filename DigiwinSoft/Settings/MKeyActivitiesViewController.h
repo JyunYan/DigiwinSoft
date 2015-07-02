@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCustGuide.h"
 
 @interface MKeyActivitiesViewController : UIViewController
+
+- (id)initWithCustGuide:(MCustGuide*) custGuide;
 
 @end
