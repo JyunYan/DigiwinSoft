@@ -425,10 +425,10 @@
 			children = (
 				D06C2D2A1B37B58C009D2082 /* MDesignateResponsibleViewController.h */,
 				D06C2D2B1B37B58C009D2082 /* MDesignateResponsibleViewController.m */,
-				382998291B3982BE0045B3BD /* MInventoryTurnoverViewController.h */,
-				3829982A1B3982BE0045B3BD /* MInventoryTurnoverViewController.m */,
 				3829982D1B3982BE0045B3BD /* MRaidersDiagramViewController.h */,
 				3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */,
+				382998291B3982BE0045B3BD /* MInventoryTurnoverViewController.h */,
+				3829982A1B3982BE0045B3BD /* MInventoryTurnoverViewController.m */,
 				3829982B1B3982BE0045B3BD /* MRaidersDescriptionViewController.h */,
 				3829982C1B3982BE0045B3BD /* MRaidersDescriptionViewController.m */,
 				382998271B3982BE0045B3BD /* MIndustryRaiders2ViewController.h */,

@@ -304,13 +304,13 @@
     //指派負責人
     UIImage *imgManager = [UIImage imageNamed:@"icon_manager.png"];
     [cell.btnManager setBackgroundImage:imgManager forState:UIControlStateNormal];
-    cell.btnManager.frame=CGRectMake(((screenWidth/4)*3)-44,25 , 16, 16);
+    cell.btnManager.frame=CGRectMake(((screenWidth/4)*3)-50,23 , 22, 22);
     [cell.btnManager addTarget:self action:@selector(btnManager:) forControlEvents:UIControlEventTouchUpInside];
     
     //攻略
     UIImage *imgRaiders = [UIImage imageNamed:@"icon_raider.png"];
     [cell.btnRaiders setBackgroundImage:imgRaiders forState:UIControlStateNormal];
-    cell.btnRaiders.frame=CGRectMake(((screenWidth/4)*3)+34,25 , 16, 16);
+    cell.btnRaiders.frame=CGRectMake(((screenWidth/4)*3)+30,23 , 22, 22);
     [cell.btnRaiders addTarget:self action:@selector(btnRaiders:) forControlEvents:UIControlEventTouchUpInside];
     
     //星星數量

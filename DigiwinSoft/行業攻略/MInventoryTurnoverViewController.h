@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MTarget.h"
 @interface MInventoryTurnoverViewController : UIViewController
-
+@property (nonatomic, weak) MTarget *target;
 @end
