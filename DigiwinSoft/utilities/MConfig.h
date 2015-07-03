@@ -19,4 +19,8 @@
 
 #define DATE_FORMATE_01 @"yyyy-MM-dd HH:mm:ss"
 
+/* 從哪裏進入p5 */
+#define GUIDE_FROM_PHEN  0  // from p1,p2
+#define GUIDE_FROM_ISSUE  1 // from p8 or p22
+
 #endif

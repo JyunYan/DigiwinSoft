@@ -18,9 +18,11 @@
 #import "MEvent.h"
 #import "MSituation.h"
 #import "MTreasure.h"
+#import "MSkill.h"
 
 #import "MCustGuide.h"
 #import "MCustActivity.h"
+#import "MCustWorkItem.h"
 #import "MCustTarget.h"
 
 #import "MConfig.h"
@@ -47,16 +49,23 @@
 // get 對策Sample
 - (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen;
 
-
 // get 議題Sample By 對策
 - (NSArray*)loadIssueArrayByGudie:(MGuide*)guide;
 
+// get 所有職能array
+- (NSArray*)loadAllSkills;
+
+// get 員工array
+- (NSArray*)loadEmployeeArray;
 
 // get 我的規劃/我的攻略
 - (NSArray*)loadMyPlanArray;
 - (NSArray*)loadMyRaidersArray;
 
-// get 某企業指標實際值的歷史資料
+// get 某企業指標實際值的歷史資料(過去一年)
 - (NSArray*)loadHistoryTargetArrayWithTarget:(MTarget*)target;
+
+// 加入"我的規劃"清單
+- (BOOL)insertIntoMyPlanWithGuide:(MGuide*)guide from:(NSInteger)from;
 
 @end

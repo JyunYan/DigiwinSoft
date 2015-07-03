@@ -48,7 +48,6 @@
 		3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE281B32895C00143374 /* UIViewController+MMDrawerController.m */; };
 		3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE2E1B32997000143374 /* MTabBarViewController.m */; };
 		3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE381B32C0C800143374 /* ASFileManager.m */; };
-		509160991B4510330065C176 /* icon_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 509160981B4510330065C176 /* icon_close.png */; };
 		3AFF62551B438A46005B6238 /* icon_menu_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624A1B438A46005B6238 /* icon_menu_1.png */; };
 		3AFF62561B438A46005B6238 /* icon_menu_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624B1B438A46005B6238 /* icon_menu_2.png */; };
 		3AFF62571B438A46005B6238 /* icon_menu_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624C1B438A46005B6238 /* icon_menu_3.png */; };
@@ -61,6 +60,7 @@
 		3AFF625E1B438A46005B6238 /* icon_menu_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF62531B438A46005B6238 /* icon_menu_10.png */; };
 		3AFF625F1B438A46005B6238 /* icon_menu_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF62541B438A46005B6238 /* icon_menu_11.png */; };
 		3AFF62621B438D08005B6238 /* MSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */; };
+		509160991B4510330065C176 /* icon_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 509160981B4510330065C176 /* icon_close.png */; };
 		D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */; };
 		D06C2D291B37AC88009D2082 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D06C2D281B37AC88009D2082 /* libsqlite3.dylib */; };
 		D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D2B1B37B58C009D2082 /* MDesignateResponsibleViewController.m */; };
@@ -134,6 +134,7 @@
 		DCF46B241B43C2F400C771BB /* MCustTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B231B43C2F400C771BB /* MCustTarget.m */; };
 		DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B261B454A0800C771BB /* MCustActivity.m */; };
 		DCF46B2A1B454FA800C771BB /* MCustWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B291B454FA800C771BB /* MCustWorkItem.m */; };
+		DCF46B2D1B462D5A00C771BB /* MSkill.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B2C1B462D5A00C771BB /* MSkill.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -225,8 +226,6 @@
 		3AB4CE2E1B32997000143374 /* MTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTabBarViewController.m; sourceTree = "<group>"; };
 		3AB4CE371B32C0C800143374 /* ASFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFileManager.h; sourceTree = "<group>"; };
 		3AB4CE381B32C0C800143374 /* ASFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFileManager.m; sourceTree = "<group>"; };
-
-		509160981B4510330065C176 /* icon_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_close.png; sourceTree = "<group>"; };
 		3AFF624A1B438A46005B6238 /* icon_menu_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_1.png; sourceTree = "<group>"; };
 		3AFF624B1B438A46005B6238 /* icon_menu_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_2.png; sourceTree = "<group>"; };
 		3AFF624C1B438A46005B6238 /* icon_menu_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_3.png; sourceTree = "<group>"; };
@@ -240,6 +239,7 @@
 		3AFF62541B438A46005B6238 /* icon_menu_11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_11.png; sourceTree = "<group>"; };
 		3AFF62601B438D08005B6238 /* MSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSettingTableViewCell.h; path = CustomViews/MSettingTableViewCell.h; sourceTree = "<group>"; };
 		3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSettingTableViewCell.m; path = CustomViews/MSettingTableViewCell.m; sourceTree = "<group>"; };
+		509160981B4510330065C176 /* icon_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_close.png; sourceTree = "<group>"; };
 		D06C2D251B37A5CD009D2082 /* MDataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDataBaseManager.h; sourceTree = "<group>"; };
 		D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDataBaseManager.m; sourceTree = "<group>"; };
 		D06C2D281B37AC88009D2082 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -346,6 +346,8 @@
 		DCF46B261B454A0800C771BB /* MCustActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustActivity.m; path = structure/MCustActivity.m; sourceTree = "<group>"; };
 		DCF46B281B454FA800C771BB /* MCustWorkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustWorkItem.h; path = structure/MCustWorkItem.h; sourceTree = "<group>"; };
 		DCF46B291B454FA800C771BB /* MCustWorkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustWorkItem.m; path = structure/MCustWorkItem.m; sourceTree = "<group>"; };
+		DCF46B2B1B462D5A00C771BB /* MSkill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSkill.h; path = structure/MSkill.h; sourceTree = "<group>"; };
+		DCF46B2C1B462D5A00C771BB /* MSkill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSkill.m; path = structure/MSkill.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -737,6 +739,8 @@
 				DCF46B261B454A0800C771BB /* MCustActivity.m */,
 				DCF46B281B454FA800C771BB /* MCustWorkItem.h */,
 				DCF46B291B454FA800C771BB /* MCustWorkItem.m */,
+				DCF46B2B1B462D5A00C771BB /* MSkill.h */,
+				DCF46B2C1B462D5A00C771BB /* MSkill.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -942,6 +946,7 @@
 				DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */,
 				382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */,
 				3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
+				DCF46B2D1B462D5A00C771BB /* MSkill.m in Sources */,
 				DCF46AD01B428F1400C771BB /* MIssue.m in Sources */,
 				3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */,
 				D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */,
