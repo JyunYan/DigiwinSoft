@@ -283,7 +283,7 @@
     
     NSMutableArray* array = [_guideArray objectAtIndex:section];
     MCustGuide* guide = [array objectAtIndex:row];
-    MCustTarget* target = guide.target;
+    MCustTarget* target = guide.custTaregt;
 
     UILabel* countermeasureLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_COUNTERMEASURE];
     UILabel* indexLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_INDEX];

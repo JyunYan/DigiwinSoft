@@ -195,8 +195,9 @@
     posY = lineView.frame.origin.y + lineView.frame.size.height + 10;
     width = (viewWidth - posX) / 2;
     height = 30;
+    
     // 指標
-    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", _guide.target.name];
+    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", _guide.custTaregt.name];
     UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     indexLabel.text = indexStr;
     indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
@@ -206,7 +207,7 @@
     
     posY = indexLabel.frame.origin.y + indexLabel.frame.size.height;
     // 現值
-    NSString* presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", _guide.target.valueR, _guide.target.unit];
+    NSString* presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", _guide.custTaregt.valueR, _guide.custTaregt.unit];
     UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 25, height)];
     presentValueLabel.text = presentValueStr;
     presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
