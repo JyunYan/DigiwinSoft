@@ -916,7 +916,7 @@ static MDataBaseManager* _director = nil;
 {
     NSString* uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_GUIDE_UUID_PREV];
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* guiid = guide.uuid;
+    NSString* gui_m_id = guide.uuid;
     NSString* name = guide.name;
     NSString* desc = guide.desc;
     NSString* tarid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_TARGET_UUID_PREV];
@@ -939,10 +939,10 @@ static MDataBaseManager* _director = nil;
     // VALUES(%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,)
     
     
-    BOOL b = [self.db executeUpdate:sql, uuid, compid, from1, from2, guiid, name, desc, tarid, empid, release, status, cre_dte, owner];
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, from1, from2, gui_m_id, name, desc, tarid, empid, release, status, cre_dte, owner];
     if(b){
         [self insertTarget:guide.target withID:tarid];
-        [self insertActivitys:guide.activityArray];
+        [self insertActivitys:guide.activityArray guideID:uuid];
     }else{
         NSLog(@"add guide failed : %@", [self.db lastErrorMessage]);
     }
@@ -950,22 +950,21 @@ static MDataBaseManager* _director = nil;
     return b;
 }
 
-- (void)insertActivitys:(NSArray*)array
+- (void)insertActivitys:(NSArray*)array guideID:(NSString*)guideid
 {
     for (MActivity* act in array) {
-        [self insertActivity:act];
+        [self insertActivity:act guideID:guideid];
     }
 }
 
-- (BOOL)insertActivity:(MActivity*)act
+- (BOOL)insertActivity:(MActivity*)act guideID:(NSString*)guideid
 {
     NSString* sql = @"insert into U_ACTIVITY ('ID','COMP_ID','GUIDE_ID','ACT_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','INDEX','PREVIOS','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?)";
     
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
     NSString* cre_dte = [[MDirector sharedInstance] getCurrentDateStringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString* uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_ACT_UUID_PREV];
-    NSString* gui_id = act.guide_id;
-    NSString* act_id = act.uuid;
+    NSString* act_m_id = act.uuid;
     NSString* name = act.name;
     NSString* desc = act.desc;
     NSString* tarid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_TARGET_UUID_PREV];
@@ -974,10 +973,10 @@ static MDataBaseManager* _director = nil;
     NSString* prev = act.previos;
     NSString* status = @"0";
     
-    BOOL b = [self.db executeUpdate:sql, uuid, compid, gui_id, act_id, name, desc, tarid, empid, index, prev, status, cre_dte];
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, act_m_id, name, desc, tarid, empid, index, prev, status, cre_dte];
     if(b){
         [self insertTarget:act.target withID:tarid];
-        [self insertWorkItems:act.workItemArray];
+        [self insertWorkItems:act.workItemArray activityID:uuid guideID:guideid];
     }else{
         NSLog(@"add activity failed : %@", [self.db lastErrorMessage]);
     }
@@ -985,14 +984,14 @@ static MDataBaseManager* _director = nil;
     return b;
 }
 
-- (void)insertWorkItems:(NSArray*)array
+- (void)insertWorkItems:(NSArray*)array activityID:(NSString*)actid guideID:(NSString*)guideid
 {
     for (MWorkItem* item in array) {
-        [self insertWorkItem:item];
+        [self insertWorkItem:item activityID:actid guideID:guideid];
     }
 }
 
-- (BOOL)insertWorkItem:(MWorkItem*)item
+- (BOOL)insertWorkItem:(MWorkItem*)item activityID:(NSString*)actid guideID:(NSString*)guideid
 {
     NSString* sql = @"insert into U_WORK_ITEM ('ID','COMP_ID','GUIDE_ID','ACT_ID','WI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','INDEX','PREVIOS','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
     
@@ -1000,8 +999,6 @@ static MDataBaseManager* _director = nil;
     NSString* cre_dte = [[MDirector sharedInstance] getCurrentDateStringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     NSString* uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_WORK_ITEM_UUID_PREV];
-    NSString* gui_id = item.guide_id;
-    NSString* act_id = item.act_id;
     NSString* wi_m_id = item.uuid;
     NSString* name = item.name;
     NSString* desc = item.desc;
@@ -1011,7 +1008,7 @@ static MDataBaseManager* _director = nil;
     NSString* previos = item.previos;
     NSString* status = @"0";
     
-    BOOL b = [self.db executeUpdate:sql, uuid, compid, gui_id, act_id, wi_m_id, name, desc, tarid, empid, index, previos, status, cre_dte];
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, actid, wi_m_id, name, desc, tarid, empid, index, previos, status, cre_dte];
     if(b)
         [self insertTarget:item.target withID:tarid];
     else
@@ -1029,6 +1026,40 @@ static MDataBaseManager* _director = nil;
     BOOL b = [self.db executeUpdate:sql, uuid, target.uuid, target.name, target.valueT, target.unit, target.startDate, target.completeDate];
     if(!b)
         NSLog(@"add target failed [%@] : %@", uuid, [self.db lastErrorMessage]);
+    return b;
+}
+
+- (BOOL)hasEmptyManagerUnderCustGudie:(MCustGuide*)guide
+{
+    // check guide
+    NSString* sql = @"select * from U_GUIDE where ID = ? and (EMP_ID is null or EMP_ID = '') limit 1";
+    FMResultSet* rs = [self.db executeQuery:sql, guide.uuid];
+    if([rs next])
+        return NO;
+    
+    // check activity
+    NSString* sql2 = @"select * from U_ACTIVITY where GUIDE_ID = ? and (EMP_ID is null or EMP_ID = '') limit 1";
+    FMResultSet* rs2 = [self.db executeQuery:sql2, guide.uuid];
+    if([rs2 next])
+        return NO;
+    
+    // check work item
+    NSString* sql3 = @"select * from U_WOEK_ITEM where GUIDE_ID = ? and (EMP_ID is null or EMP_ID = '') limit 1";
+    FMResultSet* rs3 = [self.db executeQuery:sql3, guide.uuid];
+    if([rs3 next])
+        return NO;
+    return YES;
+}
+
+- (BOOL)updateGuide:(MCustGuide*)guide release:(BOOL)release
+{
+    NSString* rel = release ? @"1" : @"0";
+    NSString* sql = @"update U_GUIDE set RELEASE = ? where ID = ?";
+    
+    BOOL b = [self.db executeUpdate:sql, rel, guide.uuid];
+    if(!b)
+        NSLog(@"update guide release to %@ failed: %@", rel, [self.db lastErrorMessage]);
+    
     return b;
 }
 
@@ -1062,6 +1093,5 @@ static MDataBaseManager* _director = nil;
     
     return b;
 }
-
 
 @end
