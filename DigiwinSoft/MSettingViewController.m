@@ -288,9 +288,4 @@
     return image;
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
 @end
