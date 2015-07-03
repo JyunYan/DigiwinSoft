@@ -48,6 +48,13 @@
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
     self.navigationItem.leftBarButtonItem = back;
     
+    //rightBarButtonItem
+    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_list.png"] forState:UIControlStateNormal];
+    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
+    self.navigationItem.rightBarButtonItem = bar_item;
+
 //    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 //    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
@@ -64,7 +71,7 @@
     screenHeight = screenSize.height;
     
     //webView
-    webViewVideo = [[UIWebView alloc] initWithFrame:CGRectMake(0.0, 20+44,screenWidth, 100.0)];
+    webViewVideo = [[UIWebView alloc] initWithFrame:CGRectMake(0.0, 20+44,screenWidth, 170.0)];
     webViewVideo.delegate=self;
     webViewVideo.backgroundColor=[UIColor redColor];
     webViewVideo.scalesPageToFit = YES;
@@ -74,13 +81,19 @@
     [webViewVideo loadRequest:videoRequest];
     [self.view addSubview:webViewVideo];
     
+    //scroll
+    UIScrollView *scroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0.0, 234, screenWidth, screenHeight-234-35)];
+    scroll.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
+    scroll.contentSize=CGSizeMake(screenWidth, 320);
+    [self.view addSubview:scroll];
+    
     //labTitle
-    labTitle=[[UILabel alloc]initWithFrame:CGRectMake(10,webViewVideo.frame.size.height+webViewVideo.frame.origin.y, screenWidth-100, 44)];
+    labTitle=[[UILabel alloc]initWithFrame:CGRectMake(0,0, screenWidth, 44)];
     labTitle.text=_guide.name;
     labTitle.backgroundColor=[UIColor whiteColor];
     [labTitle setFont:[UIFont systemFontOfSize:14]];
-    [self.view addSubview:labTitle];
-     
+    [scroll addSubview:labTitle];
+    
     //btnTargetSet
     UIButton *btnTargetSet=[[UIButton alloc]initWithFrame:CGRectMake(10+(screenWidth-100)+5,labTitle.frame.origin.y+10, 75, 24)];
     btnTargetSet.backgroundColor=[UIColor colorWithRed:116.0/255.0 green:192.0/255.0 blue:222.0/255.0 alpha:1];
@@ -92,21 +105,16 @@
     [btnTargetSet setTitle:@"指標設定" forState:UIControlStateNormal];
     [btnTargetSet addTarget:self action:@selector(actionTargetSet:) forControlEvents:UIControlEventTouchUpInside];
     btnTargetSet.titleLabel.font = [UIFont systemFontOfSize:11];
-    [self.view addSubview:btnTargetSet];
-    
-    //imgGray
-    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,labTitle.frame.origin.y+44,screenWidth, 1)];
-    imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
-    imgGray.backgroundColor=[UIColor grayColor];
-    [self.view addSubview:imgGray];
+    [scroll addSubview:btnTargetSet];
     
     //textView
-    UITextView *textView=[[UITextView alloc]initWithFrame:CGRectMake(0,labTitle.frame.origin.y+labTitle.frame.size.height+2,screenWidth, 100)];
+    UITextView *textView=[[UITextView alloc]initWithFrame:CGRectMake(0,labTitle.frame.origin.y+labTitle.frame.size.height+2,screenWidth, 80)];
     textView.backgroundColor=[UIColor whiteColor];
     textView.text=_guide.desc;
     textView.font=[UIFont systemFontOfSize:12];
     textView.editable=NO;
-    [self.view addSubview:textView];
+    textView.scrollEnabled=NO;
+    [scroll addSubview:textView];
     
     //btnAdd
     btn=[[UIButton alloc]initWithFrame:CGRectMake(0,screenHeight-35,screenWidth, 35)];
@@ -117,21 +125,20 @@
     [btn addTarget:self action:@selector(actionAddMyList:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
     
-    //imgGray
-    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,textView.frame.origin.y+100,screenWidth, btn.frame.origin.y-
-                                                         (textView.frame.origin.y+textView.frame.size.height))];
-    imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
-    [self.view addSubview:imgGray];
-
-    
     //tblView
-    tbl=[[UITableView alloc]initWithFrame:CGRectMake(10,textView.frame.origin.y+110,screenWidth-20, 120)];
+    tbl=[[UITableView alloc]initWithFrame:CGRectMake(10,textView.frame.origin.x+140,screenWidth-20, 120)];
     tbl.delegate=self;
     tbl.dataSource = self;
     tbl.separatorStyle=UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:tbl];
+    [scroll addSubview:tbl];
 }
 #pragma mark - UIButton
+-(void)clickedBtnSetting:(id)sender
+{
+    MRaidersDiagramViewController *MRaidersDiagramVC=[[MRaidersDiagramViewController alloc]init];
+    MRaidersDiagramVC.strTitle=labTitle.text;
+    [self.navigationController pushViewController:MRaidersDiagramVC animated:YES];
+}
 
 -(void)clickedBtnBcak:(id)sender
 {

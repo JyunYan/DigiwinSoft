@@ -16,6 +16,10 @@
 @interface MMyTaskViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     UIImageView *imgblueBar;
+    NSArray *aryPrepare;
+    NSArray *aryRepost;
+    NSArray *aryFinish;
+
 }
 @property (nonatomic, strong) UITableView* tableView;
 
@@ -39,6 +43,7 @@
     
     _taskDataArry = [[NSMutableArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
     
+    [self loadData];
     [self createSegmentedView];
     [self createTableView];
 }
@@ -65,9 +70,16 @@
         [_tableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
-
+- (void)loadData
+{
+    //待佈署任務
+    aryPrepare=[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
+    //進度回報
+    aryRepost=[[NSArray alloc] initWithObjects:@"瓶頸製程工時計算", @"製定最小製造批量標準", @"縮短達交天數", nil];
+    //已完成任務
+    aryFinish=[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
+}
 #pragma mark - create view
-
 - (void)createSegmentedView
 {
     NSArray* array = [[NSArray alloc] initWithObjects:@"待佈署任務", @"進度回報", @"已完成任務", nil];
@@ -153,9 +165,7 @@
         label.tag = TAG_LABEL_TASK_NAME;
         [cell addSubview:label];
         
-        /* 補齊分隔線缺口 */
-        // IOS 7
-        }
+    }
     
     NSString* taskName = [_taskDataArry objectAtIndex:indexPath.row];
     
@@ -164,22 +174,49 @@
     
     return cell;
 }
-
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     
 }
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 #pragma mark - UIButton
-
+- (void)actionToSearch:(id)sender
+{
+    
+}
 - (void)actionToShowNextPage:(id)sender
 {
     [_taskDataArry removeAllObjects];
-    
     switch ([sender selectedSegmentIndex]) {
         case 0:
         {
-            [_taskDataArry addObjectsFromArray:[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil]];
+            [_taskDataArry addObjectsFromArray:aryPrepare];
+            //segmented index0 title
+            [_segmented removeSegmentAtIndex:0 animated:NO];
+            [_segmented insertSegmentWithTitle:@"待佈署任務" atIndex:0 animated:NO];
+            
+            //segmented index1 title
+            NSString *title1=[NSString stringWithFormat:@"進度回報(%lu)",(unsigned long)[aryRepost count]];
+            [_segmented removeSegmentAtIndex:1 animated:NO];
+            [_segmented insertSegmentWithTitle:title1 atIndex:1 animated:NO];
+            
             //imgblueBar Animation
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.5];
@@ -192,12 +229,21 @@
                                         imgblueBar.frame.size.width,
                                         imgblueBar.frame.size.height);
             [UIView commitAnimations];
-
             break;
         }
         case 1:
         {
-            [_taskDataArry addObjectsFromArray:[[NSArray alloc] initWithObjects:@"瓶頸製程工時計算", @"製定最小製造批量標準", @"縮短達交天數", nil]];
+            [_taskDataArry addObjectsFromArray:aryRepost];
+            
+            //segmented index0 title
+            NSString *title0=[NSString stringWithFormat:@"待佈署任務(%lu)",(unsigned long)[aryPrepare count]];
+            [_segmented removeSegmentAtIndex:0 animated:NO];
+            [_segmented insertSegmentWithTitle:title0 atIndex:0 animated:NO];
+
+            //segmented index1 title
+            [_segmented removeSegmentAtIndex:1 animated:NO];
+            [_segmented insertSegmentWithTitle:@"進度回報" atIndex:1 animated:NO];
+
             //imgblueBar Animation
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.5];
@@ -214,7 +260,18 @@
         }
         case 2:
         {
-            [_taskDataArry addObjectsFromArray:[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil]];
+            [_taskDataArry addObjectsFromArray:aryFinish];
+            
+            //segmented index0 title
+            NSString *title0=[NSString stringWithFormat:@"待佈署任務(%lu)",(unsigned long)[aryPrepare count]];
+            [_segmented removeSegmentAtIndex:0 animated:NO];
+            [_segmented insertSegmentWithTitle:title0 atIndex:0 animated:NO];
+            
+            //segmented index1 title
+            NSString *title1=[NSString stringWithFormat:@"進度回報(%lu)",(unsigned long)[aryRepost count]];
+            [_segmented removeSegmentAtIndex:1 animated:NO];
+            [_segmented insertSegmentWithTitle:title1 atIndex:1 animated:NO];
+            
             //imgblueBar Animation
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.5];
@@ -240,23 +297,4 @@
 
     [_tableView reloadData];
 }
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Remove seperator inset
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-    }
-    
-    // Prevent the cell from inheriting the Table View's margin settings
-    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
-        [cell setPreservesSuperviewLayoutMargins:NO];
-    }
-    
-    // Explictly set your cell's layout margins
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
-}
-
 @end

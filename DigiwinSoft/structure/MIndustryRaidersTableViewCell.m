@@ -40,11 +40,14 @@
         self.btnCheck = btnCheck;
         [self.contentView addSubview:btnCheck];
 
-
         UIButton *btnManager= [[UIButton alloc] init];
         self.btnManager = btnManager;
         [self.contentView addSubview:btnManager];
 
+        UIButton *btnTargetSet= [[UIButton alloc] init];
+        self.btnTargetSet = btnTargetSet;
+        [self.contentView addSubview:btnTargetSet];
+        
         UIButton *btnRaiders= [[UIButton alloc] init];
         self.btnRaiders = btnRaiders;
         [self.contentView addSubview:btnRaiders];
