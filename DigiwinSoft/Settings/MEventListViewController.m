@@ -149,7 +149,7 @@
     CGFloat width = viewWidth;
     CGFloat height = viewHeight;
     
-    CGFloat textSize = 17.0f;
+    CGFloat textSize = 16.0f;
     
     
     int itemCount1 = [self getEventCountWithStatus:@"0"];
@@ -384,7 +384,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
         
-        CGFloat textSize = 15.0f;
+        CGFloat textSize = 14.0f;
         
         CGFloat tableWidth = tableView.frame.size.width;
         
@@ -554,12 +554,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
     NSInteger row = indexPath.row;
     MEvent* event = [_eventArray objectAtIndex:row];
 
     MEventSelectViewController* vc = [[MEventSelectViewController alloc] initWithEvent:event User:_user];
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+#pragma mark - other methods
 
 -(UIImage*)loadLocationImage:(NSString*)urlstr
 {
