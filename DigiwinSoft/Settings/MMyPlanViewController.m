@@ -293,7 +293,9 @@
     NSString* indexStr = [NSString stringWithFormat:@"指標：%@", target.name];
     indexLabel.text = indexStr;
     
-    NSString* presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", target.valueR, target.unit];
+    NSString* presentValueStr = @"現值：";
+    if (target.valueR && ![target.valueR isEqualToString:@""])
+        presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", target.valueR, target.unit];
     presentValueLabel.text = presentValueStr;
     
     MUser* user = guide.manager;

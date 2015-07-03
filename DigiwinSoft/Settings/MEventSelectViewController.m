@@ -13,6 +13,12 @@
 #import "MDirector.h"
 
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    #define GregorianCalendar NSCalendarIdentifierGregorian
+#else
+    #define GregorianCalendar NSGregorianCalendar
+#endif
+
 #define TAG_LABEL_PHENOMENON_STATUS 200
 #define TAG_LABEL_POSSIBLE_CAUSES 300
 
@@ -165,8 +171,9 @@
     
     posY = occurrenceDateLabel.frame.origin.y + occurrenceDateLabel.frame.size.height;
     // 發生期間
+    NSString* duringHappenStr = [NSString stringWithFormat:@"發生期間：%@", [self getPeriodDayWithStartDate:_event.start]];
     UILabel* duringHappenLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, 30)];
-    duringHappenLabel.text = @"發生期間：";
+    duringHappenLabel.text = duringHappenStr;
     duringHappenLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     duringHappenLabel.font = [UIFont systemFontOfSize:textSize];
     [leftView addSubview:duringHappenLabel];
@@ -208,7 +215,7 @@
     posX = reportingHierarchyTitleLabel.frame.origin.x + reportingHierarchyTitleLabel.frame.size.width;
 
     UILabel* reportingHierarchyLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 70, 30)];
-    reportingHierarchyLabel.text = @"上報層級";
+    reportingHierarchyLabel.text = @"";
     reportingHierarchyLabel.textColor = [[MDirector sharedInstance] getCustomBlueColor];
     reportingHierarchyLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:reportingHierarchyLabel];
@@ -328,7 +335,8 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 61;
+//    return 61;
+    return 0;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -496,6 +504,31 @@
     BOOL isSelected = button.selected;
     
     [button setSelected: !isSelected];
+}
+
+#pragma mark - other methods
+
+- (NSString*)getPeriodDayWithStartDate:(NSString*) dateStr
+{
+    NSString* daysStr = @"";
+    
+    NSDateFormatter* dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSDate* startDate = [dateFormatter dateFromString:dateStr];
+    if (startDate == nil)
+        return @"";
+    
+    NSDate* currentDate = [NSDate date];
+    
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:GregorianCalendar];
+    NSCalendarUnit unitFlag = NSCalendarUnitDay;
+    NSDateComponents* components = [calendar components:unitFlag fromDate:startDate toDate:currentDate options:0];
+    NSInteger days = [components day] + 1;
+    
+    daysStr = [NSString stringWithFormat:@"%ld 天", (long)days];
+    
+    return daysStr;
 }
 
 @end
