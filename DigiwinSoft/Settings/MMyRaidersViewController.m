@@ -100,7 +100,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
 
-        CGFloat textSize = 15.0f;
+        CGFloat textSize = 14.0f;
 
         CGFloat tableWidth = tableView.frame.size.width;
         
@@ -176,6 +176,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
     NSInteger row = indexPath.row;
     
     MCustGuide* guide = [_guideArray objectAtIndex:row];

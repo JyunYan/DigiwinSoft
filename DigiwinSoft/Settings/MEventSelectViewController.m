@@ -108,14 +108,14 @@
 
 - (UIView*)createTopView:(CGRect) rect
 {
-    CGFloat textSize = 15.0f;
+    CGFloat textSize = 14.0f;
     
     
     UIView* view = [[UIView alloc] initWithFrame:rect];
     
     CGFloat viewWidth = rect.size.width;
     
-    CGFloat posX = 30;
+    CGFloat posX = 20;
     CGFloat posY = 10;
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = 30;
@@ -181,7 +181,7 @@
     posX = 0;
     posY = 0;
 
-    UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 30)];
+    UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 70, 30)];
     personInChargeTitleLabel.text = @"負 責 人 ：";
     personInChargeTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     personInChargeTitleLabel.font = [UIFont systemFontOfSize:textSize];
@@ -189,7 +189,7 @@
 
     posX = personInChargeTitleLabel.frame.origin.x + personInChargeTitleLabel.frame.size.width;
 
-    UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 75, 30)];
+    UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 70, 30)];
     personInChargeLabel.text = _user.name;
     personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomBlueColor];
     personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
@@ -199,7 +199,7 @@
     posX = 0;
     posY = personInChargeLabel.frame.origin.y + personInChargeLabel.frame.size.height;
 
-    UILabel* reportingHierarchyTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 30)];
+    UILabel* reportingHierarchyTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 70, 30)];
     reportingHierarchyTitleLabel.text = @"上報層級：";
     reportingHierarchyTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     reportingHierarchyTitleLabel.font = [UIFont systemFontOfSize:textSize];
@@ -207,7 +207,7 @@
 
     posX = reportingHierarchyTitleLabel.frame.origin.x + reportingHierarchyTitleLabel.frame.size.width;
 
-    UILabel* reportingHierarchyLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 75, 30)];
+    UILabel* reportingHierarchyLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 70, 30)];
     reportingHierarchyLabel.text = @"上報層級";
     reportingHierarchyLabel.textColor = [[MDirector sharedInstance] getCustomBlueColor];
     reportingHierarchyLabel.font = [UIFont systemFontOfSize:textSize];
@@ -339,7 +339,7 @@
     header.backgroundColor = [UIColor whiteColor];
     
     
-    CGFloat textSize = 15.0f;
+    CGFloat textSize = 14.0f;
     
     
     CGFloat posX = 20;
@@ -416,7 +416,7 @@
         cell.backgroundColor = [UIColor whiteColor];
         
         
-        CGFloat textSize = 15.0f;
+        CGFloat textSize = 14.0f;
         
         CGFloat tableWidth = tableView.frame.size.width;
         
@@ -487,6 +487,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    
     NSInteger row = indexPath.row;
     
     UIButton* button = (UIButton*)[self.view viewWithTag:TAG_CHECKBOX + row];

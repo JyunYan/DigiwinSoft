@@ -11,6 +11,7 @@
 #import "MMyPlanTableViewCell.h"
 #import "MKeyActivitiesViewController.h"
 #import "MDirector.h"
+#import "MCustomAlertView.h"
 
 
 #define TAG_LABEL_COUNTERMEASURE 200
@@ -57,10 +58,6 @@
 
     UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:listView];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -125,7 +122,7 @@
 {
     CGFloat tableWidth = _tableView.frame.size.width;
     
-    CGFloat textSize = 15.0f;
+    CGFloat textSize = 14.0f;
     
     CGFloat posX = 20;
     CGFloat posY = 0;
@@ -223,7 +220,7 @@
         cell.delegate = self;
         
         
-        CGFloat textSize = 15.0f;
+        CGFloat textSize = 14.0f;
         
         CGFloat tableWidth = tableView.frame.size.width;
         
@@ -240,17 +237,17 @@
         // left
         posX = 20;
         
-        UIView* leftView = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, width/2 - offsetX * 2, height)];
+        UIView* leftView = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, width/2 - offsetX * 3, height)];
         [view addSubview:leftView];
         // 對策
-        UILabel* countermeasureLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2 - offsetX * 2, height/2)];
+        UILabel* countermeasureLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2 - offsetX * 3, height/2)];
         countermeasureLabel.tag = TAG_LABEL_COUNTERMEASURE;
         countermeasureLabel.font = [UIFont boldSystemFontOfSize:textSize];
         [leftView addSubview:countermeasureLabel];
         
         posY = countermeasureLabel.frame.origin.y + countermeasureLabel.frame.size.height;
         // 指標
-        UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2 - offsetX * 2, height/2)];
+        UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2 - offsetX * 3, height/2)];
         indexLabel.tag = TAG_LABEL_INDEX;
         indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         indexLabel.font = [UIFont systemFontOfSize:textSize];
@@ -260,10 +257,10 @@
         // right
         posX = leftView.frame.origin.x + leftView.frame.size.width;
         
-        UIView* rightView = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, width/2 - offsetX, height)];
+        UIView* rightView = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, width/2 - offsetX * 3, height)];
         [view addSubview:rightView];
         // 負責人
-        UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2 - offsetX, height/2)];
+        UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2 - offsetX * 3, height/2)];
         personInChargeLabel.tag = TAG_LABEL_PERSON_IN_CHARGE;
         personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
@@ -271,7 +268,7 @@
         
         posY = personInChargeLabel.frame.origin.y + personInChargeLabel.frame.size.height;
         // 現值
-        UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2 - offsetX, height/2)];
+        UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2 - offsetX * 3, height/2)];
         presentValueLabel.tag = TAG_LABEL_PRESENT_VALUE;
         presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         presentValueLabel.font = [UIFont systemFontOfSize:textSize];
@@ -310,6 +307,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     
@@ -332,11 +332,23 @@
 
     switch (index) {
         case 0:
+        {
             NSLog(@"clock button was pressed");
             break;
+        }
         case 1:
+        {
+            MCustomAlertView *alert = [[MCustomAlertView alloc] initWithTitle:@"訊息"
+                                                            message:@"請再次確認是否要刪除？"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"確定", nil];
+            [alert setObject:guide];
+            [alert show];
+
             NSLog(@"clock button was pressed");
             break;
+        }
         default:
             break;
     }
@@ -353,6 +365,27 @@
                                                 title:@"刪除"];
     
     return rightUtilityButtons;
+}
+
+#pragma mark - UIAlertView methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            NSLog(@"Cancel Button Pressed");
+            break;
+            
+        case 1:
+        {
+            MCustomAlertView *customAlertView = (MCustomAlertView*)alertView;
+            MCustGuide* guide = [customAlertView object];
+            
+            _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
+            [_tableView reloadData];
+            break;
+        }
+    }
 }
 
 @end

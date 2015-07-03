@@ -49,7 +49,7 @@
     CGFloat posX = 0;
     CGFloat posY = 0;
     CGFloat width = screenWidth;
-    CGFloat height = width * 3 / 4 + statusBarHeight;
+    CGFloat height = width * 3 / 4;
     
     UIView* videoView = [self createMoviePlayerView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:videoView];
@@ -88,7 +88,7 @@
         
     _moviePlayerView.scalingMode = MPMovieScalingModeAspectFit;
     
-    [_moviePlayerView.view setFrame:CGRectMake(0, 30, rect.size.width, rect.size.height - 30)];
+    [_moviePlayerView.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     [view addSubview: _moviePlayerView.view];
     
     [_moviePlayerView prepareToPlay];
@@ -101,9 +101,14 @@
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor whiteColor];
     
-    CGFloat textSize = 15.0f;
+    
+    CGFloat textSize = 14.0f;
     
     CGFloat viewWidth = rect.size.width;
+    CGFloat viewHeight = rect.size.height;
+
+    UIScrollView* scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
+    [view addSubview:scrollView];
 
     
     CGFloat posX = 25;
@@ -116,7 +121,7 @@
     titleLabel.font = [UIFont systemFontOfSize:textSize];
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.text = _treasure.name;
-    [view addSubview:titleLabel];
+    [scrollView addSubview:titleLabel];
     
     
     posX = 0;
@@ -125,7 +130,7 @@
     
     UIView* lineView1 = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, 1)];
     lineView1.backgroundColor = [UIColor lightGrayColor];
-    [view addSubview:lineView1];
+    [scrollView addSubview:lineView1];
     
     
     posX = 25;
@@ -137,7 +142,7 @@
     detailLabel.font = [UIFont systemFontOfSize:textSize];
     detailLabel.numberOfLines = 0;
     detailLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [view addSubview:detailLabel];
+    [scrollView addSubview:detailLabel];
 
     detailLabel.text = _treasure.desc;
     [detailLabel sizeToFit];
@@ -149,7 +154,7 @@
 
     UIView* lineView2 = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, 1)];
     lineView2.backgroundColor = [UIColor lightGrayColor];
-    [view addSubview:lineView2];
+    [scrollView addSubview:lineView2];
     
     
     posX = 25;
@@ -159,7 +164,7 @@
 
     UIImageView* imageViewPhone = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     imageViewPhone.image = [UIImage imageNamed:@"icon_phone.png"];
-    [view addSubview:imageViewPhone];
+    [scrollView addSubview:imageViewPhone];
 
     
     posX = imageViewPhone.frame.origin.x + imageViewPhone.frame.size.width + 10;
@@ -169,9 +174,12 @@
     phoneLabel.textAlignment = NSTextAlignmentLeft;
     phoneLabel.font = [UIFont systemFontOfSize:20.0f];
     phoneLabel.text = _treasure.phone;
-    [view addSubview:phoneLabel];
+    [scrollView addSubview:phoneLabel];
 
+    
+    scrollView.contentSize = CGSizeMake(viewWidth, phoneLabel.frame.origin.y + phoneLabel.frame.size.height + 50);
 
+    
     return view;
 }
 

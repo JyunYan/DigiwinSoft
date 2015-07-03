@@ -157,7 +157,7 @@
 
 - (UIView*)createTopView:(CGRect) rect
 {
-    CGFloat textSize = 15.0f;
+    CGFloat textSize = 14.0f;
     
 
     UIView* view = [[UIView alloc] initWithFrame:rect];
@@ -248,7 +248,7 @@
     CGFloat posX = 20;
     CGFloat posY = 20;
     CGFloat width = viewWidth - posX * 2;
-    CGFloat height = viewHeight - posY * 2;
+    CGFloat height = viewHeight - posY;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor clearColor];
@@ -494,7 +494,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSInteger row = indexPath.row;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 -(UIImage*)loadLocationImage:(NSString*)urlstr

@@ -29,6 +29,7 @@
 		3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A03F96E1B3A60A0000F345B /* QuartzCore.framework */; };
 		3A03F9731B3A60DB000F345B /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */; };
 		3A54DDFC1B40DD1100A6849A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */; };
+		3A54EDE11B4636DB00BDA945 /* MCustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */; };
 		3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5B9E9C1B3D0756005DE125 /* MRecommendTreasuresViewController.m */; };
 		3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B831B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m */; };
 		3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B851B3800C100E94211 /* SWCellScrollView.m */; };
@@ -48,7 +49,6 @@
 		3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE281B32895C00143374 /* UIViewController+MMDrawerController.m */; };
 		3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE2E1B32997000143374 /* MTabBarViewController.m */; };
 		3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE381B32C0C800143374 /* ASFileManager.m */; };
-		509160991B4510330065C176 /* icon_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 509160981B4510330065C176 /* icon_close.png */; };
 		3AFF62551B438A46005B6238 /* icon_menu_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624A1B438A46005B6238 /* icon_menu_1.png */; };
 		3AFF62561B438A46005B6238 /* icon_menu_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624B1B438A46005B6238 /* icon_menu_2.png */; };
 		3AFF62571B438A46005B6238 /* icon_menu_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624C1B438A46005B6238 /* icon_menu_3.png */; };
@@ -61,6 +61,7 @@
 		3AFF625E1B438A46005B6238 /* icon_menu_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF62531B438A46005B6238 /* icon_menu_10.png */; };
 		3AFF625F1B438A46005B6238 /* icon_menu_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF62541B438A46005B6238 /* icon_menu_11.png */; };
 		3AFF62621B438D08005B6238 /* MSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */; };
+		509160991B4510330065C176 /* icon_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 509160981B4510330065C176 /* icon_close.png */; };
 		D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */; };
 		D06C2D291B37AC88009D2082 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D06C2D281B37AC88009D2082 /* libsqlite3.dylib */; };
 		D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D2B1B37B58C009D2082 /* MDesignateResponsibleViewController.m */; };
@@ -186,6 +187,8 @@
 		3A03F9711B3A60DB000F345B /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
 		3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		3A54EDDF1B4636DB00BDA945 /* MCustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustomAlertView.h; path = CustomViews/MCustomAlertView.h; sourceTree = "<group>"; };
+		3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustomAlertView.m; path = CustomViews/MCustomAlertView.m; sourceTree = "<group>"; };
 		3A5B9E9B1B3D0756005DE125 /* MRecommendTreasuresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRecommendTreasuresViewController.h; sourceTree = "<group>"; };
 		3A5B9E9C1B3D0756005DE125 /* MRecommendTreasuresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRecommendTreasuresViewController.m; sourceTree = "<group>"; };
 		3A711B821B3800C100E94211 /* NSMutableArray+SWUtilityButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+SWUtilityButtons.h"; sourceTree = "<group>"; };
@@ -225,8 +228,6 @@
 		3AB4CE2E1B32997000143374 /* MTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTabBarViewController.m; sourceTree = "<group>"; };
 		3AB4CE371B32C0C800143374 /* ASFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFileManager.h; sourceTree = "<group>"; };
 		3AB4CE381B32C0C800143374 /* ASFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFileManager.m; sourceTree = "<group>"; };
-
-		509160981B4510330065C176 /* icon_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_close.png; sourceTree = "<group>"; };
 		3AFF624A1B438A46005B6238 /* icon_menu_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_1.png; sourceTree = "<group>"; };
 		3AFF624B1B438A46005B6238 /* icon_menu_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_2.png; sourceTree = "<group>"; };
 		3AFF624C1B438A46005B6238 /* icon_menu_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_3.png; sourceTree = "<group>"; };
@@ -240,6 +241,7 @@
 		3AFF62541B438A46005B6238 /* icon_menu_11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_11.png; sourceTree = "<group>"; };
 		3AFF62601B438D08005B6238 /* MSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSettingTableViewCell.h; path = CustomViews/MSettingTableViewCell.h; sourceTree = "<group>"; };
 		3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSettingTableViewCell.m; path = CustomViews/MSettingTableViewCell.m; sourceTree = "<group>"; };
+		509160981B4510330065C176 /* icon_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_close.png; sourceTree = "<group>"; };
 		D06C2D251B37A5CD009D2082 /* MDataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDataBaseManager.h; sourceTree = "<group>"; };
 		D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDataBaseManager.m; sourceTree = "<group>"; };
 		D06C2D281B37AC88009D2082 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -752,6 +754,8 @@
 				3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */,
 				3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */,
 				3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */,
+				3A54EDDF1B4636DB00BDA945 /* MCustomAlertView.h */,
+				3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -960,6 +964,7 @@
 				3A03AA231B3BFF0500923ABB /* MEventDetailViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
+				3A54EDE11B4636DB00BDA945 /* MCustomAlertView.m in Sources */,
 				DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */,
 				DCF46AC11B418E6B00C771BB /* MPhenomenon.m in Sources */,
 				3AFF62621B438D08005B6238 /* MSettingTableViewCell.m in Sources */,
