@@ -16,6 +16,8 @@
         
         _manager = [MUser new];
         _target = [MTarget new];
+        
+        _activityArray = [NSMutableArray new];
     }
     return self;
 }

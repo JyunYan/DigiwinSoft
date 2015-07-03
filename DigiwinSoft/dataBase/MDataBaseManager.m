@@ -363,6 +363,7 @@ static MDataBaseManager* _director = nil;
         item.name = [rs stringForColumnIndex:2];
         
         item.act_id = act.uuid;
+        item.guide_id = act.guide_id;
         
         MTarget* target = item.target;
         target.uuid = [rs stringForColumn:@"TAR_ID"];
@@ -370,6 +371,8 @@ static MDataBaseManager* _director = nil;
         target.name = [rs stringForColumnIndex:7];
         
         [self loadTargetDetailWithTarget:target];
+        
+        [array addObject:item];
         
     }
     return array;
@@ -956,7 +959,7 @@ static MDataBaseManager* _director = nil;
 
 - (BOOL)insertActivity:(MActivity*)act
 {
-    NSString* sql = @"inert into U_ACTIVITY ('ID','COMP_ID','GUIDE_ID','ACT_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','INDEX','PREVIOS','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?)";
+    NSString* sql = @"insert into U_ACTIVITY ('ID','COMP_ID','GUIDE_ID','ACT_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','INDEX','PREVIOS','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?)";
     
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
     NSString* cre_dte = [[MDirector sharedInstance] getCurrentDateStringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -1019,7 +1022,7 @@ static MDataBaseManager* _director = nil;
 
 - (BOOL)insertTarget:(MTarget*)target withID:(NSString*)uuid
 {
-    NSString* sql = @"insert into U_TARGET ('ID','TAR_M_ID','NAME','VALUE_R','VALUE_T','UNIT','START_DATE','COMPLETED') values(?,?,?,?,?,?,?,?)";
+    NSString* sql = @"insert into U_TARGET ('ID','TAR_M_ID','NAME','VALUE_T','UNIT','START_DATE','COMPLETED') values(?,?,?,?,?,?,?)";
     // ('ID','TAR_M_ID','NAME','VALUE_T','UNIT','START_DATE','COMPLETED')
     // values(?,?,?,?,?,?,?)
     
