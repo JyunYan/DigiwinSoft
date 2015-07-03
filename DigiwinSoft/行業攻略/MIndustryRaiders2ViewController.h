@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MPhenomenon.h"
+#import "MConfig.h"
+
 @interface MIndustryRaiders2ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     NSArray *aryList;
@@ -20,4 +22,5 @@
     UIImageView *imgGray;
 }
 @property (nonatomic, weak) MPhenomenon *phen;
+@property (nonatomic, assign) NSInteger from;
 @end

@@ -12,7 +12,7 @@
 @interface MCustActivity : MActivity
 
 @property (nonatomic, strong) NSString* comp_id;
-@property (nonatomic, strong) NSString* act_m_id; // ?
+@property (nonatomic, strong) NSString* act_m_id;
 @property (nonatomic, strong) NSString* status;
 
 @property (nonatomic, strong) MCustTarget* custTarget;

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MSkill.h"
 
 @interface MUser : NSObject
 
@@ -25,5 +26,8 @@
 @property (nonatomic, strong) NSString* companyName;    // 企業名稱
 
 @property (nonatomic, strong) NSString* arrive_date;    // 到職日
+
+
+@property (nonatomic, strong) NSArray* skillArray;  //技能
 
 @end

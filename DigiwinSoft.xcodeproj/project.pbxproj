@@ -135,6 +135,7 @@
 		DCF46B241B43C2F400C771BB /* MCustTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B231B43C2F400C771BB /* MCustTarget.m */; };
 		DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B261B454A0800C771BB /* MCustActivity.m */; };
 		DCF46B2A1B454FA800C771BB /* MCustWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B291B454FA800C771BB /* MCustWorkItem.m */; };
+		DCF46B2D1B462D5A00C771BB /* MSkill.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B2C1B462D5A00C771BB /* MSkill.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -348,6 +349,8 @@
 		DCF46B261B454A0800C771BB /* MCustActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustActivity.m; path = structure/MCustActivity.m; sourceTree = "<group>"; };
 		DCF46B281B454FA800C771BB /* MCustWorkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustWorkItem.h; path = structure/MCustWorkItem.h; sourceTree = "<group>"; };
 		DCF46B291B454FA800C771BB /* MCustWorkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustWorkItem.m; path = structure/MCustWorkItem.m; sourceTree = "<group>"; };
+		DCF46B2B1B462D5A00C771BB /* MSkill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSkill.h; path = structure/MSkill.h; sourceTree = "<group>"; };
+		DCF46B2C1B462D5A00C771BB /* MSkill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSkill.m; path = structure/MSkill.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -739,6 +742,8 @@
 				DCF46B261B454A0800C771BB /* MCustActivity.m */,
 				DCF46B281B454FA800C771BB /* MCustWorkItem.h */,
 				DCF46B291B454FA800C771BB /* MCustWorkItem.m */,
+				DCF46B2B1B462D5A00C771BB /* MSkill.h */,
+				DCF46B2C1B462D5A00C771BB /* MSkill.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -946,6 +951,7 @@
 				DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */,
 				382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */,
 				3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
+				DCF46B2D1B462D5A00C771BB /* MSkill.m in Sources */,
 				DCF46AD01B428F1400C771BB /* MIssue.m in Sources */,
 				3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */,
 				D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */,
