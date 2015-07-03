@@ -678,7 +678,7 @@ static MDataBaseManager* _director = nil;
         // 工作項目
         [act.workItemArray addObjectsFromArray:[self loadCustWorkItemArrayWithActivity:act]];
         
-        [array addObject:empid];
+        [array addObject:act];
     }
     return array;
 }
