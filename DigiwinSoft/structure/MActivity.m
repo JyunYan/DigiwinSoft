@@ -15,6 +15,7 @@
     if(self = [super init]){
         
         _target = [MTarget new];
+        _workItemArray = [NSMutableArray new];
     }
     return self;
 }

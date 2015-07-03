@@ -58,7 +58,7 @@ static MDirector* _director = nil;
 }
 
 // 隨機產生uuid
-- (NSString*)getCuetUuidWithPrev:(NSString*)prev
+- (NSString*)getCustUuidWithPrev:(NSString*)prev
 {
     NSArray* sample = @[@"0", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"A", @"B", @"C", @"D", @"E", @"F"];
     NSInteger count = sample.count;

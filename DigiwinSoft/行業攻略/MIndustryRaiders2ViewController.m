@@ -14,6 +14,7 @@
 #import "MDesignateResponsibleViewController.h"
 #import "MDataBaseManager.h"
 #import "AppDelegate.h"
+#import "MInventoryTurnoverViewController.h"
 @interface MIndustryRaiders2ViewController ()
 
 @end
@@ -219,7 +220,6 @@
                                         imgblueBar.frame.size.width,
                                         imgblueBar.frame.size.height);
             [UIView commitAnimations];
-
             break;
         }
         default:
@@ -230,6 +230,15 @@
     }
 }
 #pragma mark - UIButton
+-(void)btnTargetSet:(id)sender
+{
+    MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
+    MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
+    NSIndexPath* indexPath = [tbl indexPathForCell:cell];
+    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    MInventoryTurnoverVC.target=guide.target;
+    [self.navigationController pushViewController:MInventoryTurnoverVC animated:YES];
+}
 -(void)clickedBtnSetting:(id)sender
 {
     AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
@@ -263,14 +272,14 @@
 
 - (void)btnRaiders:(id)sender{
     
-    MRaidersDescriptionViewController *MIndustryRaiders2VC = [[MRaidersDescriptionViewController alloc] init];
+    MRaidersDescriptionViewController *MRaidersDescVC = [[MRaidersDescriptionViewController alloc] init];
     MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
     MGuide* guide = [aryList objectAtIndex:indexPath.row];
-    MIndustryRaiders2VC.guide=guide;
-    UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MIndustryRaiders2VC];
-    MIndustryRaidersNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
-    [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
+    MRaidersDescVC.guide=guide;
+    UINavigationController* MRaidersDescNav = [[UINavigationController alloc] initWithRootViewController:MRaidersDescVC];
+    MRaidersDescNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    [self.navigationController presentViewController:MRaidersDescNav animated:YES completion:nil];
 }
 - (void)goToBackPage:(id) sender
 {
@@ -307,8 +316,14 @@
     //指派負責人
     UIImage *imgManager = [UIImage imageNamed:@"icon_manager.png"];
     [cell.btnManager setBackgroundImage:imgManager forState:UIControlStateNormal];
-    cell.btnManager.frame=CGRectMake(((screenWidth/4)*3)-50,23 , 22, 22);
+    cell.btnManager.frame=CGRectMake(((screenWidth/2)*1)+8,23, 22, 22);
     [cell.btnManager addTarget:self action:@selector(btnManager:) forControlEvents:UIControlEventTouchUpInside];
+    
+    //目標設定
+    UIImage *imgTargetSet = [UIImage imageNamed:@"icon_manager.png"];
+    [cell.btnTargetSet setBackgroundImage:imgTargetSet forState:UIControlStateNormal];
+    cell.btnTargetSet.frame=CGRectMake(((screenWidth/4)*3)-18,23, 22,22);
+    [cell.btnTargetSet addTarget:self action:@selector(btnTargetSet:) forControlEvents:UIControlEventTouchUpInside];
     
     //攻略
     UIImage *imgRaiders = [UIImage imageNamed:@"icon_raider.png"];
@@ -351,13 +366,23 @@
     labRelation.backgroundColor=[UIColor clearColor];
     [viewSection addSubview:labRelation];
     
-    UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake(((screenWidth/4)*3)-70,5, 70,20)];
-    labMeasure.text = @"指派負責人";
+    UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake(((screenWidth/2)*1)-12,-2, 60,34)];
+    labMeasure.text = @"指派\n負責人";
+    labMeasure.numberOfLines=2;
+    labMeasure.textAlignment = NSTextAlignmentCenter;
     labMeasure.textColor =[UIColor grayColor];
     labMeasure.backgroundColor = [UIColor clearColor];
     labMeasure.font = [UIFont systemFontOfSize:12.0f];
     [viewSection addSubview:labMeasure];
     
+    UILabel *labTargetSet = [[UILabel alloc] initWithFrame:CGRectMake(((screenWidth/4)*3)-20,-2, 26,34)];
+    labTargetSet.text = @"目標\n設定";
+    labTargetSet.numberOfLines=2;
+    labTargetSet.textColor =[UIColor grayColor];
+    labTargetSet.backgroundColor = [UIColor clearColor];
+    labTargetSet.font = [UIFont systemFontOfSize:12.0f];
+    [viewSection addSubview:labTargetSet];
+
     
     UILabel *labGrade = [[UILabel alloc] initWithFrame:CGRectMake(((screenWidth/4)*3)+30,5, 30,20)];
     labGrade.text = @"攻略";

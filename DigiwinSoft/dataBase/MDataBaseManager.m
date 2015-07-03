@@ -363,6 +363,7 @@ static MDataBaseManager* _director = nil;
         item.name = [rs stringForColumnIndex:2];
         
         item.act_id = act.uuid;
+        item.guide_id = act.guide_id;
         
         MTarget* target = item.target;
         target.uuid = [rs stringForColumn:@"TAR_ID"];
@@ -370,6 +371,8 @@ static MDataBaseManager* _director = nil;
         target.name = [rs stringForColumnIndex:7];
         
         [self loadTargetDetailWithTarget:target];
+        
+        [array addObject:item];
         
     }
     return array;
@@ -488,54 +491,6 @@ static MDataBaseManager* _director = nil;
 }
 
 #pragma mark - 我的規劃 相關
-
-- (BOOL)insertIntoMyPlanWithGuide:(MGuide*)guide from:(NSInteger)from
-{
-    NSString* uuid = [[MDirector sharedInstance] getCuetUuidWithPrev:CUST_GUIDE_UUID_PREV];
-    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* guiid = guide.uuid;
-    NSString* name = guide.name;
-    NSString* desc = guide.desc;
-    NSString* tarid = [[MDirector sharedInstance] getCuetUuidWithPrev:CUST_TARGET_UUID_PREV];
-    NSString* empid = guide.manager.uuid;
-    NSString* release = @"0";
-    NSString* status = @"0";
-    NSString* cre_dte = [[MDirector sharedInstance] getCurrentDateStringWithFormat:DATE_FORMATE_01];
-    NSString* owner = [MDirector sharedInstance].currentUser.uuid;
-    
-    NSString* from1 = nil;
-    NSString* from2 = nil;
-    if(from == GUIDE_FROM_PHEN)
-        from1 = [MDirector sharedInstance].selectedPhen.uuid;
-    if(from == GUIDE_FROM_ISSUE)
-        from2 = [MDirector sharedInstance].selectedIssue.uuid;
-    
-    NSString* sql = @"insert into U_GUIDE ('ID','COMP_ID','FROM_PHEN_ID','FROM_ISS_ID','GUI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','RELEASE','STATUS','CREATE_DATE','OWNER') VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    // insert into U_GUIDE
-    // ('ID','COMP_ID','FROM_PHEN_ID','FROM_ISS_ID','GUI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','RELEASE','STATUS','CREATE_DATE','OWNER')
-    // VALUES(%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,)
-    
-    
-    BOOL b = [self.db executeUpdate:sql, uuid, compid, from1, from2, guiid, name, desc, tarid, empid, release, status, cre_dte, owner];
-    if(b)
-        [self insertTarget:guide.target withID:tarid];
-    else
-        NSLog(@"add my plan failed : %@", [self.db lastErrorMessage]);
-    
-    return b;
-}
-
-- (BOOL)insertTarget:(MTarget*)target withID:(NSString*)uuid
-{
-    NSString* sql = @"insert into U_TARGET ('ID','TAR_M_ID','NAME','VALUE_R','VALUE_T','UNIT','START_DATE','COMPLETED') values(?,?,?,?,?,?,?,?)";
-    // ('ID','TAR_M_ID','NAME','VALUE_T','UNIT','START_DATE','COMPLETED')
-    // values(?,?,?,?,?,?,?)
-    
-    BOOL b = [self.db executeUpdate:sql, uuid, target.uuid, target.name, target.valueT, target.unit, target.startDate, target.completeDate];
-    if(!b)
-        NSLog(@"add target failed [%@] : %@", uuid, [self.db lastErrorMessage]);
-    return b;
-}
 
 // p15-1, load 我的規劃
 - (NSArray*)loadMyPlanArray
@@ -930,5 +885,183 @@ static MDataBaseManager* _director = nil;
     }
     return NO;
 }
+
+- (NSArray*)targetArrayUnderCustGuide:(MCustGuide*)guide
+{
+    NSMutableArray* array = [NSMutableArray new];
+    [array addObject:guide.custTaregt];
+    
+    for (MCustActivity* act in guide.activityArray) {
+        
+        [array addObject:act.custTarget];
+        
+        for (MCustWorkItem* item in act.workItemArray) {
+            [array addObject:item.target];
+        }
+    }
+    return array;
+}
+
+#pragma mark - insert/update/delete 操作
+
+- (void)insertGuides:(NSArray*)array from:(NSInteger)from
+{
+    for (MGuide* guide in array) {
+        [self insertGuide:guide from:from];
+    }
+}
+
+// insert guide
+- (BOOL)insertGuide:(MGuide*)guide from:(NSInteger)from
+{
+    NSString* uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_GUIDE_UUID_PREV];
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* guiid = guide.uuid;
+    NSString* name = guide.name;
+    NSString* desc = guide.desc;
+    NSString* tarid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_TARGET_UUID_PREV];
+    NSString* empid = guide.manager.uuid;
+    NSString* release = @"0";
+    NSString* status = @"0";
+    NSString* cre_dte = [[MDirector sharedInstance] getCurrentDateStringWithFormat:DATE_FORMATE_01];
+    NSString* owner = [MDirector sharedInstance].currentUser.uuid;
+    
+    NSString* from1 = nil;
+    NSString* from2 = nil;
+    if(from == GUIDE_FROM_PHEN)
+        from1 = [MDirector sharedInstance].selectedPhen.uuid;
+    if(from == GUIDE_FROM_ISSUE)
+        from2 = [MDirector sharedInstance].selectedIssue.uuid;
+    
+    NSString* sql = @"insert into U_GUIDE ('ID','COMP_ID','FROM_PHEN_ID','FROM_ISS_ID','GUI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','RELEASE','STATUS','CREATE_DATE','OWNER') VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    // insert into U_GUIDE
+    // ('ID','COMP_ID','FROM_PHEN_ID','FROM_ISS_ID','GUI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','RELEASE','STATUS','CREATE_DATE','OWNER')
+    // VALUES(%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,)
+    
+    
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, from1, from2, guiid, name, desc, tarid, empid, release, status, cre_dte, owner];
+    if(b){
+        [self insertTarget:guide.target withID:tarid];
+        [self insertActivitys:guide.activityArray];
+    }else{
+        NSLog(@"add guide failed : %@", [self.db lastErrorMessage]);
+    }
+    
+    return b;
+}
+
+- (void)insertActivitys:(NSArray*)array
+{
+    for (MActivity* act in array) {
+        [self insertActivity:act];
+    }
+}
+
+- (BOOL)insertActivity:(MActivity*)act
+{
+    NSString* sql = @"insert into U_ACTIVITY ('ID','COMP_ID','GUIDE_ID','ACT_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','INDEX','PREVIOS','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?)";
+    
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* cre_dte = [[MDirector sharedInstance] getCurrentDateStringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString* uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_ACT_UUID_PREV];
+    NSString* gui_id = act.guide_id;
+    NSString* act_id = act.uuid;
+    NSString* name = act.name;
+    NSString* desc = act.desc;
+    NSString* tarid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_TARGET_UUID_PREV];
+    NSString* empid = act.manager.uuid;
+    NSString* index = act.index;
+    NSString* prev = act.previos;
+    NSString* status = @"0";
+    
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, gui_id, act_id, name, desc, tarid, empid, index, prev, status, cre_dte];
+    if(b){
+        [self insertTarget:act.target withID:tarid];
+        [self insertWorkItems:act.workItemArray];
+    }else{
+        NSLog(@"add activity failed : %@", [self.db lastErrorMessage]);
+    }
+    
+    return b;
+}
+
+- (void)insertWorkItems:(NSArray*)array
+{
+    for (MWorkItem* item in array) {
+        [self insertWorkItem:item];
+    }
+}
+
+- (BOOL)insertWorkItem:(MWorkItem*)item
+{
+    NSString* sql = @"insert into U_WORK_ITEM ('ID','COMP_ID','GUIDE_ID','ACT_ID','WI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','INDEX','PREVIOS','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* cre_dte = [[MDirector sharedInstance] getCurrentDateStringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    NSString* uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_WORK_ITEM_UUID_PREV];
+    NSString* gui_id = item.guide_id;
+    NSString* act_id = item.act_id;
+    NSString* wi_m_id = item.uuid;
+    NSString* name = item.name;
+    NSString* desc = item.desc;
+    NSString* tarid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_TARGET_UUID_PREV];
+    NSString* empid = item.manager.uuid;
+    NSString* index = item.index;
+    NSString* previos = item.previos;
+    NSString* status = @"0";
+    
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, gui_id, act_id, wi_m_id, name, desc, tarid, empid, index, previos, status, cre_dte];
+    if(b)
+        [self insertTarget:item.target withID:tarid];
+    else
+        NSLog(@"add work item failed : %@", [self.db lastErrorMessage]);
+    
+    return b;
+}
+
+- (BOOL)insertTarget:(MTarget*)target withID:(NSString*)uuid
+{
+    NSString* sql = @"insert into U_TARGET ('ID','TAR_M_ID','NAME','VALUE_T','UNIT','START_DATE','COMPLETED') values(?,?,?,?,?,?,?)";
+    // ('ID','TAR_M_ID','NAME','VALUE_T','UNIT','START_DATE','COMPLETED')
+    // values(?,?,?,?,?,?,?)
+    
+    BOOL b = [self.db executeUpdate:sql, uuid, target.uuid, target.name, target.valueT, target.unit, target.startDate, target.completeDate];
+    if(!b)
+        NSLog(@"add target failed [%@] : %@", uuid, [self.db lastErrorMessage]);
+    return b;
+}
+
+- (BOOL)deleteFromPlanWithCustGude:(MCustGuide*)guide
+{
+    // delete guide
+    NSString* sql = @"delete from U_GUIDE where ID = ?";
+    BOOL b = [self.db executeUpdate:sql, guide.uuid];
+    if(!b)
+        NSLog(@"delete guide failed [%@] : %@", guide.uuid, [self.db lastErrorMessage]);
+    
+    // delete activitys
+    sql = @"delete from U_ACTIVITY where GUIDE_ID = ?";
+    BOOL b2 = [self.db executeUpdate:sql, guide.uuid];
+    if(!b2)
+        NSLog(@"delete activity failed [%@] : %@", guide.uuid, [self.db lastErrorMessage]);
+    
+    // delete WorkItems
+    sql = @"delete from U_WORK_ITEM where GUIDE_ID = ?";
+    BOOL b3 = [self.db executeUpdate:sql, guide.uuid];
+    if(!b3)
+        NSLog(@"delete work item failed [%@] : %@", guide.uuid, [self.db lastErrorMessage]);
+    
+    // delete guide/activity/WorkIem target
+    NSArray* array = [self targetArrayUnderCustGuide:guide];
+    for (MCustTarget* target in array) {
+        BOOL b4 = [self.db executeUpdate:@"delete from U_TARGET where ID = ?", target.uuid];
+        if(!b4)
+            NSLog(@"delete target failed [%@] : %@", target.uuid, [self.db lastErrorMessage]);
+    }
+    
+    return b;
+}
+
 
 @end

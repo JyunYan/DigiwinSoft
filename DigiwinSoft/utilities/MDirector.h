@@ -26,7 +26,7 @@
 - (UIColor *)getCustomRedColor;
 
 // 隨機產生uuid
-- (NSString*)getCuetUuidWithPrev:(NSString*)prev;
+- (NSString*)getCustUuidWithPrev:(NSString*)prev;
 
 // 取得目前時間字串
 - (NSString*)getCurrentDateStringWithFormat:(NSString*)format;
