@@ -48,6 +48,8 @@
 
 // get 對策Sample
 - (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen;
+- (NSArray*)loadActivitySampleArrayWithGuide:(MGuide*)guide;
+- (NSArray*)loadWorkItemSampleArrayWithActivity:(MActivity*)act;
 
 // get 議題Sample By 對策
 - (NSArray*)loadIssueArrayByGudie:(MGuide*)guide;
@@ -62,10 +64,23 @@
 - (NSArray*)loadMyPlanArray;
 - (NSArray*)loadMyRaidersArray;
 
+- (NSArray*)loadCustActivityArrayWithGuide:(MCustGuide*)guide;
+- (NSArray*)loadCustWorkItemArrayWithActivity:(MCustActivity*)act;
+
 // get 某企業指標實際值的歷史資料(過去一年)
 - (NSArray*)loadHistoryTargetArrayWithTarget:(MTarget*)target;
 
 // 加入"我的規劃"清單
-- (BOOL)insertIntoMyPlanWithGuide:(MGuide*)guide from:(NSInteger)from;
+- (void)insertGuides:(NSArray*)array from:(NSInteger)from;
+- (BOOL)insertGuide:(MGuide*)guide from:(NSInteger)from;
+
+- (void)insertActivitys:(NSArray*)array;
+- (BOOL)insertActivity:(MActivity*)act;
+
+- (void)insertWorkItems:(NSArray*)array;
+- (BOOL)insertWorkItem:(MWorkItem*)item;
+
+// 刪除對策
+- (BOOL)deleteFromPlanWithCustGude:(MCustGuide*)guide;
 
 @end
