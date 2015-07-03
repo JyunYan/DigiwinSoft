@@ -335,6 +335,21 @@
     switch (index) {
         case 0:
         {
+            BOOL hasEmpty = [[MDataBaseManager sharedInstance] hasEmptyManagerUnderCustGudie:guide];
+            if (hasEmpty) {
+                BOOL bOK = [[MDataBaseManager sharedInstance] updateGuide:guide release:YES];
+                if (bOK) {
+                    _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
+                    [_tableView reloadData];
+
+                    [self showAlertDialog:@"轉入成功"];
+                } else {
+                    [self showAlertDialog:@"轉入失敗"];
+                }
+            } else {
+                [self showAlertDialog:@"此規劃尚未指派負責人"];
+            }
+            
             NSLog(@"clock button was pressed");
             break;
         }
@@ -382,12 +397,23 @@
         {
             MCustomAlertView *customAlertView = (MCustomAlertView*)alertView;
             MCustGuide* guide = [customAlertView object];
+            [[MDataBaseManager sharedInstance] deleteFromPlanWithCustGude:guide];
             
             _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
             [_tableView reloadData];
             break;
         }
     }
+}
+
+- (void)showAlertDialog:(NSString*) msg
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"訊息"
+                                                    message:msg
+                                                   delegate:nil
+                                          cancelButtonTitle:@"確定"
+                                          otherButtonTitles: nil];
+    [alert show];
 }
 
 @end

@@ -1051,6 +1051,7 @@ static MDataBaseManager* _director = nil;
     return YES;
 }
 
+// 我的攻略 : 1 , 我的規劃 : 0
 - (BOOL)updateGuide:(MCustGuide*)guide release:(BOOL)release
 {
     NSString* rel = release ? @"1" : @"0";
