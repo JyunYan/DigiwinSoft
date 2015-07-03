@@ -60,7 +60,7 @@
     
     
     MGuide *g=_guide;
-//    aryActivity=_guide.activityArray;    
+//    aryActivity=_guide.activityArray;
 }
 -(void)addMainMenu
 {

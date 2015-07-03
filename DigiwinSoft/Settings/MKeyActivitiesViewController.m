@@ -34,11 +34,6 @@
     self = [super init];
     if (self) {
         _activityArray = guide.activityArray;
-        if (_activityArray == nil) {
-            _activityArray = [NSMutableArray new];
-//            [self createTestData];
-        }
-
         _guide = guide;
     }
     return self;
@@ -82,71 +77,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-/*
-#pragma mark - create test data
 
-- (void)createTestData {
-    for (int i = 0; i < 2; i++) {
-        MActivity* activity = [[MActivity alloc] init];
-        if (i == 0) {
-            activity.uuid = @"test12345";
-            activity.name = @"制定最小製造批量標準";
-            
-            MUser* user = [[MUser alloc] init];
-            user.name = @"李羅";
-            activity.manager = user;
-        } else {
-            activity.uuid = @"test98765";
-            activity.name = @"使用標準指導需求計畫";
-            
-            MUser* user = [[MUser alloc] init];
-            user.name = @"王燕";
-            activity.manager = user;
-        }
-        
-        NSMutableArray* workItemArray = [[NSMutableArray alloc] init];
-        for (int i = 0; i < 5; i++) {
-            MWorkItem* workItem = [[MWorkItem alloc] init];
-            if (i == 0) {
-                workItem.name = @"瓶頸製程工時計算";
-                
-                MUser* user = [[MUser alloc] init];
-                user.name = @"李羅";
-                workItem.manager = user;
-            } else if (i == 1) {
-                workItem.name = @"決定換線損失係指數";
-
-                MUser* user = [[MUser alloc] init];
-                user.name = @"林小平";
-                workItem.manager = user;
-            } else if (i == 2) {
-                workItem.name = @"確認批量原因基數";
-
-                MUser* user = [[MUser alloc] init];
-                user.name = @"李大木";
-                workItem.manager = user;
-            } else if (i == 3) {
-                workItem.name = @"確認基數與最小製造";
-
-                MUser* user = [[MUser alloc] init];
-                user.name = @"王曉明";
-                workItem.manager = user;
-            } else {
-                workItem.name = @"產品最小製造批量審核";
-
-                MUser* user = [[MUser alloc] init];
-                user.name = @"陳郁華";
-                workItem.manager = user;
-            }
-            
-            [workItemArray addObject:workItem];
-        }
-        activity.workItemArray = workItemArray;
-        
-        [_activityArray addObject:activity];
-    }
-}
-*/
 #pragma mark - create view
 
 -(void) addMainMenu
@@ -157,7 +88,7 @@
 
 - (UIView*)createTopView:(CGRect) rect
 {
-    CGFloat textSize = 15.0f;
+    CGFloat textSize = 14.0f;
     
 
     UIView* view = [[UIView alloc] initWithFrame:rect];
@@ -207,7 +138,9 @@
     
     posY = indexLabel.frame.origin.y + indexLabel.frame.size.height;
     // 現值
-    NSString* presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", _guide.custTaregt.valueR, _guide.custTaregt.unit];
+    NSString* presentValueStr = @"現值：";
+    if (_guide.custTaregt.valueR && ![_guide.custTaregt.valueR isEqualToString:@""])
+        presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", _guide.custTaregt.valueR, _guide.custTaregt.unit];
     UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 25, height)];
     presentValueLabel.text = presentValueStr;
     presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
@@ -248,7 +181,7 @@
     CGFloat posX = 20;
     CGFloat posY = 20;
     CGFloat width = viewWidth - posX * 2;
-    CGFloat height = viewHeight - posY * 2;
+    CGFloat height = viewHeight - posY;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor clearColor];
@@ -302,11 +235,20 @@
     
     // info
     MActivity* activity = [_activityArray objectAtIndex:section];
-    NSString* keyActivitiesStr = [NSString stringWithFormat:@"關鍵活動：%@", activity.name];
-    
+    NSString* keyActivitiesStr = @"關鍵活動：";
+    if (activity.name)
+        keyActivitiesStr = [NSString stringWithFormat:@"關鍵活動：%@", activity.name];
+
     MUser* user = activity.manager;
-    NSString* personInChargeStr = [NSString stringWithFormat:@"負責人：%@", user.name];
-    
+    NSString* personInChargeStr = @"負責人：";
+    if (user.name)
+        personInChargeStr = [NSString stringWithFormat:@"負責人：%@", user.name];
+
+    MTarget* target = activity.target;
+    NSString* deadlineStr = @"截止日：";
+    if (target.completeDate)
+        deadlineStr = [NSString stringWithFormat:@"截止日：%@", target.completeDate];
+
     height = 70;
     
     UIView* infoView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
@@ -337,7 +279,7 @@
     posX = personInChargeLabel.frame.origin.x + personInChargeLabel.frame.size.width;
     // 截止日
     UILabel* deadlineLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    deadlineLabel.text = @"截止日：";
+    deadlineLabel.text = deadlineStr;
     deadlineLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     deadlineLabel.font = [UIFont systemFontOfSize:textSize];
     [infoView addSubview:deadlineLabel];
@@ -351,9 +293,9 @@
     UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     lineView.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     [infoView addSubview:lineView];
-
     
-    /* title */
+    
+/******** title ********/
     posX = 0;
     posY = infoView.frame.origin.y + infoView.frame.size.height;
     width = infoView.frame.size.width;
@@ -404,7 +346,8 @@
 {
     // Return the number of rows in the section.
     MActivity* activity = [_activityArray objectAtIndex:section];
-    return activity.workItemArray.count;
+    NSMutableArray* workItemArray = activity.workItemArray;
+    return workItemArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -485,7 +428,8 @@
     MUser* user = workItem.manager;
     appointResponsibleLabel.text = user.name;
 
-    deadlineLabel.text = @"截止日";
+    MTarget* target = workItem.target;
+    deadlineLabel.text = target.completeDate;
 
     return cell;
 }
@@ -494,8 +438,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSInteger row = indexPath.row;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+#pragma mark - other methods
 
 -(UIImage*)loadLocationImage:(NSString*)urlstr
 {

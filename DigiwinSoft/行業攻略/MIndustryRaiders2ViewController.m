@@ -245,10 +245,9 @@
     [delegate toggleLeft];
 }
 - (void)actionAddMyList:(id)sender{
-    NSLog(@"加入我的規劃清單動作");
-    
     MGuide* guide = [aryList objectAtIndex:0];
     [[MDataBaseManager sharedInstance]insertGuide:guide from:1];
+    NSLog(@"加入我的規劃清單動作");
 }
 - (void)actionCheck:(UIButton *)sender{
    

@@ -39,9 +39,9 @@
     
     
     CGFloat posX = 0;
-    CGFloat posY = statusBarHeight;
+    CGFloat posY = 0;
     CGFloat width = screenWidth - 60;
-    CGFloat height = screenHeight;
+    CGFloat height = screenHeight + statusBarHeight;
     
     UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:listView];
@@ -95,7 +95,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 101;
+    return 121;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -109,11 +109,11 @@
         return header;
     
     
-    CGFloat textSize = 15.0f;
+    CGFloat textSize = 14.0f;
 
     
     CGFloat posX = 30;
-    CGFloat posY = 10;
+    CGFloat posY = 30;
     
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 60, 60)];
     imageView.backgroundColor = [UIColor clearColor];
@@ -123,7 +123,7 @@
     
     
     posX = imageView.frame.origin.x + imageView.frame.size.width + 20;
-    posY = 5;
+    posY = 23;
 
     UILabel* username = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 200, 30)];
     username.backgroundColor = [UIColor clearColor];
@@ -153,7 +153,7 @@
     [header addSubview:email];
 
     
-    UIView* down = [[UIView alloc] initWithFrame:CGRectMake(0, 100, tableWidth, 1)];
+    UIView* down = [[UIView alloc] initWithFrame:CGRectMake(0, 120, tableWidth, 1)];
     down.backgroundColor = [UIColor lightGrayColor];
     [header addSubview:down];
     

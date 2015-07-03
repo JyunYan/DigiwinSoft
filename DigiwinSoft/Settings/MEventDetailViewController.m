@@ -142,7 +142,7 @@
 {
     CGFloat tableWidth = tableView.frame.size.width;
     
-    CGFloat textSize = 15.0f;
+    CGFloat textSize = 14.0f;
 
     CGFloat posX = 0;
     CGFloat posY = 0;
@@ -209,7 +209,7 @@
         
         CGFloat tableWidth = tableView.frame.size.width;
 
-        CGFloat textSize = 15.0f;
+        CGFloat textSize = 14.0f;
         
         CGFloat posX = 0;
         CGFloat posY = 0;
@@ -280,7 +280,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSInteger row = indexPath.row;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

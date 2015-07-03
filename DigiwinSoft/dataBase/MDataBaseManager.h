@@ -74,11 +74,17 @@
 - (void)insertGuides:(NSArray*)array from:(NSInteger)from;
 - (BOOL)insertGuide:(MGuide*)guide from:(NSInteger)from;
 
-- (void)insertActivitys:(NSArray*)array;
-- (BOOL)insertActivity:(MActivity*)act;
+- (void)insertActivitys:(NSArray*)array guideID:(NSString*)guideid;
+- (BOOL)insertActivity:(MActivity*)act guideID:(NSString*)guideid;
 
-- (void)insertWorkItems:(NSArray*)array;
-- (BOOL)insertWorkItem:(MWorkItem*)item;
+- (void)insertWorkItems:(NSArray*)array activityID:(NSString*)actid guideID:(NSString*)guideid;
+- (BOOL)insertWorkItem:(MWorkItem*)item activityID:(NSString*)actid guideID:(NSString*)guideid;
+
+// 更新對策 release 狀態 Yes:攻略 No:規劃
+- (BOOL)updateGuide:(MCustGuide*)guide release:(BOOL)release;
+
+// 判斷此攻略是否都有負責人
+- (BOOL)hasEmptyManagerUnderCustGudie:(MCustGuide*)guide;
 
 // 刪除對策
 - (BOOL)deleteFromPlanWithCustGude:(MCustGuide*)guide;

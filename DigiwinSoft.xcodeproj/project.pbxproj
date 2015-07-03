@@ -29,6 +29,7 @@
 		3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A03F96E1B3A60A0000F345B /* QuartzCore.framework */; };
 		3A03F9731B3A60DB000F345B /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */; };
 		3A54DDFC1B40DD1100A6849A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */; };
+		3A54EDE11B4636DB00BDA945 /* MCustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */; };
 		3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5B9E9C1B3D0756005DE125 /* MRecommendTreasuresViewController.m */; };
 		3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B831B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m */; };
 		3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B851B3800C100E94211 /* SWCellScrollView.m */; };
@@ -187,6 +188,8 @@
 		3A03F9711B3A60DB000F345B /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
 		3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		3A54EDDF1B4636DB00BDA945 /* MCustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustomAlertView.h; path = CustomViews/MCustomAlertView.h; sourceTree = "<group>"; };
+		3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustomAlertView.m; path = CustomViews/MCustomAlertView.m; sourceTree = "<group>"; };
 		3A5B9E9B1B3D0756005DE125 /* MRecommendTreasuresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRecommendTreasuresViewController.h; sourceTree = "<group>"; };
 		3A5B9E9C1B3D0756005DE125 /* MRecommendTreasuresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRecommendTreasuresViewController.m; sourceTree = "<group>"; };
 		3A711B821B3800C100E94211 /* NSMutableArray+SWUtilityButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+SWUtilityButtons.h"; sourceTree = "<group>"; };
@@ -756,6 +759,8 @@
 				3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */,
 				3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */,
 				3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */,
+				3A54EDDF1B4636DB00BDA945 /* MCustomAlertView.h */,
+				3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -965,6 +970,7 @@
 				3A03AA231B3BFF0500923ABB /* MEventDetailViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
 				DC10144B1B32985600EF7A6F /* MUser.m in Sources */,
+				3A54EDE11B4636DB00BDA945 /* MCustomAlertView.m in Sources */,
 				DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */,
 				DCF46AC11B418E6B00C771BB /* MPhenomenon.m in Sources */,
 				3AFF62621B438D08005B6238 /* MSettingTableViewCell.m in Sources */,

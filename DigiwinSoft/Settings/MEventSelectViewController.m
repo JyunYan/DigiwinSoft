@@ -13,6 +13,12 @@
 #import "MDirector.h"
 
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    #define GregorianCalendar NSCalendarIdentifierGregorian
+#else
+    #define GregorianCalendar NSGregorianCalendar
+#endif
+
 #define TAG_LABEL_PHENOMENON_STATUS 200
 #define TAG_LABEL_POSSIBLE_CAUSES 300
 
@@ -108,14 +114,14 @@
 
 - (UIView*)createTopView:(CGRect) rect
 {
-    CGFloat textSize = 15.0f;
+    CGFloat textSize = 14.0f;
     
     
     UIView* view = [[UIView alloc] initWithFrame:rect];
     
     CGFloat viewWidth = rect.size.width;
     
-    CGFloat posX = 30;
+    CGFloat posX = 20;
     CGFloat posY = 10;
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = 30;
@@ -165,8 +171,9 @@
     
     posY = occurrenceDateLabel.frame.origin.y + occurrenceDateLabel.frame.size.height;
     // 發生期間
+    NSString* duringHappenStr = [NSString stringWithFormat:@"發生期間：%@", [self getPeriodDayWithStartDate:_event.start]];
     UILabel* duringHappenLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, 30)];
-    duringHappenLabel.text = @"發生期間：";
+    duringHappenLabel.text = duringHappenStr;
     duringHappenLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     duringHappenLabel.font = [UIFont systemFontOfSize:textSize];
     [leftView addSubview:duringHappenLabel];
@@ -181,7 +188,7 @@
     posX = 0;
     posY = 0;
 
-    UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 30)];
+    UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 70, 30)];
     personInChargeTitleLabel.text = @"負 責 人 ：";
     personInChargeTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     personInChargeTitleLabel.font = [UIFont systemFontOfSize:textSize];
@@ -189,7 +196,7 @@
 
     posX = personInChargeTitleLabel.frame.origin.x + personInChargeTitleLabel.frame.size.width;
 
-    UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 75, 30)];
+    UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 70, 30)];
     personInChargeLabel.text = _user.name;
     personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomBlueColor];
     personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
@@ -199,7 +206,7 @@
     posX = 0;
     posY = personInChargeLabel.frame.origin.y + personInChargeLabel.frame.size.height;
 
-    UILabel* reportingHierarchyTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 30)];
+    UILabel* reportingHierarchyTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 70, 30)];
     reportingHierarchyTitleLabel.text = @"上報層級：";
     reportingHierarchyTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     reportingHierarchyTitleLabel.font = [UIFont systemFontOfSize:textSize];
@@ -207,8 +214,8 @@
 
     posX = reportingHierarchyTitleLabel.frame.origin.x + reportingHierarchyTitleLabel.frame.size.width;
 
-    UILabel* reportingHierarchyLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 75, 30)];
-    reportingHierarchyLabel.text = @"上報層級";
+    UILabel* reportingHierarchyLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width/2 - 70, 30)];
+    reportingHierarchyLabel.text = @"";
     reportingHierarchyLabel.textColor = [[MDirector sharedInstance] getCustomBlueColor];
     reportingHierarchyLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:reportingHierarchyLabel];
@@ -328,7 +335,8 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 61;
+//    return 61;
+    return 0;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -339,7 +347,7 @@
     header.backgroundColor = [UIColor whiteColor];
     
     
-    CGFloat textSize = 15.0f;
+    CGFloat textSize = 14.0f;
     
     
     CGFloat posX = 20;
@@ -416,7 +424,7 @@
         cell.backgroundColor = [UIColor whiteColor];
         
         
-        CGFloat textSize = 15.0f;
+        CGFloat textSize = 14.0f;
         
         CGFloat tableWidth = tableView.frame.size.width;
         
@@ -487,12 +495,40 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    
     NSInteger row = indexPath.row;
     
     UIButton* button = (UIButton*)[self.view viewWithTag:TAG_CHECKBOX + row];
     BOOL isSelected = button.selected;
     
     [button setSelected: !isSelected];
+}
+
+#pragma mark - other methods
+
+- (NSString*)getPeriodDayWithStartDate:(NSString*) dateStr
+{
+    NSString* daysStr = @"";
+    
+    NSDateFormatter* dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSDate* startDate = [dateFormatter dateFromString:dateStr];
+    if (startDate == nil)
+        return @"";
+    
+    NSDate* currentDate = [NSDate date];
+    
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:GregorianCalendar];
+    NSCalendarUnit unitFlag = NSCalendarUnitDay;
+    NSDateComponents* components = [calendar components:unitFlag fromDate:startDate toDate:currentDate options:0];
+    NSInteger days = [components day] + 1;
+    
+    daysStr = [NSString stringWithFormat:@"%ld 天", (long)days];
+    
+    return daysStr;
 }
 
 @end

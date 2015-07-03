@@ -20,6 +20,10 @@
     // Configure the view for the selected state
 }
 
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    
+}
+
 - (void)setFrame:(CGRect)frame
 {
     frame.origin.x += 20;
