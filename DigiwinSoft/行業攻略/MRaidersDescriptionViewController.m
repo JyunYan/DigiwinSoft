@@ -137,6 +137,7 @@
 {
     MRaidersDiagramViewController *MRaidersDiagramVC=[[MRaidersDiagramViewController alloc]init];
     MRaidersDiagramVC.strTitle=labTitle.text;
+    MRaidersDiagramVC.guide=_guide;
     [self.navigationController pushViewController:MRaidersDiagramVC animated:YES];
 }
 

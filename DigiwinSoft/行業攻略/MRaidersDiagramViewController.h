@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MGuide.h"
 @interface MRaidersDiagramViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
-    UITableView *tbl;
-    NSMutableArray *aryList;
+    UITableView *tblActivity;
+    UITableView *tblWorkItem;
+    NSArray *aryActivity;
+    NSArray *aryMActivity;
 }
 @property (nonatomic, weak) NSString *strTitle;
+@property (nonatomic, weak) MGuide *guide;
 @end

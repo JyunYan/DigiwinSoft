@@ -9,6 +9,8 @@
 #import "MRaidersDiagramViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MRaidersDiagramTableViewCell.h"
+#import "MGuide.h"
+#import "MActivity.h"
 @interface MRaidersDiagramViewController ()
 
 @end
@@ -41,19 +43,24 @@
 #pragma mark - create view
 - (void)prepareTestData
 {
-    NSDictionary *dis1=[[NSDictionary alloc]initWithObjectsAndKeys:
-                        @"制定最小製造批量標準",@"Activity",
-                        @"指標:半成品週轉天數",@"SubActivity",
-                        @"瓶頸製程工時計算",@"WorkItem",
-                        @"指標:半成品週轉天數",@"SubWorkItem", nil];
     
-    NSDictionary *dis2=[[NSDictionary alloc]initWithObjectsAndKeys:
-                        @"使用標準需求指導計畫",@"Activity",
-                        @"指標:半成品週轉天數",@"SubActivity",
-                        @"決定換線損失計數值",@"WorkItem",
-                        @"指標:半成品週轉天數",@"SubWorkItem", nil];
-
-    aryList=[[NSMutableArray alloc]initWithObjects:dis1,dis2,nil];
+//    NSDictionary *dis1=[[NSDictionary alloc]initWithObjectsAndKeys:
+//                        @"制定最小製造批量標準",@"Activity",
+//                        @"指標:半成品週轉天數",@"SubActivity",
+//                        @"瓶頸製程工時計算",@"WorkItem",
+//                        @"指標:半成品週轉天數",@"SubWorkItem", nil];
+//    
+//    NSDictionary *dis2=[[NSDictionary alloc]initWithObjectsAndKeys:
+//                        @"使用標準需求指導計畫",@"Activity",
+//                        @"指標:半成品週轉天數",@"SubActivity",
+//                        @"決定換線損失計數值",@"WorkItem",
+//                        @"指標:半成品週轉天數",@"SubWorkItem", nil];
+//
+//    aryList=[[NSMutableArray alloc]initWithObjects:dis1,dis2,nil];
+    
+    
+    MGuide *g=_guide;
+//    aryActivity=_guide.activityArray;    
 }
 -(void)addMainMenu
 {
@@ -125,13 +132,24 @@
     [labValue2 setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labValue2];
     
-    //tblView
-    tbl=[[UITableView alloc]initWithFrame:CGRectMake(20,imgGray.frame.origin.y+90,screenWidth-40, screenHeight-(imgGray.frame.origin.y+90))];
-    tbl.scrollEnabled = NO;
-    tbl.delegate=self;
-    tbl.dataSource = self;
-    tbl.separatorStyle=UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:tbl];
+    //tblActivity
+    tblActivity=[[UITableView alloc]initWithFrame:CGRectMake(20,imgGray.frame.origin.y+90,(screenWidth/2)-20, screenHeight-(imgGray.frame.origin.y+90))];
+    tblActivity.scrollEnabled = NO;
+    tblActivity.delegate=self;
+    tblActivity.dataSource = self;
+    tblActivity.separatorStyle=UITableViewCellSeparatorStyleNone;
+    tblActivity.tag=101;
+    [self.view addSubview:tblActivity];
+    
+    //tblWorkItem
+    tblWorkItem=[[UITableView alloc]initWithFrame:CGRectMake(20+tblActivity.frame.size.width,imgGray.frame.origin.y+90,(screenWidth/2)-20, screenHeight-(imgGray.frame.origin.y+90))];
+    tblWorkItem.scrollEnabled = NO;
+    tblWorkItem.delegate=self;
+    tblWorkItem.dataSource = self;
+    tblWorkItem.separatorStyle=UITableViewCellSeparatorStyleNone;
+    tblWorkItem.tag=102;
+    [self.view addSubview:tblWorkItem];
+
 
 }
 #pragma mark - UIButton
@@ -146,68 +164,89 @@
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70.0f;
+    return 50.0f;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
     return 30.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    if (tableView.tag==101)
+    {
+        return 2;
+    }else
+    {
+        return 2;
+    }
+    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MRaidersDiagramTableViewCell *cell=[MRaidersDiagramTableViewCell cellWithTableView:tableView];
+    static NSString *indentifier=@"Cell";
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:indentifier];
+    if (cell==nil) {
+        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
+    }
+    
+    UILabel *label;
+    label = [[UILabel alloc] initWithFrame:CGRectMake(5,5,tableView.frame.size.width-10,20)];
+    label.font = [UIFont boldSystemFontOfSize:12.0];
+    label.backgroundColor=[UIColor clearColor];
+    
+    UILabel *detailLabel;
+    detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(5,24,tableView.frame.size.width-10,20)];
+    detailLabel.font = [UIFont systemFontOfSize:11.0];
+    detailLabel.textColor=[UIColor grayColor];
+    detailLabel.backgroundColor=[UIColor clearColor];
     
     
-    cell.labActivity.text=[aryList[indexPath.row]objectForKey:@"Activity"];
-    cell.labActivity.frame=CGRectMake(10,15,(tbl.frame.size.width/2)-15,20);
-    cell.labActivity.font=[UIFont systemFontOfSize:12];
-    
-    cell.labSubActivity.text=[aryList[indexPath.row]objectForKey:@"SubActivity"];
-    cell.labSubActivity.frame=CGRectMake(10,40,(tbl.frame.size.width/2)-15,20);
-    cell.labSubActivity.font=[UIFont systemFontOfSize:12];
-    
-    cell.labWorkItem.text=[aryList[indexPath.row]objectForKey:@"WorkItem"];
-    cell.labWorkItem.frame=CGRectMake((tbl.frame.size.width/2)+5,15,(tbl.frame.size.width/2)-15,20);
-    cell.labWorkItem.font=[UIFont systemFontOfSize:12];
-    
-    cell.labSubWorkItem.text=[aryList[indexPath.row]objectForKey:@"SubWorkItem"];
-    cell.labSubWorkItem.frame=CGRectMake((tbl.frame.size.width/2)+5,40,(tbl.frame.size.width/2)-15,20);
-    cell.labSubWorkItem.font=[UIFont systemFontOfSize:12];
-
-
+    if (tableView.tag==101)
+    {
+//        label.text=aryActivity[indexPath.row];
+//        detailLabel.text=[aryList[indexPath.row]objectForKey:@"SubActivity"];
+    }
+    else
+    {
+//        label.text=[aryList[indexPath.row]objectForKey:@"WorkItem"];
+//        detailLabel.text =[aryList[indexPath.row]objectForKey:@"SubWorkItem"];
+    }
+    [cell.contentView addSubview:label];
+    [cell.contentView addSubview:detailLabel];
+    cell.backgroundColor=[UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView.tag==101) {
+        
+    }
     
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *viewSection = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 100, 20)];
+    UIView *viewSection = [[UIView alloc] init];
     viewSection.backgroundColor=[UIColor whiteColor];
     
-    UILabel *labRelation = [[UILabel alloc] initWithFrame:CGRectMake(30,5,60,20)];
-    labRelation.text = @"關聯議題";
-    labRelation.textColor =[UIColor grayColor];
-    labRelation.font = [UIFont systemFontOfSize:14.0f];
-    labRelation.backgroundColor=[UIColor clearColor];
-    [viewSection addSubview:labRelation];
+    UILabel *labHeader=[[UILabel alloc] initWithFrame:CGRectMake(tableView.frame.size.width/2-30,5,60,20)];
+    labHeader.textColor =[UIColor grayColor];
+    labHeader.font = [UIFont systemFontOfSize:14.0f];
+    labHeader.backgroundColor=[UIColor clearColor];
+    [viewSection addSubview:labHeader];
     
-    UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake((tbl.frame.size.width/5)*3,5, 60,20)];
-    labMeasure.text = @"工作項目";
-    labMeasure.textColor =[UIColor grayColor];
-    labMeasure.backgroundColor = [UIColor clearColor];
-    labMeasure.font = [UIFont systemFontOfSize:14.0f];
-    [viewSection addSubview:labMeasure];
+    if(tableView.tag==101){
+        labHeader.text = @"關聯議題";
+    }else
+    {
+        labHeader.text = @"工作項目";
+    }
+    
     
     //imgGray
-    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,30,tbl.frame.size.width,2)];
+    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,30,tableView.frame.size.width,2)];
     imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
     [viewSection addSubview:imgGray];
-    
+
     return viewSection;
 }
 

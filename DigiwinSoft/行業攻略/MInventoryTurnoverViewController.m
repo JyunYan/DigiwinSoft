@@ -70,7 +70,7 @@
     self.mTarget.avg = @"30";
     self.mTarget.bottom = @"40";
     self.mTarget.name = @"庫存周轉天數(天)";
-    
+
 }
 -(void)addMainMenu
 {
@@ -125,7 +125,7 @@
     
     //Label
     UILabel *labDay=[[UILabel alloc]initWithFrame:CGRectMake(170, 170, 20, 15)];
-    labDay.text=@"天";
+    labDay.text=_target.unit;
     labDay.backgroundColor=[UIColor whiteColor];
     [labDay setFont:[UIFont systemFontOfSize:14]];
     labDay.textAlignment = NSTextAlignmentJustified;
