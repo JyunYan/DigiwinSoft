@@ -15,6 +15,7 @@
 #import "MDataBaseManager.h"
 #import "AppDelegate.h"
 #import "MInventoryTurnoverViewController.h"
+#import "MDirector.h"
 @interface MIndustryRaiders2ViewController ()
 
 @end
@@ -276,6 +277,7 @@
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
     MGuide* guide = [aryList objectAtIndex:indexPath.row];
     MRaidersDescVC.guide=guide;
+    [MDirector sharedInstance].selectedPhen=_phen;
     UINavigationController* MRaidersDescNav = [[UINavigationController alloc] initWithRootViewController:MRaidersDescVC];
     MRaidersDescNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     [self.navigationController presentViewController:MRaidersDescNav animated:YES completion:nil];
@@ -319,7 +321,7 @@
     [cell.btnManager addTarget:self action:@selector(btnManager:) forControlEvents:UIControlEventTouchUpInside];
     
     //目標設定
-    UIImage *imgTargetSet = [UIImage imageNamed:@"icon_manager.png"];
+    UIImage *imgTargetSet = [UIImage imageNamed:@"icon_menu_8.png"];
     [cell.btnTargetSet setBackgroundImage:imgTargetSet forState:UIControlStateNormal];
     cell.btnTargetSet.frame=CGRectMake(((screenWidth/4)*3)-18,23, 22,22);
     [cell.btnTargetSet addTarget:self action:@selector(btnTargetSet:) forControlEvents:UIControlEventTouchUpInside];

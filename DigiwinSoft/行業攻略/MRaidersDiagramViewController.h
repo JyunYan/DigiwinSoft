@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MGuide.h"
+#import "MWorkItem.h"
 @interface MRaidersDiagramViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *tblActivity;
     UITableView *tblWorkItem;
-    NSArray *aryActivity;
-    NSArray *aryMActivity;
 }
 @property (nonatomic, weak) NSString *strTitle;
 @property (nonatomic, weak) MGuide *guide;
