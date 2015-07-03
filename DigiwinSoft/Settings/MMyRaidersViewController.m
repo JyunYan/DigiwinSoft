@@ -29,7 +29,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _guideArray = [[MDataBaseManager sharedInstance] loadCustomGuideArrayByRelease:YES];
+        _guideArray = [[MDataBaseManager sharedInstance] loadMyRaidersArray];
     }
     return self;
 }
@@ -149,7 +149,7 @@
     NSInteger row = indexPath.row;
     
     MCustGuide* guide = [_guideArray objectAtIndex:row];
-    MCustTarget* target = guide.target;
+    MCustTarget* target = guide.custTaregt;
     
     UILabel* countermeasureLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_COUNTERMEASURE];
     UILabel* indexLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_INDEX];
@@ -178,7 +178,9 @@
 {
     NSInteger row = indexPath.row;
     
-    MKeyActivitiesViewController* vc = [[MKeyActivitiesViewController alloc] init];
+    MCustGuide* guide = [_guideArray objectAtIndex:row];
+
+    MKeyActivitiesViewController* vc = [[MKeyActivitiesViewController alloc] initWithCustGuide:guide];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

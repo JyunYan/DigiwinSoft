@@ -10,16 +10,22 @@
 
 #import "FMDatabase.h"
 #import "MUser.h"
-#import "MEvent.h"
-#import "MGuide.h"
-#import "MSituation.h"
-#import "MActivity.h"
-#import "MTreasure.h"
 #import "MPhenomenon.h"
+#import "MGuide.h"
+#import "MActivity.h"
+#import "MWorkItem.h"
 #import "MIssue.h"
+#import "MEvent.h"
+#import "MSituation.h"
+#import "MTreasure.h"
+#import "MSkill.h"
 
 #import "MCustGuide.h"
+#import "MCustActivity.h"
+#import "MCustWorkItem.h"
 #import "MCustTarget.h"
+
+#import "MConfig.h"
 
 @interface MDataBaseManager : NSObject
 
@@ -31,7 +37,7 @@
 #pragma mark - 事件 相關
 - (NSArray*)loadEventsWithUser:(MUser*)user;
 - (NSArray*)loadSituationsWithEvent:(MEvent*)event;
-- (NSArray*)loadTreasureWithActivity:(MActivity*)act;
+- (NSArray*)loadTreasureWithActivity:(MCustActivity*)act;
 
 - (NSArray*)loadActivitysWithEvent:(MEvent*)event;
 
@@ -43,16 +49,23 @@
 // get 對策Sample
 - (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen;
 
-
 // get 議題Sample By 對策
 - (NSArray*)loadIssueArrayByGudie:(MGuide*)guide;
 
-// get 對策的指標設定Sample
-- (BOOL)loadTargetSettingsSampleIntoGuide:(MGuide*)guide;
+// get 所有職能array
+- (NSArray*)loadAllSkills;
 
-#pragma mark -
+// get 員工array
+- (NSArray*)loadEmployeeArray;
 
-// get 我的規劃/我的攻略, No:規劃(未發佈) Yes:攻略(發佈)
-- (NSArray*)loadCustomGuideArrayByRelease:(BOOL)release;
+// get 我的規劃/我的攻略
+- (NSArray*)loadMyPlanArray;
+- (NSArray*)loadMyRaidersArray;
+
+// get 某企業指標實際值的歷史資料(過去一年)
+- (NSArray*)loadHistoryTargetArrayWithTarget:(MTarget*)target;
+
+// 加入"我的規劃"清單
+- (BOOL)insertIntoMyPlanWithGuide:(MGuide*)guide from:(NSInteger)from;
 
 @end

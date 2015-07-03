@@ -13,6 +13,8 @@
 #import "MRaiderCarouselView.h"
 #import "AppDelegate.h"
 
+#import "MDirector.h"
+
 @interface MIndustryRaidersViewController ()
 
 @property (nonatomic, strong) MRaiderCarouselView* rcView;
@@ -146,8 +148,13 @@
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    MPhenomenon* phen = aryList[indexPath.row];
+    [MDirector sharedInstance].selectedPhen = phen;
+    
     MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] init];
-    [MIndustryRaiders2VC setPhen:aryList[indexPath.row]];
+    [MIndustryRaiders2VC setPhen:phen];
+    [MIndustryRaiders2VC setFrom:GUIDE_FROM_PHEN];
     [self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

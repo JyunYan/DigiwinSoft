@@ -36,9 +36,6 @@
     [super viewWillAppear:animated];
      self.title = @"我的任務";
     
-    UIBarButtonItem* searchBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(actionToSearch:)];
-    self.navigationItem.leftBarButtonItem = searchBtn;
-    
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     _taskDataArry = [[NSMutableArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
@@ -51,6 +48,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self addMainMenu];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,6 +78,16 @@
     aryFinish=[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
 }
 #pragma mark - create view
+-(void) addMainMenu
+{
+    //leftBarButtonItem
+    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
+    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
+    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
+    self.navigationItem.leftBarButtonItem = bar_item;
+}
+
 - (void)createSegmentedView
 {
     NSArray* array = [[NSArray alloc] initWithObjects:@"待佈署任務", @"進度回報", @"已完成任務", nil];
@@ -200,6 +208,11 @@
 - (void)actionToSearch:(id)sender
 {
     
+}
+-(void)clickedBtnSetting:(id)sender
+{
+    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
+    [delegate toggleLeft];
 }
 - (void)actionToShowNextPage:(id)sender
 {

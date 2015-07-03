@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "MUser.h"
+#import "MPhenomenon.h"
+#import "MIssue.h"
 
 @interface MDirector : NSObject
 
 @property (nonatomic, strong) MUser* currentUser;   // 目前的user
+
+@property (nonatomic, strong) MPhenomenon* selectedPhen;
+@property (nonatomic, strong) MIssue* selectedIssue;
 
 +(MDirector*) sharedInstance;
 
@@ -19,5 +24,11 @@
 - (UIColor *)getCustomLightGrayColor;
 - (UIColor *)getCustomBlueColor;
 - (UIColor *)getCustomRedColor;
+
+// 隨機產生uuid
+- (NSString*)getCuetUuidWithPrev:(NSString*)prev;
+
+// 取得目前時間字串
+- (NSString*)getCurrentDateStringWithFormat:(NSString*)format;
 
 @end

@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSString* name;   //名稱
 @property (nonatomic, strong) NSString* desc;   //描述
 @property (nonatomic, strong) NSString* review; //評價(星數)
+@property (nonatomic, strong) NSString* url;    // video url 
 
 @property (nonatomic, strong) MTarget* target;  //指標
 

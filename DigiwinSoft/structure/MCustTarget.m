@@ -10,4 +10,24 @@
 
 @implementation MCustTarget
 
+- (void)copyFromTarget:(MTarget*)target
+{
+    self.tar_uuid = target.uuid;
+    self.name = target.name;
+    self.unit = target.unit;
+    
+    self.top = target.top;
+    self.avg = target.avg;
+    self.bottom = target.bottom;
+    self.upMin = target.upMin;
+    self.upMax = target.upMax;
+    
+    self.valueR = target.valueR;
+    self.valueT = target.valueT;
+    
+    self.startDate = target.startDate;
+    self.completeDate = target.completeDate;
+    
+}
+
 @end

@@ -10,4 +10,15 @@
 
 @implementation MCustGuide
 
+-(id)init
+{
+    if(self = [super init]){
+        
+        _custTaregt = [MCustTarget new];
+        _fromIssue = [MIssue new];
+        _fromPhen = [MPhenomenon new];
+    }
+    return self;
+}
+
 @end
