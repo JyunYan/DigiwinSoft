@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MConfig.h"
+#import "MConfig.h"
 
 @interface MRaiderCarouselView : UIView
 

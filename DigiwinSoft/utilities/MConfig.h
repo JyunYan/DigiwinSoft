@@ -23,4 +23,7 @@
 #define GUIDE_FROM_PHEN  0  // from p1,p2
 #define GUIDE_FROM_ISSUE  1 // from p8 or p22
 
+/* NSNotification */
+#define kDidSelectedPhen    @"didSelectedPhen"
+
 #endif

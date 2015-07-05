@@ -38,15 +38,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     self.automaticallyAdjustsScrollViewInsets = NO;
-}
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:YES];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectedPhen:) name:kDidSelectedPhen object:nil];
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
@@ -68,6 +74,7 @@
     //aryList
     aryList=[[MDataBaseManager sharedInstance] loadPhenArray];
 }
+
 -(void) addMainMenu
 {
     //leftBarButtonItem
@@ -111,19 +118,7 @@
     [self.view addSubview:_rcView];
 
 }
-- (void)actionSegmented:(id)sender{
-    switch ([sender selectedSegmentIndex]) {
-        case 0:
-            [self.view bringSubviewToFront:_rcView];
-            break;
-        case 1:
-            [self.view bringSubviewToFront:tbl];
-            break;
-        default:
-            NSLog(@"Error");
-            break;
-    }
-}
+
 #pragma mark - UITableViewDelegate
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -149,14 +144,9 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MPhenomenon* phen = aryList[indexPath.row];
-    [MDirector sharedInstance].selectedPhen = phen;
-    
-    MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] init];
-    [MIndustryRaiders2VC setPhen:phen];
-    [MIndustryRaiders2VC setFrom:GUIDE_FROM_PHEN];
-    [self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
+    [self goToNextPageWithPhenIndex:indexPath.row];
 }
+
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Remove seperator inset
@@ -175,12 +165,46 @@
     }
 }
 
-#pragma mark - UIButton
+#pragma mark - actions
 
 -(void)clickedBtnSetting:(id)sender
 {
     AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
     [delegate toggleLeft];
+}
+
+- (void)actionSegmented:(id)sender{
+    switch ([sender selectedSegmentIndex]) {
+        case 0:
+            [self.view bringSubviewToFront:_rcView];
+            break;
+        case 1:
+            [self.view bringSubviewToFront:tbl];
+            break;
+        default:
+            NSLog(@"Error");
+            break;
+    }
+}
+
+- (void)goToNextPageWithPhenIndex:(NSInteger)index
+{
+    MPhenomenon* phen = aryList[index];
+    [MDirector sharedInstance].selectedPhen = phen;
+    
+    MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] init];
+    [MIndustryRaiders2VC setPhen:phen];
+    [MIndustryRaiders2VC setFrom:GUIDE_FROM_PHEN];
+    [self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
+}
+
+#pragma mark - NSNotification actions 
+- (void)didSelectedPhen:(NSNotification*)note
+{
+    NSNumber* number = (NSNumber*)note.object;
+    NSInteger index = [number integerValue];
+    
+    [self goToNextPageWithPhenIndex:index];
 }
 
 @end

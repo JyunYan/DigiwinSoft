@@ -13,12 +13,20 @@
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
-    // Drawing code
     
-    NSArray* array = [_content componentsSeparatedByString:@"，"];
+    CGFloat radius = (_onFacus) ? 5. : 3.;
+    CGPoint point = CGPointMake(self.frame.size.width / 2., 5.);
     UIFont* font = [UIFont boldSystemFontOfSize:_pointSize];
     UIColor* color = [UIColor colorWithWhite:1.f alpha:_alpha];
-    //color = [UIColor colorWithRed:0. green:0. blue:0. alpha:_alpha];
+    
+    // draw white circle
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextAddArc(context, point.x, point.y, radius, 0, 2 * M_PI, 1);
+    CGContextFillPath(context);
+    
+    // draw string
+    NSArray* array = [_content componentsSeparatedByString:@"，"];
     CGFloat x = (self.bounds.size.width - _pointSize * array.count) / 2.;
     
     for (NSString* str in array) {
@@ -27,10 +35,22 @@
                                                                         attributes:@{NSFontAttributeName:font,
                                                                                      NSForegroundColorAttributeName:color,
                                                                                      NSVerticalGlyphFormAttributeName:[NSNumber numberWithInt:1]}];
-        [attString drawInRect:CGRectMake(x, self.bounds.origin.y, _pointSize, self.bounds.size.height)];
+        [attString drawInRect:CGRectMake(x, self.bounds.origin.y + 15., _pointSize, self.bounds.size.height)];
         x+= _pointSize;
     }
     
+}
+
+- (void)setOnFacus:(BOOL)onFacus
+{
+    _onFacus = onFacus;
+    if(onFacus){
+        _pointSize = 22.;
+        _alpha = 1.;
+    }else{
+        _pointSize = 14.;
+        _alpha = .5;
+    }
 }
 
 - (NSString*)getContentWithString:(NSString*)str

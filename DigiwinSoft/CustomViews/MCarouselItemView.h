@@ -14,4 +14,6 @@
 @property (nonatomic, assign) CGFloat pointSize;
 @property (nonatomic, assign) CGFloat alpha;
 
+@property (nonatomic, assign) BOOL onFacus;
+
 @end

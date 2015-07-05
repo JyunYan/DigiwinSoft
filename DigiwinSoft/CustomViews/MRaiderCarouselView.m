@@ -40,7 +40,7 @@
 - (void) addCarouselView
 {
     if(!_carousel){
-        _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 220, DEVICE_SCREEN_WIDTH, 260)];
+        _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 214, DEVICE_SCREEN_WIDTH, 260)];
         _carousel.dataSource = self;
         _carousel.delegate = self;
         _carousel.type = iCarouselTypeInvertedCylinder;
@@ -60,7 +60,7 @@
 - (UIView*)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     if(!view){
-        view = [[MCarouselItemView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH / 3., 260)];
+        view = [[MCarouselItemView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH / 5., 260)];
         view.backgroundColor = [UIColor clearColor];
         view.alpha = .3;
     }
@@ -72,13 +72,7 @@
     //ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
     //ciview.content = @"小批量接單沒好配套，呆滯急遽增加";
     
-    if(index == carousel.currentItemIndex){
-        ciview.pointSize = 20.;
-        ciview.alpha = 1.;
-    }else{
-        ciview.pointSize = 16.;
-        ciview.alpha = 0.5;
-    }
+    ciview.onFacus = (index == carousel.currentItemIndex);
     [ciview setNeedsDisplay];
     
     return ciview;
@@ -89,7 +83,16 @@
 
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel
 {
-    return DEVICE_SCREEN_WIDTH / 3.;
+    return DEVICE_SCREEN_WIDTH * 0.24;
+}
+
+- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
+{
+    if(index != carousel.currentItemIndex)
+        return;
+    
+    NSNumber* number = [NSNumber numberWithInteger:index];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectedPhen object:number];
 }
 
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel
