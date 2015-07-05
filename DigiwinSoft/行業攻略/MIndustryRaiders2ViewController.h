@@ -12,7 +12,7 @@
 
 @interface MIndustryRaiders2ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
-    NSArray *aryList;
+    NSMutableArray *aryList;
     UITableView *tbl;
     UITextView *textView;
     UIButton *btn;

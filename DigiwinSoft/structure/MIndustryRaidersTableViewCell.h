@@ -15,6 +15,5 @@
 @property (nonatomic, weak) UIButton *btnManager;
 @property (nonatomic, weak) UIButton *btnTargetSet;
 @property (nonatomic, weak) UIButton *btnRaiders;
-@property (nonatomic, assign) BOOL isCheck;
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 @end

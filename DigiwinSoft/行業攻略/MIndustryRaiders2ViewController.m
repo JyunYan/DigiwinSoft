@@ -15,6 +15,7 @@
 #import "MDataBaseManager.h"
 #import "AppDelegate.h"
 #import "MInventoryTurnoverViewController.h"
+#import "MDirector.h"
 @interface MIndustryRaiders2ViewController ()
 
 @end
@@ -32,6 +33,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self loadData];
     [self addMainMenu];
+    
+    //for p25 加入對策清單
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(actionAddPlan:) name:@"actionAddPlan" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,6 +57,7 @@
     
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
     self.navigationItem.leftBarButtonItem = back;
+    
 }
 -(void)viewDidLayoutSubviews
 {
@@ -70,7 +75,8 @@
 #pragma mark - create view
 - (void)loadData
 {
-    aryList=[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen];
+    NSArray *aryGuide=[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen];
+    aryList=[NSMutableArray arrayWithArray:aryGuide];
 }
 -(void) addMainMenu
 {
@@ -229,14 +235,57 @@
         }
     }
 }
+#pragma mark - Notification
+- (void)actionAddPlan:(NSNotification*) notification
+{
+    NSString *PassUUID=[notification object];
+    for (int i=0; i<[aryList count]; i++) {
+        MGuide *Guide=aryList[i];
+        //找到相同UUID的Guid。
+        if ([Guide.uuid isEqual:PassUUID]){
+            //更改裡頭的IsCheck，reload cell。
+            if ([aryList[i]isCheck]==NO) {
+                [aryList[i] setIsCheck:YES];
+                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:i inSection:0];
+                [tbl reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+                NSLog(@"從對策說明勾選:%@",Guide.name);
+            }else
+            {
+                NSLog(@"重複勾選");
+            }
+        }
+    }
+}
+- (void)UpGuideTarget:(NSNotification*) notification
+{
+    MGuide *PassGuide=[notification object];
+    NSString *PassUUID=PassGuide.uuid;
+    for (int i=0; i<[aryList count]; i++) {
+        MGuide *Guide=aryList[i];
+        //找到相同UUID的Guid，置換裡面的Target。
+        if ([Guide.uuid isEqual:PassUUID]){
+            [aryList[i]setTarget:PassGuide.target];
+            }
+    }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"UpGuideTarget"
+                                                  object:nil];
+}
 #pragma mark - UIButton
 -(void)btnTargetSet:(id)sender
 {
+    //for p27 帶回目標值與達成日
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(UpGuideTarget:)
+                                                 name:@"UpGuideTarget"
+                                               object:nil];
+    
     MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
     MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
     MGuide* guide = [aryList objectAtIndex:indexPath.row];
-    MInventoryTurnoverVC.target=guide.target;
+    MInventoryTurnoverVC.guide=guide;
     [self.navigationController pushViewController:MInventoryTurnoverVC animated:YES];
 }
 -(void)clickedBtnSetting:(id)sender
@@ -245,22 +294,25 @@
     [delegate toggleLeft];
 }
 - (void)actionAddMyList:(id)sender{
-    MGuide* guide = [aryList objectAtIndex:0];
-    [[MDataBaseManager sharedInstance]insertGuide:guide from:1];
-    NSLog(@"加入我的規劃清單動作");
+    for (MGuide* guide in aryList) {
+        if (guide.isCheck) {
+            [[MDataBaseManager sharedInstance]insertGuide:guide from:1];
+            NSLog(@"加入:%@至DataBase",guide.name);
+        }
+    }
 }
 - (void)actionCheck:(UIButton *)sender{
-   
-    MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
     
-    if (cell.isCheck==NO) {
+    MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
+    BOOL check=[aryList[cell.tag]isCheck];
+    if (check==NO) {
         [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_fill.png"] forState:UIControlStateNormal];
     }
     else
     {
         [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_empty.png"] forState:UIControlStateNormal];
     }
-    cell.isCheck=!cell.isCheck;
+    [aryList[cell.tag] setIsCheck:!check];
 }
 - (void)btnManager:(id)sender{
     MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]init];
@@ -268,14 +320,20 @@
     MIndustryRaidersNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
 }
-
 - (void)btnRaiders:(id)sender{
+    
+    //for p27 帶回目標值與達成日
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(UpGuideTarget:)
+                                                 name:@"UpGuideTarget"
+                                               object:nil];
     
     MRaidersDescriptionViewController *MRaidersDescVC = [[MRaidersDescriptionViewController alloc] init];
     MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
     MGuide* guide = [aryList objectAtIndex:indexPath.row];
     MRaidersDescVC.guide=guide;
+    [MDirector sharedInstance].selectedPhen=_phen;
     UINavigationController* MRaidersDescNav = [[UINavigationController alloc] initWithRootViewController:MRaidersDescVC];
     MRaidersDescNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     [self.navigationController presentViewController:MRaidersDescNav animated:YES completion:nil];
@@ -298,7 +356,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MIndustryRaidersTableViewCell *cell=[MIndustryRaidersTableViewCell cellWithTableView:tableView];
+    MIndustryRaidersTableViewCell *cell=(MIndustryRaidersTableViewCell *)[MIndustryRaidersTableViewCell cellWithTableView:tableView];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     //對策名稱
@@ -319,7 +377,7 @@
     [cell.btnManager addTarget:self action:@selector(btnManager:) forControlEvents:UIControlEventTouchUpInside];
     
     //目標設定
-    UIImage *imgTargetSet = [UIImage imageNamed:@"icon_manager.png"];
+    UIImage *imgTargetSet = [UIImage imageNamed:@"icon_menu_8.png"];
     [cell.btnTargetSet setBackgroundImage:imgTargetSet forState:UIControlStateNormal];
     cell.btnTargetSet.frame=CGRectMake(((screenWidth/4)*3)-18,23, 22,22);
     [cell.btnTargetSet addTarget:self action:@selector(btnTargetSet:) forControlEvents:UIControlEventTouchUpInside];
@@ -343,10 +401,15 @@
         [cell addSubview:imgStar];
     }
     
-    //取消勾選
-    cell.isCheck=NO;
-    
-    
+    //勾選狀態
+    BOOL check=[aryList[indexPath.row]isCheck];
+    if (check==YES) {
+        [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_fill.png"] forState:UIControlStateNormal];
+    }else
+    {
+        [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_empty.png"] forState:UIControlStateNormal];
+    }
+    cell.tag=[indexPath row];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -143,14 +143,20 @@
 
 -(void)clickedBtnBcak:(id)sender
 {
-[self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"UpGuideTarget"
+                                                  object:nil];
+
 }
 - (void)actionAddMyList:(id)sender{
-    NSLog(@"加入對策動作");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"actionAddPlan" object:_guide.uuid];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)actionTargetSet:(id)sender{
+    
     MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
-    MInventoryTurnoverVC.target=_guide.target;
+    MInventoryTurnoverVC.guide=_guide;
     [self.navigationController pushViewController:MInventoryTurnoverVC animated:YES];
 }
 - (void)goToBackPage:(id) sender

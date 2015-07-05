@@ -10,18 +10,16 @@
 #import "MRaidersDiagramViewController.h"
 #import "MLineChartView.h"
 #import "MTarget.h"
-
+#import "AppDelegate.h"
 @interface MInventoryTurnoverViewController ()
 {
+    UITextField *txtTarget;
     UITextField *txtTargetDay;
     UIDatePicker *datePicker;
     NSLocale *datelocale;
     CGFloat screenWidth;
     CGFloat screenHeight;
-    //MTarget* target;
 }
-
-//
 
 @property (nonatomic) UIView* targetChatView;
 
@@ -59,6 +57,13 @@
 {
     [super viewWillAppear:YES];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
+    self.navigationItem.leftBarButtonItem = back;
+    
+    //統一從p5跟p25進入p27都用push，p5進入p27時hidden tabBar
+    AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    [appDelegate.tabBarController.tabBar setHidden:YES];
 }
 
 #pragma mark - create view
@@ -70,7 +75,6 @@
     self.mTarget.avg = @"30";
     self.mTarget.bottom = @"40";
     self.mTarget.name = @"庫存周轉天數(天)";
-
 }
 -(void)addMainMenu
 {
@@ -103,7 +107,7 @@
     //UITextField
     UITextField *txtName=[[UITextField alloc]initWithFrame:CGRectMake(105,118, 160, 29)];
     txtName.borderStyle=UITextBorderStyleLine;
-    txtName.text=_target.name;
+    txtName.text=_guide.target.name;
     txtName.enabled=NO;
     [self.view addSubview:txtName];
     
@@ -119,13 +123,13 @@
     //UITextField
     UITextField *txtInit=[[UITextField alloc]initWithFrame:CGRectMake(105,163, 50, 29)];
     txtInit.borderStyle=UITextBorderStyleLine;
-    txtInit.text=_target.valueR;
+    txtInit.text=_guide.target.valueR;
     txtInit.enabled=NO;
     [self.view addSubview:txtInit];
     
     //Label
     UILabel *labDay=[[UILabel alloc]initWithFrame:CGRectMake(170, 170, 20, 15)];
-    labDay.text=_target.unit;
+    labDay.text=_guide.target.unit;
     labDay.backgroundColor=[UIColor whiteColor];
     [labDay setFont:[UIFont systemFontOfSize:14]];
     labDay.textAlignment = NSTextAlignmentJustified;
@@ -141,14 +145,14 @@
     [self.view addSubview:labTarget];
     
     //UITextField
-    UITextField *txtTarget=[[UITextField alloc]initWithFrame:CGRectMake(105,209, 50, 29)];
+    txtTarget=[[UITextField alloc]initWithFrame:CGRectMake(105,209, 50, 29)];
     txtTarget.borderStyle=UITextBorderStyleLine;
-    txtTarget.text=_target.valueT;
+    txtTarget.text=_guide.target.valueT;
     [self.view addSubview:txtTarget];
 
     //Label
     labDay=[[UILabel alloc]initWithFrame:CGRectMake(170, 215, 20, 15)];
-    labDay.text=_target.unit;
+    labDay.text=_guide.target.unit;
     labDay.backgroundColor=[UIColor whiteColor];
     [labDay setFont:[UIFont systemFontOfSize:14]];
     labDay.textAlignment = NSTextAlignmentJustified;
@@ -273,6 +277,16 @@
 }
 
 #pragma mark - UIButton
+- (void)goToBackPage:(id) sender
+{
+    AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    [appDelegate.tabBarController.tabBar setHidden:NO];
+    
+    _guide.target.valueT=txtTarget.text;
+    _guide.target.completeDate=txtTargetDay.text;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpGuideTarget" object:_guide];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 -(void)btnShowImg:(id)sender
 {
 
