@@ -33,6 +33,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self loadData];
     [self addMainMenu];
+    
+    //for p25 加入對策清單
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(actionAddPlan:) name:@"actionAddPlan" object:nil];
 }
 
@@ -254,15 +256,36 @@
         }
     }
 }
-
+- (void)UpGuideTarget:(NSNotification*) notification
+{
+    MGuide *PassGuide=[notification object];
+    NSString *PassUUID=PassGuide.uuid;
+    for (int i=0; i<[aryList count]; i++) {
+        MGuide *Guide=aryList[i];
+        //找到相同UUID的Guid，置換裡面的Target。
+        if ([Guide.uuid isEqual:PassUUID]){
+            [aryList[i]setTarget:PassGuide.target];
+            }
+    }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"UpGuideTarget"
+                                                  object:nil];
+}
 #pragma mark - UIButton
 -(void)btnTargetSet:(id)sender
 {
+    //for p27 帶回目標值與達成日
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(UpGuideTarget:)
+                                                 name:@"UpGuideTarget"
+                                               object:nil];
+    
     MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
     MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
     MGuide* guide = [aryList objectAtIndex:indexPath.row];
-    MInventoryTurnoverVC.target=guide.target;
+    MInventoryTurnoverVC.guide=guide;
     [self.navigationController pushViewController:MInventoryTurnoverVC animated:YES];
 }
 -(void)clickedBtnSetting:(id)sender
@@ -298,6 +321,12 @@
     [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
 }
 - (void)btnRaiders:(id)sender{
+    
+    //for p27 帶回目標值與達成日
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(UpGuideTarget:)
+                                                 name:@"UpGuideTarget"
+                                               object:nil];
     
     MRaidersDescriptionViewController *MRaidersDescVC = [[MRaidersDescriptionViewController alloc] init];
     MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
