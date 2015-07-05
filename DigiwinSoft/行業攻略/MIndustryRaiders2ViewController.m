@@ -246,22 +246,25 @@
     [delegate toggleLeft];
 }
 - (void)actionAddMyList:(id)sender{
-    MGuide* guide = [aryList objectAtIndex:0];
-    [[MDataBaseManager sharedInstance]insertGuide:guide from:1];
-    NSLog(@"加入我的規劃清單動作");
+    for (MGuide* guide in aryList) {
+        if (guide.isCheck) {
+            [[MDataBaseManager sharedInstance]insertGuide:guide from:1];
+            NSLog(@"加入:%@",guide.name);
+        }
+    }
 }
 - (void)actionCheck:(UIButton *)sender{
-   
-    MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
     
-    if (cell.isCheck==NO) {
+    MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
+    BOOL check=[aryList[cell.tag]isCheck];
+    if (check==NO) {
         [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_fill.png"] forState:UIControlStateNormal];
     }
     else
     {
         [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_empty.png"] forState:UIControlStateNormal];
     }
-    cell.isCheck=!cell.isCheck;
+    [aryList[cell.tag] setIsCheck:!check];
 }
 - (void)btnManager:(id)sender{
     MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]init];
@@ -300,7 +303,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MIndustryRaidersTableViewCell *cell=[MIndustryRaidersTableViewCell cellWithTableView:tableView];
+    MIndustryRaidersTableViewCell *cell=(MIndustryRaidersTableViewCell *)[MIndustryRaidersTableViewCell cellWithTableView:tableView];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     //對策名稱
@@ -345,10 +348,9 @@
         [cell addSubview:imgStar];
     }
     
-    //取消勾選
-    cell.isCheck=NO;
-    
-    
+    //預設aryList取消勾選
+    [aryList[indexPath.row] setIsCheck:NO];
+    cell.tag=[indexPath row];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

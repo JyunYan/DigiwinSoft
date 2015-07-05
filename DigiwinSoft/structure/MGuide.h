@@ -18,8 +18,8 @@
 @property (nonatomic, strong) NSString* name;   //名稱
 @property (nonatomic, strong) NSString* desc;   //描述
 @property (nonatomic, strong) NSString* review; //評價(星數)
-@property (nonatomic, strong) NSString* url;    // video url 
-
+@property (nonatomic, strong) NSString* url;    // video url
+@property (assign) BOOL isCheck;    //在p5是否被勾選
 @property (nonatomic, strong) MTarget* target;  //指標
 
 @property (nonatomic, strong) MUser* manager;   //負責人

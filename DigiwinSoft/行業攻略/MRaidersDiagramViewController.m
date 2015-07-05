@@ -8,7 +8,6 @@
 
 #import "MRaidersDiagramViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "MRaidersDiagramTableViewCell.h"
 #import "MGuide.h"
 #import "MActivity.h"
 #import "MWorkItem.h"
