@@ -33,6 +33,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self loadData];
     [self addMainMenu];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(actionAddPlan:) name:@"actionAddPlan" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,6 +55,7 @@
     
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
     self.navigationItem.leftBarButtonItem = back;
+    
 }
 -(void)viewDidLayoutSubviews
 {
@@ -71,7 +73,8 @@
 #pragma mark - create view
 - (void)loadData
 {
-    aryList=[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen];
+    NSArray *aryGuide=[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen];
+    aryList=[NSMutableArray arrayWithArray:aryGuide];
 }
 -(void) addMainMenu
 {
@@ -230,6 +233,28 @@
         }
     }
 }
+#pragma mark - Notification
+- (void)actionAddPlan:(NSNotification*) notification
+{
+    NSString *PassUUID=[notification object];
+    for (int i=0; i<[aryList count]; i++) {
+        MGuide *Guide=aryList[i];
+        //找到相同UUID的Guid。
+        if ([Guide.uuid isEqual:PassUUID]){
+            //更改裡頭的IsCheck，reload cell。
+            if ([aryList[i]isCheck]==NO) {
+                [aryList[i] setIsCheck:YES];
+                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:i inSection:0];
+                [tbl reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+                NSLog(@"從對策說明勾選:%@",Guide.name);
+            }else
+            {
+                NSLog(@"重複勾選");
+            }
+        }
+    }
+}
+
 #pragma mark - UIButton
 -(void)btnTargetSet:(id)sender
 {
@@ -249,7 +274,7 @@
     for (MGuide* guide in aryList) {
         if (guide.isCheck) {
             [[MDataBaseManager sharedInstance]insertGuide:guide from:1];
-            NSLog(@"加入:%@",guide.name);
+            NSLog(@"加入:%@至DataBase",guide.name);
         }
     }
 }
@@ -272,7 +297,6 @@
     MIndustryRaidersNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
 }
-
 - (void)btnRaiders:(id)sender{
     
     MRaidersDescriptionViewController *MRaidersDescVC = [[MRaidersDescriptionViewController alloc] init];
@@ -348,8 +372,14 @@
         [cell addSubview:imgStar];
     }
     
-    //預設aryList取消勾選
-    [aryList[indexPath.row] setIsCheck:NO];
+    //勾選狀態
+    BOOL check=[aryList[indexPath.row]isCheck];
+    if (check==YES) {
+        [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_fill.png"] forState:UIControlStateNormal];
+    }else
+    {
+        [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_empty.png"] forState:UIControlStateNormal];
+    }
     cell.tag=[indexPath row];
     return cell;
 }

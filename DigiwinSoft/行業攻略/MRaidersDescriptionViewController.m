@@ -146,7 +146,8 @@
 [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)actionAddMyList:(id)sender{
-    NSLog(@"加入對策動作");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"actionAddPlan" object:_guide.uuid];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)actionTargetSet:(id)sender{
     MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
