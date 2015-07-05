@@ -25,5 +25,6 @@
 
 /* NSNotification */
 #define kDidSelectedPhen    @"didSelectedPhen"
+#define kDidAssignManager   @"didAssignManager"
 
 #endif

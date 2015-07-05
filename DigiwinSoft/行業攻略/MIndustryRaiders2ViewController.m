@@ -17,15 +17,26 @@
 #import "MInventoryTurnoverViewController.h"
 #import "MDirector.h"
 @interface MIndustryRaiders2ViewController ()
-
-@end
-
-@implementation MIndustryRaiders2ViewController
 {
     //screenSize
     CGFloat screenWidth;
     CGFloat screenHeight;
 }
+
+@property (nonatomic, assign) NSInteger operateIndex;
+
+@end
+
+@implementation MIndustryRaiders2ViewController
+
+- (id)init
+{
+    if(self = [super init]){
+        _operateIndex = 0;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -47,12 +58,14 @@
     [super viewWillAppear:YES];
     self.automaticallyAdjustsScrollViewInsets = NO;
  
+    /*
     //rightBarButtonItem
     UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
     [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = bar_item;
+     */
 
     
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
@@ -296,11 +309,12 @@
 - (void)actionAddMyList:(id)sender{
     for (MGuide* guide in aryList) {
         if (guide.isCheck) {
-            [[MDataBaseManager sharedInstance]insertGuide:guide from:1];
+            [[MDataBaseManager sharedInstance]insertGuide:guide from:_from];
             NSLog(@"加入:%@至DataBase",guide.name);
         }
     }
 }
+
 - (void)actionCheck:(UIButton *)sender{
     
     MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
@@ -314,12 +328,32 @@
     }
     [aryList[cell.tag] setIsCheck:!check];
 }
+
 - (void)btnManager:(id)sender{
-    MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didAssignManager:) name:kDidAssignManager object:nil];
+    
+    UIButton* button = (UIButton*)sender;
+    MIndustryRaidersTableViewCell* cell = (MIndustryRaidersTableViewCell*)button.superview.superview;
+    NSIndexPath* indexPath = [tbl indexPathForCell:cell];
+    
+    _operateIndex = indexPath.row;
+    MGuide* guide = [aryList objectAtIndex:_operateIndex];
+    
+    MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithGuide:guide];
     UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MDesignateResponsibleVC];
     MIndustryRaidersNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
 }
+
+- (void)didAssignManager:(NSNotification*)note
+{
+    MGuide* guide = (MGuide*)note.object;
+    [aryList replaceObjectAtIndex:_operateIndex withObject:guide];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidAssignManager object:nil];
+}
+
 - (void)btnRaiders:(id)sender{
     
     //for p27 帶回目標值與達成日
@@ -342,7 +376,7 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-#pragma mark - UITableViewDelegate
+#pragma mark - UITableViewDataSource
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 66.0f;

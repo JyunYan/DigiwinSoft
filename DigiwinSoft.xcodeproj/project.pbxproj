@@ -82,6 +82,7 @@
 		DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014501B32B67F00EF7A6F /* MActivity.m */; };
 		DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014531B32B69F00EF7A6F /* MWorkItem.m */; };
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
+		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
 		DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AA81B40E04A00C771BB /* MEvent.m */; };
 		DCF46AAC1B41103700C771BB /* MSituation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAB1B41103700C771BB /* MSituation.m */; };
 		DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAE1B4116F000C771BB /* MTreasure.m */; };
@@ -280,6 +281,8 @@
 		DC1014531B32B69F00EF7A6F /* MWorkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWorkItem.m; path = structure/MWorkItem.m; sourceTree = "<group>"; };
 		DC6A52B11B3D2E6E001A373F /* MDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDirector.h; sourceTree = "<group>"; };
 		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
+		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
+		DC8135281B49BB29003B56AA /* MTarInfoChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarInfoChartView.m; path = CustomViews/MTarInfoChartView.m; sourceTree = "<group>"; };
 		DCF46AA71B40E04A00C771BB /* MEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEvent.h; path = structure/MEvent.h; sourceTree = "<group>"; };
 		DCF46AA81B40E04A00C771BB /* MEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEvent.m; path = structure/MEvent.m; sourceTree = "<group>"; };
 		DCF46AAA1B41103700C771BB /* MSituation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSituation.h; path = structure/MSituation.h; sourceTree = "<group>"; };
@@ -756,6 +759,8 @@
 				3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */,
 				3A54EDDF1B4636DB00BDA945 /* MCustomAlertView.h */,
 				3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */,
+				DC8135271B49BB29003B56AA /* MTarInfoChartView.h */,
+				DC8135281B49BB29003B56AA /* MTarInfoChartView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -974,6 +979,7 @@
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
 				DCF46AB51B41265800C771BB /* MRaiderCarouselView.m in Sources */,
 				3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */,
+				DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */,
 				D07B390F1B3A39A6007FCBC0 /* MLineChartView.m in Sources */,
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,
 				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MDataBaseManager.h"
 
 @interface MDesignateResponsibleViewController : UIViewController
+
+- (id)initWithGuide:(MGuide*)guide;
 
 @end

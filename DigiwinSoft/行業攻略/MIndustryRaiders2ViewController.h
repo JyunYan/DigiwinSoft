@@ -21,6 +21,6 @@
     UIImageView *imgblueBar;
     UIImageView *imgGray;
 }
-@property (nonatomic, weak) MPhenomenon *phen;
+@property (nonatomic, strong) MPhenomenon *phen;
 @property (nonatomic, assign) NSInteger from;
 @end

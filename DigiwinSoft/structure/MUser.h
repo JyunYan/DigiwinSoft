@@ -30,4 +30,6 @@
 
 @property (nonatomic, strong) NSArray* skillArray;  //技能
 
+@property (nonatomic, assign) BOOL bSelected;
+
 @end

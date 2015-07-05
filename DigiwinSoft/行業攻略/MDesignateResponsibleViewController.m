@@ -10,30 +10,30 @@
 
 #import "MDesignateResponsibleViewController.h"
 
+
 #define UIBarSystemButtonBackArrow          101
 
-#define TAG_FOR_BUTTON_CHECK                201
+#define TAG_FOR_CHECK_BOX                   201
 #define TAG_FOR_LABEL_NAME                  202
 #define TAG_FOR_LABEL_LEVEL                 203
-#define TAG_FOR_LABEL_REPORTING_FOR_DUTY    204
+#define TAG_FOR_LABEL_ARRIVE_DAY            204
+#define TAG_FOR_THUMBNAIL                   205
 
-@interface MDesignateResponsibleViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface MDesignateResponsibleViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
-
-@property (nonatomic, assign) BOOL checkBtn;
-
-@property (nonatomic, strong) NSMutableArray* array;    // 員工array
+@property (nonatomic, strong) NSArray* array;    // 員工array
+@property (nonatomic, strong) MGuide* guide;    //對策
 
 @end
 
 @implementation MDesignateResponsibleViewController
 
-- (id)init
+- (id)initWithGuide:(MGuide*)guide
 {
     self = [super init];
     if(self){
-        _array = [[NSMutableArray alloc] init];
+        _guide = guide;
     }
     return self;
 }
@@ -74,8 +74,8 @@
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
     [view setBackgroundColor:[UIColor clearColor]];
     
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(40, 2, 120, 40)];
-    label.text = @"對策名稱 :";
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, DEVICE_SCREEN_WIDTH - 10, 30)];
+    label.text = [NSString stringWithFormat:@"對策名稱 : %@", _guide.name];
     label.font = [UIFont systemFontOfSize:18];
     [view addSubview:label];
     
@@ -84,7 +84,7 @@
 
 - (void)createSearchView
 {
-    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 108, self.view.frame.size.width, 120)];
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 108, self.view.frame.size.width, 100)];
     [view setBackgroundColor:[UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1.0f]];
     view.layer.borderColor = [UIColor lightGrayColor].CGColor;
     view.layer.borderWidth = 1.0f;
@@ -94,7 +94,7 @@
 //    label.textColor = [UIColor colorWithRed:163.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1.0];
     [view addSubview:label];
     
-    UITextField* text_field = [self createSearchInputField:CGRectMake(40, 55, 330, 40)];
+    UITextField* text_field = [self createSearchInputField:CGRectMake(20, 50, DEVICE_SCREEN_WIDTH - 40, 30)];
     [view addSubview:text_field];
     
     [self.view addSubview:view];
@@ -102,44 +102,52 @@
 
 - (UITextField*)createSearchInputField:(CGRect)frame
 {
-    UITextField* text_field = [[UITextField alloc] initWithFrame:frame];
-    text_field.layer.borderColor = [UIColor colorWithRed:131.0/255.0 green:207.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor;
-    text_field.layer.borderWidth = 1.0f;
+    CGFloat offset = 0.;
+    UIColor* color = [UIColor colorWithRed:131.0/255.0 green:207.0/255.0 blue:230.0/255.0 alpha:1.0];
     
-    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 130, frame.size.height)];
-    [view setBackgroundColor:[UIColor clearColor]];
-    
-    UILabel* label;
-    label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 1, frame.size.height - 20)];
-    [label setBackgroundColor:[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:0.5]];
-    [view addSubview:label];
+    UILabel* label1 = [[UILabel alloc] initWithFrame:CGRectMake(offset, 6, 1, frame.size.height - 12)];
+    [label1 setBackgroundColor:[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:0.5]];
     
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionToPopover:)];
     
-    label = [[UILabel alloc] initWithFrame:CGRectMake(1, 0, 60, 40)];
-    label.text = @"全部";
-    label.textAlignment = NSTextAlignmentCenter;
-    [label addGestureRecognizer:tap];
-    [view addSubview:label];
+    UILabel* label2 = [[UILabel alloc] initWithFrame:CGRectMake(offset, 0, 60, frame.size.height)];
+    label2.text = @"全部";
+    label2.textAlignment = NSTextAlignmentCenter;
+    [label2 addGestureRecognizer:tap];
     
-    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(65, 15, 10, 10)];
-    imageView.image = [UIImage imageNamed:@"icon_down.png"];
-    [imageView addGestureRecognizer:tap];
-    [view addSubview:imageView];
+    offset += label2.frame.size.width;
     
-    UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(90 , 0, 40, 40)];
-    [button setBackgroundImage:[UIImage imageNamed:@"button_search.png"] forState:UIControlStateNormal];
-    [view addSubview:button];
+    UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(offset , 0, frame.size.height, frame.size.height)];
+    [button setImage:[UIImage imageNamed:@"icon_search.png"] forState:UIControlStateNormal];
+    button.backgroundColor = color;
     
-    text_field.rightView = view;
+    offset += button.frame.size.width;
+    
+    UIView* right = [[UIView alloc] initWithFrame:CGRectMake(0, 0, offset, frame.size.height)];
+    [right setBackgroundColor:[UIColor clearColor]];
+    [right addSubview:label1];
+    [right addSubview:label2];
+    [right addSubview:button];
+    
+    UIView* left = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
+    left.backgroundColor = [UIColor clearColor];
+    
+    UITextField* text_field = [[UITextField alloc] initWithFrame:frame];
+    text_field.delegate = self;
+    text_field.backgroundColor = [UIColor whiteColor];
+    text_field.layer.borderColor = color.CGColor;
+    text_field.layer.borderWidth = 1.4f;
+    text_field.rightView = right;
     text_field.rightViewMode = UITextFieldViewModeAlways;
+    text_field.leftView = left;
+    text_field.leftViewMode = UITextFieldViewModeAlways;
     
     return text_field;
 }
 
 - (void)createTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 228, self.view.frame.size.width, self.view.frame.size.height - 228)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 208, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 208)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
@@ -159,7 +167,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 80;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -170,86 +178,112 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
         //
-        UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(10, 34, 32, 32)];
-        [button setBackgroundImage:[UIImage imageNamed:@"check_box_off.png"] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"check_box_on.png"] forState:UIControlStateSelected];
-        button.tag = TAG_FOR_BUTTON_CHECK;
-        [button addTarget:self action:@selector(actionToCheckButon:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:button];
-        
+        UIImageView* checkbox = [[UIImageView alloc] initWithFrame:CGRectMake(15, 30, 20, 20)];
+        [checkbox setTag:TAG_FOR_CHECK_BOX];
+        [checkbox setBackgroundColor:[UIColor clearColor]];
+        [cell addSubview:checkbox];
         //
-        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(50, 20, 60, 60)];
-        imageView.image = nil;
-        imageView.clipsToBounds = YES;
-        imageView.layer.cornerRadius = imageView.frame.size.width / 2;
-        imageView.layer.borderColor = [UIColor grayColor].CGColor;
-        imageView.layer.borderWidth = 1.0f;
-        [cell addSubview:imageView];
+        UIImageView* thumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(50, 13, 54, 54)];
+        thumbnail.tag = TAG_FOR_THUMBNAIL;
+        thumbnail.clipsToBounds = YES;
+        thumbnail.layer.cornerRadius = thumbnail.frame.size.width / 2;
+        thumbnail.layer.borderColor = [UIColor grayColor].CGColor;
+        thumbnail.layer.borderWidth = 1.0f;
+        [cell addSubview:thumbnail];
         
         UILabel* label;
         
         //
-        label = [[UILabel alloc] initWithFrame:CGRectMake(130, 20, 50, 30)];
-        label.text = @"姓名 :";
+        label = [[UILabel alloc] initWithFrame:CGRectMake(120, 4, DEVICE_SCREEN_WIDTH - 120, 24)];
+        label.tag = TAG_FOR_LABEL_NAME;
         label.font = [UIFont systemFontOfSize:14];
         [cell addSubview:label];
         
         //
-        label = [[UILabel alloc] initWithFrame:CGRectMake(250, 20, 70, 30)];
-        label.text = @"到職日 :";
+        label = [[UILabel alloc] initWithFrame:CGRectMake(120, 28, DEVICE_SCREEN_WIDTH - 120, 24)];
+        label.tag = TAG_FOR_LABEL_LEVEL;
         label.font = [UIFont systemFontOfSize:14];
         [cell addSubview:label];
         
         //
-        label = [[UILabel alloc] initWithFrame:CGRectMake(130, 50, 50, 30)];
-        label.text = @"職能 :";
+        label = [[UILabel alloc] initWithFrame:CGRectMake(120, 52, DEVICE_SCREEN_WIDTH - 120, 24)];
+        label.tag = TAG_FOR_LABEL_ARRIVE_DAY;
         label.font = [UIFont systemFontOfSize:14];
         [cell addSubview:label];
-        
-        //分隔線
-        UILabel* row_label = [[UILabel alloc] initWithFrame:CGRectMake(10, 99, self.view.frame.size.width - 20, 1)];
-        [row_label setBackgroundColor:[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:0.5]];
-        [cell addSubview:row_label];
     }
+    
+    UIImageView* checkbox = (UIImageView*)[cell viewWithTag:TAG_FOR_CHECK_BOX];
+    UIImageView* thumbnail = (UIImageView*)[cell viewWithTag:TAG_FOR_THUMBNAIL];
+    UILabel* name = (UILabel*)[cell viewWithTag:TAG_FOR_LABEL_NAME];
+    UILabel* level = (UILabel*)[cell viewWithTag:TAG_FOR_LABEL_LEVEL];
+    UILabel* day = (UILabel*)[cell viewWithTag:TAG_FOR_LABEL_ARRIVE_DAY];
+    
+    MUser* user = [_array objectAtIndex:indexPath.row];
+    
+    checkbox.image = (user.bSelected) ? [UIImage imageNamed:@"checkbox_fill.png"] : [UIImage imageNamed:@"checkbox_empty.png"];
+    name.text = [NSString stringWithFormat:@"姓名 : %@", user.name];
+    level.text = [NSString stringWithFormat:@"職能 : %@", [self getSkillStringWithEmployee:user]];
+    day.text = [NSString stringWithFormat:@"到職日 : %@", user.arrive_date];
     
     return cell;
 }
 
-#pragma mark - button methods
-
-- (void)actionToCheckButon:(id)sender
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIButton* button = sender;
-    
-    if ([button isSelected] == YES)
-    {
-        [button setSelected:NO];
-    }else
-    {
-        [button setSelected:YES];
+    MUser* user = [_array objectAtIndex:indexPath.row];
+    if(user.bSelected){
+        user.bSelected = NO;
+        _guide.manager = nil;
+    }else{
+        [self cleanCheck];
+        user.bSelected = YES;
+        _guide.manager = user;
     }
+    
+    [tableView reloadData];
+}
+
+#pragma mark - UITextFieldDelegate 相關
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    return [textField resignFirstResponder];
 }
 
 #pragma mark - other methods
 
+- (void)cleanCheck
+{
+    for (MUser* user in _array) {
+        user.bSelected = NO;
+    }
+}
+
+- (NSString*)getSkillStringWithEmployee:(MUser*)user
+{
+    NSMutableString* str = [[NSMutableString alloc] initWithString:@""];
+    NSInteger index = 0;
+    for (MSkill* skill in user.skillArray) {
+        
+        [str appendFormat:@"%@/LEVEL%@", skill.name, skill.level];
+        index ++;
+        
+        if(index < user.skillArray.count)
+            [str appendString:@","];
+    }
+    return str;
+}
+
 - (void)backToPage:(id) sender
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidAssignManager object:_guide];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)loadData
 {
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
-    [dict setValue:@"王小明" forKey:@"name"];
-    [dict setValue:@"IE/Level2" forKey:@"level"];
-    [dict setValue:@"2015-04-12" forKey:@"day"];
-    
-    for (int i = 0; i < 15; i++)
-    {
-        [_array addObject:dict];
-    }
+    _array = [[MDataBaseManager sharedInstance] loadEmployeeArray];
 }
 
 - (void)actionToPopover:(id)sender

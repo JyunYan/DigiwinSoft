@@ -382,7 +382,7 @@ static MDataBaseManager* _director = nil;
 - (NSArray*)loadEmployeeArray
 {
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* sql = @"select ind.NAME, comp.NAME, emp.*  inner join M_INDUSTRY as ind on ind.ID = emp.IND_ID inner join M_COMPANY as comp on comp.ID = emp.COMP_ID where COMP_ID = ?";
+    NSString* sql = @"select ind.NAME, comp.NAME, emp.* from M_EMPLOYEE as emp inner join M_INDUSTRY as ind on ind.ID = emp.IND_ID inner join M_COMPANY as comp on comp.ID = emp.COMP_ID where COMP_ID = ?";
     // select ind.NAME, comp.NAME, emp.*
     // from M_EMPLOYEE as emp
     // inner join M_INDUSTRY as ind on ind.ID = emp.IND_ID
@@ -805,11 +805,12 @@ static MDataBaseManager* _director = nil;
         return nil;
     
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* sql = @"select * from M_USER as u inner join M_EMPLOYEE as emp on u.EMP_ID = emp.ID where u.EMP_ID = 'emp-001' and u.COMP_ID = 'cmp-001' limit 1";
-    // select *
-    // from M_USER as u
-    // inner join M_EMPLOYEE as emp on u.EMP_ID = emp.ID
-    // where u.EMP_ID = 'emp-001' and u.COMP_ID = 'cmp-001'
+    NSString* sql = @"select ind.NAME, comp.NAME, emp.* from M_EMPLOYEE as emp inner join M_INDUSTRY as ind on ind.ID = emp.IND_ID inner join M_COMPANY as comp on comp.ID = emp.COMP_ID where emp.ID = ? and emp.COMP_ID = ? limit 1";
+    // select ind.NAME, comp.NAME, emp.*
+    // from M_EMPLOYEE as emp
+    // inner join M_INDUSTRY as ind on ind.ID = emp.IND_ID
+    // inner join M_COMPANY as comp on comp.ID = emp.COMP_ID
+    // where emp.ID = 'emp-001' and emp.COMP_ID = 'cmp-001'
     // limit 1
     
     FMResultSet* rs = [self.db executeQuery:sql, empid, compid];
@@ -821,7 +822,7 @@ static MDataBaseManager* _director = nil;
         employee.uuid = [rs stringForColumn:@"ID"];
         employee.industryId = [rs stringForColumn:@"IND_ID"];
         employee.companyId = [rs stringForColumn:@"COMP_ID"];
-        employee.name = [rs stringForColumnIndex:5];            // user name
+        employee.name = [rs stringForColumn:@"NAME"];            // user name
         employee.phone = [rs stringForColumn:@"PHONE"];
         employee.email = [rs stringForColumn:@"EMAIL"];
         employee.arrive_date = [rs stringForColumn:@"ARRIVE_DATE"];
@@ -880,7 +881,7 @@ static MDataBaseManager* _director = nil;
     FMResultSet* rs = [self.db executeQuery:sql, target.tar_uuid, compid];
     if([rs next]){
         
-        //target.valueR = [rs stringForColumn:@"VALUE_R"];
+        target.valueR = [rs stringForColumn:@"VALUE_R"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
     }
     return NO;

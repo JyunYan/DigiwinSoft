@@ -10,4 +10,12 @@
 
 @implementation MUser
 
+- (id)init
+{
+    if(self = [super init]){
+        _bSelected = NO;
+    }
+    return self;
+}
+
 @end
