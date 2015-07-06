@@ -136,6 +136,10 @@
     tblActivity.bounces=NO;
     [self.view addSubview:tblActivity];
     
+    //default cell selected
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
+    [tblActivity selectRowAtIndexPath:indexPath animated:NO  scrollPosition:UITableViewScrollPositionBottom];
+    
     //tblWorkItem
     tblWorkItem=[[UITableView alloc]initWithFrame:CGRectMake(20+tblActivity.frame.size.width,imgGray.frame.origin.y+90,(screenWidth/2)-20, screenHeight-(imgGray.frame.origin.y+90))];
     tblWorkItem.delegate=self;
@@ -196,17 +200,21 @@
     if (tableView.tag==101)
     {
         label.text=[aryActivity[indexPath.row]name];
-        detailLabel.text=[aryActivity[indexPath.row]desc];
+        detailLabel.text=[[aryActivity[indexPath.row]target]name];
     }
     else
     {
         label.text=[aryWorkItem[indexPath.row]name];
-        detailLabel.text =[aryWorkItem[indexPath.row]desc];
+        detailLabel.text =[[aryWorkItem[indexPath.row]target]name];
     }
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [cell.contentView addSubview:label];
     [cell.contentView addSubview:detailLabel];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle=UITableViewCellSelectionStyleDefault;
+
+     if (tableView.tag==102) {
+         cell.backgroundColor=[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1];
+    }
     return cell;
     
 }
