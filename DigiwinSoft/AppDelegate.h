@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MTabBarViewController.h"
 #import "MUser.h"
+#import "MCustGuide.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
 
@@ -28,6 +29,7 @@
 - (void) toggleLookingForSolutions;
 
 - (void) toggleMyTask;
+- (void) toggleTasksDeployedWithCustGuide:(MCustGuide*) custGuide;
 
 - (void) toggleTabBar;
 
