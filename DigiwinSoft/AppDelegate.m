@@ -14,6 +14,7 @@
 #import "MMyPlanViewController.h"
 #import "MMyTaskViewController.h"
 #import "MEventListViewController.h"
+#import "MMyTaskViewController.h"
 
 #import "MDataBaseManager.h"
 
@@ -149,6 +150,35 @@
 {
     _tabBarController.selectedIndex = 4;
     
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:YES];
+    }
+    
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    drawer.centerViewController = _tabBarController;
+    [drawer closeDrawerAnimated:YES completion:nil];
+}
+
+- (void) toggleTasksDeployedWithCustGuide:(MCustGuide*) custGuide
+{
+    _tabBarController.selectedIndex = 4;
+    
+    for (UIViewController *subViewController in _tabBarController.viewControllers)
+    {
+        UIViewController *vc = subViewController;
+        if ([subViewController isKindOfClass:[UINavigationController class]])
+        {
+            vc = [(UINavigationController*)subViewController visibleViewController];
+        }
+        
+        if ([vc isKindOfClass:[MMyTaskViewController class]])
+        {
+            MMyTaskViewController *myTaskViewController = (MMyTaskViewController *)vc;
+            [myTaskViewController goTasksDeployedWithCustGuide:custGuide];
+        }
+    }
+
+
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
         [[UINavigationBar appearance] setTranslucent:YES];
     }

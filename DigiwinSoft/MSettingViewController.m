@@ -13,6 +13,12 @@
 #import "UIViewController+MMDrawerController.h"
 #import "MDirector.h"
 #import "MSettingTableViewCell.h"
+#import "MDataBaseManager.h"
+
+
+#define TAG_IMAGEVIEW_NUM 100
+#define TAG_LABEL_NUM 101
+
 
 @interface MSettingViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -180,14 +186,26 @@
     if(cell == nil){
         cell = [[MSettingTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
+        CGFloat tableWidth = tableView.frame.size.width;
+        
         if (row > 0) {
             // up divider
-            CGFloat tableWidth = tableView.frame.size.width;
-
             UIView* up = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableWidth, 1)];
             up.backgroundColor = [UIColor lightGrayColor];
             [cell addSubview:up];
         }
+        
+        UIImageView* numImageView = [[UIImageView alloc] initWithFrame:CGRectMake(tableWidth - 50, 10, 30, 30)];
+        numImageView.tag = TAG_IMAGEVIEW_NUM;
+        numImageView.image = [UIImage imageNamed:@"icon_red_circle.png"];
+        numImageView.hidden = YES;
+        [cell addSubview:numImageView];
+        
+        UILabel* numLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        numLabel.tag = TAG_LABEL_NUM;
+        numLabel.textColor = [UIColor whiteColor];
+        numLabel.textAlignment = NSTextAlignmentCenter;
+        [numImageView addSubview:numLabel];
     }
     cell.backgroundColor = [UIColor blackColor];
     
@@ -196,16 +214,35 @@
     bgSelectionView.layer.masksToBounds = YES;
     cell.selectedBackgroundView = bgSelectionView;
     
+    
+    UIImageView* numImageView = (UIImageView*)[cell viewWithTag:TAG_IMAGEVIEW_NUM];
+    UILabel* numLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_NUM];
+    
 
     if (row == 0) {
         cell.imageView.image = [UIImage imageNamed:@"icon_menu_1.png"];
         cell.textLabel.text = @"我的攻略";
+        
+        numImageView.hidden = NO;
+
+        NSArray* array = [[MDataBaseManager sharedInstance] loadMyRaidersArray];
+        numLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)array.count];
     } else if (row == 1) {
         cell.imageView.image = [UIImage imageNamed:@"icon_menu_2.png"];
         cell.textLabel.text = @"我的規劃";
+        
+        numImageView.hidden = NO;
+
+        NSArray* array = [[MDataBaseManager sharedInstance] loadMyPlanArray];
+        numLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)array.count];
     } else if (row == 2) {
         cell.imageView.image = [UIImage imageNamed:@"icon_menu_3.png"];
         cell.textLabel.text = @"事件清單";
+        
+        numImageView.hidden = NO;
+
+        NSArray* array = [[MDataBaseManager sharedInstance] loadEventsWithUser:_user];
+        numLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)array.count];
     } else if (row == 3) {
         cell.imageView.image = [UIImage imageNamed:@"icon_menu_4.png"];
         cell.textLabel.text = @"我的商業社群";

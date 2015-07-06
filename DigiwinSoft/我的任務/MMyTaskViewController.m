@@ -8,6 +8,7 @@
 
 #import "MMyTaskViewController.h"
 #import "AppDelegate.h"
+#import "MTasksDeployedViewController.h"
 
 #define TAG_IMAGE_VIEW_TYPE     201
 #define TAG_LABEL_TASK_NAME     202
@@ -184,7 +185,11 @@
 }
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    
+    NSInteger segmentedIndex = [_segmented selectedSegmentIndex];
+    if (segmentedIndex == 0) {
+        MTasksDeployedViewController* vc = [[MTasksDeployedViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -310,4 +315,13 @@
 
     [_tableView reloadData];
 }
+
+#pragma mark - other methods
+
+- (void)goTasksDeployedWithCustGuide:(MCustGuide*) custGuide
+{
+    MTasksDeployedViewController* vc = [[MTasksDeployedViewController alloc] initWithCustGuide:custGuide];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 @end

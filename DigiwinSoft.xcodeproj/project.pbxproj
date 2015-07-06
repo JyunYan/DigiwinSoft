@@ -27,6 +27,7 @@
 		3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */; };
 		3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A03F96E1B3A60A0000F345B /* QuartzCore.framework */; };
 		3A03F9731B3A60DB000F345B /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */; };
+		3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */; };
 		3A54DDFC1B40DD1100A6849A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */; };
 		3A54EDE11B4636DB00BDA945 /* MCustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */; };
 		3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5B9E9C1B3D0756005DE125 /* MRecommendTreasuresViewController.m */; };
@@ -186,6 +187,8 @@
 		3A03F96E1B3A60A0000F345B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3A03F9711B3A60DB000F345B /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
 		3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
+		3A1363AC1B4A186000BA05F2 /* MTasksDeployedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTasksDeployedViewController.h; sourceTree = "<group>"; };
+		3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTasksDeployedViewController.m; sourceTree = "<group>"; };
 		3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		3A54EDDF1B4636DB00BDA945 /* MCustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustomAlertView.h; path = CustomViews/MCustomAlertView.h; sourceTree = "<group>"; };
 		3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustomAlertView.m; path = CustomViews/MCustomAlertView.m; sourceTree = "<group>"; };
@@ -465,6 +468,8 @@
 			children = (
 				3AB4CE181B32848B00143374 /* MMyTaskViewController.h */,
 				3AB4CE191B32848B00143374 /* MMyTaskViewController.m */,
+				3A1363AC1B4A186000BA05F2 /* MTasksDeployedViewController.h */,
+				3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */,
 			);
 			path = "我的任務";
 			sourceTree = "<group>";
@@ -992,6 +997,7 @@
 				DCF46ACD1B4236CB00C771BB /* MTarget.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
 				3A03AA1F1B3BD5CA00923ABB /* UIDownPicker.m in Sources */,
+				3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */,
 				3A03F9651B3A4F26000F345B /* MKeyActivitiesViewController.m in Sources */,
 				38E6F3FE1B411EAF00245DA1 /* MLoginViewController.m in Sources */,
 				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,
