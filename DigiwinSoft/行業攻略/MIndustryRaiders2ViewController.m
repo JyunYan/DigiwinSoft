@@ -118,6 +118,7 @@
                          action:@selector(actionSegmented:)
                forControlEvents:UIControlEventValueChanged];
     segmentedControl.tintColor=[UIColor clearColor];
+    segmentedControl.selectedSegmentIndex = 1;
     [self.view addSubview:segmentedControl];
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grayColor]} forState:UIControlStateNormal];
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0]} forState:UIControlStateSelected];
@@ -138,6 +139,7 @@
     tbl.bounces=NO;
     tbl.delegate=self;
     tbl.dataSource = self;
+    [self.view addSubview:tbl];
     
 
     
@@ -147,7 +149,7 @@
     [btn setTitle:@"+加入我的規劃清單" forState:UIControlStateNormal];
     btn.titleLabel.textColor=[UIColor whiteColor];
     [btn addTarget:self action:@selector(actionAddMyList:) forControlEvents:UIControlEventTouchUpInside]; //設定按鈕動作
-    
+    [self.view addSubview:btn];
     
     //textView
     textView=[[UITextView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,screenWidth, screenHeight-320)];
@@ -178,15 +180,6 @@
     txtField.font=[UIFont systemFontOfSize:12];
     txtField.delegate = self;
     
-           segmentedControl.selectedSegmentIndex = 0;
-        [self.view addSubview:imgGray];
-        [self.view addSubview:textView];
-        [self.view addSubview:labTarget];
-        [self.view addSubview:txtField];
-        imgblueBar.frame=CGRectMake((screenWidth/8)*1,
-                                    imgblueBar.frame.origin.y,
-                                    imgblueBar.frame.size.width,
-                                    imgblueBar.frame.size.height);
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
