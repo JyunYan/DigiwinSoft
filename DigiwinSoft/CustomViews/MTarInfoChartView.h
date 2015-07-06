@@ -11,4 +11,6 @@
 
 @interface MTarInfoChartView : UIScrollView
 
+@property (nonatomic, strong) NSArray* historyArray;
+
 @end

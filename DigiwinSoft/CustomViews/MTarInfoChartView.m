@@ -39,12 +39,12 @@
         self.darkGrayColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
         self.redColor = [UIColor colorWithRed:242/255.0 green:97/255.0 blue:95/255.0 alpha:1.0];
         
-        self.mTarget = [[MTarget alloc] init];
-        self.mTarget.valueR = @"80";
-        self.mTarget.top = @"25";
-        self.mTarget.avg = @"30";
-        self.mTarget.bottom = @"40";
-        self.mTarget.name = @"庫存周轉天數(天)";
+//        self.mTarget = [[MTarget alloc] init];
+//        self.mTarget.valueR = @"80";
+//        self.mTarget.top = @"25";
+//        self.mTarget.avg = @"30";
+//        self.mTarget.bottom = @"40";
+//        self.mTarget.name = @"庫存周轉天數(天)";
         
     }
     return self;
@@ -63,14 +63,24 @@
         self.darkGrayColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
         self.redColor = [UIColor colorWithRed:242/255.0 green:97/255.0 blue:95/255.0 alpha:1.0];
         
-        self.mTarget = [[MTarget alloc] init];
-        self.mTarget.valueR = @"50";
-        self.mTarget.top = @"25";
-        self.mTarget.avg = @"30";
-        self.mTarget.bottom = @"40";
-        self.mTarget.name = @"庫存周轉天數(天)";
+//        self.mTarget = [[MTarget alloc] init];
+//        self.mTarget.valueR = @"50";
+//        self.mTarget.top = @"25";
+//        self.mTarget.avg = @"30";
+//        self.mTarget.bottom = @"40";
+//        self.mTarget.name = @"庫存周轉天數(天)";
     }
     return self;
+}
+
+- (void)setHistoryArray:(NSArray *)historyArray
+{
+    _historyArray = historyArray;
+    
+    if(historyArray.count > 0)
+        self.mTarget = [historyArray lastObject];
+    else
+        self.mTarget = [MTarget new];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -134,7 +144,7 @@
         p_month = 1;
         p_year = n_year;
     }
-    NSString* period = [NSString stringWithFormat:@"%d-%02d ~ %d-%02d", p_year, p_month, n_year, n_month];
+    NSString* period = [NSString stringWithFormat:@"%d/%02d ~ %d/%02d", p_year, p_month, n_year, n_month];
     
     label = [self createTextAtView:self frame:CGRectMake(290,900,500,56) text:period color:self.darkGrayColor fontSize:16];
     label.textAlignment = NSTextAlignmentCenter;
@@ -142,14 +152,13 @@
     
     
     
-    label = [self createTextAtView:self frame:CGRectMake(259,290,64,58) text:self.mTarget.valueR color:self.redColor fontSize:16];
+    label = [self createTextAtView:self frame:CGRectMake(259,290,64,58) text:self.mTarget.valueR color:self.redColor fontSize:10];
     label.textAlignment = NSTextAlignmentCenter;
-    
-    label = [self createTextAtView:self frame:CGRectMake(421,290,64,58) text:self.mTarget.bottom color:self.redColor fontSize:16];
+    label = [self createTextAtView:self frame:CGRectMake(421,290,64,58) text:self.mTarget.bottom color:self.redColor fontSize:10];
     label.textAlignment = NSTextAlignmentCenter;
-    label = [self createTextAtView:self frame:CGRectMake(595,290,64,58) text:self.mTarget.avg color:self.redColor fontSize:16];
+    label = [self createTextAtView:self frame:CGRectMake(595,290,64,58) text:self.mTarget.avg color:self.redColor fontSize:10];
     label.textAlignment = NSTextAlignmentCenter;
-    label = [self createTextAtView:self frame:CGRectMake(759,290,64,58) text:self.mTarget.top color:self.redColor fontSize:16];
+    label = [self createTextAtView:self frame:CGRectMake(759,290,64,58) text:self.mTarget.top color:self.redColor fontSize:10];
     label.textAlignment = NSTextAlignmentCenter;
     
     

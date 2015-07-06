@@ -10,6 +10,7 @@
 #import "iCarousel.h"
 #import "MCarouselItemView.h"
 #import "MPhenomenon.h"
+#import "MDirector.h"
 
 @interface MRaiderCarouselView ()<iCarouselDataSource, iCarouselDelegate>
 
@@ -24,6 +25,7 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     [self addBackgrouondImage];
+    [self addIndustryLabel];
     [self addCarouselView];
 }
 
@@ -37,10 +39,25 @@
     }
 }
 
+- (void) addIndustryLabel
+{
+    CGFloat y = (DEVICE_SCREEN_HEIGHT == 480) ? 60 : 100;
+    
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, y, DEVICE_SCREEN_WIDTH, 40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:24.];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    label.text = [MDirector sharedInstance].currentUser.industryName;
+    [self addSubview:label];
+}
+
 - (void) addCarouselView
 {
+    CGFloat y = (DEVICE_SCREEN_HEIGHT == 480) ? 140 : 214;
+    
     if(!_carousel){
-        _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 214, DEVICE_SCREEN_WIDTH, 260)];
+        _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, y, DEVICE_SCREEN_WIDTH, 260)]; //214
         _carousel.dataSource = self;
         _carousel.delegate = self;
         _carousel.type = iCarouselTypeInvertedCylinder;

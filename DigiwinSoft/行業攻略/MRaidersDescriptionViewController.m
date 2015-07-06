@@ -20,6 +20,9 @@
     CGFloat screenWidth;
     CGFloat screenHeight;
 }
+
+@property (nonatomic, strong) MPMoviePlayerController* player;
+
 @end
 
 @implementation MRaidersDescriptionViewController
@@ -70,16 +73,14 @@
     screenWidth = screenSize.width;
     screenHeight = screenSize.height;
     
-    //webView
-    webViewVideo = [[UIWebView alloc] initWithFrame:CGRectMake(0.0, 20+44,screenWidth, 170.0)];
-    webViewVideo.delegate=self;
-    webViewVideo.backgroundColor=[UIColor redColor];
-    webViewVideo.scalesPageToFit = YES;
-    NSString *videoPath = @"https://www.youtube.com/watch?v=nZRMajL_ulA";
-//    NSString *videoPath = @"https://www.youtube.com/embed/watch?v=nZRMajL_ulA";
-    NSURLRequest *videoRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:videoPath]];
-    [webViewVideo loadRequest:videoRequest];
-    [self.view addSubview:webViewVideo];
+    // prepare video
+    NSURL* url = [NSURL URLWithString:_guide.url];
+    _player = [[MPMoviePlayerController alloc] initWithContentURL:url];
+    _player.scalingMode = MPMovieScalingModeAspectFit;
+    _player.view.frame = CGRectMake(0.0, 20+44,screenWidth, 170.0);
+    [self.view addSubview: _player.view];
+    
+    [_player prepareToPlay];
     
     //scroll
     UIScrollView *scroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0.0, 234, screenWidth, screenHeight-234-35)];
@@ -164,29 +165,6 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma UIWebView Delegate
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-    
-}
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [webView setUserInteractionEnabled:YES];
-}
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-//    NSLog(@"error : %@ \n", [error description]);
-    [webView stopLoading];
-}
-- (BOOL)webView:(UIWebView *)wv shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    
-    // Determine if we want the system to handle it.
-    NSURL *url = request.URL;
-    if (![url.scheme isEqual:@"http"] && ![url.scheme isEqual:@"https"]) {
-        if ([[UIApplication sharedApplication]canOpenURL:url]) {
-            [[UIApplication sharedApplication]openURL:url];
-            return NO;
-        }
-    }
-    return YES;
-}
 #pragma mark - UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

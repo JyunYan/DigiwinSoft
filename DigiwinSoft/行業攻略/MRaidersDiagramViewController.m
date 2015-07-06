@@ -231,7 +231,7 @@
     [viewSection addSubview:labHeader];
     
     if(tableView.tag==101){
-        labHeader.text = @"關聯議題";
+        labHeader.text = @"關鍵活動";
     }else
     {
         labHeader.text = @"工作項目";
