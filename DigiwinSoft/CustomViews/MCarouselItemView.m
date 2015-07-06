@@ -26,30 +26,45 @@
     CGContextFillPath(context);
     
     // draw string
-    NSArray* array = [_content componentsSeparatedByString:@"，"];
-    CGFloat x = (self.bounds.size.width - _pointSize * array.count) / 2.;
+    NSMutableArray* array = [NSMutableArray new];
+    NSInteger index = 0;
+    for (int i = 0; i < 2; index++) {
+        
+        if(_content.length - index > 10){
+            NSString* string = [_content substringWithRange:NSMakeRange(index, 10)];
+            [array addObject:string];
+        }else{
+            NSString* string = [_content substringWithRange:NSMakeRange(index, _content.length - index)];
+            [array addObject:string];
+        }
+        
+        index += 10;
+        if(index >= _content.length)
+            break;
+    }
     
+    
+    CGFloat x = (self.bounds.size.width - _pointSize * array.count) / 2.;
     for (NSString* str in array) {
        // NSString* string = [self getContentWithString:str];
         NSAttributedString* attString = [[NSAttributedString alloc] initWithString:str
                                                                         attributes:@{NSFontAttributeName:font,
                                                                                      NSForegroundColorAttributeName:color,
-                                                                                     NSVerticalGlyphFormAttributeName:[NSNumber numberWithInt:1]}];
+                                                                    NSVerticalGlyphFormAttributeName:[NSNumber numberWithInt:1]}];
         [attString drawInRect:CGRectMake(x, self.bounds.origin.y + 15., _pointSize, self.bounds.size.height)];
         x+= _pointSize;
     }
-    
 }
 
 - (void)setOnFacus:(BOOL)onFacus
 {
     _onFacus = onFacus;
     if(onFacus){
-        _pointSize = 22.;
+        _pointSize = (DEVICE_SCREEN_HEIGHT == 480) ? 18. : 22.;
         _alpha = 1.;
     }else{
         _pointSize = 14.;
-        _alpha = .5;
+        _alpha = 1.;
     }
 }
 

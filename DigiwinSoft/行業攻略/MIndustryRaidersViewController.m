@@ -110,12 +110,14 @@
     tbl.dataSource = self;
     [self.view addSubview:tbl];
     
-    
+    //CGFloat scale = DEVICE_SCREEN_WIDTH / 320.;
     //MerryGoRound
-    _rcView = [[MRaiderCarouselView alloc] initWithFrame:CGRectMake(0, 64, screenWidth, screenHeight - 113)];
+    _rcView = [[MRaiderCarouselView alloc] initWithFrame:CGRectMake(0, 64, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 113)];// 214
     _rcView.phenArray = aryList;
     _rcView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_rcView];
+    
+    //_rcView.transform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
 
 }
 

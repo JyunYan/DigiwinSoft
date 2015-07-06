@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCustGuide.h"
 
 @interface MMyTaskViewController : UIViewController
+
+- (void)goTasksDeployedWithCustGuide:(MCustGuide*) custGuide;
 
 @end

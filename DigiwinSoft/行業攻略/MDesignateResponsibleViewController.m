@@ -189,10 +189,11 @@
         //
         UIImageView* thumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(50, 13, 54, 54)];
         thumbnail.tag = TAG_FOR_THUMBNAIL;
-        thumbnail.clipsToBounds = YES;
         thumbnail.layer.cornerRadius = thumbnail.frame.size.width / 2;
         thumbnail.layer.borderColor = [UIColor grayColor].CGColor;
         thumbnail.layer.borderWidth = 1.0f;
+        thumbnail.clipsToBounds = YES;
+        //thumbnail.layer.masksToBounds = YES;
         [cell addSubview:thumbnail];
         
         UILabel* label;
@@ -225,6 +226,7 @@
     MUser* user = [_array objectAtIndex:indexPath.row];
     
     checkbox.image = (user.bSelected) ? [UIImage imageNamed:@"checkbox_fill.png"] : [UIImage imageNamed:@"checkbox_empty.png"];
+    thumbnail.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
     name.text = [NSString stringWithFormat:@"姓名 : %@", user.name];
     level.text = [NSString stringWithFormat:@"職能 : %@", [self getSkillStringWithEmployee:user]];
     day.text = [NSString stringWithFormat:@"到職日 : %@", user.arrive_date];
@@ -288,6 +290,17 @@
 {
     _array = [[MDataBaseManager sharedInstance] loadEmployeeArray];
     _arySkills=[[MDataBaseManager sharedInstance]loadAllSkills];
+    
+    NSString* uuid = _guide.manager.uuid;
+    if(uuid && ![uuid isEqualToString:@""]){
+        
+        for (MUser* user in _array) {
+            if([uuid isEqualToString:user.uuid]){
+                user.bSelected = YES;
+                break;
+            }
+        }
+    }
 }
 - (void)actionToPopover:(id)sender
 {

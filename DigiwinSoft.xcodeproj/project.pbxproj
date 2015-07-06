@@ -27,6 +27,7 @@
 		3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */; };
 		3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A03F96E1B3A60A0000F345B /* QuartzCore.framework */; };
 		3A03F9731B3A60DB000F345B /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */; };
+		3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */; };
 		3A54DDFC1B40DD1100A6849A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */; };
 		3A54EDE11B4636DB00BDA945 /* MCustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */; };
 		3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5B9E9C1B3D0756005DE125 /* MRecommendTreasuresViewController.m */; };
@@ -83,6 +84,7 @@
 		DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014531B32B69F00EF7A6F /* MWorkItem.m */; };
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
+		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
 		DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AA81B40E04A00C771BB /* MEvent.m */; };
 		DCF46AAC1B41103700C771BB /* MSituation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAB1B41103700C771BB /* MSituation.m */; };
 		DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAE1B4116F000C771BB /* MTreasure.m */; };
@@ -185,6 +187,8 @@
 		3A03F96E1B3A60A0000F345B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3A03F9711B3A60DB000F345B /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
 		3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
+		3A1363AC1B4A186000BA05F2 /* MTasksDeployedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTasksDeployedViewController.h; sourceTree = "<group>"; };
+		3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTasksDeployedViewController.m; sourceTree = "<group>"; };
 		3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		3A54EDDF1B4636DB00BDA945 /* MCustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustomAlertView.h; path = CustomViews/MCustomAlertView.h; sourceTree = "<group>"; };
 		3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustomAlertView.m; path = CustomViews/MCustomAlertView.m; sourceTree = "<group>"; };
@@ -283,6 +287,7 @@
 		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
 		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
 		DC8135281B49BB29003B56AA /* MTarInfoChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarInfoChartView.m; path = CustomViews/MTarInfoChartView.m; sourceTree = "<group>"; };
+		DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = z_thumbnail.jpg; sourceTree = "<group>"; };
 		DCF46AA71B40E04A00C771BB /* MEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEvent.h; path = structure/MEvent.h; sourceTree = "<group>"; };
 		DCF46AA81B40E04A00C771BB /* MEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEvent.m; path = structure/MEvent.m; sourceTree = "<group>"; };
 		DCF46AAA1B41103700C771BB /* MSituation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSituation.h; path = structure/MSituation.h; sourceTree = "<group>"; };
@@ -463,6 +468,8 @@
 			children = (
 				3AB4CE181B32848B00143374 /* MMyTaskViewController.h */,
 				3AB4CE191B32848B00143374 /* MMyTaskViewController.m */,
+				3A1363AC1B4A186000BA05F2 /* MTasksDeployedViewController.h */,
+				3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */,
 			);
 			path = "我的任務";
 			sourceTree = "<group>";
@@ -526,6 +533,7 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */,
 				3AFF624A1B438A46005B6238 /* icon_menu_1.png */,
 				3AFF624B1B438A46005B6238 /* icon_menu_2.png */,
 				3AFF624C1B438A46005B6238 /* icon_menu_3.png */,
@@ -893,6 +901,7 @@
 				3A03AA1C1B3BD5CA00923ABB /* downArrow@2x.png in Resources */,
 				DCF46B111B42AAF300C771BB /* rect_white.png in Resources */,
 				DCF46B031B42AAF300C771BB /* icon_gray_circle.png in Resources */,
+				DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */,
 				DCF46B0B1B42AAF300C771BB /* icon_red_arrow.png in Resources */,
 				3AFF62571B438A46005B6238 /* icon_menu_3.png in Resources */,
 				DCF46B101B42AAF300C771BB /* rect_blue2.png in Resources */,
@@ -988,6 +997,7 @@
 				DCF46ACD1B4236CB00C771BB /* MTarget.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
 				3A03AA1F1B3BD5CA00923ABB /* UIDownPicker.m in Sources */,
+				3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */,
 				3A03F9651B3A4F26000F345B /* MKeyActivitiesViewController.m in Sources */,
 				38E6F3FE1B411EAF00245DA1 /* MLoginViewController.m in Sources */,
 				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,

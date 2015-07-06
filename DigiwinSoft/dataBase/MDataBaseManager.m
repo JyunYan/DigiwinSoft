@@ -288,6 +288,7 @@ static MDataBaseManager* _director = nil;
         guide.name = [rs stringForColumnIndex:2];   // 對策name
         guide.desc = [rs stringForColumn:@"DESCRIPTION"];
         guide.review = [rs stringForColumn:@"REVIEW"];
+        guide.url = [rs stringForColumn:@"URL"];
         
         // 指標
         MTarget* target = guide.target;
