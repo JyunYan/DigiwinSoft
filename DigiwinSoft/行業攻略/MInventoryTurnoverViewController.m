@@ -11,10 +11,12 @@
 #import "MLineChartView.h"
 #import "MTarget.h"
 #import "AppDelegate.h"
+#import "MDirector.h"
+#import "MDataBaseManager.h"
 
 #import "MTarInfoChartView.h"
 
-@interface MInventoryTurnoverViewController ()
+@interface MInventoryTurnoverViewController ()<UITextFieldDelegate>
 {
     UITextField *txtTarget;
     UITextField *txtTargetDay;
@@ -136,6 +138,7 @@
     
     //UITextField
     txtTarget=[[UITextField alloc]initWithFrame:CGRectMake(105,209, 50, 29)];
+    txtTarget.delegate = self;
     txtTarget.borderStyle=UITextBorderStyleLine;
     txtTarget.textAlignment = NSTextAlignmentCenter;
     txtTarget.text=_guide.target.valueT;
@@ -244,12 +247,22 @@
 
 -(void)btnShowImg:(id)sender
 {
-
+    NSArray* array = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:_guide.target];
+    
     MTarInfoChartView* view = [[MTarInfoChartView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height - 44)];
+    [view setHistoryArray:array];
     [view setBackgroundColor:[UIColor whiteColor]];
     view.contentSize = [self getScaledSize:CGSizeMake(1080,1770)];
     [self.view addSubview:view];
     return;
+}
+
+#pragma mark - UITextFieldDelegate 相關
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 /*
 #pragma mark - Navigation

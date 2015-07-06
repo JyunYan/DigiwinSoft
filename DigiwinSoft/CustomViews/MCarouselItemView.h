@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MConfig.h"
 
 @interface MCarouselItemView : UIView
 

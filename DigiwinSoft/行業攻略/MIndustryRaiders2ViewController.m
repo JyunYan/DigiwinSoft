@@ -344,6 +344,8 @@
     MGuide* guide = (MGuide*)note.object;
     [aryList replaceObjectAtIndex:_operateIndex withObject:guide];
     
+    [tbl reloadData];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidAssignManager object:nil];
 }
 
@@ -386,6 +388,8 @@
     MIndustryRaidersTableViewCell *cell=(MIndustryRaidersTableViewCell *)[MIndustryRaidersTableViewCell cellWithTableView:tableView];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    
     //對策名稱
     cell.labName.text=[aryList[indexPath.row]name];
     cell.labName.font=[UIFont systemFontOfSize:12];
@@ -398,10 +402,13 @@
     [cell.btnCheck addTarget:self action:@selector(actionCheck:) forControlEvents:UIControlEventTouchUpInside];
     
     //指派負責人
-    UIImage *imgManager = [UIImage imageNamed:@"icon_manager.png"];
-    [cell.btnManager setBackgroundImage:imgManager forState:UIControlStateNormal];
+    UIImage *imgManager = (guide.manager.uuid != nil) ? [UIImage imageNamed:@"z_thumbnail.jpg"] : [UIImage imageNamed:@"icon_manager.png"];
+    [cell.btnManager setImage:imgManager forState:UIControlStateNormal];
     cell.btnManager.frame=CGRectMake(((screenWidth/2)*1)+8,23, 22, 22);
+    cell.btnManager.layer.cornerRadius = cell.btnManager.frame.size.width / 2;
+    cell.btnManager.clipsToBounds = YES;
     [cell.btnManager addTarget:self action:@selector(btnManager:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     //目標設定
     UIImage *imgTargetSet = [UIImage imageNamed:@"icon_menu_8.png"];
