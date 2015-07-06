@@ -10,6 +10,14 @@
 #import "MDirector.h"
 #import "MActivity.h"
 
+
+#define TAG_LABEL_ACTIVITY 100
+
+#define TAG_BUTTON_APPOINT_RESPONSIBLE 1000
+#define TAG_BUTTON_TARGET 2000
+#define TAG_BUTTON_RAIDERS 3000
+
+
 @interface MTasksDeployedViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView* tableView;
@@ -279,6 +287,27 @@
     
 }
 
+-(void)goAppointResponsible:(id)sender
+{
+    UIButton* button = (UIButton*)sender;
+    NSInteger tag = button.tag;
+    NSInteger index = tag - TAG_BUTTON_APPOINT_RESPONSIBLE;
+}
+
+-(void)goTarget:(id)sender
+{
+    UIButton* button = (UIButton*)sender;
+    NSInteger tag = button.tag;
+    NSInteger index = tag - TAG_BUTTON_TARGET;
+}
+
+-(void)goRaiders:(id)sender
+{
+    UIButton* button = (UIButton*)sender;
+    NSInteger tag = button.tag;
+    NSInteger index = tag - TAG_BUTTON_RAIDERS;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -310,51 +339,51 @@
 
     width = tableWidth / 2;
 
-    UILabel* workItemTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    workItemTitleLabel.text = @"關鍵活動";
-    workItemTitleLabel.textAlignment = NSTextAlignmentCenter;
-    workItemTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    workItemTitleLabel.font = [UIFont systemFontOfSize:textSize];
-    [header addSubview:workItemTitleLabel];
+    UILabel* activityHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    activityHeaderLabel.text = @"關鍵活動";
+    activityHeaderLabel.textAlignment = NSTextAlignmentCenter;
+    activityHeaderLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    activityHeaderLabel.font = [UIFont systemFontOfSize:textSize];
+    [header addSubview:activityHeaderLabel];
     
     
-    posX = workItemTitleLabel.frame.origin.x + workItemTitleLabel.frame.size.width;
+    posX = activityHeaderLabel.frame.origin.x + activityHeaderLabel.frame.size.width;
     width = 40;
 
-    UILabel* appointResponsibleTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    appointResponsibleTitleLabel.text = @"指派負責人";
-    appointResponsibleTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    appointResponsibleTitleLabel.textAlignment = NSTextAlignmentCenter;
-    appointResponsibleTitleLabel.font = [UIFont systemFontOfSize:textSize];
-    appointResponsibleTitleLabel.numberOfLines = 0;
-    appointResponsibleTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [header addSubview:appointResponsibleTitleLabel];
+    UILabel* appointResponsibleHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    appointResponsibleHeaderLabel.text = @"指派負責人";
+    appointResponsibleHeaderLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    appointResponsibleHeaderLabel.textAlignment = NSTextAlignmentCenter;
+    appointResponsibleHeaderLabel.font = [UIFont systemFontOfSize:textSize];
+    appointResponsibleHeaderLabel.numberOfLines = 0;
+    appointResponsibleHeaderLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    [header addSubview:appointResponsibleHeaderLabel];
     
     
-    posX = appointResponsibleTitleLabel.frame.origin.x + tableWidth / 6;
+    posX = appointResponsibleHeaderLabel.frame.origin.x + tableWidth / 6;
     width = 30;
 
-    UILabel* deadlineTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    deadlineTitleLabel.text = @"目標設定";
-    deadlineTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    deadlineTitleLabel.textAlignment = NSTextAlignmentCenter;
-    deadlineTitleLabel.font = [UIFont systemFontOfSize:textSize];
-    deadlineTitleLabel.numberOfLines = 0;
-    deadlineTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [header addSubview:deadlineTitleLabel];
+    UILabel* targetHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    targetHeaderLabel.text = @"目標設定";
+    targetHeaderLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    targetHeaderLabel.textAlignment = NSTextAlignmentCenter;
+    targetHeaderLabel.font = [UIFont systemFontOfSize:textSize];
+    targetHeaderLabel.numberOfLines = 0;
+    targetHeaderLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    [header addSubview:targetHeaderLabel];
     
     
-    posX = deadlineTitleLabel.frame.origin.x + tableWidth / 6;
+    posX = targetHeaderLabel.frame.origin.x + tableWidth / 6;
     width = 30;
     
-    UILabel* raidersLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    raidersLabel.text = @"攻略";
-    raidersLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    raidersLabel.textAlignment = NSTextAlignmentCenter;
-    raidersLabel.font = [UIFont systemFontOfSize:textSize];
-    raidersLabel.numberOfLines = 0;
-    raidersLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [header addSubview:raidersLabel];
+    UILabel* raidersHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    raidersHeaderLabel.text = @"攻略";
+    raidersHeaderLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    raidersHeaderLabel.textAlignment = NSTextAlignmentCenter;
+    raidersHeaderLabel.font = [UIFont systemFontOfSize:textSize];
+    raidersHeaderLabel.numberOfLines = 0;
+    raidersHeaderLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    [header addSubview:raidersHeaderLabel];
     
     
     return header;
@@ -363,9 +392,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    MActivity* activity = [_activityArray objectAtIndex:section];
-    NSMutableArray* workItemArray = activity.workItemArray;
-    return workItemArray.count;
+    return _activityArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -375,6 +402,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSInteger row = indexPath.row;
+
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
@@ -397,59 +426,50 @@
         [cell addSubview:view];
         
         
-        
         width = tableWidth / 2;
+        // 關鍵活動
+        UILabel* activityLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+        activityLabel.tag = TAG_LABEL_ACTIVITY;
+        activityLabel.textAlignment = NSTextAlignmentCenter;
+        activityLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+        activityLabel.font = [UIFont systemFontOfSize:textSize];
+        [cell addSubview:activityLabel];
         
-        UILabel* workItemTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        workItemTitleLabel.text = @"關鍵活動";
-        workItemTitleLabel.textAlignment = NSTextAlignmentCenter;
-        workItemTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-        workItemTitleLabel.font = [UIFont systemFontOfSize:textSize];
-        [cell addSubview:workItemTitleLabel];
         
-        
-        posX = workItemTitleLabel.frame.origin.x + workItemTitleLabel.frame.size.width;
-        width = 40;
-        
-        UILabel* appointResponsibleButton = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        appointResponsibleButton.text = @"指派負責人";
-        appointResponsibleButton.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-        appointResponsibleButton.textAlignment = NSTextAlignmentCenter;
-        appointResponsibleButton.font = [UIFont systemFontOfSize:textSize];
-        appointResponsibleButton.numberOfLines = 0;
-        appointResponsibleButton.lineBreakMode = NSLineBreakByWordWrapping;
+        posX = activityLabel.frame.origin.x + activityLabel.frame.size.width;
+        posY = 10;
+        width = 30;
+        height = 30;
+        // 指派負責人
+        UIButton* appointResponsibleButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+        appointResponsibleButton.tag = TAG_BUTTON_APPOINT_RESPONSIBLE + row;
+        [appointResponsibleButton setBackgroundImage:[UIImage imageNamed:@"icon_manager.png"] forState:UIControlStateNormal];
+        [appointResponsibleButton addTarget:self action:@selector(goAppointResponsible:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:appointResponsibleButton];
         
         
         posX = appointResponsibleButton.frame.origin.x + tableWidth / 6;
-        width = 30;
-        
-        UILabel* deadlineButton = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        deadlineButton.text = @"目標設定";
-        deadlineButton.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-        deadlineButton.textAlignment = NSTextAlignmentCenter;
-        deadlineButton.font = [UIFont systemFontOfSize:textSize];
-        deadlineButton.numberOfLines = 0;
-        deadlineButton.lineBreakMode = NSLineBreakByWordWrapping;
-        [cell addSubview:deadlineButton];
+        // 目標設定
+        UIButton* targetButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+        targetButton.tag = TAG_BUTTON_TARGET + row;
+        [targetButton setBackgroundImage:[UIImage imageNamed:@"icon_menu_8.png"] forState:UIControlStateNormal];
+        [targetButton addTarget:self action:@selector(goTarget:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:targetButton];
         
         
-        posX = deadlineButton.frame.origin.x + tableWidth / 6;
-        width = 30;
+        posX = targetButton.frame.origin.x + tableWidth / 6;
         
-        UILabel* raidersButton = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        raidersButton.text = @"攻略";
-        raidersButton.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-        raidersButton.textAlignment = NSTextAlignmentCenter;
-        raidersButton.font = [UIFont systemFontOfSize:textSize];
-        raidersButton.numberOfLines = 0;
-        raidersButton.lineBreakMode = NSLineBreakByWordWrapping;
+        UIButton* raidersButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+        raidersButton.tag = TAG_BUTTON_RAIDERS + row;
+        [raidersButton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
+        [raidersButton addTarget:self action:@selector(goRaiders:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:raidersButton];
-      }
+    }
     
-    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
-    
+    MActivity* activity = [_activityArray objectAtIndex:row];
+
+    UILabel* activityLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_ACTIVITY];
+    activityLabel.text = activity.name;
     
     return cell;
 }
