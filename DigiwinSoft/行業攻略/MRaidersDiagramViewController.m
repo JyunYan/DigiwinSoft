@@ -80,12 +80,11 @@
     [self.view addSubview:labTarget];
     
     //Label
-    UILabel *labValue=[[UILabel alloc]initWithFrame:CGRectMake(labTarget.frame.origin.x+labTarget.frame.size.width+30,125,100, 15)];
+    UILabel *labValue=[[UILabel alloc]initWithFrame:CGRectMake(labTarget.frame.origin.x+labTarget.frame.size.width+5,125,100, 15)];
     
     NSString *valueR=[MDirector sharedInstance].selectedPhen.target.valueR;
     NSString *unit=[MDirector sharedInstance].selectedPhen.target.unit;
     labValue.text=[NSString stringWithFormat:@"現值:%@%@",valueR,unit];
-                   
     labValue.backgroundColor=[UIColor clearColor];
     [labValue setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labValue];
@@ -121,7 +120,7 @@
     [self.view addSubview:labTarget2];
     
     //Label
-    UILabel *labValue2=[[UILabel alloc]initWithFrame:CGRectMake(labTarget.frame.origin.x+labTarget.frame.size.width+30,imgGray.frame.origin.y+60,100, 15)];
+    UILabel *labValue2=[[UILabel alloc]initWithFrame:CGRectMake(labTarget2.frame.origin.x+labTarget2.frame.size.width+5,imgGray.frame.origin.y+60,100, 15)];
     labValue2.text=[NSString stringWithFormat:@"現值:%@%@",_guide.target.valueR,_guide.target.unit];
     labValue2.backgroundColor=[UIColor clearColor];
     [labValue2 setFont:[UIFont systemFontOfSize:14]];
@@ -200,12 +199,13 @@
     if (tableView.tag==101)
     {
         label.text=[aryActivity[indexPath.row]name];
-        detailLabel.text=[[aryActivity[indexPath.row]target]name];
+        detailLabel.text=[NSString stringWithFormat:@"指標:%@",[[aryActivity[indexPath.row]target]name]];
+        
     }
     else
     {
         label.text=[aryWorkItem[indexPath.row]name];
-        detailLabel.text =[[aryWorkItem[indexPath.row]target]name];
+        detailLabel.text =[NSString stringWithFormat:@"指標:%@",[[aryWorkItem[indexPath.row]target]name]];
     }
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [cell.contentView addSubview:label];
