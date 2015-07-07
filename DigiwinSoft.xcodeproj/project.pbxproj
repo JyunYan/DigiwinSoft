@@ -39,6 +39,12 @@
 		3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B891B3800C100E94211 /* SWTableViewCell.m */; };
 		3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B8B1B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m */; };
 		3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B8D1B3800C100E94211 /* SWUtilityButtonView.m */; };
+		3A7E31A51B4B5ECA00790026 /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E31A41B4B5ECA00790026 /* CustomIOSAlertView.m */; };
+		3A7E31E41B4BA51300790026 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7E31E31B4BA51300790026 /* MessageUI.framework */; };
+		3A7E31E91B4BD82800790026 /* icon_email.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7E31E51B4BD82800790026 /* icon_email.png */; };
+		3A7E31EA1B4BD82800790026 /* icon_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7E31E61B4BD82800790026 /* icon_line.png */; };
+		3A7E31EB1B4BD82800790026 /* icon_sms.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7E31E71B4BD82800790026 /* icon_sms.png */; };
+		3A7E31EC1B4BD82800790026 /* icon_weibo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7E31E81B4BD82800790026 /* icon_weibo.png */; };
 		3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */; };
 		3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */; };
 		3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE101B32831500143374 /* MMonitorMapViewController.m */; };
@@ -212,6 +218,13 @@
 		3A711B8B1B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonTapGestureRecognizer.m; sourceTree = "<group>"; };
 		3A711B8C1B3800C100E94211 /* SWUtilityButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUtilityButtonView.h; sourceTree = "<group>"; };
 		3A711B8D1B3800C100E94211 /* SWUtilityButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonView.m; sourceTree = "<group>"; };
+		3A7E31A31B4B5ECA00790026 /* CustomIOSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOSAlertView.h; sourceTree = "<group>"; };
+		3A7E31A41B4B5ECA00790026 /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOSAlertView.m; sourceTree = "<group>"; };
+		3A7E31E31B4BA51300790026 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		3A7E31E51B4BD82800790026 /* icon_email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_email.png; sourceTree = "<group>"; };
+		3A7E31E61B4BD82800790026 /* icon_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_line.png; sourceTree = "<group>"; };
+		3A7E31E71B4BD82800790026 /* icon_sms.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_sms.png; sourceTree = "<group>"; };
+		3A7E31E81B4BD82800790026 /* icon_weibo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_weibo.png; sourceTree = "<group>"; };
 		3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMyPlanTableViewCell.h; path = CustomViews/MMyPlanTableViewCell.h; sourceTree = "<group>"; };
 		3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMyPlanTableViewCell.m; path = CustomViews/MMyPlanTableViewCell.m; sourceTree = "<group>"; };
 		3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryRaidersViewController.h; sourceTree = "<group>"; };
@@ -369,6 +382,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A7E31E41B4BA51300790026 /* MessageUI.framework in Frameworks */,
 				3A54DDFC1B40DD1100A6849A /* MediaPlayer.framework in Frameworks */,
 				3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */,
 				D06C2D291B37AC88009D2082 /* libsqlite3.dylib in Frameworks */,
@@ -448,6 +462,15 @@
 			path = SWTableViewCell;
 			sourceTree = "<group>";
 		};
+		3A7E31A21B4B5ECA00790026 /* CustomIOSAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				3A7E31A31B4B5ECA00790026 /* CustomIOSAlertView.h */,
+				3A7E31A41B4B5ECA00790026 /* CustomIOSAlertView.m */,
+			);
+			path = CustomIOSAlertView;
+			sourceTree = "<group>";
+		};
 		3AB4CE041B3264B500143374 /* 行業攻略 */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,6 +535,7 @@
 		3AB4CE1E1B32895C00143374 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				3A7E31A21B4B5ECA00790026 /* CustomIOSAlertView */,
 				DCF46AB61B41278200C771BB /* iCarousel */,
 				3A03AA131B3BD5CA00923ABB /* DownPicker */,
 				3A03F9701B3A60DB000F345B /* HMSegmentedControl */,
@@ -541,6 +565,10 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3A7E31E51B4BD82800790026 /* icon_email.png */,
+				3A7E31E61B4BD82800790026 /* icon_line.png */,
+				3A7E31E71B4BD82800790026 /* icon_sms.png */,
+				3A7E31E81B4BD82800790026 /* icon_weibo.png */,
 				DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */,
 				3AFF624A1B438A46005B6238 /* icon_menu_1.png */,
 				3AFF624B1B438A46005B6238 /* icon_menu_2.png */,
@@ -646,6 +674,7 @@
 		DC0ADF4F1B316E340019236D = {
 			isa = PBXGroup;
 			children = (
+				3A7E31E31B4BA51300790026 /* MessageUI.framework */,
 				3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */,
 				3A03F96E1B3A60A0000F345B /* QuartzCore.framework */,
 				D06C2D281B37AC88009D2082 /* libsqlite3.dylib */,
@@ -875,6 +904,7 @@
 				DCF46B0D1B42AAF300C771BB /* icon_search.png in Resources */,
 				3AFF625B1B438A46005B6238 /* icon_menu_7.png in Resources */,
 				3AFF62551B438A46005B6238 /* icon_menu_1.png in Resources */,
+				3A7E31E91B4BD82800790026 /* icon_email.png in Resources */,
 				3AFF62581B438A46005B6238 /* icon_menu_4.png in Resources */,
 				DCF46B171B42AAF300C771BB /* tab_icon_4.png in Resources */,
 				DCF46AF91B42AAF300C771BB /* Button-Favorite-List-Pressed.png in Resources */,
@@ -911,11 +941,14 @@
 				3A03AA1C1B3BD5CA00923ABB /* downArrow@2x.png in Resources */,
 				DCF46B111B42AAF300C771BB /* rect_white.png in Resources */,
 				DCF46B031B42AAF300C771BB /* icon_gray_circle.png in Resources */,
+				3A7E31EA1B4BD82800790026 /* icon_line.png in Resources */,
 				DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */,
 				DCF46B0B1B42AAF300C771BB /* icon_red_arrow.png in Resources */,
+				3A7E31EC1B4BD82800790026 /* icon_weibo.png in Resources */,
 				3AFF62571B438A46005B6238 /* icon_menu_3.png in Resources */,
 				DCF46B101B42AAF300C771BB /* rect_blue2.png in Resources */,
 				DCF46B091B42AAF300C771BB /* icon_phone.png in Resources */,
+				3A7E31EB1B4BD82800790026 /* icon_sms.png in Resources */,
 				DCF46AF51B42AAF300C771BB /* bg_industry_raider.jpg in Resources */,
 				DCF46AF61B42AAF300C771BB /* bg_status.png in Resources */,
 				DCF46B1D1B42B4C000C771BB /* icon_cloud_2.png in Resources */,
@@ -971,6 +1004,7 @@
 				3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				DCF46B2D1B462D5A00C771BB /* MSkill.m in Sources */,
 				DCF46AD01B428F1400C771BB /* MIssue.m in Sources */,
+				3A7E31A51B4B5ECA00790026 /* CustomIOSAlertView.m in Sources */,
 				3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */,
 				D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */,
 				382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */,
