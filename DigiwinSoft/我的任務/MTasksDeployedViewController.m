@@ -9,6 +9,7 @@
 #import "MTasksDeployedViewController.h"
 #import "MDirector.h"
 #import "MActivity.h"
+#import "CustomIOSAlertView.h"
 
 
 #define TAG_LABEL_ACTIVITY 100
@@ -25,6 +26,8 @@
 @property (nonatomic, strong) NSMutableArray* activityArray;
 
 @property (nonatomic, strong) MCustGuide* guide;
+
+@property (nonatomic, strong) CustomIOSAlertView *customIOSAlertView;
 
 @end
 
@@ -133,7 +136,7 @@
     
     UIButton* goMyTaskButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, 25, 25)];
     [goMyTaskButton setBackgroundImage:[UIImage imageNamed:@"icon_info.png"] forState:UIControlStateNormal];
-    [goMyTaskButton addTarget:self action:@selector(showDesc:) forControlEvents:UIControlEventTouchUpInside];
+    [goMyTaskButton addTarget:self action:@selector(showDescAlert:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:goMyTaskButton];
     
     
@@ -260,6 +263,81 @@
     return view;
 }
 
+- (UIView*)createDescView:(CGRect) rect
+{
+    CGFloat textSize = 14.0f;
+    
+    
+    UIView* view = [[UIView alloc] initWithFrame:rect];
+    view.backgroundColor = [UIColor whiteColor];
+    
+    CGFloat viewWidth = view.frame.size.width;
+    CGFloat viewHeight = view.frame.size.height;
+    
+    CGFloat width = 25;
+    CGFloat height = 25;
+    CGFloat posX = viewWidth - width - 10;
+    CGFloat posY = 10;
+
+    UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnClose.frame = CGRectMake(posX, posY, width, height);
+    [btnClose setImage:[UIImage imageNamed:@"icon_close.png"] forState:UIControlStateNormal];
+    [btnClose addTarget:self action:@selector(actionClose:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:btnClose];
+    
+    
+    // 標題
+    posX = 20;
+    posY = btnClose.frame.origin.y + btnClose.frame.size.height + 5;
+    width = viewWidth - posX * 2;
+    height = 30;
+    
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    titleLabel.text = _guide.name;
+    titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
+    [view addSubview:titleLabel];
+    
+    
+    posX = 10;
+    width = viewWidth - posX * 2;
+    posY = titleLabel.frame.origin.y + titleLabel.frame.size.height + 5;
+    height = 1;
+    
+    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    [view addSubview:lineView];
+    
+    
+    posX = 20;
+    posY = lineView.frame.origin.y + lineView.frame.size.height + 5;
+    height = 30;
+    // 說明
+    UILabel* descTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    descTitleLabel.text = @"說明：";
+    descTitleLabel.font = [UIFont systemFontOfSize:textSize];
+    [view addSubview:descTitleLabel];
+    
+    
+    posY = descTitleLabel.frame.origin.y + descTitleLabel.frame.size.height;
+    height = viewHeight - posY - 10;
+    
+    UIScrollView* scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    [view addSubview:scrollView];
+    
+    posX = 0;
+    posY = 0;
+    
+    UILabel* descLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    descLabel.font = [UIFont systemFontOfSize:textSize];
+    descLabel.text = _guide.desc;
+    [scrollView addSubview:descLabel];
+
+    [descLabel sizeToFit];
+    [scrollView setContentSize:CGSizeMake(scrollView.frame.size.width, descLabel.frame.size.height)];
+    
+    return view;
+}
+
 #pragma mark - UIButton
 
 -(void)back:(id)sender
@@ -267,9 +345,20 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)showDesc:(id)sender
+-(void)showDescAlert:(id)sender
 {
+    _customIOSAlertView = [[CustomIOSAlertView alloc] initWithParentView:self.view.superview];
+    [_customIOSAlertView setButtonTitles:nil];
     
+    UIView* view = [self createDescView:CGRectMake(0, 0, 300, 300)];
+    [_customIOSAlertView setContainerView:view];
+    [_customIOSAlertView show];    
+}
+
+-(void)actionClose:(id)sender
+{
+    if (_customIOSAlertView)
+        [_customIOSAlertView close];
 }
 
 -(void)actionGanttChart:(id)sender

@@ -11,6 +11,7 @@
 #import "ASFileManager.h"
 #import "MEventSelectViewController.h"
 #import "MDirector.h"
+#import <MessageUI/MessageUI.h>
 
 
 #define TAG_TOPVIEW 100
@@ -22,15 +23,15 @@
 #define TAG_BUTTON_PERSON_IN_CHARGE 3000
 
 #define TAG_BUTTON_TELEPHONE 4000
-#define TAG_BUTTON_MESSAGE 5000
-#define TAG_BUTTON_NOTIFICATION 6000
+#define TAG_BUTTON_WEIBO 5000
+#define TAG_BUTTON_LINE 6000
 #define TAG_BUTTON_EMAIL 7000
-#define TAG_BUTTON_CALENDAR 8000
+#define TAG_BUTTON_SMS 8000
 
 #define TAG_BAR_VIEW 9000
 
 
-@interface MEventListViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
+@interface MEventListViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
 
@@ -243,37 +244,70 @@
     NSInteger index = tag - TAG_BUTTON_TELEPHONE;
     MEvent* event = [_eventArray objectAtIndex:index];
      */
-    NSString* telStr = _user.phone;
-    NSString* phoneNumber = [@"tel://" stringByAppendingString:telStr];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+    BOOL isPhone = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel://"]];
+    if (isPhone) {
+        NSString* url = [@"tel://" stringByAppendingString:_user.phone];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    } else {
+        UIAlertView *emailAlert = [[UIAlertView alloc] initWithTitle:@"Call Phone Failure" message:@"Your device is not configured to call phone" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [emailAlert show];
+    }
 }
 
-- (void)actionMessage:(UIButton *)button
+- (void)actionWeibo:(UIButton *)button
 {
     NSInteger tag = button.tag;
-    NSInteger index = tag - TAG_BUTTON_MESSAGE;
-    
+    NSInteger index = tag - TAG_BUTTON_WEIBO;
+    MEvent* event = [_eventArray objectAtIndex:index];
+
 }
 
-- (void)actionNotification:(UIButton *)button
+- (void)actionLine:(UIButton *)button
 {
     NSInteger tag = button.tag;
-    NSInteger index = tag - TAG_BUTTON_NOTIFICATION;
-    
+    NSInteger index = tag - TAG_BUTTON_LINE;
+    MEvent* event = [_eventArray objectAtIndex:index];
+
 }
 
 - (void)actionEmail:(UIButton *)button
 {
+    /*
     NSInteger tag = button.tag;
     NSInteger index = tag - TAG_BUTTON_EMAIL;
-    
+    MEvent* event = [_eventArray objectAtIndex:index];
+     */
+    if ([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
+        mailViewController.mailComposeDelegate = self;
+        
+        [mailViewController setToRecipients:@[_user.email]];
+        
+        [self presentViewController:mailViewController animated:YES completion:nil];
+    } else {
+        UIAlertView *emailAlert = [[UIAlertView alloc] initWithTitle:@"Email Failure" message:@"Your device is not configured to send email" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [emailAlert show];
+    }
 }
 
-- (void)actionCalendar:(UIButton *)button
+- (void)actionSMS:(UIButton *)button
 {
+    /*
     NSInteger tag = button.tag;
-    NSInteger index = tag - TAG_BUTTON_CALENDAR;
-    
+    NSInteger index = tag - TAG_BUTTON_SMS;
+    MEvent* event = [_eventArray objectAtIndex:index];
+     */
+    if ([MFMessageComposeViewController canSendText]) {
+        MFMessageComposeViewController *messageViewController = [[MFMessageComposeViewController alloc] init];
+        messageViewController.messageComposeDelegate = self;
+        
+        messageViewController.recipients = @[_user.phone];
+        
+        [self presentViewController:messageViewController animated:YES completion:nil];
+    } else {
+        UIAlertView *emailAlert = [[UIAlertView alloc] initWithTitle:@"Cannot Send Message" message:@"Text message is not available." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [emailAlert show];
+    }
 }
 
 #pragma mark - UISegmentedControl
@@ -463,7 +497,7 @@
         UIButton* telButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPosX, buttonPosY, buttonWidth, buttonHeight)];
         telButton.tag = TAG_BUTTON_TELEPHONE + row;
         telButton.backgroundColor = [UIColor clearColor];
-        [telButton setTitle:@"電話" forState:UIControlStateNormal];
+        [telButton setImage:[UIImage imageNamed:@"icon_phone.png"] forState:UIControlStateNormal];
         [telButton setTintColor:[UIColor whiteColor]];
         [telButton addTarget:self action:@selector(actionTelephone:) forControlEvents:UIControlEventTouchDown];
         [cell addSubview:telButton];
@@ -471,22 +505,24 @@
         
         buttonPosX = (view.frame.size.width / 5 - buttonWidth) / 2 + view.frame.size.width / 5;
         
-        UIButton* msgButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPosX, buttonPosY, buttonWidth, buttonHeight)];
-        msgButton.tag = TAG_BUTTON_MESSAGE + row;
-        msgButton.backgroundColor = [UIColor clearColor];
-        [msgButton setTitle:@"訊息" forState:UIControlStateNormal];
-        [msgButton setTintColor:[UIColor whiteColor]];
-        [cell addSubview:msgButton];
+        UIButton* weiboButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPosX, buttonPosY, buttonWidth, buttonHeight)];
+        weiboButton.tag = TAG_BUTTON_WEIBO + row;
+        weiboButton.backgroundColor = [UIColor clearColor];
+        [weiboButton setImage:[UIImage imageNamed:@"icon_weibo.png"] forState:UIControlStateNormal];
+        [weiboButton setTintColor:[UIColor whiteColor]];
+        [weiboButton addTarget:self action:@selector(actionWeibo:) forControlEvents:UIControlEventTouchDown];
+        [cell addSubview:weiboButton];
         
         
         buttonPosX = (view.frame.size.width / 5 - buttonWidth) / 2 + view.frame.size.width * 2 / 5;
         
-        UIButton* notiButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPosX, buttonPosY, buttonWidth, buttonHeight)];
-        notiButton.tag = TAG_BUTTON_NOTIFICATION + row;
-        notiButton.backgroundColor = [UIColor clearColor];
-        [notiButton setTitle:@"通知" forState:UIControlStateNormal];
-        [notiButton setTintColor:[UIColor whiteColor]];
-        [cell addSubview:notiButton];
+        UIButton* lineButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPosX, buttonPosY, buttonWidth, buttonHeight)];
+        lineButton.tag = TAG_BUTTON_LINE + row;
+        lineButton.backgroundColor = [UIColor clearColor];
+        [lineButton setImage:[UIImage imageNamed:@"icon_line.png"] forState:UIControlStateNormal];
+        [lineButton setTintColor:[UIColor whiteColor]];
+        [lineButton addTarget:self action:@selector(actionLine:) forControlEvents:UIControlEventTouchDown];
+        [cell addSubview:lineButton];
         
         
         buttonPosX = (view.frame.size.width / 5 - buttonWidth) / 2 + view.frame.size.width * 3 / 5;
@@ -494,19 +530,21 @@
         UIButton* emailButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPosX, buttonPosY, buttonWidth, buttonHeight)];
         emailButton.tag = TAG_BUTTON_EMAIL + row;
         emailButton.backgroundColor = [UIColor clearColor];
-        [emailButton setTitle:@"郵件" forState:UIControlStateNormal];
+        [emailButton setImage:[UIImage imageNamed:@"icon_email.png"] forState:UIControlStateNormal];
         [emailButton setTintColor:[UIColor whiteColor]];
+        [emailButton addTarget:self action:@selector(actionEmail:) forControlEvents:UIControlEventTouchDown];
         [cell addSubview:emailButton];
         
         
         buttonPosX = (view.frame.size.width / 5 - buttonWidth) / 2 + view.frame.size.width * 4 / 5;
         
-        UIButton* calButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPosX, buttonPosY, buttonWidth, buttonHeight)];
-        calButton.tag = TAG_BUTTON_CALENDAR + row;
-        calButton.backgroundColor = [UIColor clearColor];
-        [calButton setTitle:@"日曆" forState:UIControlStateNormal];
-        [calButton setTintColor:[UIColor whiteColor]];
-        [cell addSubview:calButton];
+        UIButton* smsButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPosX, buttonPosY, buttonWidth, buttonHeight)];
+        smsButton.tag = TAG_BUTTON_SMS + row;
+        smsButton.backgroundColor = [UIColor clearColor];
+        [smsButton setImage:[UIImage imageNamed:@"icon_sms.png"] forState:UIControlStateNormal];
+        [smsButton setTintColor:[UIColor whiteColor]];
+        [smsButton addTarget:self action:@selector(actionSMS:) forControlEvents:UIControlEventTouchDown];
+        [cell addSubview:smsButton];
    }
     
     MEvent* event = [_eventArray objectAtIndex:row];
@@ -533,18 +571,18 @@
     UIView* barView = [cell viewWithTag:TAG_BAR_VIEW + row];
     
     UIButton* telButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_TELEPHONE + row];
-    UIButton* msgButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_MESSAGE + row];
-    UIButton* notiButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_NOTIFICATION + row];
+    UIButton* weiboButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_WEIBO + row];
+    UIButton* lineButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_LINE + row];
     UIButton* emailButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_EMAIL + row];
-    UIButton* calButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_CALENDAR + row];
+    UIButton* smsButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_SMS + row];
 
     barView.hidden = !(row == _showCellBarIndex);
     
     telButton.hidden = !(row == _showCellBarIndex);
-    msgButton.hidden = !(row == _showCellBarIndex);
-    notiButton.hidden = !(row == _showCellBarIndex);
+    weiboButton.hidden = !(row == _showCellBarIndex);
+    lineButton.hidden = !(row == _showCellBarIndex);
     emailButton.hidden = !(row == _showCellBarIndex);
-    calButton.hidden = !(row == _showCellBarIndex);
+    smsButton.hidden = !(row == _showCellBarIndex);
 
     
     return cell;
@@ -562,6 +600,52 @@
 
     MEventSelectViewController* vc = [[MEventSelectViewController alloc] initWithEvent:event User:_user];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - MFMailComposeViewController delegate
+
+-(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled: you cancelled the operation and no email message was queued.");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved: you saved the email message in the drafts folder.");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail send: the email message is queued in the outbox. It is ready to send.");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail failed: the email message was not saved or queued, possibly due to an error.");
+            break;
+        default:
+            NSLog(@"Mail not sent.");
+            break;
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+#pragma mark - MFMessageComposeViewController delegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    
+    switch (result) {
+        case MessageComposeResultCancelled:
+            NSLog(@"Cancelled");
+            break;
+        case MessageComposeResultFailed:
+            NSLog(@"unknown error sending m");
+            break;
+        case MessageComposeResultSent:
+            NSLog(@"Message sent successfully");
+            break;
+        default:
+            break;
+    }
+    
 }
 
 #pragma mark - other methods
