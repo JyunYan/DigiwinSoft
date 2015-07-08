@@ -10,7 +10,7 @@
 #import "MCustGuide.h"
 
 @interface MTasksDeployedViewController : UIViewController
-
+@property (nonatomic, strong) MCustGuide* guide;
 - (id)initWithCustGuide:(MCustGuide*) custGuide;
 
 @end

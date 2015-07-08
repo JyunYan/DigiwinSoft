@@ -25,8 +25,6 @@
 
 @property (nonatomic, strong) NSMutableArray* activityArray;
 
-@property (nonatomic, strong) MCustGuide* guide;
-
 @property (nonatomic, strong) CustomIOSAlertView *customIOSAlertView;
 
 @end
