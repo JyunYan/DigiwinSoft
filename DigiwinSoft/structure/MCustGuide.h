@@ -22,6 +22,8 @@
 @property (nonatomic, strong) NSString* fromIssueID;
 @property (nonatomic, strong) NSString* fromSubject;
 
+@property (nonatomic, strong) NSString* cre_dte;
+
 @property (nonatomic, strong) MPhenomenon* fromPhen;
 @property (nonatomic, strong) MIssue* fromIssue;
 

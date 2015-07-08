@@ -122,7 +122,7 @@
     if (indexPath.row==0) {
         return 320.0f;
     }
-    return 90.0f;
+    return 110.0f;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -141,7 +141,8 @@
         if (cell==nil) {
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
         }
-
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        
         _btnNotStart=[[UIButton alloc]initWithFrame:CGRectMake(15,10, 75, 24)];
         _btnNotStart.backgroundColor=[UIColor clearColor];
         _btnNotStart.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
@@ -205,6 +206,9 @@
         txtUnit.backgroundColor=[UIColor clearColor];
         txtUnit.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
         txtUnit.layer.borderWidth=2;
+        txtUnit.placeholder = @"單位";
+        txtUnit.textAlignment=NSTextAlignmentCenter;
+        [txtUnit setFont:[UIFont systemFontOfSize:12]];
         [cell addSubview:txtUnit];
         
         lab=[[UILabel alloc]initWithFrame:CGRectMake(15, textView.frame.origin.y+textView.frame.size.height+50, 50, 25)];
@@ -236,31 +240,31 @@
         cell.lab.backgroundColor=[UIColor clearColor];
         cell.lab.font = [UIFont systemFontOfSize:12];
         cell.lab.textColor=[UIColor blackColor];
-        cell.lab.frame=CGRectMake(15, 0, 115, 16);
+        cell.lab.frame=CGRectMake(15, 5, 115, 16);
 
         cell.labState.text=@"狀態";
         cell.labState.backgroundColor=[UIColor clearColor];
         cell.labState.font = [UIFont systemFontOfSize:12];
         cell.labState.textColor=[UIColor blackColor];
-        cell.labState.frame=CGRectMake(15, 18, 115, 16);
+        cell.labState.frame=CGRectMake(15, 25, 115, 16);
         
         cell.labReason.text=@"原因";
         cell.labReason.backgroundColor=[UIColor clearColor];
         cell.labReason.font = [UIFont systemFontOfSize:12];
         cell.labReason.textColor=[UIColor blackColor];
-        cell.labReason.frame=CGRectMake(15, 36, 115, 16);
+        cell.labReason.frame=CGRectMake(15, 45, 115, 16);
         
         cell.labValueT.text=@"實際值";
         cell.labValueT.backgroundColor=[UIColor clearColor];
         cell.labValueT.font = [UIFont systemFontOfSize:12];
         cell.labValueT.textColor=[UIColor blackColor];
-        cell.labValueT.frame=CGRectMake(15, 54, 115, 16);
+        cell.labValueT.frame=CGRectMake(15, 65, 115, 16);
         
         cell.labFinishDay.text=@"完成日期";
         cell.labFinishDay.backgroundColor=[UIColor clearColor];
         cell.labFinishDay.font = [UIFont systemFontOfSize:12];
         cell.labFinishDay.textColor=[UIColor blackColor];
-        cell.labFinishDay.frame=CGRectMake(15, 72, 115, 16);
+        cell.labFinishDay.frame=CGRectMake(15, 85, 115, 16);
         
         return cell;
     }

@@ -123,10 +123,21 @@
     label = [self createTextAtView:self frame:CGRectMake(230,155,620,55) text:self.mTarget.name color:self.darkGrayColor fontSize:18];
     label.textAlignment = NSTextAlignmentCenter;
     
+    // 計量表上方字樣
+    label = [self createTextAtView:self frame:CGRectMake(259,290,64,58) text:self.mTarget.valueR color:self.redColor fontSize:10];
+    label.textAlignment = NSTextAlignmentCenter;
+    label = [self createTextAtView:self frame:CGRectMake(421,290,64,58) text:self.mTarget.bottom color:self.redColor fontSize:10];
+    label.textAlignment = NSTextAlignmentCenter;
+    label = [self createTextAtView:self frame:CGRectMake(595,290,64,58) text:self.mTarget.avg color:self.redColor fontSize:10];
+    label.textAlignment = NSTextAlignmentCenter;
+    label = [self createTextAtView:self frame:CGRectMake(759,290,64,58) text:self.mTarget.top color:self.redColor fontSize:10];
+    label.textAlignment = NSTextAlignmentCenter;
+    
     [self createTextAtView:self frame:CGRectMake(242,702, 104,37) text:@"自己" color:self.grayColor fontSize:12];
     [self createTextAtView:self frame:CGRectMake(437,702, 104,37) text:@"低標" color:self.grayColor fontSize:12];
     [self createTextAtView:self frame:CGRectMake(629,702, 104,37) text:@"均標" color:self.grayColor fontSize:12];
     [self createTextAtView:self frame:CGRectMake(825,702, 104,37) text:@"頂標" color:self.grayColor fontSize:12];
+    
     //
     //長灰線
     [self createRectAtView:self frame:CGRectMake(143,631,800,4) color:[UIColor colorWithRed:187/255.0 green:187/255.0 blue:187/255.0 alpha:187/255.0]];
@@ -147,18 +158,6 @@
     NSString* period = [NSString stringWithFormat:@"%d/%02d ~ %d/%02d", p_year, p_month, n_year, n_month];
     
     label = [self createTextAtView:self frame:CGRectMake(290,900,500,56) text:period color:self.darkGrayColor fontSize:16];
-    label.textAlignment = NSTextAlignmentCenter;
-    
-    
-    
-    
-    label = [self createTextAtView:self frame:CGRectMake(259,290,64,58) text:self.mTarget.valueR color:self.redColor fontSize:10];
-    label.textAlignment = NSTextAlignmentCenter;
-    label = [self createTextAtView:self frame:CGRectMake(421,290,64,58) text:self.mTarget.bottom color:self.redColor fontSize:10];
-    label.textAlignment = NSTextAlignmentCenter;
-    label = [self createTextAtView:self frame:CGRectMake(595,290,64,58) text:self.mTarget.avg color:self.redColor fontSize:10];
-    label.textAlignment = NSTextAlignmentCenter;
-    label = [self createTextAtView:self frame:CGRectMake(759,290,64,58) text:self.mTarget.top color:self.redColor fontSize:10];
     label.textAlignment = NSTextAlignmentCenter;
     
     

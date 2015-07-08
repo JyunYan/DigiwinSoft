@@ -491,6 +491,208 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
+#pragma mark - 我的任務
+
+- (NSArray*)loadMyMissionsWithIndex:(NSInteger)index
+{
+    NSMutableArray* missions = [NSMutableArray new];
+    
+    BOOL release;
+    NSString* status;
+    if(index == 0){         //待佈屬任務
+        release = NO;
+        status = @"0";
+    }else if(index == 1){   //進度回報
+        release = YES;
+        status = @"0";
+    }else if(index == 2){   //已完成任務
+        release = YES;
+        status = @"2";
+    }else{
+        return missions;
+    }
+    
+    NSArray* array = [self loadMyGuideMissionsWithRelese:release status:status];
+    [missions addObjectsFromArray:array];
+    
+    array = [self loadMyActivityMissionWithRelese:release status:status];
+    [missions addObjectsFromArray:array];
+
+    array = [self loadMyWorkItemMissionWithRelese:release status:status];
+    [missions addObjectsFromArray:array];
+    
+    // sort by created date
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"cre_dte" ascending:YES];  // YES:升冪 NO:降冪
+    NSArray *descriptors = [NSArray arrayWithObject:descriptor];
+    [missions sortUsingDescriptors:descriptors];
+    
+    return missions;
+}
+
+- (NSArray*)loadMyGuideMissionsWithRelese:(BOOL)brelease status:(NSString*)status
+{
+    NSMutableArray* array = [NSMutableArray new];
+
+    NSString* rel = brelease ? @"1" : @"0";
+    NSString* empid = [MDirector sharedInstance].currentUser.uuid;
+    NSString* sql = @"select * from U_GUIDE as ug inner join U_TARGET as ut on ug.TAR_ID = ut.ID where ug.EMP_ID = ? and ug.RELEASE = ? ";
+    if(!status)
+        return array;
+    else if([status isEqualToString:@"2"])
+        sql = [sql stringByAppendingString:@"and ug.STATUS = 2"];   //已完成
+    else
+        sql = [sql stringByAppendingString:@"and ug.STATUS <> 2"];  //未開始or進行中
+    
+    FMResultSet* rs = [self.db executeQuery:sql, empid, rel];
+    while ([rs next]) {
+        MCustGuide* guide = [MCustGuide new];
+        guide.uuid = [rs stringForColumnIndex:0];
+        guide.companyID = [rs stringForColumn:@"COMP_ID"];
+        guide.gui_uuid = [rs stringForColumn:@"GUI_M_ID"];
+        guide.name = [rs stringForColumnIndex:5];
+        guide.desc = [rs stringForColumn:@"DESCRIPTION"];
+        guide.bRelease = [rs boolForColumn:@"RELEASE"];
+        guide.status = [rs stringForColumn:@"STATUS"];
+        guide.cre_dte = [rs stringForColumn:@"CREATE_DATE"];
+        
+        // 指標
+        MCustTarget* target = guide.custTaregt;
+        target.uuid = [rs stringForColumn:@"TAR_ID"];
+        target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
+        target.name = [rs stringForColumnIndex:15];
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.startDate = [rs stringForColumn:@"START_DATE"];
+        target.completeDate = [rs stringForColumn:@"COMPLETED"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+        
+        [self loadTargetDetailWithCustTarget:target];
+        
+        
+        // 緣起1
+        NSString* phenId = [rs stringForColumn:@"FROM_PHEN_ID"];
+        guide.fromPhen = [self loadPhenWithID:phenId];
+        
+        // 緣起2
+        NSString* issueId = [rs stringForColumn:@"FROM_ISS_ID"];
+        guide.fromIssue = [self loadIssueWithID:issueId];
+        
+        // 負責人
+        NSString* empid = [rs stringForColumn:@"EMP_ID"];
+        guide.manager = [self loadEmployeeWithID:empid];
+        
+        // 關鍵活動
+        [guide.activityArray addObjectsFromArray:[self loadCustActivityArrayWithGuide:guide]];
+        
+        [array addObject:guide];
+    }
+    return array;
+}
+
+- (NSArray*)loadMyActivityMissionWithRelese:(BOOL)brelease status:(NSString*)status
+{
+    NSMutableArray* array = [NSMutableArray new];
+    
+    NSString* rel = brelease ? @"1" : @"0";
+    NSString* empid = [MDirector sharedInstance].currentUser.uuid;
+    NSString* sql = @"select ua.*, ut.* from U_GUIDE as ug inner join U_ACTIVITY as ua on ug.ID = ua.GUIDE_ID inner join U_TARGET as ut on ua.TAR_ID = ut.ID where ug.RELEASE = ? and ua.EMP_ID = ? ";
+    if(!status)
+        return array;
+    else if([status isEqualToString:@"2"])
+        sql = [sql stringByAppendingString:@"and ua.STATUS = 2"];   //已完成
+    else
+        sql = [sql stringByAppendingString:@"and ua.STATUS <> 2"];  //未開始or進行中
+    
+    FMResultSet* rs = [self.db executeQuery:sql, rel, empid];
+    while ([rs next]) {
+        
+        MCustActivity* act = [MCustActivity new];
+        act.uuid = [rs stringForColumnIndex:0];
+        act.name = [rs stringForColumnIndex:4];
+        act.desc = [rs stringForColumn:@"DESCRIPTION"];
+        act.index = [rs stringForColumn:@"INDEX"];
+        act.previos = [rs stringForColumn:@"PREVIOS"];
+        act.status = [rs stringForColumn:@"STATUS"];
+        act.comp_id = [rs stringForColumn:@"COMP_ID"];
+        act.guide_id = [rs stringForColumn:@"GUIDE_ID"];
+        act.act_m_id = [rs stringForColumn:@"ACT_M_ID"];
+        act.cre_dte = [rs stringForColumn:@"CREATE_DATE"];
+        
+        // 指標
+        MCustTarget* target = act.custTarget;
+        target.uuid = [rs stringForColumn:@"TAR_ID"];
+        target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
+        target.name = [rs stringForColumnIndex:14];
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.startDate = [rs stringForColumn:@"START_DATE"];
+        target.completeDate = [rs stringForColumn:@"COMPLETED"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+        
+        [self loadTargetDetailWithCustTarget:target];
+        
+        // 負責人
+        NSString* empid = [rs stringForColumn:@"EMP_ID"];
+        act.manager = [self loadEmployeeWithID:empid];
+        
+        // 工作項目
+        [act.workItemArray addObjectsFromArray:[self loadCustWorkItemArrayWithActivity:act]];
+        
+        [array addObject:act];
+    }
+    return array;
+}
+
+- (NSArray*)loadMyWorkItemMissionWithRelese:(BOOL)brelease status:(NSString*)status
+{
+    NSMutableArray* array = [NSMutableArray new];
+    
+    NSString* rel = brelease ? @"1" : @"0";
+    NSString* empid = [MDirector sharedInstance].currentUser.uuid;
+    NSString* sql = @"select uw.*, ut.* from U_GUIDE as ug inner join U_WORK_ITEM as uw on ug.ID = uw.GUIDE_ID inner join U_TARGET as ut on uw.TAR_ID = ut.ID where ug.RELEASE = ? and uw.EMP_ID = ? ";
+    if(!status)
+        return array;
+    else if([status isEqualToString:@"2"])
+        sql = [sql stringByAppendingString:@"and uw.STATUS = 2"];   //已完成
+    else
+        sql = [sql stringByAppendingString:@"and uw.STATUS <> 2"];  //未開始or進行中
+    
+    FMResultSet* rs = [self.db executeQuery:sql, rel, empid];
+    while ([rs next]) {
+        
+        MCustWorkItem* item = [MCustWorkItem new];
+        item.uuid = [rs stringForColumnIndex:0];
+        item.name = [rs stringForColumnIndex:5];
+        item.desc = [rs stringForColumn:@"DESCRIPTION"];
+        item.index = [rs stringForColumn:@"INDEX"];
+        item.previos = [rs stringForColumn:@"PREVIOS"];
+        item.status = [rs stringForColumn:@"STATUS"];
+        item.comp_id = [rs stringForColumn:@"COMP_ID"];
+        item.guide_id = [rs stringForColumn:@"GUIDE_ID"];
+        item.act_id = [rs stringForColumn:@"ACT_ID"];
+        item.wi_m_id = [rs stringForColumn:@"WI_M_ID"];
+        item.cre_dte = [rs stringForColumn:@"CREATE_DATE"];
+        
+        // 指標
+        MCustTarget* target = item.custTarget;
+        target.uuid = [rs stringForColumn:@"TAR_ID"];
+        target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
+        target.name = [rs stringForColumnIndex:15];
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.startDate = [rs stringForColumn:@"START_DATE"];
+        target.completeDate = [rs stringForColumn:@"COMPLETED"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+        
+        [self loadTargetDetailWithCustTarget:target];
+        
+        // 負責人
+        NSString* empid = [rs stringForColumn:@"EMP_ID"];
+        item.manager = [self loadEmployeeWithID:empid];
+        
+        [array addObject:item];
+    }
+    
+    return array;
+}
+
 #pragma mark - 我的規劃 相關
 
 // p15-1, load 我的規劃
@@ -606,6 +808,7 @@ static MDataBaseManager* _director = nil;
         guide.desc = [rs stringForColumn:@"DESCRIPTION"];
         guide.bRelease = [rs boolForColumn:@"RELEASE"];
         guide.status = [rs stringForColumn:@"STATUS"];
+        guide.cre_dte = [rs stringForColumn:@"CREATE_DATE"];
         
         // 指標
         MCustTarget* target = guide.custTaregt;
@@ -659,6 +862,7 @@ static MDataBaseManager* _director = nil;
         act.comp_id = [rs stringForColumn:@"COMP_ID"];
         act.guide_id = [rs stringForColumn:@"GUIDE_ID"];
         act.act_m_id = [rs stringForColumn:@"ACT_M_ID"];
+        act.cre_dte = [rs stringForColumn:@"CREATE_DATE"];
         
         // 指標
         MCustTarget* target = act.custTarget;
@@ -707,6 +911,7 @@ static MDataBaseManager* _director = nil;
         item.guide_id = [rs stringForColumn:@"GUIDE_ID"];
         item.act_id = [rs stringForColumn:@"ACT_ID"];
         item.wi_m_id = [rs stringForColumn:@"WI_M_ID"];
+        item.cre_dte = [rs stringForColumn:@"CREATE_DATE"];
         
         // 指標
         MCustTarget* target = item.custTarget;

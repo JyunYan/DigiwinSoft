@@ -259,8 +259,6 @@
         UIImageView* thumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(50, 13, 54, 54)];
         thumbnail.tag = TAG_FOR_THUMBNAIL;
         thumbnail.layer.cornerRadius = thumbnail.frame.size.width / 2;
-        thumbnail.layer.borderColor = [UIColor grayColor].CGColor;
-        thumbnail.layer.borderWidth = 1.0f;
         thumbnail.clipsToBounds = YES;
         //thumbnail.layer.masksToBounds = YES;
         [cell addSubview:thumbnail];
