@@ -645,7 +645,8 @@
         default:
             break;
     }
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
+  
 }
 
 #pragma mark - other methods
