@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MActivity.h"
 
-@interface MGoalSettingViewController : UIViewController
+@interface MGoalSettingViewController : UITableViewController
 
 - (id)initWithActivity:(MActivity*) act;
 
