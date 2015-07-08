@@ -9,6 +9,7 @@
 #import "MMyTaskViewController.h"
 #import "AppDelegate.h"
 #import "MTasksDeployedViewController.h"
+#import "MReportViewController.h"
 
 #define TAG_IMAGE_VIEW_TYPE     201
 #define TAG_LABEL_TASK_NAME     202
@@ -189,6 +190,15 @@
     if (segmentedIndex == 0) {
         MTasksDeployedViewController* vc = [[MTasksDeployedViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
+    }else if (segmentedIndex == 1)
+    {
+        MReportViewController* MReportVC = [[MReportViewController alloc] init];
+        UINavigationController* MReportNav = [[UINavigationController alloc] initWithRootViewController:MReportVC];
+        MReportNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+        [self.navigationController presentViewController:MReportNav animated:YES completion:nil];
+    }else
+    {
+        
     }
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

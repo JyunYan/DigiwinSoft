@@ -13,6 +13,8 @@
 		382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */; };
 		382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */; };
 		382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */; };
+		383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F831B4BD9CD00472513 /* MReportViewController.m */; };
+		383E2F871B4BF32800472513 /* MReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F861B4BF32800472513 /* MReportTableViewCell.m */; };
 		38E6F3FE1B411EAF00245DA1 /* MLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E6F3FD1B411EAF00245DA1 /* MLoginViewController.m */; };
 		3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03AA111B3B9B1900923ABB /* MEventSelectViewController.m */; };
 		3A03AA1B1B3BD5CA00923ABB /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A03AA141B3BD5CA00923ABB /* downArrow.png */; };
@@ -169,6 +171,10 @@
 		382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustryRaidersTableViewCell.m; path = structure/MIndustryRaidersTableViewCell.m; sourceTree = "<group>"; };
 		382998361B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaidersDescriptionTableViewCell.h; path = structure/MRaidersDescriptionTableViewCell.h; sourceTree = "<group>"; };
 		382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersDescriptionTableViewCell.m; path = structure/MRaidersDescriptionTableViewCell.m; sourceTree = "<group>"; };
+		383E2F821B4BD9CD00472513 /* MReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MReportViewController.h; sourceTree = "<group>"; };
+		383E2F831B4BD9CD00472513 /* MReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MReportViewController.m; sourceTree = "<group>"; };
+		383E2F851B4BF32800472513 /* MReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MReportTableViewCell.h; path = structure/MReportTableViewCell.h; sourceTree = "<group>"; };
+		383E2F861B4BF32800472513 /* MReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MReportTableViewCell.m; path = structure/MReportTableViewCell.m; sourceTree = "<group>"; };
 		38E6F3FC1B411EAF00245DA1 /* MLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLoginViewController.h; sourceTree = "<group>"; };
 		38E6F3FD1B411EAF00245DA1 /* MLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLoginViewController.m; sourceTree = "<group>"; };
 		3A03AA101B3B9B1900923ABB /* MEventSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEventSelectViewController.h; sourceTree = "<group>"; };
@@ -493,6 +499,8 @@
 				3AB4CE191B32848B00143374 /* MMyTaskViewController.m */,
 				3A1363AC1B4A186000BA05F2 /* MTasksDeployedViewController.h */,
 				3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */,
+				383E2F821B4BD9CD00472513 /* MReportViewController.h */,
+				383E2F831B4BD9CD00472513 /* MReportViewController.m */,
 			);
 			path = "我的任務";
 			sourceTree = "<group>";
@@ -749,6 +757,8 @@
 				382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */,
 				382998361B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.h */,
 				382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */,
+				383E2F851B4BF32800472513 /* MReportTableViewCell.h */,
+				383E2F861B4BF32800472513 /* MReportTableViewCell.m */,
 				DC1014491B32985600EF7A6F /* MUser.h */,
 				DC10144A1B32985600EF7A6F /* MUser.m */,
 				DC10144C1B32B66200EF7A6F /* MGuide.h */,
@@ -1005,6 +1015,7 @@
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
 				DCF46B241B43C2F400C771BB /* MCustTarget.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
+				383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */,
 				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
 				DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */,
@@ -1029,6 +1040,7 @@
 				DCF46B2A1B454FA800C771BB /* MCustWorkItem.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
 				DCF46ACD1B4236CB00C771BB /* MTarget.m in Sources */,
+				383E2F871B4BF32800472513 /* MReportTableViewCell.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
 				3A03AA1F1B3BD5CA00923ABB /* UIDownPicker.m in Sources */,
 				3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */,
