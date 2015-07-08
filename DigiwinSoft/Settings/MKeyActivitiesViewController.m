@@ -160,10 +160,12 @@
     
     posX = personInChargeLabel.frame.origin.x + personInChargeLabel.frame.size.width;
 
-    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 25, 25)];
+    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 30, 30)];
     imageView.backgroundColor = [UIColor clearColor];
 //    imageView.image = [self loadLocationImage:nil];;
-    imageView.image = [UIImage imageNamed:@"Button-Favorite-List-Normal.png"];
+    imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
+    imageView.layer.cornerRadius = imageView.frame.size.width / 2.;
+    imageView.layer.masksToBounds = YES;
     [view addSubview:imageView];
 
     

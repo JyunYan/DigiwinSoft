@@ -134,6 +134,8 @@
     tblActivity.separatorStyle=UITableViewCellSeparatorStyleNone;
     tblActivity.tag=101;
     tblActivity.bounces=NO;
+    tblActivity.layer.borderColor = [UIColor grayColor].CGColor;
+    tblActivity.layer.borderWidth = 1.f;
     [self.view addSubview:tblActivity];
     
     //default cell selected
@@ -141,12 +143,14 @@
     [tblActivity selectRowAtIndexPath:indexPath animated:NO  scrollPosition:UITableViewScrollPositionBottom];
     
     //tblWorkItem
-    tblWorkItem=[[UITableView alloc]initWithFrame:CGRectMake(20+tblActivity.frame.size.width,imgGray.frame.origin.y+90,(screenWidth/2)-20, screenHeight-(imgGray.frame.origin.y+90))];
+    tblWorkItem=[[UITableView alloc]initWithFrame:CGRectMake(20+tblActivity.frame.size.width - 1,imgGray.frame.origin.y+90,(screenWidth/2)-20, screenHeight-(imgGray.frame.origin.y+90))];
     tblWorkItem.delegate=self;
     tblWorkItem.dataSource = self;
     tblWorkItem.separatorStyle=UITableViewCellSeparatorStyleNone;
     tblWorkItem.tag=102;
     tblWorkItem.bounces=NO;
+    tblWorkItem.layer.borderColor = [UIColor grayColor].CGColor;
+    tblWorkItem.layer.borderWidth = 1.f;
     [self.view addSubview:tblWorkItem];
 
 

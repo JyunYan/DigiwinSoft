@@ -124,7 +124,9 @@
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 60, 60)];
     imageView.backgroundColor = [UIColor clearColor];
 //    imageView.image = [self loadLocationImage:_user.thumbnail];
-    imageView.image = [UIImage imageNamed:@"Button-Favorite-List-Normal.png"];
+    imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
+    imageView.layer.cornerRadius = imageView.frame.size.width / 2;
+    imageView.clipsToBounds = YES;
     [header addSubview:imageView];
     
     
@@ -174,7 +176,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45;
+    return 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -195,16 +197,17 @@
             [cell addSubview:up];
         }
         
-        UIImageView* numImageView = [[UIImageView alloc] initWithFrame:CGRectMake(tableWidth - 50, 10, 30, 30)];
+        UIImageView* numImageView = [[UIImageView alloc] initWithFrame:CGRectMake(tableWidth - 50, 12, 20, 20)];
         numImageView.tag = TAG_IMAGEVIEW_NUM;
         numImageView.image = [UIImage imageNamed:@"icon_red_circle.png"];
         numImageView.hidden = YES;
         [cell addSubview:numImageView];
         
-        UILabel* numLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        UILabel* numLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
         numLabel.tag = TAG_LABEL_NUM;
         numLabel.textColor = [UIColor whiteColor];
         numLabel.textAlignment = NSTextAlignmentCenter;
+        numLabel.font = [UIFont systemFontOfSize:10.];
         [numImageView addSubview:numLabel];
     }
     cell.backgroundColor = [UIColor blackColor];
