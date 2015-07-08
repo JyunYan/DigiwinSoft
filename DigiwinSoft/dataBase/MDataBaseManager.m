@@ -493,17 +493,32 @@ static MDataBaseManager* _director = nil;
 
 #pragma mark - 我的任務
 
-- (NSArray*)loadMyMissionsWithRelese:(BOOL)brelease status:(NSString*)status
+- (NSArray*)loadMyMissionsWithIndex:(NSInteger)index
 {
     NSMutableArray* missions = [NSMutableArray new];
     
-    NSArray* array = [self loadMyGuideMissionsWithRelese:brelease status:status];
+    BOOL release;
+    NSString* status;
+    if(index == 0){         //待佈屬任務
+        release = NO;
+        status = @"0";
+    }else if(index == 1){   //進度回報
+        release = YES;
+        status = @"0";
+    }else if(index == 2){   //已完成任務
+        release = YES;
+        status = @"2";
+    }else{
+        return missions;
+    }
+    
+    NSArray* array = [self loadMyGuideMissionsWithRelese:release status:status];
     [missions addObjectsFromArray:array];
     
-    array = [self loadMyActivityMissionWithRelese:brelease status:status];
+    array = [self loadMyActivityMissionWithRelese:release status:status];
     [missions addObjectsFromArray:array];
 
-    array = [self loadMyWorkItemMissionWithRelese:brelease status:status];
+    array = [self loadMyWorkItemMissionWithRelese:release status:status];
     [missions addObjectsFromArray:array];
     
     // sort by created date

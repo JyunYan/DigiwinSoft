@@ -62,7 +62,7 @@
 
 #pragma mark - 我的任務
 // get 我的任務 list
-- (NSArray*)loadMyMissionsWithRelese:(BOOL)brelease status:(NSString*)status;
+- (NSArray*)loadMyMissionsWithIndex:(NSInteger)index;
 - (NSArray*)loadMyGuideMissionsWithRelese:(BOOL)brelease status:(NSString*)status;
 - (NSArray*)loadMyActivityMissionWithRelese:(BOOL)brelease status:(NSString*)status;
 - (NSArray*)loadMyWorkItemMissionWithRelese:(BOOL)brelease status:(NSString*)status;
