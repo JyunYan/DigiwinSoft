@@ -60,6 +60,14 @@
 // get 員工array
 - (NSArray*)loadEmployeeArray;
 
+#pragma mark - 我的任務
+// get 我的任務 list
+- (NSArray*)loadMyMissionsWithRelese:(BOOL)brelease status:(NSString*)status;
+- (NSArray*)loadMyGuideMissionsWithRelese:(BOOL)brelease status:(NSString*)status;
+- (NSArray*)loadMyActivityMissionWithRelese:(BOOL)brelease status:(NSString*)status;
+- (NSArray*)loadMyWorkItemMissionWithRelese:(BOOL)brelease status:(NSString*)status;
+
+#pragma mark - 我的規劃/我的攻略
 // get 我的規劃/我的攻略
 - (NSArray*)loadMyPlanArray;
 - (NSArray*)loadMyRaidersArray;

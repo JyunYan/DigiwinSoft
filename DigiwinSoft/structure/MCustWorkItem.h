@@ -15,6 +15,8 @@
 @property (nonatomic, strong) NSString* wi_m_id;
 @property (nonatomic, strong) NSString* status;
 
+@property (nonatomic, strong) NSString* cre_dte;
+
 @property (nonatomic, strong) MCustTarget* custTarget;
 
 @end

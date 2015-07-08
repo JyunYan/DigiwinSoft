@@ -74,7 +74,7 @@
     
     //Label
     UILabel *labAvgTarget=[[UILabel alloc]initWithFrame:CGRectMake(20,80, 85, 15)];
-    labAvgTarget.text=@"恆量指標設定";
+    labAvgTarget.text=@"衡量指標設定";
     labAvgTarget.backgroundColor=[UIColor whiteColor];
     [labAvgTarget setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labAvgTarget];
@@ -94,9 +94,13 @@
     
     //UITextField
     UITextField *txtName=[[UITextField alloc]initWithFrame:CGRectMake(105,118, 160, 29)];
-    txtName.borderStyle=UITextBorderStyleLine;
+    txtName.textColor = [UIColor lightGrayColor];
     txtName.text=_guide.target.name;
-    txtName.enabled=NO;
+    txtName.userInteractionEnabled=NO;
+    txtName.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    txtName.layer.borderWidth = 1.6;
+    txtName.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
+    txtName.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:txtName];
     
     
@@ -115,7 +119,7 @@
     txtInit.text=_guide.target.valueR;
     txtInit.userInteractionEnabled=NO;
     txtInit.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    txtInit.layer.borderWidth = 2.;
+    txtInit.layer.borderWidth = 1.6;
     
     [self.view addSubview:txtInit];
     
@@ -185,7 +189,7 @@
     [self.view addSubview:labTargetDay];
 
     //UITextField
-    txtTargetDay=[[UITextField alloc]initWithFrame:CGRectMake(105,308, 120, 29)];
+    txtTargetDay=[[UITextField alloc]initWithFrame:CGRectMake(105,308, 140, 29)];
     txtTargetDay.borderStyle=UITextBorderStyleLine;
     txtTargetDay.tag=101;
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -194,6 +198,8 @@
                                                object:txtTargetDay];
     txtTargetDay.rightViewMode = UITextFieldViewModeAlways;
     txtTargetDay.rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+    txtTargetDay.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
+    txtTargetDay.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:txtTargetDay];
 
 }

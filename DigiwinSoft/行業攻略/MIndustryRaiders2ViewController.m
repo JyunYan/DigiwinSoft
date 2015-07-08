@@ -300,11 +300,22 @@
     [delegate toggleLeft];
 }
 - (void)actionAddMyList:(id)sender{
+    
+    BOOL b = NO;
     for (MGuide* guide in aryList) {
         if (guide.isCheck) {
+            b = YES;
             [[MDataBaseManager sharedInstance]insertGuide:guide from:_from];
             NSLog(@"加入:%@至DataBase",guide.name);
         }
+    }
+    
+    if(b){
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:@"成功加入我的規劃" delegate:nil cancelButtonTitle:@"確定" otherButtonTitles:nil];
+        [alert show];
+    }else{
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:@"請勾選對策" delegate:nil cancelButtonTitle:@"確定" otherButtonTitles:nil];
+        [alert show];
     }
 }
 

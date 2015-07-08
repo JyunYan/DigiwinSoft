@@ -23,7 +23,7 @@
 #define TAG_BUTTON_PERSON_IN_CHARGE 3000
 
 #define TAG_BUTTON_TELEPHONE 4000
-#define TAG_BUTTON_WEIBO 5000
+#define TAG_BUTTON_WEIXIN 5000
 #define TAG_BUTTON_LINE 6000
 #define TAG_BUTTON_EMAIL 7000
 #define TAG_BUTTON_SMS 8000
@@ -254,10 +254,10 @@
     }
 }
 
-- (void)actionWeibo:(UIButton *)button
+- (void)actionWeixin:(UIButton *)button
 {
     NSInteger tag = button.tag;
-    NSInteger index = tag - TAG_BUTTON_WEIBO;
+    NSInteger index = tag - TAG_BUTTON_WEIXIN;
     MEvent* event = [_eventArray objectAtIndex:index];
 
 }
@@ -505,13 +505,13 @@
         
         buttonPosX = (view.frame.size.width / 5 - buttonWidth) / 2 + view.frame.size.width / 5;
         
-        UIButton* weiboButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPosX, buttonPosY, buttonWidth, buttonHeight)];
-        weiboButton.tag = TAG_BUTTON_WEIBO + row;
-        weiboButton.backgroundColor = [UIColor clearColor];
-        [weiboButton setImage:[UIImage imageNamed:@"icon_weibo.png"] forState:UIControlStateNormal];
-        [weiboButton setTintColor:[UIColor whiteColor]];
-        [weiboButton addTarget:self action:@selector(actionWeibo:) forControlEvents:UIControlEventTouchDown];
-        [cell addSubview:weiboButton];
+        UIButton* weixinButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonPosX, buttonPosY, buttonWidth, buttonHeight)];
+        weixinButton.tag = TAG_BUTTON_WEIXIN + row;
+        weixinButton.backgroundColor = [UIColor clearColor];
+        [weixinButton setImage:[UIImage imageNamed:@"icon_weixin.png"] forState:UIControlStateNormal];
+        [weixinButton setTintColor:[UIColor whiteColor]];
+        [weixinButton addTarget:self action:@selector(actionWeixin:) forControlEvents:UIControlEventTouchDown];
+        [cell addSubview:weixinButton];
         
         
         buttonPosX = (view.frame.size.width / 5 - buttonWidth) / 2 + view.frame.size.width * 2 / 5;
@@ -571,7 +571,7 @@
     UIView* barView = [cell viewWithTag:TAG_BAR_VIEW + row];
     
     UIButton* telButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_TELEPHONE + row];
-    UIButton* weiboButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_WEIBO + row];
+    UIButton* weixinButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_WEIXIN + row];
     UIButton* lineButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_LINE + row];
     UIButton* emailButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_EMAIL + row];
     UIButton* smsButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_SMS + row];
@@ -579,7 +579,7 @@
     barView.hidden = !(row == _showCellBarIndex);
     
     telButton.hidden = !(row == _showCellBarIndex);
-    weiboButton.hidden = !(row == _showCellBarIndex);
+    weixinButton.hidden = !(row == _showCellBarIndex);
     lineButton.hidden = !(row == _showCellBarIndex);
     emailButton.hidden = !(row == _showCellBarIndex);
     smsButton.hidden = !(row == _showCellBarIndex);
@@ -645,7 +645,8 @@
         default:
             break;
     }
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
+  
 }
 
 #pragma mark - other methods
