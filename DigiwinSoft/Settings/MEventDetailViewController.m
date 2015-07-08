@@ -33,7 +33,7 @@
     self = [super init];
     if (self) {
         _treasureArray = [NSMutableArray new];
-        for (MActivity* act in actArray) {
+        for (MCustActivity* act in actArray) {
             NSArray* array = [[MDataBaseManager sharedInstance] loadTreasureWithActivity:act];
             [_treasureArray addObjectsFromArray:array];
         }

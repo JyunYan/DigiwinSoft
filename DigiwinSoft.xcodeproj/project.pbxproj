@@ -28,7 +28,6 @@
 		3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9641B3A4F26000F345B /* MMyRaidersViewController.m */; };
 		3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */; };
 		3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A03F96E1B3A60A0000F345B /* QuartzCore.framework */; };
-		3A03F9731B3A60DB000F345B /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */; };
 		3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */; };
 		3A54DDFC1B40DD1100A6849A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */; };
 		3A54EDE11B4636DB00BDA945 /* MCustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */; };
@@ -45,6 +44,7 @@
 		3A7E31EA1B4BD82800790026 /* icon_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7E31E61B4BD82800790026 /* icon_line.png */; };
 		3A7E31EB1B4BD82800790026 /* icon_sms.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7E31E71B4BD82800790026 /* icon_sms.png */; };
 		3A7E31EC1B4BD82800790026 /* icon_weixin.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7E31E81B4BD82800790026 /* icon_weixin.png */; };
+		3A81B9481B4CDAB600EAF996 /* MGoalSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A81B9471B4CDAB600EAF996 /* MGoalSettingViewController.m */; };
 		3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */; };
 		3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */; };
 		3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE101B32831500143374 /* MMonitorMapViewController.m */; };
@@ -197,8 +197,6 @@
 		3A03F96B1B3A5B3E000F345B /* MEventListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEventListViewController.h; sourceTree = "<group>"; };
 		3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEventListViewController.m; sourceTree = "<group>"; };
 		3A03F96E1B3A60A0000F345B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		3A03F9711B3A60DB000F345B /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
-		3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		3A1363AC1B4A186000BA05F2 /* MTasksDeployedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTasksDeployedViewController.h; sourceTree = "<group>"; };
 		3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTasksDeployedViewController.m; sourceTree = "<group>"; };
 		3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -225,6 +223,8 @@
 		3A7E31E61B4BD82800790026 /* icon_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_line.png; sourceTree = "<group>"; };
 		3A7E31E71B4BD82800790026 /* icon_sms.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_sms.png; sourceTree = "<group>"; };
 		3A7E31E81B4BD82800790026 /* icon_weixin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_weixin.png; sourceTree = "<group>"; };
+		3A81B9461B4CDAB600EAF996 /* MGoalSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGoalSettingViewController.h; sourceTree = "<group>"; };
+		3A81B9471B4CDAB600EAF996 /* MGoalSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGoalSettingViewController.m; sourceTree = "<group>"; };
 		3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMyPlanTableViewCell.h; path = CustomViews/MMyPlanTableViewCell.h; sourceTree = "<group>"; };
 		3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMyPlanTableViewCell.m; path = CustomViews/MMyPlanTableViewCell.m; sourceTree = "<group>"; };
 		3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryRaidersViewController.h; sourceTree = "<group>"; };
@@ -434,15 +434,6 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		3A03F9701B3A60DB000F345B /* HMSegmentedControl */ = {
-			isa = PBXGroup;
-			children = (
-				3A03F9711B3A60DB000F345B /* HMSegmentedControl.h */,
-				3A03F9721B3A60DB000F345B /* HMSegmentedControl.m */,
-			);
-			path = HMSegmentedControl;
-			sourceTree = "<group>";
-		};
 		3A711B811B3800C100E94211 /* SWTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -501,6 +492,8 @@
 				3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */,
 				383E2F821B4BD9CD00472513 /* MReportViewController.h */,
 				383E2F831B4BD9CD00472513 /* MReportViewController.m */,
+				3A81B9461B4CDAB600EAF996 /* MGoalSettingViewController.h */,
+				3A81B9471B4CDAB600EAF996 /* MGoalSettingViewController.m */,
 			);
 			path = "我的任務";
 			sourceTree = "<group>";
@@ -538,7 +531,6 @@
 				3A7E31A21B4B5ECA00790026 /* CustomIOSAlertView */,
 				DCF46AB61B41278200C771BB /* iCarousel */,
 				3A03AA131B3BD5CA00923ABB /* DownPicker */,
-				3A03F9701B3A60DB000F345B /* HMSegmentedControl */,
 				3A711B811B3800C100E94211 /* SWTableViewCell */,
 				D06C2D361B381850009D2082 /* FMDatabase */,
 				3AB4CE1F1B32895C00143374 /* MMDrawerController */,
@@ -983,7 +975,7 @@
 			files = (
 				D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */,
 				3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */,
-				3A03F9731B3A60DB000F345B /* HMSegmentedControl.m in Sources */,
+				3A81B9481B4CDAB600EAF996 /* MGoalSettingViewController.m in Sources */,
 				DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */,
 				DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */,
 				DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */,

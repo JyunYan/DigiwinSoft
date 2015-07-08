@@ -10,6 +10,8 @@
 #import "MDirector.h"
 #import "MActivity.h"
 #import "CustomIOSAlertView.h"
+#import "MDesignateResponsibleViewController.h"
+#import "MGoalSettingViewController.h"
 
 
 #define TAG_LABEL_ACTIVITY 100
@@ -72,7 +74,7 @@
     posX = 0;
     posY = topView.frame.origin.y + topView.frame.size.height;
     width = screenWidth;
-    height = screenHeight - posY - navBarHeight + statusBarHeight - 130;
+    height = screenHeight - posY - navBarHeight + statusBarHeight - 47;
     
     UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:listView];
@@ -81,7 +83,7 @@
     posX = 0;
     posY = listView.frame.origin.y + listView.frame.size.height;
     width = screenWidth;
-    height = 130;
+    height = 42;
     
     UIView* bottomView = [self createBottomView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:bottomView];
@@ -115,16 +117,16 @@
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = 30;
     //對策
-    UILabel* countermeasureLael = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 40, height)];
-    countermeasureLael.text = @"對策";
-    countermeasureLael.textColor = [UIColor lightGrayColor];
-    countermeasureLael.font = [UIFont boldSystemFontOfSize:textSize];
-    countermeasureLael.textAlignment = NSTextAlignmentCenter;
-    countermeasureLael.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    countermeasureLael.layer.borderWidth = 1.0;
-    [view addSubview:countermeasureLael];
+    UILabel* countermeasureLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 40, height)];
+    countermeasureLabel.text = @"對策";
+    countermeasureLabel.textColor = [UIColor lightGrayColor];
+    countermeasureLabel.font = [UIFont boldSystemFontOfSize:textSize];
+    countermeasureLabel.textAlignment = NSTextAlignmentCenter;
+    countermeasureLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    countermeasureLabel.layer.borderWidth = 1.0;
+    [view addSubview:countermeasureLabel];
     // 標題
-    posX = countermeasureLael.frame.origin.x + countermeasureLael.frame.size.width + 10;
+    posX = countermeasureLabel.frame.origin.x + countermeasureLabel.frame.size.width + 10;
 
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 80, height)];
     titleLabel.text = _guide.name;
@@ -237,10 +239,10 @@
     [view addSubview:buttonView];
     
     
-    posX = 30;
-    posY = 20;
-    width = buttonView.frame.size.width - posX * 2;
-    height = 30;
+    posX = 1;
+    posY = 0;
+    width = buttonView.frame.size.width / 2 - posX * 2;
+    height = viewHeight - 2;
 
     UIButton* addActButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     addActButton.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
@@ -250,14 +252,14 @@
     [buttonView addSubview:addActButton];
     
     
-    posY = addActButton.frame.origin.y + addActButton.frame.size.height + 20;
+    posX = addActButton.frame.origin.x + addActButton.frame.size.width + 2;
     
-    UIButton* releaseButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    releaseButton.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
-    [releaseButton setTitle:@"發佈" forState:UIControlStateNormal];
-    releaseButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
-    [releaseButton addTarget:self action:@selector(actionRelease:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonView addSubview:releaseButton];
+    UIButton* notifyButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    notifyButton.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
+    [notifyButton setTitle:@"通知" forState:UIControlStateNormal];
+    notifyButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
+    [notifyButton addTarget:self action:@selector(actionNotify:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonView addSubview:notifyButton];
 
 
     return view;
@@ -347,10 +349,13 @@
 
 -(void)showDescAlert:(id)sender
 {
+    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
+    CGFloat screenWidth = screenFrame.size.width;
+
     _customIOSAlertView = [[CustomIOSAlertView alloc] initWithParentView:self.view.superview];
     [_customIOSAlertView setButtonTitles:nil];
     
-    UIView* view = [self createDescView:CGRectMake(0, 0, 300, 300)];
+    UIView* view = [self createDescView:CGRectMake(0, 0, screenWidth, 300)];
     [_customIOSAlertView setContainerView:view];
     [_customIOSAlertView show];    
 }
@@ -371,16 +376,23 @@
     
 }
 
--(void)actionRelease:(id)sender
+-(void)actionNotify:(id)sender
 {
     
 }
 
 -(void)goAppointResponsible:(id)sender
 {
+    /*
     UIButton* button = (UIButton*)sender;
     NSInteger tag = button.tag;
     NSInteger index = tag - TAG_BUTTON_APPOINT_RESPONSIBLE;
+    MActivity* activity = [_activityArray objectAtIndex:index];
+     */
+    MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithGuide:_guide];
+    UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MDesignateResponsibleVC];
+    MIndustryRaidersNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
 }
 
 -(void)goTarget:(id)sender
@@ -388,6 +400,10 @@
     UIButton* button = (UIButton*)sender;
     NSInteger tag = button.tag;
     NSInteger index = tag - TAG_BUTTON_TARGET;
+    MActivity* act = [_activityArray objectAtIndex:index];
+    
+    MGoalSettingViewController* vc = [[MGoalSettingViewController alloc] initWithActivity:act];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)goRaiders:(id)sender
@@ -395,6 +411,7 @@
     UIButton* button = (UIButton*)sender;
     NSInteger tag = button.tag;
     NSInteger index = tag - TAG_BUTTON_RAIDERS;
+    MActivity* activity = [_activityArray objectAtIndex:index];
 }
 
 #pragma mark - Table view data source
