@@ -108,8 +108,8 @@
     
     posX = titleLabel.frame.origin.x + titleLabel.frame.size.width;
     
-    UIButton* goMyTaskButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, 25, 25)];
-    [goMyTaskButton setBackgroundImage:[UIImage imageNamed:@"icon_setting.png"] forState:UIControlStateNormal];
+    UIButton* goMyTaskButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, 30, 30)];
+    [goMyTaskButton setBackgroundImage:[UIImage imageNamed:@"icon_menu_8.png"] forState:UIControlStateNormal];
     [goMyTaskButton addTarget:self action:@selector(goTasksDeployed:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:goMyTaskButton];
 

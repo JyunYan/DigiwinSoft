@@ -9,6 +9,7 @@
 #import "MMyTaskViewController.h"
 #import "AppDelegate.h"
 #import "MTasksDeployedViewController.h"
+#import "MReportViewController.h"
 
 #define TAG_IMAGE_VIEW_TYPE     201
 #define TAG_LABEL_TASK_NAME     202
@@ -36,11 +37,9 @@
 {
     [super viewWillAppear:animated];
      self.title = @"我的任務";
-    
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     _taskDataArry = [[NSMutableArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
-    
     [self loadData];
     [self createSegmentedView];
     [self createTableView];
@@ -77,6 +76,7 @@
     aryRepost=[[NSArray alloc] initWithObjects:@"瓶頸製程工時計算", @"製定最小製造批量標準", @"縮短達交天數", nil];
     //已完成任務
     aryFinish=[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
+    
 }
 #pragma mark - create view
 -(void) addMainMenu
@@ -91,8 +91,11 @@
 
 - (void)createSegmentedView
 {
-    NSArray* array = [[NSArray alloc] initWithObjects:@"待佈署任務", @"進度回報", @"已完成任務", nil];
-    
+    [_segmented removeFromSuperview];
+    NSString *title0=[NSString stringWithFormat:@"待佈署任務(%lu)",(unsigned long)[aryPrepare count]];
+    NSString *title1=[NSString stringWithFormat:@"進度回報(%lu)",(unsigned long)[aryRepost count]];
+    NSString *title2=[NSString stringWithFormat:@"已完成任務(%lu)",(unsigned long)[aryRepost count]];
+    NSArray* array = [[NSArray alloc] initWithObjects:title0,title1,title2, nil];
     _segmented = [[UISegmentedControl alloc] initWithItems:array];
     _segmented.frame = CGRectMake(0, 64, self.view.frame.size.width - 10, 40);
     _segmented.selectedSegmentIndex = 0;
@@ -114,8 +117,6 @@
     imgGray.backgroundColor=[UIColor colorWithRed:194.0/255.0 green:194.0/255.0 blue:194.0/255.0 alpha:1.0];
     [_segmented addSubview:imgGray];
 
-    
-    
     //分隔線
     UILabel* row_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, 1)];
     [row_label setBackgroundColor:[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:0.5]];
@@ -189,6 +190,15 @@
     if (segmentedIndex == 0) {
         MTasksDeployedViewController* vc = [[MTasksDeployedViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
+    }else if (segmentedIndex == 1)
+    {
+        MReportViewController* MReportVC = [[MReportViewController alloc] init];
+        UINavigationController* MReportNav = [[UINavigationController alloc] initWithRootViewController:MReportVC];
+        MReportNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+        [self.navigationController presentViewController:MReportNav animated:YES completion:nil];
+    }else
+    {
+        
     }
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -226,14 +236,6 @@
         case 0:
         {
             [_taskDataArry addObjectsFromArray:aryPrepare];
-            //segmented index0 title
-            [_segmented removeSegmentAtIndex:0 animated:NO];
-            [_segmented insertSegmentWithTitle:@"待佈署任務" atIndex:0 animated:NO];
-            
-            //segmented index1 title
-            NSString *title1=[NSString stringWithFormat:@"進度回報(%lu)",(unsigned long)[aryRepost count]];
-            [_segmented removeSegmentAtIndex:1 animated:NO];
-            [_segmented insertSegmentWithTitle:title1 atIndex:1 animated:NO];
             
             //imgblueBar Animation
             [UIView beginAnimations:nil context:NULL];
@@ -253,15 +255,6 @@
         {
             [_taskDataArry addObjectsFromArray:aryRepost];
             
-            //segmented index0 title
-            NSString *title0=[NSString stringWithFormat:@"待佈署任務(%lu)",(unsigned long)[aryPrepare count]];
-            [_segmented removeSegmentAtIndex:0 animated:NO];
-            [_segmented insertSegmentWithTitle:title0 atIndex:0 animated:NO];
-
-            //segmented index1 title
-            [_segmented removeSegmentAtIndex:1 animated:NO];
-            [_segmented insertSegmentWithTitle:@"進度回報" atIndex:1 animated:NO];
-
             //imgblueBar Animation
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.5];
@@ -280,16 +273,6 @@
         {
             [_taskDataArry addObjectsFromArray:aryFinish];
             
-            //segmented index0 title
-            NSString *title0=[NSString stringWithFormat:@"待佈署任務(%lu)",(unsigned long)[aryPrepare count]];
-            [_segmented removeSegmentAtIndex:0 animated:NO];
-            [_segmented insertSegmentWithTitle:title0 atIndex:0 animated:NO];
-            
-            //segmented index1 title
-            NSString *title1=[NSString stringWithFormat:@"進度回報(%lu)",(unsigned long)[aryRepost count]];
-            [_segmented removeSegmentAtIndex:1 animated:NO];
-            [_segmented insertSegmentWithTitle:title1 atIndex:1 animated:NO];
-            
             //imgblueBar Animation
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.5];
@@ -302,8 +285,6 @@
                                         imgblueBar.frame.size.width,
                                         imgblueBar.frame.size.height);
             [UIView commitAnimations];
-            
-
             break;
         }
         default:

@@ -9,22 +9,24 @@
 /* 指派負責人*/
 
 #import "MDesignateResponsibleViewController.h"
-
+#import "MDataBaseManager.h"
 
 #define UIBarSystemButtonBackArrow          101
-
 #define TAG_FOR_CHECK_BOX                   201
 #define TAG_FOR_LABEL_NAME                  202
 #define TAG_FOR_LABEL_LEVEL                 203
 #define TAG_FOR_LABEL_ARRIVE_DAY            204
 #define TAG_FOR_THUMBNAIL                   205
 
-@interface MDesignateResponsibleViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface MDesignateResponsibleViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate,UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) NSArray* array;    // 員工array
 @property (nonatomic, strong) MGuide* guide;    //對策
-
+@property (nonatomic, strong) NSArray *arySkills;
+@property (nonatomic, strong) UILabel* label2;
+@property (nonatomic, strong) UIPickerView *PickerSkill;
+@property (nonatomic, strong) UIToolbar *toolBar;
 @end
 
 @implementation MDesignateResponsibleViewController
@@ -109,13 +111,14 @@
     [label1 setBackgroundColor:[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:0.5]];
     
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionToPopover:)];
+
+    self.label2 = [[UILabel alloc] initWithFrame:CGRectMake(offset, 0, 60, frame.size.height)];
+    self.label2.text = @"全部";
+    self.label2.textAlignment = NSTextAlignmentCenter;
+    self.label2.userInteractionEnabled = YES;
+    [self.label2 addGestureRecognizer:tap];
     
-    UILabel* label2 = [[UILabel alloc] initWithFrame:CGRectMake(offset, 0, 60, frame.size.height)];
-    label2.text = @"全部";
-    label2.textAlignment = NSTextAlignmentCenter;
-    [label2 addGestureRecognizer:tap];
-    
-    offset += label2.frame.size.width;
+    offset += self.label2.frame.size.width;
     
     UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(offset , 0, frame.size.height, frame.size.height)];
     [button setImage:[UIImage imageNamed:@"icon_search.png"] forState:UIControlStateNormal];
@@ -126,7 +129,7 @@
     UIView* right = [[UIView alloc] initWithFrame:CGRectMake(0, 0, offset, frame.size.height)];
     [right setBackgroundColor:[UIColor clearColor]];
     [right addSubview:label1];
-    [right addSubview:label2];
+    [right addSubview:self.label2];
     [right addSubview:button];
     
     UIView* left = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
@@ -142,6 +145,7 @@
     text_field.leftView = left;
     text_field.leftViewMode = UITextFieldViewModeAlways;
     
+     [text_field addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     return text_field;
 }
 
@@ -152,7 +156,75 @@
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
 }
+-(void)textFieldDidChange:(UITextField *)txtFld {
+    NSString * strMatch = txtFld.text;
+    
+    //過濾Name符合的使用者
+    NSPredicate *sPredicate = [NSPredicate predicateWithFormat:
+                               @"SELF CONTAINS[cd] %@", strMatch];
+    
+    NSMutableArray *aryName=[[NSMutableArray alloc]init];
 
+    for (MUser *user in _array) {
+        [aryName addObject:user.name];
+    }
+
+    //過濾後得到matchUserName
+    NSArray *matchUserName=[[NSMutableArray alloc]init];
+    matchUserName = [NSArray arrayWithArray:[aryName
+                                         filteredArrayUsingPredicate:sPredicate]];
+    
+    //抓出與matchUserName相同Name的MUser
+    NSMutableArray *aryMUser=[[NSMutableArray alloc]init];
+    for (NSString *name in matchUserName) {
+        for (MUser *user in _array) {
+           if([user.name isEqualToString:name])
+           {
+               [aryMUser addObject:user];
+           }
+        }
+    }
+    
+    //過濾aryMUser裡的skill
+    NSMutableArray *matchMUser=[[NSMutableArray alloc]init];
+    for (MUser *user in aryMUser) {
+        NSArray *arySkill=user.skillArray;
+        
+        for (MSkill *Skill in arySkill) {
+                if ([Skill.name isEqualToString:self.label2.text])
+                {
+                [matchMUser addObject:user];
+                }
+        }
+    }
+    
+    _array=matchMUser;//把要秀的_array改為過濾完的matchMUser
+    
+    //如原有負責人，將負責人加入_array
+    if(_guide.manager!=nil)
+    {
+        //有無重複
+        BOOL isRepeat=NO;
+        for (MUser *user in _array)
+        {
+            if (user ==_guide.manager)
+            {
+                isRepeat=YES;
+            }
+        }
+        
+        //未重複即加入_array
+        if(isRepeat){
+        NSMutableArray *addOld=[NSMutableArray arrayWithArray:_array];
+        [addOld insertObject:_guide.manager atIndex:0];
+        _array=[NSArray arrayWithArray:addOld];
+        }
+    }
+    
+    
+    [_tableView reloadData];
+    
+}
 #pragma mark - TableView DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -284,6 +356,7 @@
 - (void)loadData
 {
     _array = [[MDataBaseManager sharedInstance] loadEmployeeArray];
+    _arySkills=[[MDataBaseManager sharedInstance]loadAllSkills];
     
     NSString* uuid = _guide.manager.uuid;
     if(uuid && ![uuid isEqualToString:@""]){
@@ -296,10 +369,45 @@
         }
     }
 }
-
 - (void)actionToPopover:(id)sender
 {
+    
+    //screenSize
+    CGSize screenSize = [[UIScreen mainScreen]bounds].size;
+    CGFloat screenWidth = screenSize.width;
+    CGFloat screenHeight = screenSize.height;
 
+    //picker
+    self.PickerSkill=[[UIPickerView alloc]initWithFrame:CGRectMake(0, screenHeight-140, screenWidth, 140)];
+    self.PickerSkill.dataSource = self;
+    self.PickerSkill.delegate = self;
+    self.PickerSkill.backgroundColor=[UIColor whiteColor];
+    [self.view addSubview:self.PickerSkill];
+    
+    //UIToolbar
+    self.toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, screenHeight-175, screenWidth, 35)];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelPicker)];
+    self.toolBar.items = [NSArray arrayWithObject:right];
+    [self.view addSubview:self.toolBar];
+    
+}
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    
+    return [_arySkills count];
+}
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+
+    return [[_arySkills objectAtIndex:row]name];
+}
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    self.label2.text=[NSString stringWithFormat:@"%@",[[_arySkills objectAtIndex:row]name]];
+}
+-(void) cancelPicker {
+    [self.PickerSkill removeFromSuperview];
+    [self.toolBar removeFromSuperview];
 }
 
 /*
