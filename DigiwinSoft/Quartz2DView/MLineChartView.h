@@ -6,10 +6,14 @@
 //  Copyright (c) 2015年 Jyun. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "MTarget.h"
 
 @interface MLineChartView : UIView
 
-- (id)initWithPoints:(NSMutableArray*)point;
+@property (nonatomic) CGFloat scale;
+@property (nonatomic, strong) NSMutableArray* points;
 
 @end
+

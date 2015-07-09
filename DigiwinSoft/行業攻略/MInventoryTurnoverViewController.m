@@ -232,13 +232,6 @@
     }
 }
 
--(CGSize) getScaledSize:(CGSize)size
-{
-    float scale = self.view.frame.size.width / 1080.0;
-    CGSize size2 = CGSizeMake(size.width * scale, size.height  * scale);
-    return size2;
-}
-
 #pragma mark - UIButton
 - (void)goToBackPage:(id) sender
 {
@@ -258,7 +251,7 @@
     MTarInfoChartView* view = [[MTarInfoChartView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height - 44)];
     [view setHistoryArray:array];
     [view setBackgroundColor:[UIColor whiteColor]];
-    view.contentSize = [self getScaledSize:CGSizeMake(1080,1770)];
+    view.contentSize = [[MDirector sharedInstance] getScaledSize:CGSizeMake(1080,1770)];
     [self.view addSubview:view];
     return;
 }

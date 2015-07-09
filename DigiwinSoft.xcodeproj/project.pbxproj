@@ -90,6 +90,9 @@
 		DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */ = {isa = PBXBuildFile; fileRef = DC10144D1B32B66200EF7A6F /* MGuide.m */; };
 		DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014501B32B67F00EF7A6F /* MActivity.m */; };
 		DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014531B32B69F00EF7A6F /* MWorkItem.m */; };
+		DC3DF9D21B4E17C90065DF5D /* MTarMeterView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D11B4E17C90065DF5D /* MTarMeterView.m */; };
+		DC3DF9D51B4E23360065DF5D /* MTarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D41B4E23360065DF5D /* MTarChartView.m */; };
+		DC3DF9D81B4E46C00065DF5D /* MCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */; };
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
 		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
@@ -302,6 +305,12 @@
 		DC1014501B32B67F00EF7A6F /* MActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MActivity.m; path = structure/MActivity.m; sourceTree = "<group>"; };
 		DC1014521B32B69F00EF7A6F /* MWorkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWorkItem.h; path = structure/MWorkItem.h; sourceTree = "<group>"; };
 		DC1014531B32B69F00EF7A6F /* MWorkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWorkItem.m; path = structure/MWorkItem.m; sourceTree = "<group>"; };
+		DC3DF9D01B4E17C90065DF5D /* MTarMeterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarMeterView.h; path = CustomViews/MTarMeterView.h; sourceTree = "<group>"; };
+		DC3DF9D11B4E17C90065DF5D /* MTarMeterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarMeterView.m; path = CustomViews/MTarMeterView.m; sourceTree = "<group>"; };
+		DC3DF9D31B4E23360065DF5D /* MTarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarChartView.h; path = CustomViews/MTarChartView.h; sourceTree = "<group>"; };
+		DC3DF9D41B4E23360065DF5D /* MTarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarChartView.m; path = CustomViews/MTarChartView.m; sourceTree = "<group>"; };
+		DC3DF9D61B4E46C00065DF5D /* MCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCoordinate.h; path = structure/MCoordinate.h; sourceTree = "<group>"; };
+		DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCoordinate.m; path = structure/MCoordinate.m; sourceTree = "<group>"; };
 		DC6A52B11B3D2E6E001A373F /* MDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDirector.h; sourceTree = "<group>"; };
 		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
 		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
@@ -789,6 +798,8 @@
 				DCF46B291B454FA800C771BB /* MCustWorkItem.m */,
 				DCF46B2B1B462D5A00C771BB /* MSkill.h */,
 				DCF46B2C1B462D5A00C771BB /* MSkill.m */,
+				DC3DF9D61B4E46C00065DF5D /* MCoordinate.h */,
+				DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -808,6 +819,10 @@
 				3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */,
 				DC8135271B49BB29003B56AA /* MTarInfoChartView.h */,
 				DC8135281B49BB29003B56AA /* MTarInfoChartView.m */,
+				DC3DF9D01B4E17C90065DF5D /* MTarMeterView.h */,
+				DC3DF9D11B4E17C90065DF5D /* MTarMeterView.m */,
+				DC3DF9D31B4E23360065DF5D /* MTarChartView.h */,
+				DC3DF9D41B4E23360065DF5D /* MTarChartView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1015,6 +1030,7 @@
 				DCF46AB91B41279900C771BB /* iCarousel.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
 				DCF46B241B43C2F400C771BB /* MCustTarget.m in Sources */,
+				DC3DF9D21B4E17C90065DF5D /* MTarMeterView.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */,
 				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
@@ -1041,6 +1057,7 @@
 				DCF46B2A1B454FA800C771BB /* MCustWorkItem.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
 				DCF46ACD1B4236CB00C771BB /* MTarget.m in Sources */,
+				DC3DF9D51B4E23360065DF5D /* MTarChartView.m in Sources */,
 				383E2F871B4BF32800472513 /* MReportTableViewCell.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
 				3A03AA1F1B3BD5CA00923ABB /* UIDownPicker.m in Sources */,
@@ -1049,6 +1066,7 @@
 				38E6F3FE1B411EAF00245DA1 /* MLoginViewController.m in Sources */,
 				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,
 				3A03F9661B3A4F26000F345B /* MMyPlanViewController.m in Sources */,
+				DC3DF9D81B4E46C00065DF5D /* MCoordinate.m in Sources */,
 				3829982F1B3982BE0045B3BD /* MIndustryRaiders2ViewController.m in Sources */,
 				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
 				DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */,
