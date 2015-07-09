@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MReportViewController : UIViewController
-
+@property (nonatomic, strong)id task;
 @end

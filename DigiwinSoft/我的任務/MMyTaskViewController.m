@@ -10,7 +10,10 @@
 #import "AppDelegate.h"
 #import "MTasksDeployedViewController.h"
 #import "MReportViewController.h"
-
+#import "MDataBaseManager.h"
+#import "MCustGuide.h"
+#import "MCustActivity.h"
+#import "MCustWorkItem.h"
 #define TAG_IMAGE_VIEW_TYPE     201
 #define TAG_LABEL_TASK_NAME     202
 
@@ -21,7 +24,6 @@
     NSArray *aryPrepare;
     NSArray *aryRepost;
     NSArray *aryFinish;
-
 }
 @property (nonatomic, strong) UITableView* tableView;
 
@@ -39,9 +41,10 @@
      self.title = @"我的任務";
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    _taskDataArry = [[NSMutableArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
+    NSArray *ary=[[MDataBaseManager sharedInstance]loadMyMissionsWithIndex:0];
+    _taskDataArry=[[NSMutableArray alloc]initWithArray:ary];
+    
     [self loadData];
-    [self createSegmentedView];
     [self createTableView];
 }
 
@@ -49,6 +52,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self addMainMenu];
+    [self createSegmentedView];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,11 +76,11 @@
 - (void)loadData
 {
     //待佈署任務
-    aryPrepare=[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
+    aryPrepare=[[MDataBaseManager sharedInstance]loadMyMissionsWithIndex:0];
     //進度回報
-    aryRepost=[[NSArray alloc] initWithObjects:@"瓶頸製程工時計算", @"製定最小製造批量標準", @"縮短達交天數", nil];
+    aryRepost=[[MDataBaseManager sharedInstance]loadMyMissionsWithIndex:1];
     //已完成任務
-    aryFinish=[[NSArray alloc] initWithObjects:@"防止半成品製造批量浮增", @"原料價格評估", nil];
+    aryFinish=[[MDataBaseManager sharedInstance]loadMyMissionsWithIndex:2];
     
 }
 #pragma mark - create view
@@ -91,10 +96,9 @@
 
 - (void)createSegmentedView
 {
-    [_segmented removeFromSuperview];
     NSString *title0=[NSString stringWithFormat:@"待佈署任務(%lu)",(unsigned long)[aryPrepare count]];
     NSString *title1=[NSString stringWithFormat:@"進度回報(%lu)",(unsigned long)[aryRepost count]];
-    NSString *title2=[NSString stringWithFormat:@"已完成任務(%lu)",(unsigned long)[aryRepost count]];
+    NSString *title2=[NSString stringWithFormat:@"已完成任務(%lu)",(unsigned long)[aryFinish count]];
     NSArray* array = [[NSArray alloc] initWithObjects:title0,title1,title2, nil];
     _segmented = [[UISegmentedControl alloc] initWithItems:array];
     _segmented.frame = CGRectMake(0, 64, self.view.frame.size.width - 10, 40);
@@ -126,7 +130,7 @@
 
 - (void)createTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,_segmented.frame.origin.y+_segmented.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - 64)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,_segmented.frame.origin.y+_segmented.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - 64-40-49)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
@@ -158,12 +162,12 @@
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         //
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 20, 20, 20)];
-        imageView.image = [UIImage imageNamed:@"icon_down.png"];
         imageView.tag = TAG_IMAGE_VIEW_TYPE;
         [imageView setBackgroundColor:[UIColor clearColor]];
         [cell addSubview:imageView];
@@ -177,22 +181,63 @@
         
     }
     
-    NSString* taskName = [_taskDataArry objectAtIndex:indexPath.row];
-    
     UILabel* label = (UILabel*) [cell viewWithTag:TAG_LABEL_TASK_NAME];
-    label.text = taskName;
-    
+    UIImageView* imageView =(UIImageView*) [cell viewWithTag:TAG_IMAGE_VIEW_TYPE];
+
+    id task=[_taskDataArry objectAtIndex:indexPath.row];
+    if([task isKindOfClass:[MCustGuide class]])
+    {
+        MCustGuide *guid=(MCustGuide *)task;
+        label.text = guid.name;
+        imageView.image = [UIImage imageNamed:@"icon_menu_11.png"];
+    }else if([task isKindOfClass:[MCustWorkItem class]])
+    {
+        MCustWorkItem *WorkItem=(MCustWorkItem *)task;
+        label.text = WorkItem.name;
+        imageView.image = [UIImage imageNamed:@"icon_menu_10.png"];
+    }else if ([task isKindOfClass:[MCustActivity class]])
+    {
+        MCustActivity *Activity=(MCustActivity *)task;
+        label.text = Activity.name;
+        imageView.image = [UIImage imageNamed:@"icon_menu_9.png"];
+    }
+    else
+    {
+        
+    }
     return cell;
 }
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     NSInteger segmentedIndex = [_segmented selectedSegmentIndex];
     if (segmentedIndex == 0) {
-        MTasksDeployedViewController* vc = [[MTasksDeployedViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
+        
+        id task=[_taskDataArry objectAtIndex:indexPath.row];
+        if([task isKindOfClass:[MCustGuide class]])
+        {
+            MTasksDeployedViewController* vc = [[MTasksDeployedViewController alloc] init];
+            vc.guide=(MCustGuide *)task;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if([task isKindOfClass:[MCustWorkItem class]])
+        {
+            NSLog(@"To Page.42");
+        }
+        else if ([task isKindOfClass:[MCustActivity class]])
+        {
+            NSLog(@"NoAction");
+        }
+        else
+        {
+            NSLog(@"不屬於任何型別");
+        }
+
     }else if (segmentedIndex == 1)
     {
         MReportViewController* MReportVC = [[MReportViewController alloc] init];
+        
+        id task=[_taskDataArry objectAtIndex:indexPath.row];
+        MReportVC.task=task;
         UINavigationController* MReportNav = [[UINavigationController alloc] initWithRootViewController:MReportVC];
         MReportNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
         [self.navigationController presentViewController:MReportNav animated:YES completion:nil];

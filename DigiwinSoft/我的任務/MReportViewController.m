@@ -9,7 +9,9 @@
 #import "MReportViewController.h"
 #import "MConfig.h"
 #import "MReportTableViewCell.h"
-
+#import "MCustGuide.h"
+#import "MCustActivity.h"
+#import "MCustWorkItem.h"
 #define TAG_BUTTON_Not_Start 101
 #define TAG_BUTTON_Start 102
 #define TAG_BUTTON_Finish 103
@@ -22,6 +24,12 @@
 @property (nonatomic, strong) UIButton *btnNotStart;
 @property (nonatomic, strong) UIButton *btnStart;
 @property (nonatomic, strong) UIButton *btnFinish;
+@property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) UITextField *TextField;
+@property (nonatomic, strong) UITextField *txtUnit;
+@property (nonatomic, strong) MCustGuide* guide;
+@property (nonatomic, strong) MCustActivity* activity;
+@property (nonatomic, strong) MCustWorkItem* workItem;
 @end
 
 @implementation MReportViewController
@@ -29,10 +37,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title=@"我的標題";
+    
     self.view.backgroundColor= [UIColor whiteColor];
     
     [self createTableView];
+    [self createStateBtn];
+    [self createTextView];
+    [self createTextField];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,23 +56,41 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
     self.navigationItem.leftBarButtonItem = back;
-}
-- (void)createTableView
-{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 64-30)];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    _tableView.backgroundColor=[UIColor clearColor];
-    [self.view addSubview:_tableView];
     
+
     
-    //btnAdd
-    UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(0,_tableView.frame.origin.y+_tableView.frame.size.height,DEVICE_SCREEN_WIDTH, 30)];
-    btn.backgroundColor=[UIColor colorWithRed:245.0/255.0 green:113.0/255.0 blue:116.0/255.0 alpha:1];
-    [btn setTitle:@"確認" forState:UIControlStateNormal];
-    btn.titleLabel.textColor=[UIColor whiteColor];
-    [btn addTarget:self action:@selector(actionConfirm:) forControlEvents:UIControlEventTouchUpInside]; //設定按鈕動作
-    [self.view addSubview:btn];
+    if([_task isKindOfClass:[MCustGuide class]])
+    {
+        _guide=(MCustGuide *)_task;
+        self.title=_guide.name;
+        [self initState:_guide.status];
+        _textView.text=_guide.desc;
+        _TextField.text=_guide.target.valueT;
+        _txtUnit.text=_guide.target.unit;
+
+    }
+    else if([_task isKindOfClass:[MCustWorkItem class]])
+    {
+        _workItem=(MCustWorkItem *)_task;
+        self.title=_workItem.name;
+        [self initState:_workItem.status];
+        _textView.text=_workItem.desc;
+        _TextField.text=_workItem.target.valueT;
+        _txtUnit.text=_workItem.target.unit;
+    }
+    else if ([_task isKindOfClass:[MCustActivity class]])
+    {
+        _activity=(MCustActivity *)_task;
+        self.title=_activity.name;
+        [self initState:_activity.status];
+        _textView.text=_activity.desc;
+        _TextField.text=_activity.target.valueT;
+        _txtUnit.text=_activity.target.unit;
+    }
+    else
+    {
+        NSLog(@"不屬於任何型別");
+    }
 }
 -(void)viewDidLayoutSubviews
 {
@@ -76,7 +105,100 @@
         [_tableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+- (void)createStateBtn
+{
+    
+    UIImage *btnImage = [UIImage imageNamed:@"icon_gray_dot.png"];
 
+    _btnNotStart=[[UIButton alloc]initWithFrame:CGRectMake(15,10, 75, 24)];
+    _btnNotStart.backgroundColor=[UIColor clearColor];
+    _btnNotStart.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
+    [_btnNotStart setImage:btnImage forState:UIControlStateNormal];
+    _btnNotStart.titleEdgeInsets = UIEdgeInsetsMake(-10, -100, -10, -60);
+    [_btnNotStart addTarget:self action:@selector(setState:) forControlEvents:UIControlEventTouchUpInside];
+    _btnNotStart.titleLabel.font = [UIFont systemFontOfSize:11];
+    _btnNotStart.tag=TAG_BUTTON_Not_Start;
+    [_btnNotStart setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [_btnNotStart setTitle:@"未開始" forState:UIControlStateNormal];
+    
+    _btnStart=[[UIButton alloc]initWithFrame:CGRectMake(15+85,10, 75, 24)];
+    _btnStart.backgroundColor=[UIColor clearColor];
+    _btnStart.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
+    [_btnStart setImage:btnImage forState:UIControlStateNormal];
+    _btnStart.titleEdgeInsets = UIEdgeInsetsMake(-10, -100, -10, -60);
+    [_btnStart addTarget:self action:@selector(setState:) forControlEvents:UIControlEventTouchUpInside];
+    _btnStart.titleLabel.font = [UIFont systemFontOfSize:11];
+    _btnStart.tag=TAG_BUTTON_Start;
+    [_btnStart setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [_btnStart setTitle:@"進行中" forState:UIControlStateNormal];
+
+    _btnFinish=[[UIButton alloc]initWithFrame:CGRectMake(15+(85*2),10, 75, 24)];
+    _btnFinish.backgroundColor=[UIColor clearColor];
+    _btnFinish.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
+    [_btnFinish setImage:btnImage forState:UIControlStateNormal];
+    _btnFinish.titleEdgeInsets = UIEdgeInsetsMake(-10, -100, -10, -60);
+    [_btnFinish addTarget:self action:@selector(setState:) forControlEvents:UIControlEventTouchUpInside];
+    _btnFinish.titleLabel.font = [UIFont systemFontOfSize:11];
+    _btnFinish.tag=TAG_BUTTON_Finish;
+    [_btnFinish setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [_btnFinish setTitle:@"已完成" forState:UIControlStateNormal];
+    
+    //btnAdd
+    UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(0,_tableView.frame.origin.y+_tableView.frame.size.height,DEVICE_SCREEN_WIDTH, 30)];
+    btn.backgroundColor=[UIColor colorWithRed:245.0/255.0 green:113.0/255.0 blue:116.0/255.0 alpha:1];
+    [btn setTitle:@"確認" forState:UIControlStateNormal];
+    btn.titleLabel.textColor=[UIColor whiteColor];
+    [btn addTarget:self action:@selector(actionConfirm:) forControlEvents:UIControlEventTouchUpInside]; //設定按鈕動作
+    [self.view addSubview:btn];
+
+}
+- (void)createTableView
+{
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 64-30)];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    _tableView.backgroundColor=[UIColor clearColor];
+    [self.view addSubview:_tableView];
+}
+-(void)createTextView
+{
+    _textView=[[UITextView alloc]initWithFrame:CGRectMake(15,35,DEVICE_SCREEN_WIDTH-30, 180)];
+    _textView.backgroundColor=[UIColor whiteColor];
+    _textView.text=@"";
+    _textView.font=[UIFont systemFontOfSize:12];
+    _textView.editable=NO;
+    _textView.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
+    _textView.layer.borderWidth=2;
+
+}
+-(void)createTextField
+{
+    _TextField=[[UITextField alloc]initWithFrame:CGRectMake(65,_textView.frame.origin.y+_textView.frame.size.height+7, 50, 30)];
+    _TextField.backgroundColor=[UIColor clearColor];
+    _TextField.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
+    _TextField.layer.borderWidth=2;
+
+    _txtUnit=[[UITextField alloc]initWithFrame:CGRectMake(120,_textView.frame.origin.y+_textView.frame.size.height+7, 50, 30)];
+    _txtUnit.backgroundColor=[UIColor clearColor];
+    _txtUnit.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
+    _txtUnit.layer.borderWidth=2;
+    _txtUnit.placeholder = @"單位";
+    _txtUnit.textAlignment=NSTextAlignmentCenter;
+    [_txtUnit setFont:[UIFont systemFontOfSize:12]];
+    
+    _txtTargetDay=[[UITextField alloc]initWithFrame:CGRectMake(65,_textView.frame.origin.y+_textView.frame.size.height+50, 120, 29)];
+    _txtTargetDay.borderStyle=UITextBorderStyleLine;
+    _txtTargetDay.tag=101;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(textFieldChanged)
+                                                 name:UITextFieldTextDidBeginEditingNotification
+                                               object:_txtTargetDay];
+    _txtTargetDay.rightViewMode = UITextFieldViewModeAlways;
+    _txtTargetDay.rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_red_circle.png"]];
+    _txtTargetDay.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
+    _txtTargetDay.layer.borderWidth=2;
+
+}
 #pragma mark - UIButton
 - (void)goToBackPage:(id) sender
 {
@@ -110,8 +232,7 @@
 }
 - (void)actionConfirm:(id) sender
 {
-    
-}
+    }
 #pragma mark - UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -142,131 +263,65 @@
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
         }
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        
-        _btnNotStart=[[UIButton alloc]initWithFrame:CGRectMake(15,10, 75, 24)];
-        _btnNotStart.backgroundColor=[UIColor clearColor];
-        _btnNotStart.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
-        UIImage *btnImage = [UIImage imageNamed:@"icon_gray_dot.png"];
-        [_btnNotStart setImage:btnImage forState:UIControlStateNormal];
-        _btnNotStart.titleEdgeInsets = UIEdgeInsetsMake(-10, -100, -10, -60);
-        [_btnNotStart addTarget:self action:@selector(setState:) forControlEvents:UIControlEventTouchUpInside];
-        _btnNotStart.titleLabel.font = [UIFont systemFontOfSize:11];
-        _btnNotStart.tag=TAG_BUTTON_Not_Start;
-        [_btnNotStart setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [_btnNotStart setTitle:@"未開始" forState:UIControlStateNormal];
         [cell addSubview:_btnNotStart];
-        
-        _btnStart=[[UIButton alloc]initWithFrame:CGRectMake(15+85,10, 75, 24)];
-        _btnStart.backgroundColor=[UIColor clearColor];
-        _btnStart.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
-        [_btnStart setImage:btnImage forState:UIControlStateNormal];
-        _btnStart.titleEdgeInsets = UIEdgeInsetsMake(-10, -100, -10, -60);
-        [_btnStart addTarget:self action:@selector(setState:) forControlEvents:UIControlEventTouchUpInside];
-        _btnStart.titleLabel.font = [UIFont systemFontOfSize:11];
-        _btnStart.tag=TAG_BUTTON_Start;
-        [_btnStart setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [_btnStart setTitle:@"進行中" forState:UIControlStateNormal];
         [cell addSubview:_btnStart];
-        
-        _btnFinish=[[UIButton alloc]initWithFrame:CGRectMake(15+(85*2),10, 75, 24)];
-        _btnFinish.backgroundColor=[UIColor clearColor];
-        _btnFinish.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
-        [_btnFinish setImage:btnImage forState:UIControlStateNormal];
-        _btnFinish.titleEdgeInsets = UIEdgeInsetsMake(-10, -100, -10, -60);
-        [_btnFinish addTarget:self action:@selector(setState:) forControlEvents:UIControlEventTouchUpInside];
-        _btnFinish.titleLabel.font = [UIFont systemFontOfSize:11];
-        _btnFinish.tag=TAG_BUTTON_Finish;
-        [_btnFinish setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [_btnFinish setTitle:@"已完成" forState:UIControlStateNormal];
         [cell addSubview:_btnFinish];
+        [cell addSubview:_textView];
 
-        UITextView *textView=[[UITextView alloc]initWithFrame:CGRectMake(15,35,DEVICE_SCREEN_WIDTH-30, 180)];
-        textView.backgroundColor=[UIColor whiteColor];
-        textView.text=@"隨著iPhone6推出即將屆滿一年，相信不少果粉已經又開始期待新一代的iPhone 6s何時會登場，根據富士康員工的消息指出，蘋果今年預計在9月11日正式亮相iPhone 6s和iPhone 6s Plus，並在9月18日開賣。多次預測蘋果產品動向的凱基投顧分析師指出，新一代的iPhone 6s因搭載新的「3D壓力觸控感應」面板，將比原來的iPhone6增加0.2mm厚度。此外，相機的主鏡頭也幾乎已確定將提升至1200萬畫素，前鏡頭也從120萬畫素大幅提升至500萬畫素，且支援4K錄影拍攝。";
-        textView.font=[UIFont systemFontOfSize:12];
-        textView.editable=NO;
-        textView.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
-        textView.layer.borderWidth=2;
-        [cell addSubview:textView];
-
-        UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(15, textView.frame.origin.y+textView.frame.size.height+10, 50, 25)];
+        UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(15, _textView.frame.origin.y+_textView.frame.size.height+10, 50, 25)];
         lab.text=@"實際值";
         lab.backgroundColor=[UIColor clearColor];
         [lab setFont:[UIFont systemFontOfSize:12]];
         lab.textAlignment = NSTextAlignmentJustified;
         [cell addSubview:lab];
+
+        [cell addSubview:_TextField];
+        [cell addSubview:_txtUnit];
         
-        UITextField *TextField=[[UITextField alloc]initWithFrame:CGRectMake(65,textView.frame.origin.y+textView.frame.size.height+7, 50, 30)];
-        TextField.backgroundColor=[UIColor clearColor];
-        TextField.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
-        TextField.layer.borderWidth=2;
-        [cell addSubview:TextField];
-        
-        UITextField *txtUnit=[[UITextField alloc]initWithFrame:CGRectMake(120,textView.frame.origin.y+textView.frame.size.height+7, 50, 30)];
-        txtUnit.backgroundColor=[UIColor clearColor];
-        txtUnit.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
-        txtUnit.layer.borderWidth=2;
-        txtUnit.placeholder = @"單位";
-        txtUnit.textAlignment=NSTextAlignmentCenter;
-        [txtUnit setFont:[UIFont systemFontOfSize:12]];
-        [cell addSubview:txtUnit];
-        
-        lab=[[UILabel alloc]initWithFrame:CGRectMake(15, textView.frame.origin.y+textView.frame.size.height+50, 50, 25)];
+        lab=[[UILabel alloc]initWithFrame:CGRectMake(15, _textView.frame.origin.y+_textView.frame.size.height+50, 50, 25)];
         lab.text=@"完成日";
         [lab setFont:[UIFont systemFontOfSize:12]];
         [cell addSubview:lab];
-
-
-        //UITextField
-        _txtTargetDay=[[UITextField alloc]initWithFrame:CGRectMake(65,textView.frame.origin.y+textView.frame.size.height+50, 120, 29)];
-        _txtTargetDay.borderStyle=UITextBorderStyleLine;
-        _txtTargetDay.tag=101;
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(textFieldChanged)
-                                                     name:UITextFieldTextDidBeginEditingNotification
-                                                   object:_txtTargetDay];
-        _txtTargetDay.rightViewMode = UITextFieldViewModeAlways;
-        _txtTargetDay.rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
-        _txtTargetDay.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
-        _txtTargetDay.layer.borderWidth=2;
+        
         [cell addSubview:_txtTargetDay];
 
         return cell;
     }
     else
     {
-        MReportTableViewCell *cell=[MReportTableViewCell cellWithTableView:tableView];
-        cell.lab.text=@"回報紀錄";
-        cell.lab.backgroundColor=[UIColor clearColor];
-        cell.lab.font = [UIFont systemFontOfSize:12];
-        cell.lab.textColor=[UIColor blackColor];
-        cell.lab.frame=CGRectMake(15, 5, 115, 16);
+       
+        MReportTableViewCell *Reportcell=[MReportTableViewCell cellWithTableView:tableView];
+        Reportcell.lab.text=@"回報紀錄";
+        Reportcell.lab.backgroundColor=[UIColor clearColor];
+        Reportcell.lab.font = [UIFont systemFontOfSize:12];
+        Reportcell.lab.textColor=[UIColor blackColor];
+        Reportcell.lab.frame=CGRectMake(15, 5, 115, 16);
 
-        cell.labState.text=@"狀態";
-        cell.labState.backgroundColor=[UIColor clearColor];
-        cell.labState.font = [UIFont systemFontOfSize:12];
-        cell.labState.textColor=[UIColor blackColor];
-        cell.labState.frame=CGRectMake(15, 25, 115, 16);
+        Reportcell.labState.text=@"狀態";
+        Reportcell.labState.backgroundColor=[UIColor clearColor];
+        Reportcell.labState.font = [UIFont systemFontOfSize:12];
+        Reportcell.labState.textColor=[UIColor blackColor];
+        Reportcell.labState.frame=CGRectMake(15, 25, 115, 16);
         
-        cell.labReason.text=@"原因";
-        cell.labReason.backgroundColor=[UIColor clearColor];
-        cell.labReason.font = [UIFont systemFontOfSize:12];
-        cell.labReason.textColor=[UIColor blackColor];
-        cell.labReason.frame=CGRectMake(15, 45, 115, 16);
+        Reportcell.labReason.text=@"原因";
+        Reportcell.labReason.backgroundColor=[UIColor clearColor];
+        Reportcell.labReason.font = [UIFont systemFontOfSize:12];
+        Reportcell.labReason.textColor=[UIColor blackColor];
+        Reportcell.labReason.frame=CGRectMake(15, 45, 115, 16);
         
-        cell.labValueT.text=@"實際值";
-        cell.labValueT.backgroundColor=[UIColor clearColor];
-        cell.labValueT.font = [UIFont systemFontOfSize:12];
-        cell.labValueT.textColor=[UIColor blackColor];
-        cell.labValueT.frame=CGRectMake(15, 65, 115, 16);
+        Reportcell.labValueT.text=@"實際值";
+        Reportcell.labValueT.backgroundColor=[UIColor clearColor];
+        Reportcell.labValueT.font = [UIFont systemFontOfSize:12];
+        Reportcell.labValueT.textColor=[UIColor blackColor];
+        Reportcell.labValueT.frame=CGRectMake(15, 65, 115, 16);
         
-        cell.labFinishDay.text=@"完成日期";
-        cell.labFinishDay.backgroundColor=[UIColor clearColor];
-        cell.labFinishDay.font = [UIFont systemFontOfSize:12];
-        cell.labFinishDay.textColor=[UIColor blackColor];
-        cell.labFinishDay.frame=CGRectMake(15, 85, 115, 16);
+        Reportcell.labFinishDay.text=@"完成日期";
+        Reportcell.labFinishDay.backgroundColor=[UIColor clearColor];
+        Reportcell.labFinishDay.font = [UIFont systemFontOfSize:12];
+        Reportcell.labFinishDay.textColor=[UIColor blackColor];
+        Reportcell.labFinishDay.frame=CGRectMake(15, 85, 115, 16);
         
-        return cell;
+        return Reportcell;
     }
     
     
@@ -340,7 +395,22 @@
         _txtTargetDay.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:_datePicker.date]];
     }
 }
-
+-(void)initState:(NSString *)state
+{
+    UIImage *btnImage2 = [UIImage imageNamed:@"icon_red_circle.png"];
+    if ([state isEqualToString:@"0"])
+    {
+    [_btnNotStart setImage:btnImage2 forState:UIControlStateNormal];
+    }
+    else if([state isEqualToString:@"1"])
+    {
+    [_btnNotStart setImage:btnImage2 forState:UIControlStateNormal];
+    }
+    else
+    {
+    [_btnNotStart setImage:btnImage2 forState:UIControlStateNormal];
+    }
+}
 /*
 #pragma mark - Navigation
 
