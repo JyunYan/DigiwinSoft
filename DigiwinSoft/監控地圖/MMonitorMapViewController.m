@@ -71,7 +71,7 @@
     CGFloat posX = 0;
     CGFloat posY = statusBarHeight + navBarHeight;
     CGFloat width = screenWidth;
-    CGFloat height = 130;
+    CGFloat height = 100;
     
     UIView* topView = [self createTopView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:topView];
@@ -535,7 +535,17 @@
     guideLabel.text = @"對策";
     targetLabel.text = @"指標";
     managerLabel.text = @"負責人";
-    completionDegreeLabel.text = @"100%";
+    
+    NSString* completionDegreeStr = @"100%";
+    completionDegreeLabel.text = completionDegreeStr;
+    
+    NSString* subCompletionDegreeStr = [completionDegreeStr substringToIndex:completionDegreeStr.length - 1];
+    NSInteger completionDegreeInt = [subCompletionDegreeStr integerValue];
+    if (completionDegreeInt < 50)
+        completionDegreeLabel.textColor = [UIColor redColor];
+    else
+        completionDegreeLabel.textColor = [[MDirector sharedInstance] getForestGreenColor];
+    
     
     arrowImageView.image = [UIImage imageNamed:@"icon_arrow_up_right.png"];
     
@@ -583,6 +593,13 @@
 
     MMonitorPageContentViewController* pageContent = [_pageContentViewArray objectAtIndex:_pageIndex];
     return pageContent;
+}
+
+#pragma mark - MMonitorPageContentView delegate
+
+- (void)goDetailViewController
+{
+    
 }
 
 @end

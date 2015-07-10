@@ -314,6 +314,8 @@
     }
 }
 
+#pragma mark - other methods
+
 -(UIImage*)loadLocationImage:(NSString*)urlstr
 {
     if(!urlstr || urlstr == (NSString*)[NSNull null])

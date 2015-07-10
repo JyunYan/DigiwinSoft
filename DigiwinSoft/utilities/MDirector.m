@@ -57,6 +57,11 @@ static MDirector* _director = nil;
     return [UIColor colorWithRed:243.0f/255.0f green:137.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
 }
 
+- (UIColor *)getForestGreenColor
+{
+    return [UIColor colorWithRed:34.0f/255.0f green:139.0f/255.0f blue:34.0f/255.0f alpha:1.0f];
+}
+
 // 隨機產生uuid
 - (NSString*)getCustUuidWithPrev:(NSString*)prev
 {
