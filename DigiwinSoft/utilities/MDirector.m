@@ -35,6 +35,23 @@ static MDirector* _director = nil;
     return self;
 }
 
+#pragma mark - scale
+
+-(CGSize) getScaledSize:(CGSize)size
+{
+    //float scale = self.view.frame.size.width / 1080.0;
+    CGFloat scale = DEVICE_SCREEN_WIDTH / 1080.0;
+    CGSize size2 = CGSizeMake(size.width * scale, size.height  * scale);
+    return size2;
+}
+
+-(CGRect) getScaledRect:(CGRect)frame
+{
+    float scale = DEVICE_SCREEN_WIDTH / 1080.0;
+    CGRect frame2 = CGRectMake(frame.origin.x * scale, frame.origin.y * scale, frame.size.width * scale, frame.size.height  * scale);
+    return frame2;
+}
+
 #pragma mark - get color methods
 
 - (UIColor *)getCustomGrayColor

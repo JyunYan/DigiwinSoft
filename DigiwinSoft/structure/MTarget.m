@@ -10,4 +10,21 @@
 
 @implementation MTarget
 
+-(id)init
+{
+    if(self = [super init]){
+        
+        _valueR = @"0";
+        _valueT = @"0";
+        
+        _top = @"0";
+        _avg = @"0";
+        _bottom = @"0";
+        
+        _upMax = @"0";
+        _upMin = @"0";
+    }
+    return self;
+}
+
 @end

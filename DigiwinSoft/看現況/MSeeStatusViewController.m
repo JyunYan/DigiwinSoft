@@ -8,7 +8,7 @@
 
 #import "MSeeStatusViewController.h"
 #import "AppDelegate.h"
-
+#import "MRouletteViewController.h"
 
 @interface MSeeStatusViewController ()
 
@@ -37,8 +37,20 @@
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.leftBarButtonItem = bar_item;
-}
+    
+    
+    UIButton *btn= [[UIButton alloc] initWithFrame:CGRectMake(120, 120, 120, 120)];
+    [btn addTarget:self action:@selector(toPage8:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setTitle:@"toPage8" forState:UIControlStateNormal];
+    btn.backgroundColor=[UIColor brownColor];
+    [self.view addSubview:btn];
 
+}
+-(void)toPage8:(id)sender
+{
+    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
+    [self.navigationController pushViewController:MRouletteVC animated:YES];
+}
 #pragma mark - UIButton
 
 -(void)clickedBtnSetting:(id)sender
