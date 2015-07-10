@@ -45,6 +45,8 @@
 		3A7E31EB1B4BD82800790026 /* icon_sms.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7E31E71B4BD82800790026 /* icon_sms.png */; };
 		3A7E31EC1B4BD82800790026 /* icon_weixin.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7E31E81B4BD82800790026 /* icon_weixin.png */; };
 		3A81B9481B4CDAB600EAF996 /* MGoalSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A81B9471B4CDAB600EAF996 /* MGoalSettingViewController.m */; };
+		3A8399791B4E1D50008B0150 /* icon_arrow_up_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A8399781B4E1D50008B0150 /* icon_arrow_up_right.png */; };
+		3A83997F1B4E5471008B0150 /* MMonitorPageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A83997E1B4E5471008B0150 /* MMonitorPageContentViewController.m */; };
 		3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */; };
 		3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */; };
 		3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE101B32831500143374 /* MMonitorMapViewController.m */; };
@@ -231,6 +233,9 @@
 		3A7E31E81B4BD82800790026 /* icon_weixin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_weixin.png; sourceTree = "<group>"; };
 		3A81B9461B4CDAB600EAF996 /* MGoalSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGoalSettingViewController.h; sourceTree = "<group>"; };
 		3A81B9471B4CDAB600EAF996 /* MGoalSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGoalSettingViewController.m; sourceTree = "<group>"; };
+		3A8399781B4E1D50008B0150 /* icon_arrow_up_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_arrow_up_right.png; sourceTree = "<group>"; };
+		3A83997D1B4E5471008B0150 /* MMonitorPageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorPageContentViewController.h; path = CustomViews/MMonitorPageContentViewController.h; sourceTree = "<group>"; };
+		3A83997E1B4E5471008B0150 /* MMonitorPageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorPageContentViewController.m; path = CustomViews/MMonitorPageContentViewController.m; sourceTree = "<group>"; };
 		3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMyPlanTableViewCell.h; path = CustomViews/MMyPlanTableViewCell.h; sourceTree = "<group>"; };
 		3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMyPlanTableViewCell.m; path = CustomViews/MMyPlanTableViewCell.m; sourceTree = "<group>"; };
 		3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryRaidersViewController.h; sourceTree = "<group>"; };
@@ -575,6 +580,7 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3A8399781B4E1D50008B0150 /* icon_arrow_up_right.png */,
 				3A7E31E51B4BD82800790026 /* icon_email.png */,
 				3A7E31E61B4BD82800790026 /* icon_line.png */,
 				3A7E31E71B4BD82800790026 /* icon_sms.png */,
@@ -830,6 +836,8 @@
 				DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */,
 				DC3DF9DF1B4EE40B0065DF5D /* MMessageBox.h */,
 				DC3DF9E01B4EE40B0065DF5D /* MMessageBox.m */,
+				3A83997D1B4E5471008B0150 /* MMonitorPageContentViewController.h */,
+				3A83997E1B4E5471008B0150 /* MMonitorPageContentViewController.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -983,6 +991,7 @@
 				DCF46B051B42AAF300C771BB /* icon_info.png in Resources */,
 				3A03AA1D1B3BD5CA00923ABB /* downArrow@3x.png in Resources */,
 				DCF46B001B42AAF300C771BB /* icon_blue_circle.png in Resources */,
+				3A8399791B4E1D50008B0150 /* icon_arrow_up_right.png in Resources */,
 				3AFF625D1B438A46005B6238 /* icon_menu_9.png in Resources */,
 				3AFF62561B438A46005B6238 /* icon_menu_2.png in Resources */,
 				DC0ADF691B316E340019236D /* Images.xcassets in Resources */,
@@ -1030,6 +1039,7 @@
 				DCF46AD01B428F1400C771BB /* MIssue.m in Sources */,
 				3A7E31A51B4B5ECA00790026 /* CustomIOSAlertView.m in Sources */,
 				3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */,
+				3A83997F1B4E5471008B0150 /* MMonitorPageContentViewController.m in Sources */,
 				D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */,
 				382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */,
 				3AB4CE2A1B32895C00143374 /* MMDrawerController.m in Sources */,
