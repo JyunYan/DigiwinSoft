@@ -465,7 +465,9 @@
         UIButton* personInChargeButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, height/2, 25, 25)];
         personInChargeButton.tag = TAG_BUTTON_PERSON_IN_CHARGE + row;
         personInChargeButton.backgroundColor = [UIColor clearColor];
-        [personInChargeButton addTarget:self action:@selector(showCellBar:) forControlEvents:UIControlEventTouchDown];
+        [personInChargeButton addTarget:self action:@selector(showCellBar:) forControlEvents:UIControlEventTouchUpInside];
+        personInChargeButton.layer.cornerRadius = personInChargeButton.frame.size.width / 2;
+        personInChargeButton.clipsToBounds = YES;
         [cell addSubview:personInChargeButton ];
 
         posX = personInChargeButton.frame.origin.x + personInChargeButton.frame.size.width + 5;
@@ -499,7 +501,7 @@
         telButton.backgroundColor = [UIColor clearColor];
         [telButton setImage:[UIImage imageNamed:@"icon_phone.png"] forState:UIControlStateNormal];
         [telButton setTintColor:[UIColor whiteColor]];
-        [telButton addTarget:self action:@selector(actionTelephone:) forControlEvents:UIControlEventTouchDown];
+        [telButton addTarget:self action:@selector(actionTelephone:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:telButton];
         
         
@@ -510,7 +512,7 @@
         weixinButton.backgroundColor = [UIColor clearColor];
         [weixinButton setImage:[UIImage imageNamed:@"icon_weixin.png"] forState:UIControlStateNormal];
         [weixinButton setTintColor:[UIColor whiteColor]];
-        [weixinButton addTarget:self action:@selector(actionWeixin:) forControlEvents:UIControlEventTouchDown];
+        [weixinButton addTarget:self action:@selector(actionWeixin:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:weixinButton];
         
         
@@ -521,7 +523,7 @@
         lineButton.backgroundColor = [UIColor clearColor];
         [lineButton setImage:[UIImage imageNamed:@"icon_line.png"] forState:UIControlStateNormal];
         [lineButton setTintColor:[UIColor whiteColor]];
-        [lineButton addTarget:self action:@selector(actionLine:) forControlEvents:UIControlEventTouchDown];
+        [lineButton addTarget:self action:@selector(actionLine:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:lineButton];
         
         
@@ -532,7 +534,7 @@
         emailButton.backgroundColor = [UIColor clearColor];
         [emailButton setImage:[UIImage imageNamed:@"icon_email.png"] forState:UIControlStateNormal];
         [emailButton setTintColor:[UIColor whiteColor]];
-        [emailButton addTarget:self action:@selector(actionEmail:) forControlEvents:UIControlEventTouchDown];
+        [emailButton addTarget:self action:@selector(actionEmail:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:emailButton];
         
         
@@ -543,7 +545,7 @@
         smsButton.backgroundColor = [UIColor clearColor];
         [smsButton setImage:[UIImage imageNamed:@"icon_sms.png"] forState:UIControlStateNormal];
         [smsButton setTintColor:[UIColor whiteColor]];
-        [smsButton addTarget:self action:@selector(actionSMS:) forControlEvents:UIControlEventTouchDown];
+        [smsButton addTarget:self action:@selector(actionSMS:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:smsButton];
    }
     
@@ -563,7 +565,7 @@
     personInChargeLabel.text = _user.name;
 
 //    UIImage* image = [self loadLocationImage:nil];
-    UIImage* image = [UIImage imageNamed:@"Button-Favorite-List-Normal.png"];
+    UIImage* image = [UIImage imageNamed:@"z_thumbnail.jpg"];
     [personInChargeButton setImage:image forState:UIControlStateNormal];
 
     

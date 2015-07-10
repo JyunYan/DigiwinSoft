@@ -207,7 +207,7 @@
         numLabel.tag = TAG_LABEL_NUM;
         numLabel.textColor = [UIColor whiteColor];
         numLabel.textAlignment = NSTextAlignmentCenter;
-        numLabel.font = [UIFont systemFontOfSize:10.];
+        numLabel.font = [UIFont boldSystemFontOfSize:10.];
         [numImageView addSubview:numLabel];
     }
     cell.backgroundColor = [UIColor blackColor];

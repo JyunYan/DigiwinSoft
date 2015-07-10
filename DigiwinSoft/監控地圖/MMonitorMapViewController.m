@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "MDirector.h"
 #import "MMonitorPageContentViewController.h"
+#import "MMonitorDetailViewController.h"
 
 
 #define TAG_SEGVIEW_LIST 100
@@ -599,7 +600,8 @@
 
 - (void)goDetailViewController
 {
-    
+    MMonitorDetailViewController* vc = [[MMonitorDetailViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

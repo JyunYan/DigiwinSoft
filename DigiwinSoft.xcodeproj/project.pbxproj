@@ -46,7 +46,8 @@
 		3A7E31EC1B4BD82800790026 /* icon_weixin.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A7E31E81B4BD82800790026 /* icon_weixin.png */; };
 		3A81B9481B4CDAB600EAF996 /* MGoalSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A81B9471B4CDAB600EAF996 /* MGoalSettingViewController.m */; };
 		3A8399791B4E1D50008B0150 /* icon_arrow_up_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A8399781B4E1D50008B0150 /* icon_arrow_up_right.png */; };
-		3A83997F1B4E5471008B0150 /* MMonitorPageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A83997E1B4E5471008B0150 /* MMonitorPageContentViewController.m */; };
+		3A8D5B881B4F7F4F0025374B /* MMonitorDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8D5B871B4F7F4F0025374B /* MMonitorDetailViewController.m */; };
+		3A8D5B8B1B4F800B0025374B /* MMonitorPageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8D5B8A1B4F800B0025374B /* MMonitorPageContentViewController.m */; };
 		3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */; };
 		3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */; };
 		3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE101B32831500143374 /* MMonitorMapViewController.m */; };
@@ -228,8 +229,10 @@
 		3A81B9461B4CDAB600EAF996 /* MGoalSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGoalSettingViewController.h; sourceTree = "<group>"; };
 		3A81B9471B4CDAB600EAF996 /* MGoalSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGoalSettingViewController.m; sourceTree = "<group>"; };
 		3A8399781B4E1D50008B0150 /* icon_arrow_up_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_arrow_up_right.png; sourceTree = "<group>"; };
-		3A83997D1B4E5471008B0150 /* MMonitorPageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorPageContentViewController.h; path = CustomViews/MMonitorPageContentViewController.h; sourceTree = "<group>"; };
-		3A83997E1B4E5471008B0150 /* MMonitorPageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorPageContentViewController.m; path = CustomViews/MMonitorPageContentViewController.m; sourceTree = "<group>"; };
+		3A8D5B861B4F7F4F0025374B /* MMonitorDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMonitorDetailViewController.h; sourceTree = "<group>"; };
+		3A8D5B871B4F7F4F0025374B /* MMonitorDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMonitorDetailViewController.m; sourceTree = "<group>"; };
+		3A8D5B891B4F800B0025374B /* MMonitorPageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMonitorPageContentViewController.h; sourceTree = "<group>"; };
+		3A8D5B8A1B4F800B0025374B /* MMonitorPageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMonitorPageContentViewController.m; sourceTree = "<group>"; };
 		3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMyPlanTableViewCell.h; path = CustomViews/MMyPlanTableViewCell.h; sourceTree = "<group>"; };
 		3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMyPlanTableViewCell.m; path = CustomViews/MMyPlanTableViewCell.m; sourceTree = "<group>"; };
 		3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryRaidersViewController.h; sourceTree = "<group>"; };
@@ -526,6 +529,10 @@
 			children = (
 				3AB4CE0F1B32831500143374 /* MMonitorMapViewController.h */,
 				3AB4CE101B32831500143374 /* MMonitorMapViewController.m */,
+				3A8D5B891B4F800B0025374B /* MMonitorPageContentViewController.h */,
+				3A8D5B8A1B4F800B0025374B /* MMonitorPageContentViewController.m */,
+				3A8D5B861B4F7F4F0025374B /* MMonitorDetailViewController.h */,
+				3A8D5B871B4F7F4F0025374B /* MMonitorDetailViewController.m */,
 			);
 			path = "監控地圖";
 			sourceTree = "<group>";
@@ -806,8 +813,6 @@
 				3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */,
 				DC8135271B49BB29003B56AA /* MTarInfoChartView.h */,
 				DC8135281B49BB29003B56AA /* MTarInfoChartView.m */,
-				3A83997D1B4E5471008B0150 /* MMonitorPageContentViewController.h */,
-				3A83997E1B4E5471008B0150 /* MMonitorPageContentViewController.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -982,6 +987,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A8D5B8B1B4F800B0025374B /* MMonitorPageContentViewController.m in Sources */,
 				D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */,
 				3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */,
 				3A81B9481B4CDAB600EAF996 /* MGoalSettingViewController.m in Sources */,
@@ -996,6 +1002,7 @@
 				3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */,
 				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
 				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
+				3A8D5B881B4F7F4F0025374B /* MMonitorDetailViewController.m in Sources */,
 				D06C2D421B381850009D2082 /* FMDatabaseAdditions.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
@@ -1008,7 +1015,6 @@
 				DCF46AD01B428F1400C771BB /* MIssue.m in Sources */,
 				3A7E31A51B4B5ECA00790026 /* CustomIOSAlertView.m in Sources */,
 				3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */,
-				3A83997F1B4E5471008B0150 /* MMonitorPageContentViewController.m in Sources */,
 				D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */,
 				382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */,
 				3AB4CE2A1B32895C00143374 /* MMDrawerController.m in Sources */,
