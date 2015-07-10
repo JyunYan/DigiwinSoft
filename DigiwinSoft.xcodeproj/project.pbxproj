@@ -15,6 +15,12 @@
 		382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */; };
 		383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F831B4BD9CD00472513 /* MReportViewController.m */; };
 		383E2F871B4BF32800472513 /* MReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F861B4BF32800472513 /* MReportTableViewCell.m */; };
+		38DCDD8D1B4E18B2008B57A2 /* RVCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */; };
+		38DCDD8E1B4E18B2008B57A2 /* RVCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8C1B4E18B2008B57A2 /* RVCollectionViewLayout.m */; };
+		38DCDD911B4E199F008B57A2 /* MRouletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD901B4E199F008B57A2 /* MRouletteViewController.m */; };
+		38DCDD931B4E22ED008B57A2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38DCDD921B4E22ED008B57A2 /* CoreGraphics.framework */; };
+		38DCDD951B4E22FD008B57A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38DCDD941B4E22FD008B57A2 /* Foundation.framework */; };
+		38DCDD971B4E2308008B57A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38DCDD961B4E2308008B57A2 /* UIKit.framework */; };
 		38E6F3FE1B411EAF00245DA1 /* MLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E6F3FD1B411EAF00245DA1 /* MLoginViewController.m */; };
 		3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03AA111B3B9B1900923ABB /* MEventSelectViewController.m */; };
 		3A03AA1B1B3BD5CA00923ABB /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A03AA141B3BD5CA00923ABB /* downArrow.png */; };
@@ -175,6 +181,15 @@
 		383E2F831B4BD9CD00472513 /* MReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MReportViewController.m; sourceTree = "<group>"; };
 		383E2F851B4BF32800472513 /* MReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MReportTableViewCell.h; path = structure/MReportTableViewCell.h; sourceTree = "<group>"; };
 		383E2F861B4BF32800472513 /* MReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MReportTableViewCell.m; path = structure/MReportTableViewCell.m; sourceTree = "<group>"; };
+		38DCDD891B4E18B2008B57A2 /* RVCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewCell.h; sourceTree = "<group>"; };
+		38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVCollectionViewCell.m; sourceTree = "<group>"; };
+		38DCDD8B1B4E18B2008B57A2 /* RVCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewLayout.h; sourceTree = "<group>"; };
+		38DCDD8C1B4E18B2008B57A2 /* RVCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVCollectionViewLayout.m; sourceTree = "<group>"; };
+		38DCDD8F1B4E199F008B57A2 /* MRouletteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRouletteViewController.h; sourceTree = "<group>"; };
+		38DCDD901B4E199F008B57A2 /* MRouletteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRouletteViewController.m; sourceTree = "<group>"; };
+		38DCDD921B4E22ED008B57A2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		38DCDD941B4E22FD008B57A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		38DCDD961B4E2308008B57A2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		38E6F3FC1B411EAF00245DA1 /* MLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLoginViewController.h; sourceTree = "<group>"; };
 		38E6F3FD1B411EAF00245DA1 /* MLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLoginViewController.m; sourceTree = "<group>"; };
 		3A03AA101B3B9B1900923ABB /* MEventSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEventSelectViewController.h; sourceTree = "<group>"; };
@@ -382,6 +397,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38DCDD971B4E2308008B57A2 /* UIKit.framework in Frameworks */,
+				38DCDD951B4E22FD008B57A2 /* Foundation.framework in Frameworks */,
+				38DCDD931B4E22ED008B57A2 /* CoreGraphics.framework in Frameworks */,
 				3A7E31E41B4BA51300790026 /* MessageUI.framework in Frameworks */,
 				3A54DDFC1B40DD1100A6849A /* MediaPlayer.framework in Frameworks */,
 				3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */,
@@ -399,6 +417,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		38DCDD881B4E1852008B57A2 /* RVCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				38DCDD891B4E18B2008B57A2 /* RVCollectionViewCell.h */,
+				38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */,
+				38DCDD8B1B4E18B2008B57A2 /* RVCollectionViewLayout.h */,
+				38DCDD8C1B4E18B2008B57A2 /* RVCollectionViewLayout.m */,
+			);
+			name = RVCollectionView;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		3A03AA131B3BD5CA00923ABB /* DownPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,6 +542,8 @@
 			children = (
 				3AB4CE121B32839300143374 /* MSeeStatusViewController.h */,
 				3AB4CE131B32839300143374 /* MSeeStatusViewController.m */,
+				38DCDD8F1B4E199F008B57A2 /* MRouletteViewController.h */,
+				38DCDD901B4E199F008B57A2 /* MRouletteViewController.m */,
 			);
 			path = "看現況";
 			sourceTree = "<group>";
@@ -528,6 +560,7 @@
 		3AB4CE1E1B32895C00143374 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				38DCDD881B4E1852008B57A2 /* RVCollectionView */,
 				3A7E31A21B4B5ECA00790026 /* CustomIOSAlertView */,
 				DCF46AB61B41278200C771BB /* iCarousel */,
 				3A03AA131B3BD5CA00923ABB /* DownPicker */,
@@ -666,6 +699,9 @@
 		DC0ADF4F1B316E340019236D = {
 			isa = PBXGroup;
 			children = (
+				38DCDD961B4E2308008B57A2 /* UIKit.framework */,
+				38DCDD941B4E22FD008B57A2 /* Foundation.framework */,
+				38DCDD921B4E22ED008B57A2 /* CoreGraphics.framework */,
 				3A7E31E31B4BA51300790026 /* MessageUI.framework */,
 				3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */,
 				3A03F96E1B3A60A0000F345B /* QuartzCore.framework */,
@@ -987,6 +1023,7 @@
 				3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */,
 				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
 				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
+				38DCDD911B4E199F008B57A2 /* MRouletteViewController.m in Sources */,
 				D06C2D421B381850009D2082 /* FMDatabaseAdditions.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
@@ -995,6 +1032,7 @@
 				DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */,
 				382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */,
 				3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
+				38DCDD8E1B4E18B2008B57A2 /* RVCollectionViewLayout.m in Sources */,
 				DCF46B2D1B462D5A00C771BB /* MSkill.m in Sources */,
 				DCF46AD01B428F1400C771BB /* MIssue.m in Sources */,
 				3A7E31A51B4B5ECA00790026 /* CustomIOSAlertView.m in Sources */,
@@ -1006,6 +1044,7 @@
 				3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */,
 				DCF46AB91B41279900C771BB /* iCarousel.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
+				38DCDD8D1B4E18B2008B57A2 /* RVCollectionViewCell.m in Sources */,
 				DCF46B241B43C2F400C771BB /* MCustTarget.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */,
