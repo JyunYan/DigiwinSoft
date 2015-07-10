@@ -322,7 +322,7 @@
 
 - (void)btnManagerClicked:(MIndustryRaidersTableViewCell*)cell
 {
-    
+    //
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didAssignManager:) name:kDidAssignManager object:nil];
     
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
