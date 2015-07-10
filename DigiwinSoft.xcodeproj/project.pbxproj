@@ -93,6 +93,9 @@
 		DC3DF9D21B4E17C90065DF5D /* MTarMeterView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D11B4E17C90065DF5D /* MTarMeterView.m */; };
 		DC3DF9D51B4E23360065DF5D /* MTarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D41B4E23360065DF5D /* MTarChartView.m */; };
 		DC3DF9D81B4E46C00065DF5D /* MCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */; };
+		DC3DF9DB1B4E6C0B0065DF5D /* MDashedLine.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9DA1B4E6C0B0065DF5D /* MDashedLine.m */; };
+		DC3DF9DE1B4ED13E0065DF5D /* MConcentricCircles.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */; };
+		DC3DF9E11B4EE40B0065DF5D /* MMessageBox.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9E01B4EE40B0065DF5D /* MMessageBox.m */; };
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
 		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
@@ -311,6 +314,12 @@
 		DC3DF9D41B4E23360065DF5D /* MTarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarChartView.m; path = CustomViews/MTarChartView.m; sourceTree = "<group>"; };
 		DC3DF9D61B4E46C00065DF5D /* MCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCoordinate.h; path = structure/MCoordinate.h; sourceTree = "<group>"; };
 		DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCoordinate.m; path = structure/MCoordinate.m; sourceTree = "<group>"; };
+		DC3DF9D91B4E6C0B0065DF5D /* MDashedLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDashedLine.h; path = CustomViews/MDashedLine.h; sourceTree = "<group>"; };
+		DC3DF9DA1B4E6C0B0065DF5D /* MDashedLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDashedLine.m; path = CustomViews/MDashedLine.m; sourceTree = "<group>"; };
+		DC3DF9DC1B4ED13E0065DF5D /* MConcentricCircles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MConcentricCircles.h; path = CustomViews/MConcentricCircles.h; sourceTree = "<group>"; };
+		DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MConcentricCircles.m; path = CustomViews/MConcentricCircles.m; sourceTree = "<group>"; };
+		DC3DF9DF1B4EE40B0065DF5D /* MMessageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMessageBox.h; path = CustomViews/MMessageBox.h; sourceTree = "<group>"; };
+		DC3DF9E01B4EE40B0065DF5D /* MMessageBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMessageBox.m; path = CustomViews/MMessageBox.m; sourceTree = "<group>"; };
 		DC6A52B11B3D2E6E001A373F /* MDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDirector.h; sourceTree = "<group>"; };
 		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
 		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
@@ -815,6 +824,12 @@
 				DC3DF9D11B4E17C90065DF5D /* MTarMeterView.m */,
 				DC3DF9D31B4E23360065DF5D /* MTarChartView.h */,
 				DC3DF9D41B4E23360065DF5D /* MTarChartView.m */,
+				DC3DF9D91B4E6C0B0065DF5D /* MDashedLine.h */,
+				DC3DF9DA1B4E6C0B0065DF5D /* MDashedLine.m */,
+				DC3DF9DC1B4ED13E0065DF5D /* MConcentricCircles.h */,
+				DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */,
+				DC3DF9DF1B4EE40B0065DF5D /* MMessageBox.h */,
+				DC3DF9E01B4EE40B0065DF5D /* MMessageBox.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1006,6 +1021,7 @@
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
 				3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */,
+				DC3DF9DB1B4E6C0B0065DF5D /* MDashedLine.m in Sources */,
 				382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */,
 				DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */,
 				382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */,
@@ -1028,6 +1044,7 @@
 				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
 				DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */,
+				DC3DF9DE1B4ED13E0065DF5D /* MConcentricCircles.m in Sources */,
 				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
 				3A03AA231B3BFF0500923ABB /* MEventDetailViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
@@ -1061,6 +1078,7 @@
 				DC3DF9D81B4E46C00065DF5D /* MCoordinate.m in Sources */,
 				3829982F1B3982BE0045B3BD /* MIndustryRaiders2ViewController.m in Sources */,
 				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
+				DC3DF9E11B4EE40B0065DF5D /* MMessageBox.m in Sources */,
 				DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */,
 				3AB4CE1A1B32848B00143374 /* MMyTaskViewController.m in Sources */,
 			);

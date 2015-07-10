@@ -512,14 +512,17 @@ static MDataBaseManager* _director = nil;
         return missions;
     }
     
-    NSArray* array = [self loadMyGuideMissionsWithRelese:release status:status];
-    [missions addObjectsFromArray:array];
+    // 只有 進度回報&已完成任務 才有對策
+    if(index == 1 || index == 2){
+        NSArray* array = [self loadMyGuideMissionsWithRelese:release status:status];
+        [missions addObjectsFromArray:array];
+    }
     
-    array = [self loadMyActivityMissionWithRelese:release status:status];
-    [missions addObjectsFromArray:array];
+    NSArray* array2 = [self loadMyActivityMissionWithRelese:release status:status];
+    [missions addObjectsFromArray:array2];
 
-    array = [self loadMyWorkItemMissionWithRelese:release status:status];
-    [missions addObjectsFromArray:array];
+    NSArray* array3 = [self loadMyWorkItemMissionWithRelese:release status:status];
+    [missions addObjectsFromArray:array3];
     
     // sort by created date
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"cre_dte" ascending:YES];  // YES:升冪 NO:降冪

@@ -9,6 +9,7 @@
 #import "MTarChartView.h"
 #import "MDirector.h"
 #import "MLineChartView.h"
+#import "MDashedLine.h"
 
 @interface MTarChartView ()
 
@@ -71,7 +72,7 @@
 {
     if(!string || [string isEqualToString:@""]){
         NSDateComponents *comps = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear  fromDate:[NSDate date]];
-        return [NSString stringWithFormat:@"%04d-%02d-%02d", comps.year, comps.month, comps.day];
+        return [NSString stringWithFormat:@"%04d-%02d-%02d", (int)comps.year, (int)comps.month, (int)comps.day];
     }
     
     NSDateFormatter* fm = [NSDateFormatter new];
@@ -87,7 +88,7 @@
         month += 12;
     }
     
-    return [NSString stringWithFormat:@"%04d-%02d-%02d", year, month, comps.day];
+    return [NSString stringWithFormat:@"%04d-%02d-%02d", (int)year, (int)month, (int)comps.day];
 }
 
 - (void)drawRect:(CGRect)rect
