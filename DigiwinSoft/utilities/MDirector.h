@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MConfig.h"
 #import "MUser.h"
 #import "MPhenomenon.h"
 #import "MIssue.h"
@@ -20,6 +21,11 @@
 
 +(MDirector*) sharedInstance;
 
+#pragma mark - scale
+-(CGSize) getScaledSize:(CGSize)size;
+-(CGRect) getScaledRect:(CGRect)frame;
+
+#pragma mark - get color methods
 - (UIColor *)getCustomGrayColor;
 - (UIColor *)getCustomLightGrayColor;
 - (UIColor *)getCustomBlueColor;
