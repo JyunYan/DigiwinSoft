@@ -16,11 +16,13 @@
 #import "AppDelegate.h"
 #import "MInventoryTurnoverViewController.h"
 #import "MDirector.h"
-@interface MIndustryRaiders2ViewController ()
+
+#import "ASAnimationManager.h"
+@interface MIndustryRaiders2ViewController ()<MIndustryRaidersTableViewCellDelegate>
 {
     //screenSize
-    CGFloat screenWidth;
-    CGFloat screenHeight;
+    //CGFloat screenWidth;
+    //CGFloat screenHeight;
 }
 
 @property (nonatomic, assign) NSInteger operateIndex;
@@ -93,12 +95,8 @@
 }
 -(void) addMainMenu
 {
-    CGSize screenSize =[[UIScreen mainScreen]bounds].size;
-     screenWidth = screenSize.width;
-     screenHeight = screenSize.height;
-
     //Label
-    UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(0, 64,screenWidth, 40)];
+    UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(0, 64,DEVICE_SCREEN_WIDTH, 40)];
     labTitle.text=self.phen.subject;
     labTitle.backgroundColor=[UIColor whiteColor];
     labTitle.textAlignment=NSTextAlignmentCenter;
@@ -106,14 +104,14 @@
     [self.view addSubview:labTitle];
     
     //imgGray
-    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64+40,screenWidth, 10)];
+    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64+40,DEVICE_SCREEN_WIDTH, 10)];
     imgGray.backgroundColor=[UIColor colorWithRed:193.0/255.0 green:193.0/255.0 blue:193.0/255.0 alpha:1.0];
     [self.view addSubview:imgGray];
     
     //Segmented
     NSArray *itemArray = [NSArray arrayWithObjects:@"說明",@"建議對策",nil];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
-    segmentedControl.frame = CGRectMake(0, 20+44+40+10,screenWidth, 40);
+    segmentedControl.frame = CGRectMake(0, 20+44+40+10,DEVICE_SCREEN_WIDTH, 40);
     [segmentedControl addTarget:self
                          action:@selector(actionSegmented:)
                forControlEvents:UIControlEventValueChanged];
@@ -124,17 +122,17 @@
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0]} forState:UIControlStateSelected];
     
     //imgGray
-    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,39,screenWidth, 1)];
+    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,39,DEVICE_SCREEN_WIDTH, 1)];
     imgGray.backgroundColor=[UIColor colorWithRed:194.0/255.0 green:194.0/255.0 blue:194.0/255.0 alpha:1.0];
     [segmentedControl addSubview:imgGray];
 
     //imgblueBar
-    imgblueBar=[[UIImageView alloc]initWithFrame:CGRectMake((screenWidth/8)*5,36,screenWidth/4, 3)];
+    imgblueBar=[[UIImageView alloc]initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/8)*5,36,DEVICE_SCREEN_WIDTH/4, 3)];
     imgblueBar.backgroundColor=[UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0];
     [segmentedControl addSubview:imgblueBar];
     
     //TableView
-    tbl=[[UITableView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,screenWidth, screenHeight-(20+44+40+10+40+35+49))];
+    tbl=[[UITableView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT-(20+44+40+10+40+35+49))];
     tbl.backgroundColor=[UIColor whiteColor];
     tbl.bounces=NO;
     tbl.delegate=self;
@@ -144,7 +142,7 @@
 
     
     //btnAdd
-    btn=[[UIButton alloc]initWithFrame:CGRectMake(0,tbl.frame.origin.y+tbl.frame.size.height,screenWidth, 35)];
+    btn=[[UIButton alloc]initWithFrame:CGRectMake(0,tbl.frame.origin.y+tbl.frame.size.height,DEVICE_SCREEN_WIDTH, 35)];
     btn.backgroundColor=[UIColor colorWithRed:245.0/255.0 green:113.0/255.0 blue:116.0/255.0 alpha:1];
     [btn setTitle:@"+加入我的規劃清單" forState:UIControlStateNormal];
     btn.titleLabel.textColor=[UIColor whiteColor];
@@ -152,7 +150,7 @@
     [self.view addSubview:btn];
     
     //textView
-    textView=[[UITextView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,screenWidth, screenHeight-320)];
+    textView=[[UITextView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT-320)];
     textView.backgroundColor=[UIColor whiteColor];
     textView.text=self.phen.desc;
     textView.font=[UIFont systemFontOfSize:12];
@@ -160,7 +158,7 @@
     
     
     //imgGray
-    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(10,textView.frame.origin.y+textView.frame.size.height+1,screenWidth-20, 1)];
+    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(10,textView.frame.origin.y+textView.frame.size.height+1,DEVICE_SCREEN_WIDTH-20, 1)];
     imgGray.backgroundColor=[UIColor colorWithRed:193.0/255.0 green:193.0/255.0 blue:193.0/255.0 alpha:1.0];
     
     //Label
@@ -204,7 +202,7 @@
             
             //設定動畫開始時的狀態為目前畫面上的樣子
             [UIView setAnimationBeginsFromCurrentState:YES];
-            imgblueBar.frame=CGRectMake((screenWidth/8)*1,
+            imgblueBar.frame=CGRectMake((DEVICE_SCREEN_WIDTH/8)*1,
                                         imgblueBar.frame.origin.y,
                                         imgblueBar.frame.size.width,
                                         imgblueBar.frame.size.height);
@@ -227,7 +225,7 @@
             
             //設定動畫開始時的狀態為目前畫面上的樣子
             [UIView setAnimationBeginsFromCurrentState:YES];
-            imgblueBar.frame=CGRectMake((screenWidth/8)*5,
+            imgblueBar.frame=CGRectMake((DEVICE_SCREEN_WIDTH/8)*5,
                                         imgblueBar.frame.origin.y,
                                         imgblueBar.frame.size.width,
                                         imgblueBar.frame.size.height);
@@ -279,21 +277,7 @@
                                                   object:nil];
 }
 #pragma mark - UIButton
--(void)btnTargetSet:(id)sender
-{
-    //for p27 帶回目標值與達成日
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(UpGuideTarget:)
-                                                 name:@"UpGuideTarget"
-                                               object:nil];
-    
-    MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
-    MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
-    NSIndexPath* indexPath = [tbl indexPathForCell:cell];
-    MGuide* guide = [aryList objectAtIndex:indexPath.row];
-    MInventoryTurnoverVC.guide=guide;
-    [self.navigationController pushViewController:MInventoryTurnoverVC animated:YES];
-}
+
 -(void)clickedBtnSetting:(id)sender
 {
     AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
@@ -319,37 +303,6 @@
     }
 }
 
-- (void)actionCheck:(UIButton *)sender{
-    
-    MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
-    BOOL check=[aryList[cell.tag]isCheck];
-    if (check==NO) {
-        [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_fill.png"] forState:UIControlStateNormal];
-    }
-    else
-    {
-        [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_empty.png"] forState:UIControlStateNormal];
-    }
-    [aryList[cell.tag] setIsCheck:!check];
-}
-
-- (void)btnManager:(id)sender{
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didAssignManager:) name:kDidAssignManager object:nil];
-    
-    UIButton* button = (UIButton*)sender;
-    MIndustryRaidersTableViewCell* cell = (MIndustryRaidersTableViewCell*)button.superview.superview;
-    NSIndexPath* indexPath = [tbl indexPathForCell:cell];
-    
-    _operateIndex = indexPath.row;
-    MGuide* guide = [aryList objectAtIndex:_operateIndex];
-    
-    MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithGuide:guide];
-    UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MDesignateResponsibleVC];
-    MIndustryRaidersNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
-    [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
-}
-
 - (void)didAssignManager:(NSNotification*)note
 {
     MGuide* guide = (MGuide*)note.object;
@@ -360,7 +313,45 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidAssignManager object:nil];
 }
 
-- (void)btnRaiders:(id)sender{
+- (void)goToBackPage:(id) sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - MIndustryRaidersTableViewCellDelegate 相關
+
+- (void)btnManagerClicked:(MIndustryRaidersTableViewCell*)cell
+{
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didAssignManager:) name:kDidAssignManager object:nil];
+    
+    NSIndexPath* indexPath = [tbl indexPathForCell:cell];
+    _operateIndex = indexPath.row;
+    MGuide* guide = [aryList objectAtIndex:_operateIndex];
+    
+    MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithGuide:guide];
+    UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MDesignateResponsibleVC];
+    MIndustryRaidersNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
+}
+
+-(void)btnTargetSetClicked:(MIndustryRaidersTableViewCell*)cell
+{
+    //for p27 帶回目標值與達成日
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(UpGuideTarget:)
+                                                 name:@"UpGuideTarget"
+                                               object:nil];
+    
+    NSIndexPath* indexPath = [tbl indexPathForCell:cell];
+    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    
+    MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
+    MInventoryTurnoverVC.guide=guide;
+    [self.navigationController pushViewController:MInventoryTurnoverVC animated:YES];
+}
+
+- (void)btnRaidersClicked:(MIndustryRaidersTableViewCell*)cell{
     
     //for p27 帶回目標值與達成日
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -368,28 +359,26 @@
                                                  name:@"UpGuideTarget"
                                                object:nil];
     
-    MRaidersDescriptionViewController *MRaidersDescVC = [[MRaidersDescriptionViewController alloc] init];
-    MIndustryRaidersTableViewCell * cell = (MIndustryRaidersTableViewCell *)[[sender superview] superview];
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
     MGuide* guide = [aryList objectAtIndex:indexPath.row];
-    MRaidersDescVC.guide=guide;
+    
     [MDirector sharedInstance].selectedPhen=_phen;
+    
+    MRaidersDescriptionViewController *MRaidersDescVC = [[MRaidersDescriptionViewController alloc] init];
+    MRaidersDescVC.guide=guide;
     UINavigationController* MRaidersDescNav = [[UINavigationController alloc] initWithRootViewController:MRaidersDescVC];
     MRaidersDescNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     [self.navigationController presentViewController:MRaidersDescNav animated:YES completion:nil];
 }
-- (void)goToBackPage:(id) sender
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 #pragma mark - UITableViewDataSource
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 66.0f;
+    return 60.0f;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    return 32.0f;
+    return 30.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [aryList count];
@@ -397,68 +386,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MIndustryRaidersTableViewCell *cell=(MIndustryRaidersTableViewCell *)[MIndustryRaidersTableViewCell cellWithTableView:tableView];
+    cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     MGuide* guide = [aryList objectAtIndex:indexPath.row];
     
-    //對策名稱
-    cell.labName.text=[aryList[indexPath.row]name];
-    cell.labName.font=[UIFont systemFontOfSize:12];
-    cell.labName.frame=CGRectMake(30, 16, 140, 18);
-    cell.labName.backgroundColor=[UIColor clearColor];
-    
-    //Check
-    [cell.btnCheck  setImage:[UIImage imageNamed:@"checkbox_empty.png"] forState:UIControlStateNormal];
-    cell.btnCheck.frame=CGRectMake(12, 16, 16, 16);
-    [cell.btnCheck addTarget:self action:@selector(actionCheck:) forControlEvents:UIControlEventTouchUpInside];
-    
-    //指派負責人
-    UIImage *imgManager = (guide.manager.uuid != nil) ? [UIImage imageNamed:@"z_thumbnail.jpg"] : [UIImage imageNamed:@"icon_manager.png"];
-    [cell.btnManager setImage:imgManager forState:UIControlStateNormal];
-    cell.btnManager.frame=CGRectMake(((screenWidth/2)*1)+8,23, 22, 22);
-    cell.btnManager.layer.cornerRadius = cell.btnManager.frame.size.width / 2;
-    cell.btnManager.clipsToBounds = YES;
-    [cell.btnManager addTarget:self action:@selector(btnManager:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    //目標設定
-    UIImage *imgTargetSet = [UIImage imageNamed:@"icon_menu_8.png"];
-    [cell.btnTargetSet setBackgroundImage:imgTargetSet forState:UIControlStateNormal];
-    cell.btnTargetSet.frame=CGRectMake(((screenWidth/4)*3)-18,23, 22,22);
-    [cell.btnTargetSet addTarget:self action:@selector(btnTargetSet:) forControlEvents:UIControlEventTouchUpInside];
-    
-    //攻略
-    UIImage *imgRaiders = [UIImage imageNamed:@"icon_raider.png"];
-    [cell.btnRaiders setBackgroundImage:imgRaiders forState:UIControlStateNormal];
-    cell.btnRaiders.frame=CGRectMake(((screenWidth/4)*3)+30,23 , 22, 22);
-    [cell.btnRaiders addTarget:self action:@selector(btnRaiders:) forControlEvents:UIControlEventTouchUpInside];
-    
-    //星星數量
-    NSInteger iStarNum=[[aryList[indexPath.row]review]integerValue];
-    for (int i=0; i<5; i++){
-        UIImageView *imgStar=[[UIImageView alloc]initWithFrame:CGRectMake(30+(17*i), 36,16,16)];
-        if(i<iStarNum){
-            imgStar.image=[UIImage imageNamed:@"star_fill.png"];
-        }else
-        {
-            imgStar.image=[UIImage imageNamed:@"star_empty.png"];
-        }
-        [cell addSubview:imgStar];
-    }
-    
-    //勾選狀態
-    BOOL check=[aryList[indexPath.row]isCheck];
-    if (check==YES) {
-        [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_fill.png"] forState:UIControlStateNormal];
-    }else
-    {
-        [cell.btnCheck setImage:[UIImage imageNamed:@"checkbox_empty.png"] forState:UIControlStateNormal];
-    }
-    cell.tag=[indexPath row];
+    [cell prepareWithGuide:guide];
+
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    guide.isCheck = !guide.isCheck;
+    
+    MIndustryRaidersTableViewCell* cell = (MIndustryRaidersTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    [cell prepareWithGuide:guide];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -466,36 +409,24 @@
     UIView *viewSection = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 100, 20)];
     viewSection.backgroundColor=[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1];
     
-    UILabel *labRelation = [[UILabel alloc] initWithFrame:CGRectMake((screenWidth/4)-30,5,60,20)];
-    labRelation.text = @"對策名稱";
-    labRelation.textColor =[UIColor grayColor];
-    labRelation.font = [UIFont systemFontOfSize:12.0f];
-    labRelation.backgroundColor=[UIColor clearColor];
+    CGFloat offset = 0;
+    
+    UILabel *labRelation = [self createTitleLabelWithText:@"對策名稱" frame:CGRectMake(offset,0,DEVICE_SCREEN_WIDTH*0.45,30)];
     [viewSection addSubview:labRelation];
     
-    UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake(((screenWidth/2)*1)-12,-2, 60,34)];
-    labMeasure.text = @"指派\n負責人";
-    labMeasure.numberOfLines=2;
-    labMeasure.textAlignment = NSTextAlignmentCenter;
-    labMeasure.textColor =[UIColor grayColor];
-    labMeasure.backgroundColor = [UIColor clearColor];
-    labMeasure.font = [UIFont systemFontOfSize:12.0f];
+    offset += labRelation.frame.size.width;
+    
+    UILabel *labMeasure = [self createTitleLabelWithText:@"指派\n負責人" frame:CGRectMake(offset, 0, DEVICE_SCREEN_WIDTH*0.18, 30)];
     [viewSection addSubview:labMeasure];
     
-    UILabel *labTargetSet = [[UILabel alloc] initWithFrame:CGRectMake(((screenWidth/4)*3)-20,-2, 26,34)];
-    labTargetSet.text = @"目標\n設定";
-    labTargetSet.numberOfLines=2;
-    labTargetSet.textColor =[UIColor grayColor];
-    labTargetSet.backgroundColor = [UIColor clearColor];
-    labTargetSet.font = [UIFont systemFontOfSize:12.0f];
-    [viewSection addSubview:labTargetSet];
-
+    offset += labMeasure.frame.size.width;
     
-    UILabel *labGrade = [[UILabel alloc] initWithFrame:CGRectMake(((screenWidth/4)*3)+30,5, 30,20)];
-    labGrade.text = @"攻略";
-    labGrade.textColor =[UIColor grayColor];
-    labGrade.backgroundColor = [UIColor clearColor];
-    labGrade.font = [UIFont systemFontOfSize:12.0f];
+    UILabel *labTargetSet = [self createTitleLabelWithText:@"目標\n設定" frame:CGRectMake(offset, 0, DEVICE_SCREEN_WIDTH*0.18, 30)];
+    [viewSection addSubview:labTargetSet];
+    
+    offset += labTargetSet.frame.size.width;
+    
+    UILabel *labGrade = [self createTitleLabelWithText:@"攻略" frame:CGRectMake(offset, 0, DEVICE_SCREEN_WIDTH*0.18, 30)];
     [viewSection addSubview:labGrade];
     
     return viewSection;
@@ -516,6 +447,19 @@
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+}
+
+- (UILabel*)createTitleLabelWithText:(NSString*)text frame:(CGRect)frame
+{
+    UILabel* label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor=[UIColor clearColor];
+    label.numberOfLines = 2;
+    label.font = [UIFont systemFontOfSize:12.0f];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor =[UIColor grayColor];
+    label.text = text;
+    
+    return label;
 }
 
 
