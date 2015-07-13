@@ -342,12 +342,12 @@
                     _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
                     [_tableView reloadData];
 
-                    [self showAlertDialog:@"轉入成功"];
+                    [[MDirector sharedInstance] showAlertDialog:@"轉入成功"];
                 } else {
-                    [self showAlertDialog:@"轉入失敗"];
+                    [[MDirector sharedInstance] showAlertDialog:@"轉入失敗"];
                 }
             } else {
-                [self showAlertDialog:@"此規劃尚未指派負責人"];
+                [[MDirector sharedInstance] showAlertDialog:@"此規劃尚未指派負責人"];
             }
             
             NSLog(@"clock button was pressed");
@@ -404,16 +404,6 @@
             break;
         }
     }
-}
-
-- (void)showAlertDialog:(NSString*) msg
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"訊息"
-                                                    message:msg
-                                                   delegate:nil
-                                          cancelButtonTitle:@"確定"
-                                          otherButtonTitles: nil];
-    [alert show];
 }
 
 @end

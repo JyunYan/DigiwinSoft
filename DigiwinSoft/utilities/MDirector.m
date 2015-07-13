@@ -79,6 +79,24 @@ static MDirector* _director = nil;
     return [UIColor colorWithRed:34.0f/255.0f green:139.0f/255.0f blue:34.0f/255.0f alpha:1.0f];
 }
 
+- (BOOL)image:(UIImage *)image1 isEqualTo:(UIImage *)image2
+{
+    NSData *data1 = UIImagePNGRepresentation(image1);
+    NSData *data2 = UIImagePNGRepresentation(image2);
+    
+    return [data1 isEqual:data2];
+}
+
+- (void)showAlertDialog:(NSString*) msg
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"訊息"
+                                                    message:msg
+                                                   delegate:nil
+                                          cancelButtonTitle:@"確定"
+                                          otherButtonTitles: nil];
+    [alert show];
+}
+
 // 隨機產生uuid
 - (NSString*)getCustUuidWithPrev:(NSString*)prev
 {

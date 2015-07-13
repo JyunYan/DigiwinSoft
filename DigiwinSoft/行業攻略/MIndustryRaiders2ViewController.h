@@ -18,7 +18,6 @@
     UIButton *btn;
     UILabel *labTarget;
     UITextField *txtField;
-    UIImageView *imgblueBar;
     UIImageView *imgGray;
 }
 @property (nonatomic, strong) MPhenomenon *phen;

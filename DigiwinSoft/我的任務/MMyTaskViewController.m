@@ -14,20 +14,21 @@
 #import "MCustGuide.h"
 #import "MCustActivity.h"
 #import "MCustWorkItem.h"
+#import "MCustomSegmentedControl.h"
+
 #define TAG_IMAGE_VIEW_TYPE     201
 #define TAG_LABEL_TASK_NAME     202
 
 
 @interface MMyTaskViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
-    UIImageView *imgblueBar;
     NSArray *aryPrepare;
     NSArray *aryRepost;
     NSArray *aryFinish;
 }
 @property (nonatomic, strong) UITableView* tableView;
 
-@property (nonatomic, strong) UISegmentedControl* segmented;
+@property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
 
 @property (nonatomic, strong) NSMutableArray* taskDataArry;
 
@@ -96,31 +97,23 @@
 
 - (void)createSegmentedView
 {
+    CGFloat width = self.view.frame.size.width - 10;
+    CGFloat height = 40;
+
     NSString *title0=[NSString stringWithFormat:@"待佈署任務(%lu)",(unsigned long)[aryPrepare count]];
     NSString *title1=[NSString stringWithFormat:@"進度回報(%lu)",(unsigned long)[aryRepost count]];
     NSString *title2=[NSString stringWithFormat:@"已完成任務(%lu)",(unsigned long)[aryFinish count]];
     NSArray* array = [[NSArray alloc] initWithObjects:title0,title1,title2, nil];
-    _segmented = [[UISegmentedControl alloc] initWithItems:array];
-    _segmented.frame = CGRectMake(0, 64, self.view.frame.size.width - 10, 40);
-    _segmented.selectedSegmentIndex = 0;
-    _segmented.layer.borderColor = [UIColor clearColor].CGColor;
-    _segmented.layer.borderWidth = 0.0f;
-    _segmented.tintColor=[UIColor clearColor];
-    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grayColor]} forState:UIControlStateNormal];
-    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0]} forState:UIControlStateSelected];
-    [_segmented addTarget:self action:@selector(actionToShowNextPage:) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:_segmented];
-    
-    //imgblueBar
-    imgblueBar=[[UIImageView alloc]initWithFrame:CGRectMake(5,36,(self.view.frame.size.width/3)-20, 3)];
-    imgblueBar.backgroundColor=[UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0];
-    [_segmented addSubview:imgblueBar];
-    
-    //imgGray
-    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,39,self.view.frame.size.width, 1)];
-    imgGray.backgroundColor=[UIColor colorWithRed:194.0/255.0 green:194.0/255.0 blue:194.0/255.0 alpha:1.0];
-    [_segmented addSubview:imgGray];
+    _customSegmentedControl = [[MCustomSegmentedControl alloc] initWithItems:array BarSize:CGSizeMake(width, height) BarIndex:0 TextSize:13.];
+    _customSegmentedControl.frame = CGRectMake(0, 64, width, height);
+    _customSegmentedControl.selectedSegmentIndex = 0;
+    _customSegmentedControl.layer.borderColor = [UIColor clearColor].CGColor;
+    _customSegmentedControl.layer.borderWidth = 0.0f;
+    _customSegmentedControl.tintColor=[UIColor clearColor];
+    [_customSegmentedControl addTarget:self action:@selector(actionToShowNextPage:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:_customSegmentedControl];
 
+    
     //分隔線
     UILabel* row_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, 1)];
     [row_label setBackgroundColor:[UIColor colorWithRed:128.0/255.0 green:128.0/255.0 blue:128.0/255.0 alpha:0.5]];
@@ -130,7 +123,7 @@
 
 - (void)createTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,_segmented.frame.origin.y+_segmented.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - 64-40-49)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,_customSegmentedControl.frame.origin.y+_customSegmentedControl.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - 64-40-49)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
@@ -209,7 +202,7 @@
 }
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSInteger segmentedIndex = [_segmented selectedSegmentIndex];
+    NSInteger segmentedIndex = [_customSegmentedControl selectedSegmentIndex];
     if (segmentedIndex == 0) {
         
         id task=[_taskDataArry objectAtIndex:indexPath.row];
@@ -277,59 +270,24 @@
 - (void)actionToShowNextPage:(id)sender
 {
     [_taskDataArry removeAllObjects];
-    switch ([sender selectedSegmentIndex]) {
+
+    NSInteger index = [sender selectedSegmentIndex];
+    [_customSegmentedControl moveImgblueBar:index];
+
+    switch (index) {
         case 0:
         {
             [_taskDataArry addObjectsFromArray:aryPrepare];
-            
-            //imgblueBar Animation
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.5];
-            [UIView setAnimationDelegate:self];
-            
-            //設定動畫開始時的狀態為目前畫面上的樣子
-            [UIView setAnimationBeginsFromCurrentState:YES];
-            imgblueBar.frame=CGRectMake(5,
-                                        imgblueBar.frame.origin.y,
-                                        imgblueBar.frame.size.width,
-                                        imgblueBar.frame.size.height);
-            [UIView commitAnimations];
             break;
         }
         case 1:
         {
             [_taskDataArry addObjectsFromArray:aryRepost];
-            
-            //imgblueBar Animation
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.5];
-            [UIView setAnimationDelegate:self];
-            
-            //設定動畫開始時的狀態為目前畫面上的樣子
-            [UIView setAnimationBeginsFromCurrentState:YES];
-            imgblueBar.frame=CGRectMake((self.view.frame.size.width/3)+5,
-                                        imgblueBar.frame.origin.y,
-                                        imgblueBar.frame.size.width,
-                                        imgblueBar.frame.size.height);
-            [UIView commitAnimations];
             break;
         }
         case 2:
         {
             [_taskDataArry addObjectsFromArray:aryFinish];
-            
-            //imgblueBar Animation
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.5];
-            [UIView setAnimationDelegate:self];
-            
-            //設定動畫開始時的狀態為目前畫面上的樣子
-            [UIView setAnimationBeginsFromCurrentState:YES];
-            imgblueBar.frame=CGRectMake(((self.view.frame.size.width/3)*2)+5,
-                                        imgblueBar.frame.origin.y,
-                                        imgblueBar.frame.size.width,
-                                        imgblueBar.frame.size.height);
-            [UIView commitAnimations];
             break;
         }
         default:

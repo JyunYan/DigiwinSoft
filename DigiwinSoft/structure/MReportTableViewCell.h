@@ -10,6 +10,7 @@
 
 @interface MReportTableViewCell : UITableViewCell
 
+@property (nonatomic, weak) UILabel *labTitle;
 @property (nonatomic, weak) UILabel *lab;
 @property (nonatomic, weak) UILabel *labState;
 @property (nonatomic, weak) UILabel *labReason;
