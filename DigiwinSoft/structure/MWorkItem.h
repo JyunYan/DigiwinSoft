@@ -25,5 +25,6 @@
 
 @property (nonatomic, strong) MTarget* target; //指標
 @property (nonatomic, strong) MUser* manager;   //負責人
+@property (nonatomic, strong) MSkill* suggestSkill; //推薦職能
 
 @end

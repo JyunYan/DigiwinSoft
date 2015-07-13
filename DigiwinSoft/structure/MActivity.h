@@ -24,7 +24,8 @@
 
 @property (nonatomic, strong) MTarget* target;
 @property (nonatomic, strong) MUser* manager;   //負責人
-
+@property (nonatomic, strong) MSkill* suggestSkill; //推薦職能
+ 
 @property (nonatomic, strong) NSMutableArray* workItemArray;    //工作項目array
 
 @end

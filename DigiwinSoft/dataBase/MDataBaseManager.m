@@ -124,6 +124,31 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
+- (MSkill*)loadSuggestSkillWithID:(NSString*)uuid type:(NSInteger)type
+{
+    MSkill* skill = [MSkill new];
+    
+    NSString* sql = @"select * from M_SUGGEST as sug inner join M_SKILL as sk on sk.ID = sug.SKILL_ID ";
+    if(type == 0)
+        sql = [sql stringByAppendingString:@"where sug.GUI_ID = ?"];
+    else if(type == 1)
+        sql = [sql stringByAppendingString:@"where sug.ACT_ID = ?"];
+    else if(type == 2)
+        sql = [sql stringByAppendingString:@"where sug.WI_ID = ?"];
+    else
+        return skill;
+    
+    FMResultSet* rs = [self.db executeQuery:sql, uuid];
+    if([rs next]){
+        
+        skill.uuid = [rs stringForColumn:@"ID"];
+        skill.name = [rs stringForColumn:@"NAME"];
+        skill.level = [rs stringForColumn:@"LEVEL"];
+    }
+    
+    return skill;
+}
+
 #pragma mark - 事件相關
 
 // p16
@@ -298,6 +323,9 @@ static MDataBaseManager* _director = nil;
         
         [self loadTargetDetailWithTarget:target];
         
+        // 推薦職能
+        guide.suggestSkill = [self loadSuggestSkillWithID:guide.uuid type:0];
+        
         // 關鍵活動
         [guide.activityArray addObjectsFromArray:[self loadActivitySampleArrayWithGuide:guide]];
         
@@ -336,6 +364,9 @@ static MDataBaseManager* _director = nil;
         
         [self loadTargetDetailWithTarget:target];
         
+        // 推薦職能
+        act.suggestSkill = [self loadSuggestSkillWithID:act.uuid type:1];
+        
         // 工作項目
         [act.workItemArray addObjectsFromArray:[self loadWorkItemSampleArrayWithActivity:act]];
         
@@ -372,6 +403,9 @@ static MDataBaseManager* _director = nil;
         target.name = [rs stringForColumnIndex:7];
         
         [self loadTargetDetailWithTarget:target];
+        
+        // 推薦職能
+        item.suggestSkill = [self loadSuggestSkillWithID:item.uuid type:2];
         
         [array addObject:item];
         

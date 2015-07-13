@@ -16,6 +16,7 @@
         
         _target = [MTarget new];
         _workItemArray = [NSMutableArray new];
+        _suggestSkill = [MSkill new];
     }
     return self;
 }

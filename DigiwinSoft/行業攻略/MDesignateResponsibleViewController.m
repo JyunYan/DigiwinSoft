@@ -86,13 +86,15 @@
 
 - (void)createSearchView
 {
+    MSkill* skill = _guide.suggestSkill;
+    
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 108, self.view.frame.size.width, 100)];
     [view setBackgroundColor:[UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1.0f]];
     view.layer.borderColor = [UIColor lightGrayColor].CGColor;
     view.layer.borderWidth = 1.0f;
     
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, 250, 40)];
-    label.text = @"建議職能/層級 : IE / Level2 以上";
+    label.text = [NSString stringWithFormat:@"建議職能/層級 : %@ / Level%@ 以上", skill.name, skill.level];
 //    label.textColor = [UIColor colorWithRed:163.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1.0];
     [view addSubview:label];
     

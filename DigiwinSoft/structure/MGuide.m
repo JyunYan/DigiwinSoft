@@ -16,6 +16,7 @@
         
         _manager = [MUser new];
         _target = [MTarget new];
+        _suggestSkill = [MSkill new];
         
         _activityArray = [NSMutableArray new];
     }

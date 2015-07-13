@@ -24,6 +24,8 @@
 @property (nonatomic, strong) MUser* manager;   //負責人
 @property (nonatomic, strong) NSMutableArray* activityArray;    //關鍵活動
 
+@property (nonatomic, strong) MSkill* suggestSkill; //推薦職能
+
 @property (assign) BOOL isCheck;    //在p5是否被勾選
 
 @end

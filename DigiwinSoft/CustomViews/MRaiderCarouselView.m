@@ -54,7 +54,8 @@
 
 - (void) addCarouselView
 {
-    CGFloat y = (DEVICE_SCREEN_HEIGHT == 480) ? 140 : 214;
+    CGFloat bgHeight = DEVICE_SCREEN_HEIGHT - 64 - 49;
+    CGFloat y = (DEVICE_SCREEN_HEIGHT == 480) ? 140 : (bgHeight * 0.386);
     
     if(!_carousel){
         _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, y, DEVICE_SCREEN_WIDTH, 260)]; //214
