@@ -169,7 +169,31 @@
 
 -(void)searchMatchUser:(id)sender
 {
+    NSArray* array = [[MDataBaseManager sharedInstance] loadEmployeeArray];
     
+    NSMutableArray* array2 = [NSMutableArray new];
+    for (MUser* user in array) {
+        
+        if(![self hasMatchNameWithEmployee:user])   // 姓名條件
+            continue;
+        if(![self hasMatchSkillWithEmployee:user])  // 職能條件
+            continue;
+        [array2 addObject:user];
+    }
+    _array = array2;
+    
+    NSString* uuid = _guide.manager.uuid;
+    if(uuid && ![uuid isEqualToString:@""]){
+        
+        for (MUser* user in _array) {
+            if([uuid isEqualToString:user.uuid]){
+                user.bSelected = YES;
+                break;
+            }
+        }
+    }
+    
+    /*
     _array = [[MDataBaseManager sharedInstance] loadEmployeeArray];
     
     NSString * strMatch = _text_field.text;
@@ -235,10 +259,38 @@
             _array=[NSArray arrayWithArray:addOld];
         }
     }
+     */
     
     
     [_tableView reloadData];
 }
+
+- (BOOL)hasMatchNameWithEmployee:(MUser*)employee
+{
+    NSString* cond = _text_field.text;
+    
+    if([cond isEqualToString:@""])
+        return YES;
+    if([employee.name rangeOfString:cond].location != NSNotFound)
+        return YES;
+    return NO;
+}
+
+- (BOOL)hasMatchSkillWithEmployee:(MUser*)employee
+{
+    NSString* cond = self.label2.text;
+    
+    if([cond isEqualToString:@"全部"])
+        return YES;
+    
+    for (MSkill* skill in employee.skillArray) {
+        if([cond isEqualToString:skill.name])
+            return YES;
+    }
+    
+    return NO;
+}
+                                        
 #pragma mark - TableView DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -334,7 +386,8 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    return [textField resignFirstResponder];
+    [textField resignFirstResponder];
+    return NO;
 }
 
 #pragma mark - other methods
@@ -385,7 +438,6 @@
 }
 - (void)actionToPopover:(id)sender
 {
-    
     //screenSize
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
     CGFloat screenWidth = screenSize.width;
@@ -410,14 +462,20 @@
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     
-    return [_arySkills count];
+    return [_arySkills count] + 1;
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
 
-    return [[_arySkills objectAtIndex:row]name];
+    if(row == 0)
+        return @"全部";
+    else
+        return [[_arySkills objectAtIndex:row - 1] name];
 }
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.label2.text=[NSString stringWithFormat:@"%@",[[_arySkills objectAtIndex:row]name]];
+    if(row == 0)
+        self.label2.text = @"全部";
+    else
+        self.label2.text=[NSString stringWithFormat:@"%@",[[_arySkills objectAtIndex:row - 1] name]];
 }
 -(void) cancelPicker {
     [self.PickerSkill removeFromSuperview];
