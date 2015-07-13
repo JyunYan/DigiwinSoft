@@ -27,6 +27,7 @@
 @property (nonatomic, strong) UILabel* label2;
 @property (nonatomic, strong) UIPickerView *PickerSkill;
 @property (nonatomic, strong) UIToolbar *toolBar;
+@property (nonatomic, strong) UITextField* text_field;
 @end
 
 @implementation MDesignateResponsibleViewController
@@ -124,8 +125,12 @@
     
     UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(offset , 0, frame.size.height, frame.size.height)];
     [button setImage:[UIImage imageNamed:@"icon_search.png"] forState:UIControlStateNormal];
-    button.backgroundColor = color;
+    [button addTarget:self
+               action:@selector(searchMatchUser:)
+     forControlEvents:UIControlEventTouchUpInside
+     ];
     
+    button.backgroundColor = color;
     offset += button.frame.size.width;
     
     UIView* right = [[UIView alloc] initWithFrame:CGRectMake(0, 0, offset, frame.size.height)];
@@ -137,18 +142,18 @@
     UIView* left = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
     left.backgroundColor = [UIColor clearColor];
     
-    UITextField* text_field = [[UITextField alloc] initWithFrame:frame];
-    text_field.delegate = self;
-    text_field.backgroundColor = [UIColor whiteColor];
-    text_field.layer.borderColor = color.CGColor;
-    text_field.layer.borderWidth = 1.4f;
-    text_field.rightView = right;
-    text_field.rightViewMode = UITextFieldViewModeAlways;
-    text_field.leftView = left;
-    text_field.leftViewMode = UITextFieldViewModeAlways;
+    _text_field = [[UITextField alloc] initWithFrame:frame];
+    _text_field.delegate = self;
+    _text_field.backgroundColor = [UIColor whiteColor];
+    _text_field.layer.borderColor = color.CGColor;
+    _text_field.layer.borderWidth = 1.4f;
+    _text_field.rightView = right;
+    _text_field.rightViewMode = UITextFieldViewModeAlways;
+    _text_field.leftView = left;
+    _text_field.leftViewMode = UITextFieldViewModeAlways;
     
-     [text_field addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    return text_field;
+     [_text_field addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    return _text_field;
 }
 
 - (void)createTableView
@@ -159,31 +164,39 @@
     [self.view addSubview:_tableView];
 }
 -(void)textFieldDidChange:(UITextField *)txtFld {
-    NSString * strMatch = txtFld.text;
+    
+}
+
+-(void)searchMatchUser:(id)sender
+{
+    
+    _array = [[MDataBaseManager sharedInstance] loadEmployeeArray];
+    
+    NSString * strMatch = _text_field.text;
     
     //過濾Name符合的使用者
     NSPredicate *sPredicate = [NSPredicate predicateWithFormat:
                                @"SELF CONTAINS[cd] %@", strMatch];
     
     NSMutableArray *aryName=[[NSMutableArray alloc]init];
-
+    
     for (MUser *user in _array) {
         [aryName addObject:user.name];
     }
-
+    
     //過濾後得到matchUserName
     NSArray *matchUserName=[[NSMutableArray alloc]init];
     matchUserName = [NSArray arrayWithArray:[aryName
-                                         filteredArrayUsingPredicate:sPredicate]];
+                                             filteredArrayUsingPredicate:sPredicate]];
     
     //抓出與matchUserName相同Name的MUser
     NSMutableArray *aryMUser=[[NSMutableArray alloc]init];
     for (NSString *name in matchUserName) {
         for (MUser *user in _array) {
-           if([user.name isEqualToString:name])
-           {
-               [aryMUser addObject:user];
-           }
+            if([user.name isEqualToString:name])
+            {
+                [aryMUser addObject:user];
+            }
         }
     }
     
@@ -193,10 +206,10 @@
         NSArray *arySkill=user.skillArray;
         
         for (MSkill *Skill in arySkill) {
-                if ([Skill.name isEqualToString:self.label2.text])
-                {
+            if ([Skill.name isEqualToString:self.label2.text])
+            {
                 [matchMUser addObject:user];
-                }
+            }
         }
     }
     
@@ -217,15 +230,14 @@
         
         //未重複即加入_array
         if(isRepeat){
-        NSMutableArray *addOld=[NSMutableArray arrayWithArray:_array];
-        [addOld insertObject:_guide.manager atIndex:0];
-        _array=[NSArray arrayWithArray:addOld];
+            NSMutableArray *addOld=[NSMutableArray arrayWithArray:_array];
+            [addOld insertObject:_guide.manager atIndex:0];
+            _array=[NSArray arrayWithArray:addOld];
         }
     }
     
     
     [_tableView reloadData];
-    
 }
 #pragma mark - TableView DataSource
 

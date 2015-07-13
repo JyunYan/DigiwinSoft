@@ -44,13 +44,13 @@
     NSArray *ary=[[MDataBaseManager sharedInstance]loadMyMissionsWithIndex:0];
     _taskDataArry=[[NSMutableArray alloc]initWithArray:ary];
     
-    [self loadData];
     [self createTableView];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self loadData];
     [self addMainMenu];
     [self createSegmentedView];
 

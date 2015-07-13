@@ -30,6 +30,7 @@
 - (UIColor *)getCustomLightGrayColor;
 - (UIColor *)getCustomBlueColor;
 - (UIColor *)getCustomRedColor;
+- (UIColor *)getForestGreenColor;
 
 // 隨機產生uuid
 - (NSString*)getCustUuidWithPrev:(NSString*)prev;

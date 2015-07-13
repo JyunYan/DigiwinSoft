@@ -10,6 +10,8 @@
 
 @protocol MMonitorPageContentViewDelegate <NSObject>
 
+- (void)goDetailViewController;
+
 @end
 
 @interface MMonitorPageContentViewController : UIViewController
