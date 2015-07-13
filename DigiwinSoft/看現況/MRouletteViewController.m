@@ -101,14 +101,14 @@
 - (void)printCurrentCard{
     NSArray * visibleCards = _mCollection.visibleCells;
     [visibleCards enumerateObjectsUsingBlock:^(RVCollectionViewCell * visibleCell, NSUInteger idx, BOOL *stop) {
-        NSLog(@"visible cell: %@", visibleCell.imageName);
+//        NSLog(@"visible cell: %@", visibleCell.imageName);
     }];
 }
 
 
 - (void) initImages {
     
-    NSMutableArray *aryName=[[NSMutableArray alloc]initWithObjects:@"測試1號測試1號測試1號",@"測試2號測試2號測試2號",@"測試3號測試3號測試3號",@"測試4號測試4號測試4號",@"測試5號測試5號測試5號",@"測試6號測試6號測試6號",nil];
+    NSMutableArray *aryName=[[NSMutableArray alloc]initWithObjects:@"測試測試測試測試測試測試",@"測試2號測試2號測試2號",@"測試3號測試3號測試3號",nil];
     
     self.imagesArray =[NSMutableArray array];
     self.imageNamesArray = [NSMutableArray array];

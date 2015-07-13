@@ -61,6 +61,11 @@
 //    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 //    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_player stop];
+}
 #pragma mark - create view
 - (void)loadData
 {
@@ -79,7 +84,6 @@
     _player.scalingMode = MPMovieScalingModeAspectFit;
     _player.view.frame = CGRectMake(0.0, 20+44,screenWidth, 170.0);
     [self.view addSubview: _player.view];
-    
     [_player prepareToPlay];
     
     //scroll

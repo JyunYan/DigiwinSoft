@@ -17,5 +17,5 @@
     UILabel *labTitle;
     NSArray *aryList;
 }
-@property (nonatomic, weak) MGuide *guide;
+@property (nonatomic, strong) MGuide *guide;
 @end

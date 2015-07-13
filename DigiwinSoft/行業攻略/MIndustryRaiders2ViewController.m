@@ -26,7 +26,7 @@
 }
 
 @property (nonatomic, assign) NSInteger operateIndex;
-
+@property (nonatomic, strong) NSMutableArray *aryList;
 @end
 
 @implementation MIndustryRaiders2ViewController
@@ -91,7 +91,7 @@
 - (void)loadData
 {
     NSArray *aryGuide=[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen];
-    aryList=[NSMutableArray arrayWithArray:aryGuide];
+    _aryList=[NSMutableArray arrayWithArray:aryGuide];
 }
 -(void) addMainMenu
 {
@@ -243,13 +243,13 @@
 - (void)actionAddPlan:(NSNotification*) notification
 {
     NSString *PassUUID=[notification object];
-    for (int i=0; i<[aryList count]; i++) {
-        MGuide *Guide=aryList[i];
+    for (int i=0; i<[_aryList count]; i++) {
+        MGuide *Guide=_aryList[i];
         //找到相同UUID的Guid。
         if ([Guide.uuid isEqual:PassUUID]){
             //更改裡頭的IsCheck，reload cell。
-            if ([aryList[i]isCheck]==NO) {
-                [aryList[i] setIsCheck:YES];
+            if ([_aryList[i]isCheck]==NO) {
+                [_aryList[i] setIsCheck:YES];
                 NSIndexPath *indexPath=[NSIndexPath indexPathForRow:i inSection:0];
                 [tbl reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
                 NSLog(@"從對策說明勾選:%@",Guide.name);
@@ -264,11 +264,11 @@
 {
     MGuide *PassGuide=[notification object];
     NSString *PassUUID=PassGuide.uuid;
-    for (int i=0; i<[aryList count]; i++) {
-        MGuide *Guide=aryList[i];
+    for (int i=0; i<[_aryList count]; i++) {
+        MGuide *Guide=_aryList[i];
         //找到相同UUID的Guid，置換裡面的Target。
         if ([Guide.uuid isEqual:PassUUID]){
-            [aryList[i]setTarget:PassGuide.target];
+            [_aryList[i]setTarget:PassGuide.target];
             }
     }
     
@@ -286,7 +286,7 @@
 - (void)actionAddMyList:(id)sender{
     
     BOOL b = NO;
-    for (MGuide* guide in aryList) {
+    for (MGuide* guide in _aryList) {
         if (guide.isCheck) {
             b = YES;
             [[MDataBaseManager sharedInstance]insertGuide:guide from:_from];
@@ -306,7 +306,7 @@
 - (void)didAssignManager:(NSNotification*)note
 {
     MGuide* guide = (MGuide*)note.object;
-    [aryList replaceObjectAtIndex:_operateIndex withObject:guide];
+    [_aryList replaceObjectAtIndex:_operateIndex withObject:guide];
     
     [tbl reloadData];
     
@@ -327,7 +327,7 @@
     
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
     _operateIndex = indexPath.row;
-    MGuide* guide = [aryList objectAtIndex:_operateIndex];
+    MGuide* guide = [_aryList objectAtIndex:_operateIndex];
     
     MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithGuide:guide];
     UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MDesignateResponsibleVC];
@@ -344,7 +344,7 @@
                                                object:nil];
     
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
-    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
     
     MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
     MInventoryTurnoverVC.guide=guide;
@@ -360,7 +360,7 @@
                                                object:nil];
     
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
-    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
     
     [MDirector sharedInstance].selectedPhen=_phen;
     
@@ -381,7 +381,7 @@
     return 30.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [aryList count];
+    return [_aryList count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -389,7 +389,7 @@
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
     
     [cell prepareWithGuide:guide];
 
@@ -397,7 +397,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
     guide.isCheck = !guide.isCheck;
     
     MIndustryRaidersTableViewCell* cell = (MIndustryRaidersTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];

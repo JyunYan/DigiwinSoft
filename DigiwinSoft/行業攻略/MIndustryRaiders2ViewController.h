@@ -12,7 +12,6 @@
 
 @interface MIndustryRaiders2ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
-    NSMutableArray *aryList;
     UITableView *tbl;
     UITextView *textView;
     UIButton *btn;
@@ -21,6 +20,7 @@
     UIImageView *imgblueBar;
     UIImageView *imgGray;
 }
+
 @property (nonatomic, strong) MPhenomenon *phen;
 @property (nonatomic, assign) NSInteger from;
 @end
