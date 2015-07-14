@@ -27,9 +27,7 @@
     NSArray *aryFinish;
 }
 @property (nonatomic, strong) UITableView* tableView;
-
 @property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
-
 @property (nonatomic, strong) NSMutableArray* taskDataArry;
 
 @end
