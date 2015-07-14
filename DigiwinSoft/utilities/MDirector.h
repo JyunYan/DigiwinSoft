@@ -32,6 +32,10 @@
 - (UIColor *)getCustomRedColor;
 - (UIColor *)getForestGreenColor;
 
+- (BOOL)image:(UIImage *)image1 isEqualTo:(UIImage *)image2;
+
+- (void)showAlertDialog:(NSString*) msg;
+
 // 隨機產生uuid
 - (NSString*)getCustUuidWithPrev:(NSString*)prev;
 

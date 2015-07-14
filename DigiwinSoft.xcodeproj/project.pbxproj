@@ -35,6 +35,8 @@
 		3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */; };
 		3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A03F96E1B3A60A0000F345B /* QuartzCore.framework */; };
 		3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */; };
+		3A5374041B535EEB002C2836 /* MReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5374031B535EEB002C2836 /* MReport.m */; };
+		3A5374071B538E88002C2836 /* MCustomSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5374061B538E88002C2836 /* MCustomSegmentedControl.m */; };
 		3A54DDFC1B40DD1100A6849A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */; };
 		3A54EDE11B4636DB00BDA945 /* MCustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */; };
 		3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5B9E9C1B3D0756005DE125 /* MRecommendTreasuresViewController.m */; };
@@ -224,6 +226,10 @@
 		3A03F96E1B3A60A0000F345B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3A1363AC1B4A186000BA05F2 /* MTasksDeployedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTasksDeployedViewController.h; sourceTree = "<group>"; };
 		3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTasksDeployedViewController.m; sourceTree = "<group>"; };
+		3A5374021B535EEB002C2836 /* MReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MReport.h; path = structure/MReport.h; sourceTree = "<group>"; };
+		3A5374031B535EEB002C2836 /* MReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MReport.m; path = structure/MReport.m; sourceTree = "<group>"; };
+		3A5374051B538E88002C2836 /* MCustomSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustomSegmentedControl.h; path = CustomViews/MCustomSegmentedControl.h; sourceTree = "<group>"; };
+		3A5374061B538E88002C2836 /* MCustomSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustomSegmentedControl.m; path = CustomViews/MCustomSegmentedControl.m; sourceTree = "<group>"; };
 		3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		3A54EDDF1B4636DB00BDA945 /* MCustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustomAlertView.h; path = CustomViews/MCustomAlertView.h; sourceTree = "<group>"; };
 		3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustomAlertView.m; path = CustomViews/MCustomAlertView.m; sourceTree = "<group>"; };
@@ -855,6 +861,8 @@
 				DCF46B2C1B462D5A00C771BB /* MSkill.m */,
 				DC3DF9D61B4E46C00065DF5D /* MCoordinate.h */,
 				DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */,
+				3A5374021B535EEB002C2836 /* MReport.h */,
+				3A5374031B535EEB002C2836 /* MReport.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -884,8 +892,8 @@
 				DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */,
 				DC3DF9DF1B4EE40B0065DF5D /* MMessageBox.h */,
 				DC3DF9E01B4EE40B0065DF5D /* MMessageBox.m */,
-				3A83997D1B4E5471008B0150 /* MMonitorPageContentViewController.h */,
-				3A83997E1B4E5471008B0150 /* MMonitorPageContentViewController.m */,
+				3A5374051B538E88002C2836 /* MCustomSegmentedControl.h */,
+				3A5374061B538E88002C2836 /* MCustomSegmentedControl.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1093,6 +1101,7 @@
 				3A7E31A51B4B5ECA00790026 /* CustomIOSAlertView.m in Sources */,
 				3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */,
 				D06C2D2C1B37B58C009D2082 /* MDesignateResponsibleViewController.m in Sources */,
+				3A5374041B535EEB002C2836 /* MReport.m in Sources */,
 				382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */,
 				3AB4CE2A1B32895C00143374 /* MMDrawerController.m in Sources */,
 				DCF46AAC1B41103700C771BB /* MSituation.m in Sources */,
@@ -1122,6 +1131,7 @@
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
 				DCF46AB51B41265800C771BB /* MRaiderCarouselView.m in Sources */,
 				3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */,
+				3A5374071B538E88002C2836 /* MCustomSegmentedControl.m in Sources */,
 				DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */,
 				D07B390F1B3A39A6007FCBC0 /* MLineChartView.m in Sources */,
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,

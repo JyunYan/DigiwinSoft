@@ -730,6 +730,81 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
+// p35
+- (NSArray*)loadReports
+{
+    NSString* sql = @"select * from U_REPORT";
+    // select *
+    // from U_REPORT
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql];
+    while ([rs next]) {
+        MReport* report = [MReport new];
+        report.uuid = [rs stringForColumn:@"ID"];
+        report.gui_id = [rs stringForColumn:@"GUI_ID"];
+        report.act_id = [rs stringForColumn:@"ACT_ID"];
+        report.wi_id = [rs stringForColumn:@"WI_ID"];
+
+        report.status = [rs stringForColumn:@"STATUS"];
+        report.value = [rs stringForColumn:@"VALUE"];
+        report.desc = [rs stringForColumn:@"DESCRIPTION"];
+        report.completed = [rs stringForColumn:@"COMPLETED"];
+        report.create_date = [rs stringForColumn:@"CREATE_DATE"];
+
+        [array addObject:report];
+    }
+    return array;
+}
+
+- (BOOL)insertReport:(MReport*)report
+{
+    NSString* uuid = report.uuid;
+    NSString* gui_id = report.gui_id;
+    NSString* act_id = report.act_id;
+    NSString* wi_id = report.wi_id;
+    
+    if (uuid == nil || [uuid isEqualToString:@""]) {
+        if (gui_id && ![gui_id isEqualToString:@""]) {
+            uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_GUIDE_UUID_PREV];
+        } else if (act_id && ![act_id isEqualToString:@""]) {
+            uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_ACT_UUID_PREV];
+        } else if (wi_id && ![wi_id isEqualToString:@""]) {
+            uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_WORK_ITEM_UUID_PREV];
+        }
+    } else {
+        return NO;
+    }
+
+    NSString* status = report.status;
+    NSString* value = report.value;
+    NSString* desc = report.desc;
+    NSString* completed = report.completed;
+    NSString* create_date = report.create_date;
+    
+    if (create_date == nil || [create_date isEqualToString:@""]) {
+        NSDateFormatter* dateFormatter = [NSDateFormatter new];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        
+        NSDate* date = [NSDate date];
+        create_date = [dateFormatter stringFromDate:date];
+    }
+
+    NSString* sql = @"insert into U_REPORT ('ID','GUI_ID','ACT_ID','WI_ID','STATUS','VALUE','DESCRIPTION','COMPLETED','CREATE_DATE') VALUES(?,?,?,?,?,?,?,?,?)";
+    // insert into U_REPORT
+    // ('ID','GUI_ID','ACT_ID','WI_ID','STATUS','VALUE','DESCRIPTION','COMPLETED','CREATE_DATE')
+    // VALUES(%@,%@,%@,%@,%@,%@,%@,%@,%@)
+    
+    
+    BOOL b = [self.db executeUpdate:sql, uuid, gui_id, act_id, wi_id, status, value, desc, completed, create_date];
+    if(!b){
+        NSLog(@"add report failed : %@", [self.db lastErrorMessage]);
+    }
+    
+    return b;
+}
+
 #pragma mark - 我的規劃 相關
 
 // p15-1, load 我的規劃

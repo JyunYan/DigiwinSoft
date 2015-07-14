@@ -12,6 +12,8 @@
 #import "MCustGuide.h"
 #import "MCustActivity.h"
 #import "MCustWorkItem.h"
+#import "MDataBaseManager.h"
+#import "MDirector.h"
 #define TAG_BUTTON_Not_Start 101
 #define TAG_BUTTON_Start 102
 #define TAG_BUTTON_Finish 103
@@ -27,12 +29,21 @@
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UITextField *TextField;
 @property (nonatomic, strong) UITextField *txtUnit;
+@property (nonatomic, strong) NSArray *reportArray;
 @property (nonatomic, strong) MCustGuide* guide;
 @property (nonatomic, strong) MCustActivity* activity;
 @property (nonatomic, strong) MCustWorkItem* workItem;
 @end
 
 @implementation MReportViewController
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        _reportArray = [[MDataBaseManager sharedInstance] loadReports];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -232,7 +243,60 @@
 }
 - (void)actionConfirm:(id) sender
 {
+    MReport* report = [MReport new];
+    
+    if([_task isKindOfClass:[MCustGuide class]])
+    {
+        _guide = (MCustGuide *)_task;
+        report.gui_id = _guide.uuid;
     }
+    else if([_task isKindOfClass:[MCustWorkItem class]])
+    {
+        _workItem = (MCustWorkItem *)_task;
+        report.wi_id = _workItem.uuid;
+    }
+    else if ([_task isKindOfClass:[MCustActivity class]])
+    {
+        _activity = (MCustActivity *)_task;
+        report.act_id = _activity.uuid;
+    }
+    
+    UIImage *btnImageClick = [UIImage imageNamed:@"icon_red_circle.png"];
+    
+    UIImage* image = [_btnNotStart imageForState:UIControlStateNormal];
+    BOOL bEqualImage = [[MDirector sharedInstance] image:btnImageClick isEqualTo:image];
+    if (bEqualImage) {
+        // 未開始
+        report.status = @"0";
+    } else {
+        image = [_btnStart imageForState:UIControlStateNormal];
+        bEqualImage = [[MDirector sharedInstance] image:btnImageClick isEqualTo:image];
+        if (bEqualImage) {
+            // 進行中
+            report.status = @"1";
+        } else {
+            image = [_btnFinish imageForState:UIControlStateNormal];
+            bEqualImage = [[MDirector sharedInstance] image:btnImageClick isEqualTo:image];
+            if (bEqualImage) {
+                // 已完成
+                report.status = @"2";
+            }
+        }
+    }
+    
+    report.desc = _textView.text;
+    report.value = _TextField.text;
+    report.completed = _txtTargetDay.text;
+    
+    BOOL bOK = [[MDataBaseManager sharedInstance] insertReport:report];
+    if (bOK) {
+        _reportArray = [[MDataBaseManager sharedInstance] loadReports];
+        [_tableView reloadData];
+    } else {
+        [[MDirector sharedInstance] showAlertDialog:@"新增失敗"];
+    }
+}
+
 #pragma mark - UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -243,7 +307,20 @@
     if (indexPath.row==0) {
         return 320.0f;
     }
-    return 110.0f;
+    
+    NSInteger index = indexPath.row - 1;
+    MReport* report = [_reportArray objectAtIndex:index];
+    
+    UILabel *labReason = [[UILabel alloc] init];
+    labReason.text = report.desc;
+    [labReason sizeToFit];
+    
+    CGFloat offsetY = 0;
+    CGFloat reasonHeight = labReason.frame.size.height;
+    if (reasonHeight > 65.)
+        offsetY = reasonHeight - 65.;
+
+    return 130.0f + offsetY;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -251,7 +328,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return _reportArray.count + 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -261,65 +338,97 @@
         UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:indentifier];
         if (cell==nil) {
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
+            
+            cell.selectionStyle=UITableViewCellSelectionStyleNone;
+            [cell addSubview:_btnNotStart];
+            [cell addSubview:_btnStart];
+            [cell addSubview:_btnFinish];
+            [cell addSubview:_textView];
+            
+            UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(15, _textView.frame.origin.y+_textView.frame.size.height+10, 50, 25)];
+            lab.text=@"實際值";
+            lab.backgroundColor=[UIColor clearColor];
+            [lab setFont:[UIFont systemFontOfSize:12]];
+            lab.textAlignment = NSTextAlignmentJustified;
+            [cell addSubview:lab];
+            
+            [cell addSubview:_TextField];
+            [cell addSubview:_txtUnit];
+            
+            lab=[[UILabel alloc]initWithFrame:CGRectMake(15, _textView.frame.origin.y+_textView.frame.size.height+50, 50, 25)];
+            lab.text=@"完成日";
+            [lab setFont:[UIFont systemFontOfSize:12]];
+            [cell addSubview:lab];
+            
+            [cell addSubview:_txtTargetDay];
         }
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        [cell addSubview:_btnNotStart];
-        [cell addSubview:_btnStart];
-        [cell addSubview:_btnFinish];
-        [cell addSubview:_textView];
-
-        UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(15, _textView.frame.origin.y+_textView.frame.size.height+10, 50, 25)];
-        lab.text=@"實際值";
-        lab.backgroundColor=[UIColor clearColor];
-        [lab setFont:[UIFont systemFontOfSize:12]];
-        lab.textAlignment = NSTextAlignmentJustified;
-        [cell addSubview:lab];
-
-        [cell addSubview:_TextField];
-        [cell addSubview:_txtUnit];
-        
-        lab=[[UILabel alloc]initWithFrame:CGRectMake(15, _textView.frame.origin.y+_textView.frame.size.height+50, 50, 25)];
-        lab.text=@"完成日";
-        [lab setFont:[UIFont systemFontOfSize:12]];
-        [cell addSubview:lab];
-        
-        [cell addSubview:_txtTargetDay];
 
         return cell;
     }
     else
     {
-       
+        CGFloat tableWidth = tableView.frame.size.width;
+        
+        CGFloat posX = 15;
+        CGFloat width = tableWidth - posX * 2;
+        CGFloat height = 16;
+
+        
+        NSInteger index = indexPath.row - 1;
+        MReport* report = [_reportArray objectAtIndex:index];
+        
         MReportTableViewCell *Reportcell=[MReportTableViewCell cellWithTableView:tableView];
-        Reportcell.lab.text=@"回報紀錄";
+        Reportcell.labTitle.text=@"回報紀錄：";
+        Reportcell.labTitle.backgroundColor=[UIColor clearColor];
+        Reportcell.labTitle.font = [UIFont systemFontOfSize:12];
+        Reportcell.labTitle.textColor=[UIColor blackColor];
+        Reportcell.labTitle.frame=CGRectMake(posX, 5, width, height);
+        
+        // 建立日期
+        Reportcell.lab.text=[NSString stringWithFormat:@"%@ 回報", report.create_date];
         Reportcell.lab.backgroundColor=[UIColor clearColor];
         Reportcell.lab.font = [UIFont systemFontOfSize:12];
         Reportcell.lab.textColor=[UIColor blackColor];
-        Reportcell.lab.frame=CGRectMake(15, 5, 115, 16);
-
-        Reportcell.labState.text=@"狀態";
+        Reportcell.lab.frame=CGRectMake(posX, 25, width, height);
+        
+        // 狀態
+        if ([report.status isEqualToString:@"0"])
+            Reportcell.labState.text=@"未開始";
+        else if ([report.status isEqualToString:@"1"])
+            Reportcell.labState.text=@"進行中";
+        else if ([report.status isEqualToString:@"2"])
+            Reportcell.labState.text=@"已完成";
         Reportcell.labState.backgroundColor=[UIColor clearColor];
         Reportcell.labState.font = [UIFont systemFontOfSize:12];
         Reportcell.labState.textColor=[UIColor blackColor];
-        Reportcell.labState.frame=CGRectMake(15, 25, 115, 16);
+        Reportcell.labState.frame=CGRectMake(posX, 45, width, height);
         
-        Reportcell.labReason.text=@"原因";
+        // 原因
+        Reportcell.labReason.text=report.desc;
         Reportcell.labReason.backgroundColor=[UIColor clearColor];
         Reportcell.labReason.font = [UIFont systemFontOfSize:12];
         Reportcell.labReason.textColor=[UIColor blackColor];
-        Reportcell.labReason.frame=CGRectMake(15, 45, 115, 16);
+        Reportcell.labReason.frame=CGRectMake(posX, 65, width, height);
+        [Reportcell.labReason sizeToFit];
         
-        Reportcell.labValueT.text=@"實際值";
+        CGFloat offsetY = 0;
+        CGFloat reasonHeight = Reportcell.labReason.frame.size.height;
+        if (reasonHeight > 65.)
+            offsetY = reasonHeight - 65.;
+
+        // 實際值
+        Reportcell.labValueT.text=[NSString stringWithFormat:@"實際值：%@", report.value];
         Reportcell.labValueT.backgroundColor=[UIColor clearColor];
         Reportcell.labValueT.font = [UIFont systemFontOfSize:12];
         Reportcell.labValueT.textColor=[UIColor blackColor];
-        Reportcell.labValueT.frame=CGRectMake(15, 65, 115, 16);
+        Reportcell.labValueT.frame=CGRectMake(posX, 85 + offsetY, width, height);
         
-        Reportcell.labFinishDay.text=@"完成日期";
+        // 完成日期
+        Reportcell.labFinishDay.text=[NSString stringWithFormat:@"完成日期：%@", report.completed];
         Reportcell.labFinishDay.backgroundColor=[UIColor clearColor];
         Reportcell.labFinishDay.font = [UIFont systemFontOfSize:12];
         Reportcell.labFinishDay.textColor=[UIColor blackColor];
-        Reportcell.labFinishDay.frame=CGRectMake(15, 85, 115, 16);
+        Reportcell.labFinishDay.frame=CGRectMake(posX, 105 + offsetY, width, height);
         
         return Reportcell;
     }
@@ -387,8 +496,9 @@
 -(void) cancelPicker {
     if ([self.view endEditing:NO]) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"yyyy-MM-dd" options:0 locale:_datelocale];
-        [formatter setDateFormat:dateFormat];
+//        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"yyyy-MM-dd" options:0 locale:_datelocale];
+//        [formatter setDateFormat:dateFormat];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
         [formatter setLocale:_datelocale];
         
         //將選取後的日期填入UITextField

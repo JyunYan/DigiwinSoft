@@ -17,7 +17,6 @@
     UIButton *btn;
     UILabel *labTarget;
     UITextField *txtField;
-    UIImageView *imgblueBar;
     UIImageView *imgGray;
 }
 
