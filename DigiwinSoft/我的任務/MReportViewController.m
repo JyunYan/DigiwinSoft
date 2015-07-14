@@ -328,13 +328,13 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _reportArray.count;
+    return _reportArray.count + 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *indentifier=@"Cell";
-
+    
     if (indexPath.row==0) {
+        static NSString *indentifier=@"Cell";
         UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:indentifier];
         if (cell==nil) {
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];

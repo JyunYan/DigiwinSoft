@@ -21,7 +21,7 @@
 }
 
 + (instancetype)cellWithTableView:(UITableView *)tableView {
-    static NSString *identifier = @"Cell";
+    static NSString *identifier = @"ReportCell";
     MReportTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
         cell = [[MReportTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
