@@ -14,6 +14,8 @@
 #import "MCustomAlertView.h"
 
 
+#define UIBarSystemButtonBackArrow 101
+
 #define TAG_LABEL_COUNTERMEASURE 200
 #define TAG_LABEL_INDEX 201
 #define TAG_LABEL_PRESENT_VALUE 202
@@ -69,11 +71,8 @@
 
 -(void) addMainMenu
 {
-    UIButton* backbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 20, 24)];
-    [backbutton setBackgroundImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
-    [backbutton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* left_bar_item = [[UIBarButtonItem alloc] initWithCustomView:backbutton];
-    self.navigationItem.leftBarButtonItem = left_bar_item;
+    UIBarButtonItem* back  =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarSystemButtonBackArrow target:self action:@selector(back:)];
+    self.navigationItem.leftBarButtonItem = back;
 }
 
 - (UIView*)createListView:(CGRect) rect

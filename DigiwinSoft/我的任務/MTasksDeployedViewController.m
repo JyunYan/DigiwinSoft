@@ -12,6 +12,7 @@
 #import "CustomIOSAlertView.h"
 #import "MDesignateResponsibleViewController.h"
 #import "MGoalSettingViewController.h"
+#import "MTaskRaidersViewController.h"
 
 
 #define TAG_LABEL_ACTIVITY 100
@@ -85,6 +86,15 @@
     
     UIView* bottomView = [self createBottomView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:bottomView];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetActivity:) name:@"ResetActivity" object:nil];
+}
+
+- (void)viewDidUnload {
+    [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -385,7 +395,7 @@
     UIButton* button = (UIButton*)sender;
     NSInteger tag = button.tag;
     NSInteger index = tag - TAG_BUTTON_APPOINT_RESPONSIBLE;
-    MActivity* activity = [_activityArray objectAtIndex:index];
+    MActivity* act = [_activityArray objectAtIndex:index];
      */
     MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithGuide:_guide];
     UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MDesignateResponsibleVC];
@@ -398,9 +408,9 @@
     UIButton* button = (UIButton*)sender;
     NSInteger tag = button.tag;
     NSInteger index = tag - TAG_BUTTON_TARGET;
-    MActivity* act = [_activityArray objectAtIndex:index];
+//    MActivity* act = [_activityArray objectAtIndex:index];
     
-    MGoalSettingViewController* vc = [[MGoalSettingViewController alloc] initWithActivity:act];
+    MGoalSettingViewController* vc = [[MGoalSettingViewController alloc] initWithActivityArray:_activityArray Index:index];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -409,7 +419,10 @@
     UIButton* button = (UIButton*)sender;
     NSInteger tag = button.tag;
     NSInteger index = tag - TAG_BUTTON_RAIDERS;
-    MActivity* activity = [_activityArray objectAtIndex:index];
+//    MActivity* act = [_activityArray objectAtIndex:index];
+    
+    MTaskRaidersViewController* vc = [[MTaskRaidersViewController alloc] initWithCustGuide:_guide Index:index];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -583,6 +596,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - NSNotification method
+
+- (void) resetActivity:(NSNotification*) notification
+{
+    NSMutableArray* activityArray = [notification object];
+    
+    _activityArray = activityArray;
+    
+    _guide.activityArray = activityArray;
 }
 
 @end

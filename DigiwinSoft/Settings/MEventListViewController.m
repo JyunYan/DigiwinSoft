@@ -15,6 +15,8 @@
 #import "MCustomSegmentedControl.h"
 
 
+#define UIBarSystemButtonBackArrow 101
+
 #define TAG_LABEL_EVENT 200
 #define TAG_LABEL_OCCURRENCE_DATE 201
 #define TAG_LABEL_PERSON_IN_CHARGE 202
@@ -129,11 +131,8 @@
 
 -(void) addMainMenu
 {
-    UIButton* backbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 20, 24)];
-    [backbutton setBackgroundImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
-    [backbutton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* left_bar_item = [[UIBarButtonItem alloc] initWithCustomView:backbutton];
-    self.navigationItem.leftBarButtonItem = left_bar_item;
+    UIBarButtonItem* back  =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarSystemButtonBackArrow target:self action:@selector(back:)];
+    self.navigationItem.leftBarButtonItem = back;
 }
 
 - (UIView*)createSegmentedView:(CGRect) rect
