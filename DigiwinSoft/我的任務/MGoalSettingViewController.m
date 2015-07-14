@@ -33,14 +33,21 @@
 @property (nonatomic, strong) UIDatePicker* startDatePicker;
 @property (nonatomic, strong) UIDatePicker* endDatePicker;
 
+@property (nonatomic, strong) NSMutableArray* activityArray;
+
+@property (nonatomic, assign) NSInteger actIndex;
+
 @end
 
 @implementation MGoalSettingViewController
 
-- (id)initWithActivity:(MActivity*) act {
+- (id)initWithActivityArray:(NSMutableArray*) activityArray Index:(NSInteger) index {
     self = [super init];
     if (self) {
-        _act = act;
+        _activityArray = activityArray;
+        _actIndex = index;
+
+        _act = [activityArray objectAtIndex:index];
     }
     return self;
 }
@@ -59,6 +66,10 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionEndEdit:)];
     tap.delegate = self;
     [self.view addGestureRecognizer:tap];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -157,6 +168,7 @@
     textField.layer.masksToBounds = YES;
     textField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     textField.layer.borderWidth = 2.0f;
+    textField.text = _act.target.name;
     [view addSubview:textField];
     
     NSMutableArray* bandArray = [[NSMutableArray alloc] init];
@@ -195,6 +207,7 @@
     
     // checkbox
     UIImage *btnImage = [UIImage imageNamed:@"icon_gray_dot.png"];
+    UIImage *btnImage2 = [UIImage imageNamed:@"icon_red_circle.png"];
 
     posY = goalValueTitleLabel.frame.origin.y + goalValueTitleLabel.frame.size.height + 10;
     width = 75;
@@ -203,7 +216,10 @@
     _yesOrNoButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     _yesOrNoButton.backgroundColor = [UIColor clearColor];
     _yesOrNoButton.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
-    [_yesOrNoButton setImage:btnImage forState:UIControlStateNormal];
+    if (! [_act.target.valueT isEqualToString:@""] && [_act.target.valueT isEqualToString:@"Y/N"])
+        [_yesOrNoButton setImage:btnImage2 forState:UIControlStateNormal];
+    else
+        [_yesOrNoButton setImage:btnImage forState:UIControlStateNormal];
     _yesOrNoButton.titleEdgeInsets = UIEdgeInsetsMake(-10, -100, -10, -60);
     [_yesOrNoButton addTarget:self action:@selector(setState:) forControlEvents:UIControlEventTouchUpInside];
     _yesOrNoButton.titleLabel.font = [UIFont systemFontOfSize:textSize];
@@ -217,7 +233,10 @@
     _valueButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     _valueButton.backgroundColor = [UIColor clearColor];
     _valueButton.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
-    [_valueButton setImage:btnImage forState:UIControlStateNormal];
+    if (! [_act.target.valueT isEqualToString:@""] && ! [_act.target.valueT isEqualToString:@"Y/N"])
+        [_valueButton setImage:btnImage2 forState:UIControlStateNormal];
+    else
+        [_valueButton setImage:btnImage forState:UIControlStateNormal];
     _valueButton.titleEdgeInsets = UIEdgeInsetsMake(-10, -100, -10, -60);
     [_valueButton addTarget:self action:@selector(setState:) forControlEvents:UIControlEventTouchUpInside];
     _valueButton.titleLabel.font = [UIFont systemFontOfSize:textSize];
@@ -232,6 +251,7 @@
     UITextField* valueTextField = [[UITextField alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     valueTextField.tag = TAG_TEXTFIELD_VALUE;
     valueTextField.returnKeyType = UIReturnKeyDone;
+    valueTextField.keyboardType = UIKeyboardTypeNumberPad;
     valueTextField.delegate = self;
     valueTextField.font = [UIFont systemFontOfSize:textSize];
     valueTextField.textAlignment = NSTextAlignmentCenter;
@@ -239,6 +259,8 @@
     valueTextField.layer.masksToBounds = YES;
     valueTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     valueTextField.layer.borderWidth = 2.0f;
+    if (! [_act.target.valueT isEqualToString:@""] && ! [_act.target.valueT isEqualToString:@"Y/N"])
+        valueTextField.text = _act.target.valueT;
     [view addSubview:valueTextField];
     
     posX = valueTextField.frame.origin.x + valueTextField.frame.size.width + 5;
@@ -254,6 +276,7 @@
     unitTextField.layer.masksToBounds = YES;
     unitTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     unitTextField.layer.borderWidth = 2.0f;
+    unitTextField.text = _act.target.unit;
     [view addSubview:unitTextField];
 
     
@@ -294,6 +317,7 @@
     _startDateTextField.layer.masksToBounds = YES;
     _startDateTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     _startDateTextField.layer.borderWidth = 2.0f;
+    _startDateTextField.text = _act.target.startDate;
     [view addSubview:_startDateTextField];
     
     _startDatePicker = [[UIDatePicker alloc]init];
@@ -331,6 +355,7 @@
     _endDateTextField.layer.masksToBounds = YES;
     _endDateTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     _endDateTextField.layer.borderWidth = 2.0f;
+    _endDateTextField.text = _act.target.completeDate;
     [view addSubview:_endDateTextField];
     
     _endDatePicker = [[UIDatePicker alloc]init];
@@ -436,7 +461,14 @@
 #pragma mark - UIButton
 
 -(void)back:(id)sender
-{
+{ 
+    [self.view endEditing:YES];
+    
+    _act.target.uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_TARGET_UUID_PREV];
+    [_activityArray replaceObjectAtIndex:_actIndex withObject:_act];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ResetActivity" object:_activityArray];
+
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -445,18 +477,31 @@
     UIImage *btnImage = [UIImage imageNamed:@"icon_gray_dot.png"];
     UIImage *btnImage2 = [UIImage imageNamed:@"icon_red_circle.png"];
     
+    UITextField* valueTextField = (UITextField*)[self.view viewWithTag:TAG_TEXTFIELD_VALUE];
+    UITextField* unitTextField = (UITextField*)[self.view viewWithTag:TAG_TEXTFIELD_UNIT];
+    
     if ([sender tag] == TAG_BUTTON_YES_OR_NO)
     {
         NSLog(@"Y/N");
         [_yesOrNoButton setImage:btnImage2 forState:UIControlStateNormal];
         [_valueButton setImage:btnImage forState:UIControlStateNormal];
+        
+        _act.target.valueT = @"Y/N";
+        
+        valueTextField.userInteractionEnabled = NO;
+        unitTextField.userInteractionEnabled = NO;
     }
     else if ([sender tag]==TAG_BUTTON_VALUE)
     {
         NSLog(@"數值");
         [_yesOrNoButton setImage:btnImage forState:UIControlStateNormal];
         [_valueButton setImage:btnImage2 forState:UIControlStateNormal];
-    }
+        
+        _act.target.valueT = valueTextField.text;
+        
+        valueTextField.userInteractionEnabled = YES;
+        unitTextField.userInteractionEnabled = YES;
+   }
 }
 
 -(void) cancelStartDatePicker {
@@ -468,6 +513,7 @@
         [formatter setLocale:datelocale];
         
         _startDateTextField.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:_startDatePicker.date]];
+        _act.target.startDate = _startDateTextField.text;
     }
 }
 
@@ -480,6 +526,7 @@
         [formatter setLocale:datelocale];
 
         _endDateTextField.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:_endDatePicker.date]];
+        _act.target.completeDate = _endDateTextField.text;
     }
 }
 
@@ -487,7 +534,7 @@
 
 -(void)dp_Selected:(id)dp {
     NSString* selectedValue = [_downPicker text];
-    
+    _act.target.name = selectedValue;
 }
 
 #pragma mark - UIGestureRecognizer
@@ -498,6 +545,16 @@
 }
 
 #pragma mark - UITextField method
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSInteger tag = textField.tag;
+    if (tag == TAG_TEXTFIELD_VALUE) {
+        _act.target.valueT = textField.text;
+    } else if (tag == TAG_TEXTFIELD_UNIT) {
+        _act.target.unit = textField.text;
+    }
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

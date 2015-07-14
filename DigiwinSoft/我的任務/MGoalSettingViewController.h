@@ -11,6 +11,6 @@
 
 @interface MGoalSettingViewController : UITableViewController
 
-- (id)initWithActivity:(MActivity*) act;
+- (id)initWithActivityArray:(NSMutableArray*) activityArray Index:(NSInteger) index;
 
 @end
