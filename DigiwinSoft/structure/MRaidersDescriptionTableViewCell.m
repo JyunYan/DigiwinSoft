@@ -8,6 +8,7 @@
 
 #import "MRaidersDescriptionTableViewCell.h"
 
+
 @implementation MRaidersDescriptionTableViewCell
 
 - (void)awakeFromNib {
@@ -23,6 +24,7 @@
     static NSString *identifier = @"Cell";
     MRaidersDescriptionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
+    
         cell = [[MRaidersDescriptionTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     return cell;
@@ -32,24 +34,40 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        UILabel *labRelation = [[UILabel alloc] init];
-        self.labRelation = labRelation;
-        [self.contentView addSubview:labRelation];
+        CGFloat gap = 4.;
+        CGFloat offset = gap;
+        CGFloat width = MRaidersDescriptionTableViewCell_WIDTH - 5*gap;
         
-        UILabel *labMeasure = [[UILabel alloc] init];
-        self.labMeasure = labMeasure;
-        [self.contentView addSubview:labMeasure];
-
-        UILabel *labMin = [[UILabel alloc] init];
-        self.labMin = labMin;
-        [self.contentView addSubview:labMin];
-
+        _labRelation = [self createLabelWithFrame:CGRectMake(offset, 0, width*0.4, MRaidersDescriptionTableViewCell_HEIGHT)];
+        [self.contentView addSubview:_labRelation];
         
-        UILabel *labMax = [[UILabel alloc] init];
-        self.labMax = labMax;
-        [self.contentView addSubview:labMax];
+        offset += _labRelation.frame.size.width + gap;
+        
+        _labMeasure = [self createLabelWithFrame:CGRectMake(offset, 0, width*0.36, MRaidersDescriptionTableViewCell_HEIGHT)];;
+        [self.contentView addSubview:_labMeasure];
+        
+        offset += _labMeasure.frame.size.width + gap;
+
+        _labMin = [self createLabelWithFrame:CGRectMake(offset, 0, width*0.12, MRaidersDescriptionTableViewCell_HEIGHT)];;
+        [self.contentView addSubview:_labMin];
+        
+        offset += _labMin.frame.size.width + gap;
+
+        _labMax = [self createLabelWithFrame:CGRectMake(offset, 0, width*0.12, MRaidersDescriptionTableViewCell_HEIGHT)];;
+        [self.contentView addSubview:_labMax];
     }
     return self;
+}
+
+- (UILabel*)createLabelWithFrame:(CGRect)frame
+{
+    UILabel* label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor=[UIColor clearColor];
+    label.textColor=[UIColor blackColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = [UIFont systemFontOfSize:12];
+    
+    return label;
 }
 
 

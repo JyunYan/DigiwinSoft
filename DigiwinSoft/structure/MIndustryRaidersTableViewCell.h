@@ -27,7 +27,7 @@
 @property (nonatomic, strong) UIButton *btnTargetSet;
 @property (nonatomic, strong) UIButton *btnRaiders;
 
-@property (nonatomic) id<MIndustryRaidersTableViewCellDelegate>delegate;
+@property (nonatomic) id<MIndustryRaidersTableViewCellDelegate> delegate;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 - (void)prepareWithGuide:(MGuide*)guide;

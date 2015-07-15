@@ -14,7 +14,6 @@
     UITableView *tbl;
     UIWebView *webViewVideo;
     UIButton *btn;
-    UILabel *labTitle;
     NSArray *aryList;
 }
 @property (nonatomic, weak) MGuide *guide;

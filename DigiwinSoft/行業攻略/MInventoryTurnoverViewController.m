@@ -191,11 +191,12 @@
     //UITextField
     txtTargetDay=[[UITextField alloc]initWithFrame:CGRectMake(105,308, 140, 29)];
     txtTargetDay.borderStyle=UITextBorderStyleLine;
+    txtTargetDay.text = _guide.target.completeDate;
     txtTargetDay.tag=101;
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textFieldChanged)
+                                             selector:@selector(textFieldChanged:)
                                                  name:UITextFieldTextDidBeginEditingNotification
-                                               object:txtTargetDay];
+                                               object:nil];
     txtTargetDay.rightViewMode = UITextFieldViewModeAlways;
     txtTargetDay.rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
     txtTargetDay.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
@@ -203,7 +204,7 @@
     [self.view addSubview:txtTargetDay];
 
 }
--(void)textFieldChanged
+-(void)textFieldChanged:(UITextField*)textField
 {
     datePicker=[[UIDatePicker alloc]init];//WithFrame:CGRectMake(0,screenHeight-70,screenWidth, 70)];
     datelocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];

@@ -14,6 +14,6 @@
     UITableView *tblActivity;
     UITableView *tblWorkItem;
 }
-@property (nonatomic, weak) NSString *strTitle;
+
 @property (nonatomic, weak) MGuide *guide;
 @end

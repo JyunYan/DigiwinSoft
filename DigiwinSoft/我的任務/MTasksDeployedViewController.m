@@ -565,7 +565,7 @@
         
         UIButton* raidersButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         raidersButton.tag = TAG_BUTTON_RAIDERS + row;
-        [raidersButton setBackgroundImage:[UIImage imageNamed:@"Button-Favorite-List-Normal.png"] forState:UIControlStateNormal];
+        [raidersButton setBackgroundImage:[UIImage imageNamed:@"icon_raider.png"] forState:UIControlStateNormal];
         [raidersButton addTarget:self action:@selector(goRaiders:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:raidersButton];
     }
