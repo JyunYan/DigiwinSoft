@@ -275,11 +275,11 @@
     CGFloat right = self.bounds.size.width;
     CGFloat left = self.bounds.origin.x;
     
-    //if最左測
+    //if最右測
     if(point.x >= right){
         [_dashLineView hideTopBox:NO];
     }
-    //if最右側
+    //if最左側
     if(point.x <= left){
         [_dashLineView hideTopBox:NO];
     }

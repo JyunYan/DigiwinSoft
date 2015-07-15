@@ -15,6 +15,8 @@
 #import "MDataBaseManager.h"
 #import "MGuide.h"
 #import "MTarget.h"
+#import "MFlowChartView.h"
+
 @interface MRaidersDescriptionViewController ()
 {
     CGFloat screenWidth;
@@ -71,6 +73,21 @@
 {
     aryList=[[MDataBaseManager sharedInstance]loadIssueArrayByGudie:_guide];
 }
+
+-(void)kkk:(NSNotification*)note
+{
+    if(_player.playbackState == MPMoviePlaybackStatePlaying){
+        [_player setFullscreen:YES animated:YES];
+        NSLog(@"ppp");
+    }
+}
+
+- (void)ggg:(NSNotification*)note
+{
+    [_player setFullscreen:NO animated:YES];
+    NSLog(@"end");
+}
+
 -(void)addMainMenu
 {
     //screenSize
@@ -78,51 +95,24 @@
     screenWidth = screenSize.width;
     screenHeight = screenSize.height;
     
+    CGFloat offset = 20.+44.;
+    
     // prepare video
     NSURL* url = [NSURL URLWithString:_guide.url];
     _player = [[MPMoviePlayerController alloc] initWithContentURL:url];
     _player.scalingMode = MPMovieScalingModeAspectFit;
-    _player.view.frame = CGRectMake(0.0, 20+44,screenWidth, 170.0);
+    _player.view.frame = CGRectMake(0.0, offset,DEVICE_SCREEN_WIDTH, 170.0);
+    _player.shouldAutoplay = NO;
     [self.view addSubview: _player.view];
     [_player prepareToPlay];
     
-    //scroll
-    UIScrollView *scroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0.0, 234, screenWidth, screenHeight-234-35)];
-    scroll.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
-    scroll.contentSize=CGSizeMake(screenWidth, 320);
-    [self.view addSubview:scroll];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kkk:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ggg:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
     
-    //labTitle
-    labTitle=[[UILabel alloc]initWithFrame:CGRectMake(0,0, screenWidth, 44)];
-    labTitle.text=_guide.name;
-    labTitle.backgroundColor=[UIColor whiteColor];
-    [labTitle setFont:[UIFont systemFontOfSize:14]];
-    [scroll addSubview:labTitle];
-    
-    //btnTargetSet
-    UIButton *btnTargetSet=[[UIButton alloc]initWithFrame:CGRectMake(10+(screenWidth-100)+5,labTitle.frame.origin.y+10, 75, 24)];
-    btnTargetSet.backgroundColor=[UIColor colorWithRed:116.0/255.0 green:192.0/255.0 blue:222.0/255.0 alpha:1];
-//之後有圖取消註解，換圖即可
-//    btnTargetSet.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
-//    UIImage *btnImage = [UIImage imageNamed:@"icon_setting.png"];
-//    [btnTargetSet setImage:btnImage forState:UIControlStateNormal];
-//    btnTargetSet.titleEdgeInsets = UIEdgeInsetsMake(-10, -156, -10, -60);
-    [btnTargetSet setTitle:@"指標設定" forState:UIControlStateNormal];
-    [btnTargetSet addTarget:self action:@selector(actionTargetSet:) forControlEvents:UIControlEventTouchUpInside];
-    btnTargetSet.titleLabel.font = [UIFont systemFontOfSize:11];
-    [scroll addSubview:btnTargetSet];
-    
-    //textView
-    UITextView *textView=[[UITextView alloc]initWithFrame:CGRectMake(0,labTitle.frame.origin.y+labTitle.frame.size.height+2,screenWidth, 80)];
-    textView.backgroundColor=[UIColor whiteColor];
-    textView.text=_guide.desc;
-    textView.font=[UIFont systemFontOfSize:12];
-    textView.editable=NO;
-    textView.scrollEnabled=NO;
-    [scroll addSubview:textView];
+    offset += _player.view.frame.size.height;
     
     //btnAdd
-    btn=[[UIButton alloc]initWithFrame:CGRectMake(0,screenHeight-35,screenWidth, 35)];
+    btn=[[UIButton alloc]initWithFrame:CGRectMake(0,DEVICE_SCREEN_HEIGHT-35,DEVICE_SCREEN_WIDTH, 35)];
     btn.backgroundColor=[UIColor purpleColor];
     btn.backgroundColor=[UIColor colorWithRed:245.0/255.0 green:113.0/255.0 blue:116.0/255.0 alpha:1];
     [btn setTitle:@"+加入對策清單" forState:UIControlStateNormal];
@@ -130,18 +120,95 @@
     [btn addTarget:self action:@selector(actionAddMyList:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
     
-    //tblView
-    tbl=[[UITableView alloc]initWithFrame:CGRectMake(10,textView.frame.origin.x+140,screenWidth-20, 120)];
+    
+    CGRect frame = CGRectMake(0, offset, DEVICE_SCREEN_WIDTH, btn.frame.origin.y - offset);
+    [self prepareScrollViewWithFrame:frame];
+}
+
+- (void)prepareScrollViewWithFrame:(CGRect)frame
+{
+    //包括 對策名稱/對策說明/路徑圖/議題
+    
+    CGFloat offset = 0.;
+    
+    //scroll
+    UIScrollView *scroll=[[UIScrollView alloc]initWithFrame:frame];
+    scroll.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
+    [self.view addSubview:scroll];
+    
+    //對策name
+    UITextField* title = [[UITextField alloc]initWithFrame:CGRectMake(0,offset, DEVICE_SCREEN_WIDTH, 44)];
+    title.text=_guide.name;
+    title.userInteractionEnabled = NO;
+    title.backgroundColor=[UIColor whiteColor];
+    title.font = [UIFont systemFontOfSize:14];
+    [scroll addSubview:title];
+    
+    UIView* left = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
+    title.leftView = left;
+    title.leftViewMode = UITextFieldViewModeAlways;
+    
+    // 目標設定button
+    title.rightView = [self createTagetSettingButton];
+    title.rightViewMode = UITextFieldViewModeAlways;
+    
+    offset += title.frame.size.height + 2.;
+    
+    //對策描述
+    UITextView *textView=[[UITextView alloc]initWithFrame:CGRectMake(0,offset,DEVICE_SCREEN_WIDTH, 80)];
+    textView.backgroundColor=[UIColor whiteColor];
+    textView.text=_guide.desc;
+    textView.font=[UIFont systemFontOfSize:12];
+    textView.editable=NO;
+    textView.scrollEnabled=NO;
+    [scroll addSubview:textView];
+    
+    offset += textView.frame.size.height + 2.;
+    
+    MFlowChartView* chart = [[MFlowChartView alloc] initWithFrame:CGRectMake(0, offset, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_WIDTH/6.*4.)];
+    chart.backgroundColor = [UIColor whiteColor];
+    [chart setItems:_guide.activityArray];
+    [scroll addSubview:chart];
+    
+    offset += chart.frame.size.height + 20.;
+    
+    //議題table
+    tbl=[[UITableView alloc]initWithFrame:CGRectMake(0,offset,MRaidersDescriptionTableViewCell_WIDTH, 120)];
+    tbl.center = CGPointMake(DEVICE_SCREEN_WIDTH/2., tbl.center.y);
     tbl.delegate=self;
     tbl.dataSource = self;
     tbl.separatorStyle=UITableViewCellSeparatorStyleNone;
     [scroll addSubview:tbl];
+    
+    offset += tbl.frame.size.height;
+    
+    scroll.contentSize = CGSizeMake(frame.size.width, offset);
 }
+
+- (UIView*)createTagetSettingButton
+{
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 75+8, 24)];
+    
+    //btnTargetSet
+    UIButton *btnTargetSet=[[UIButton alloc]initWithFrame:CGRectMake(0 ,0, 75, 24)];
+    btnTargetSet.backgroundColor=[UIColor colorWithRed:116.0/255.0 green:192.0/255.0 blue:222.0/255.0 alpha:1];
+    [btnTargetSet setTitle:@"指標設定" forState:UIControlStateNormal];
+    [btnTargetSet addTarget:self action:@selector(actionTargetSet:) forControlEvents:UIControlEventTouchUpInside];
+    btnTargetSet.titleLabel.font = [UIFont systemFontOfSize:11];
+    [view addSubview:btnTargetSet];
+
+//之後有圖取消註解，換圖即可
+//    [btnTargetSet setImage:[UIImage imageNamed:@"icon_setting.png"] forState:UIControlStateNormal];
+//    btnTargetSet.imageEdgeInsets = UIEdgeInsetsMake(4, 3, 4, 56);
+//    btnTargetSet.titleEdgeInsets = UIEdgeInsetsMake(-10, -156, -10, -60);
+    
+    return view;
+}
+
 #pragma mark - UIButton
 -(void)clickedBtnSetting:(id)sender
 {
     MRaidersDiagramViewController *MRaidersDiagramVC=[[MRaidersDiagramViewController alloc]init];
-    MRaidersDiagramVC.strTitle=labTitle.text;
     MRaidersDiagramVC.guide=_guide;
     [self.navigationController pushViewController:MRaidersDiagramVC animated:YES];
 }
@@ -176,7 +243,7 @@
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 40.0f;
+    return MRaidersDescriptionTableViewCell_HEIGHT;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
@@ -188,34 +255,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MRaidersDescriptionTableViewCell *cell=[MRaidersDescriptionTableViewCell cellWithTableView:tableView];
-    cell.labRelation.text=[aryList[indexPath.row]name];
-    cell.labRelation.backgroundColor=[UIColor clearColor];
-    cell.labRelation.font = [UIFont systemFontOfSize:12];
-    cell.labRelation.textColor=[UIColor blackColor];
-    cell.labRelation.frame=CGRectMake((tbl.frame.size.width/4)-65, 14, 115, 16);
+    
 
     
     MTarget *target=[aryList[indexPath.row]target];
     
+    cell.labRelation.text=[aryList[indexPath.row] name];
     cell.labMeasure.text=target.name;
-    cell.labMeasure.textColor=[UIColor blackColor];
-    cell.labMeasure.backgroundColor=[UIColor clearColor];
-    cell.labMeasure.font = [UIFont systemFontOfSize:12];
-    cell.labMeasure.frame=CGRectMake((tbl.frame.size.width/2)-42, 14, 90, 16);
-    
-
     cell.labMax.text=target.upMax;
-    cell.labMax.textColor=[UIColor blackColor];
-    cell.labMax.backgroundColor=[UIColor clearColor];
-    cell.labMax.font = [UIFont systemFontOfSize:12];
-    cell.labMax.frame=CGRectMake(((tbl.frame.size.width/4)*3)+34, 14, 30, 16);
-
-    
     cell.labMin.text=target.upMin;
-    cell.labMin.textColor=[UIColor blackColor];
-    cell.labMin.backgroundColor=[UIColor clearColor];
-    cell.labMin.font = [UIFont systemFontOfSize:12];
-    cell.labMin.frame=CGRectMake(((tbl.frame.size.width/4)*3)-16, 14, 30, 16);
 
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -227,51 +275,56 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    CGFloat gap = 4.;
+    CGFloat offset = gap;
+    CGFloat width = tbl.frame.size.width - 5*gap;
+    
     UIView *viewSection = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 100, 20)];
     viewSection.backgroundColor=[UIColor whiteColor];
-
-    UILabel *labRelation = [[UILabel alloc] initWithFrame:CGRectMake((tbl.frame.size.width/4)-45,10,60,20)];
+    
+    UILabel *labRelation = [self createIssueColumnLabelWithFrame:CGRectMake(offset, 0 , width*0.4, 40.)];
     labRelation.text = @"關聯議題";
-    labRelation.textColor =[UIColor grayColor];
-    labRelation.font = [UIFont systemFontOfSize:12.0f];
-    labRelation.backgroundColor=[UIColor clearColor];
     [viewSection addSubview:labRelation];
     
-    UILabel *labMeasure = [[UILabel alloc] initWithFrame:CGRectMake((tbl.frame.size.width/2)-30,10, 60,20)];
+    offset += labRelation.frame.size.width + gap;
+    
+    UILabel *labMeasure = [self createIssueColumnLabelWithFrame:CGRectMake(offset, 0 , width*0.36, 40.)];
     labMeasure.text = @"衡量指標";
-    labMeasure.textColor =[UIColor grayColor];
-    labMeasure.backgroundColor = [UIColor clearColor];
-    labMeasure.font = [UIFont systemFontOfSize:12.0f];
     [viewSection addSubview:labMeasure];
 
+    offset += labMeasure.frame.size.width + gap;
     
-    UILabel *labGrade = [[UILabel alloc] initWithFrame:CGRectMake(((tbl.frame.size.width/4)*3)-10,0, 75,20)];
+    UILabel *labGrade = [self createIssueColumnLabelWithFrame:CGRectMake(offset, 0 , width*0.24, 20.)];
     labGrade.text = @"實績提升率";
-    labGrade.textColor =[UIColor grayColor];
-    labGrade.backgroundColor = [UIColor clearColor];
-    labGrade.font = [UIFont systemFontOfSize:12.0f];
     [viewSection addSubview:labGrade];
 
-    UILabel *labMin = [[UILabel alloc] initWithFrame:CGRectMake(labGrade.frame.origin.x-5,20, 30,20)];
+    UILabel *labMin = [self createIssueColumnLabelWithFrame:CGRectMake(offset, 20 , width*0.12, 20.)];
     labMin.text = @"Min.";
-    labMin.textColor =[UIColor grayColor];
-    labMin.backgroundColor = [UIColor clearColor];
-    labMin.font = [UIFont systemFontOfSize:12.0f];
     [viewSection addSubview:labMin];
     
-    UILabel *labMax = [[UILabel alloc] initWithFrame:CGRectMake(labGrade.frame.origin.x+(labGrade.frame.size.width/2)+8,20, 32,20)];
+    offset += labMin.frame.size.width + gap;
+    
+    UILabel *labMax = [self createIssueColumnLabelWithFrame:CGRectMake(offset, 20 , width*0.12, 20.)];
     labMax.text = @"Max.";
-    labMax.textColor =[UIColor grayColor];
-    labMax.backgroundColor = [UIColor clearColor];
-    labMax.font = [UIFont systemFontOfSize:12.0f];
     [viewSection addSubview:labMax];
 
     //imgGray
-    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,40,tbl.frame.size.width,2)];
+    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,38, tbl.frame.size.width,2)];
     imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
     [viewSection addSubview:imgGray];
     
     return viewSection;
+}
+
+- (UILabel*)createIssueColumnLabelWithFrame:(CGRect)frame
+{
+    UILabel* label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont systemFontOfSize:12.0f];
+    label.textColor =[UIColor grayColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    
+    return label;
 }
 
 /*

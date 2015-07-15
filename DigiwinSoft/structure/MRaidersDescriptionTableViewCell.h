@@ -7,12 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MConfig.h"
+
+#define MRaidersDescriptionTableViewCell_WIDTH (DEVICE_SCREEN_WIDTH-20)
+#define MRaidersDescriptionTableViewCell_HEIGHT 24
 
 @interface MRaidersDescriptionTableViewCell : UITableViewCell
 
-@property (nonatomic, weak) UILabel *labRelation;
-@property (nonatomic, weak) UILabel *labMeasure;
-@property (nonatomic, weak) UILabel *labMin;
-@property (nonatomic, weak) UILabel *labMax;
+@property (nonatomic, strong) UILabel *labRelation;
+@property (nonatomic, strong) UILabel *labMeasure;
+@property (nonatomic, strong) UILabel *labMin;
+@property (nonatomic, strong) UILabel *labMax;
+
 + (instancetype)cellWithTableView:(UITableView *)tableView;
+
 @end

@@ -18,7 +18,8 @@
 @property (nonatomic, strong) NSString* name;   //名稱
 @property (nonatomic, strong) NSString* desc;
 @property (nonatomic, strong) NSString* index;  //順序
-@property (nonatomic, strong) NSString* previos;    //前置
+@property (nonatomic, strong) NSString* previos1;    //前置
+@property (nonatomic, strong) NSString* previos2;    //前置
 
 @property (nonatomic, strong) NSString* guide_id;
 

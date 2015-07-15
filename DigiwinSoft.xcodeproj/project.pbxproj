@@ -116,6 +116,8 @@
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
 		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
+		DCB3FDE91B54ABA900ED5BFA /* MFlowChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDE81B54ABA900ED5BFA /* MFlowChartView.m */; };
+		DCB3FDEF1B55F67B00ED5BFA /* MFlowChartPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDEE1B55F67B00ED5BFA /* MFlowChartPoint.m */; };
 		DCCAB1AC1B4F841500AA1CD2 /* ASAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCAB1AB1B4F841500AA1CD2 /* ASAnimationManager.m */; };
 		DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AA81B40E04A00C771BB /* MEvent.m */; };
 		DCF46AAC1B41103700C771BB /* MSituation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAB1B41103700C771BB /* MSituation.m */; };
@@ -373,6 +375,10 @@
 		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
 		DC8135281B49BB29003B56AA /* MTarInfoChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarInfoChartView.m; path = CustomViews/MTarInfoChartView.m; sourceTree = "<group>"; };
 		DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = z_thumbnail.jpg; sourceTree = "<group>"; };
+		DCB3FDE71B54ABA900ED5BFA /* MFlowChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MFlowChartView.h; path = CustomViews/MFlowChartView.h; sourceTree = "<group>"; };
+		DCB3FDE81B54ABA900ED5BFA /* MFlowChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MFlowChartView.m; path = CustomViews/MFlowChartView.m; sourceTree = "<group>"; };
+		DCB3FDED1B55F67B00ED5BFA /* MFlowChartPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MFlowChartPoint.h; path = structure/MFlowChartPoint.h; sourceTree = "<group>"; };
+		DCB3FDEE1B55F67B00ED5BFA /* MFlowChartPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MFlowChartPoint.m; path = structure/MFlowChartPoint.m; sourceTree = "<group>"; };
 		DCCAB1AA1B4F841500AA1CD2 /* ASAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASAnimationManager.h; sourceTree = "<group>"; };
 		DCCAB1AB1B4F841500AA1CD2 /* ASAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASAnimationManager.m; sourceTree = "<group>"; };
 		DCF46AA71B40E04A00C771BB /* MEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEvent.h; path = structure/MEvent.h; sourceTree = "<group>"; };
@@ -905,6 +911,8 @@
 				DCF46B2C1B462D5A00C771BB /* MSkill.m */,
 				DC3DF9D61B4E46C00065DF5D /* MCoordinate.h */,
 				DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */,
+				DCB3FDED1B55F67B00ED5BFA /* MFlowChartPoint.h */,
+				DCB3FDEE1B55F67B00ED5BFA /* MFlowChartPoint.m */,
 				3A5374021B535EEB002C2836 /* MReport.h */,
 				3A5374031B535EEB002C2836 /* MReport.m */,
 			);
@@ -938,6 +946,8 @@
 				DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */,
 				DC3DF9DF1B4EE40B0065DF5D /* MMessageBox.h */,
 				DC3DF9E01B4EE40B0065DF5D /* MMessageBox.m */,
+				DCB3FDE71B54ABA900ED5BFA /* MFlowChartView.h */,
+				DCB3FDE81B54ABA900ED5BFA /* MFlowChartView.m */,
 				3A5374051B538E88002C2836 /* MCustomSegmentedControl.h */,
 				3A5374061B538E88002C2836 /* MCustomSegmentedControl.m */,
 			);
@@ -1165,6 +1175,7 @@
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
 				38FD52F81B54C2F600AC03F4 /* MRadarChartView.m in Sources */,
 				DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */,
+				DCB3FDEF1B55F67B00ED5BFA /* MFlowChartPoint.m in Sources */,
 				DC3DF9DE1B4ED13E0065DF5D /* MConcentricCircles.m in Sources */,
 				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
 				3A03AA231B3BFF0500923ABB /* MEventDetailViewController.m in Sources */,
@@ -1196,6 +1207,7 @@
 				3A03AA1F1B3BD5CA00923ABB /* UIDownPicker.m in Sources */,
 				3AE9972E1B54B41B005D590C /* MTaskRaidersViewController.m in Sources */,
 				3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */,
+				DCB3FDE91B54ABA900ED5BFA /* MFlowChartView.m in Sources */,
 				3A03F9651B3A4F26000F345B /* MKeyActivitiesViewController.m in Sources */,
 				38E6F3FE1B411EAF00245DA1 /* MLoginViewController.m in Sources */,
 				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,

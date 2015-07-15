@@ -221,8 +221,15 @@ static MDataBaseManager* _director = nil;
         act.guide_id = [rs stringForColumn:@"GUIDE_ID"];
         act.act_m_id = [rs stringForColumn:@"ACT_M_ID"];
         act.desc = [rs stringForColumn:@"DESCRIPTION"];
-        //act.emp_id = [rs stringForColumn:@"EMP_ID"];
         act.status = [rs stringForColumn:@"STATUS"];
+        act.previos1 = [rs stringForColumn:@"PREVIOS_1"];
+        act.previos2 = [rs stringForColumn:@"PREVIOS_2"];
+        
+        // 負責人
+        NSString* empid = [rs stringForColumn:@"EMP_ID"];
+        act.manager = [self loadEmployeeWithID:empid];
+        
+        // 工作項目 & 指標 用不到, 先不用load
         
         [array addObject:act];
     }
@@ -350,8 +357,9 @@ static MDataBaseManager* _director = nil;
         MActivity* act = [MActivity new];
         act.uuid = [rs stringForColumn:@"ID"];
         act.desc = [rs stringForColumn:@"DESCRIPTION"];
-        act.index = [rs stringForColumn:@"INDEX"];
-        act.previos = [rs stringForColumn:@"PREVIOS"];
+        //act.index = [rs stringForColumn:@"INDEX"];
+        act.previos1 = [rs stringForColumn:@"PREVIOS_1"];
+        act.previos2 = [rs stringForColumn:@"PREVIOS_2"];
         act.name = [rs stringForColumnIndex:1];
         
         act.guide_id = guide.uuid;
@@ -646,8 +654,9 @@ static MDataBaseManager* _director = nil;
         act.uuid = [rs stringForColumnIndex:0];
         act.name = [rs stringForColumnIndex:4];
         act.desc = [rs stringForColumn:@"DESCRIPTION"];
-        act.index = [rs stringForColumn:@"INDEX"];
-        act.previos = [rs stringForColumn:@"PREVIOS"];
+        //act.index = [rs stringForColumn:@"INDEX"];
+        act.previos1 = [rs stringForColumn:@"PREVIOS_1"];
+        act.previos2 = [rs stringForColumn:@"PREVIOS_2"];
         act.status = [rs stringForColumn:@"STATUS"];
         act.comp_id = [rs stringForColumn:@"COMP_ID"];
         act.guide_id = [rs stringForColumn:@"GUIDE_ID"];
@@ -968,8 +977,9 @@ static MDataBaseManager* _director = nil;
         act.uuid = [rs stringForColumnIndex:0];
         act.name = [rs stringForColumnIndex:4];
         act.desc = [rs stringForColumn:@"DESCRIPTION"];
-        act.index = [rs stringForColumn:@"INDEX"];
-        act.previos = [rs stringForColumn:@"PREVIOS"];
+        //act.index = [rs stringForColumn:@"INDEX"];
+        act.previos1 = [rs stringForColumn:@"PREVIOS_1"];
+        act.previos2 = [rs stringForColumn:@"PREVIOS_2"];
         act.status = [rs stringForColumn:@"STATUS"];
         act.comp_id = [rs stringForColumn:@"COMP_ID"];
         act.guide_id = [rs stringForColumn:@"GUIDE_ID"];
@@ -1278,7 +1288,7 @@ static MDataBaseManager* _director = nil;
 
 - (BOOL)insertActivity:(MActivity*)act guideID:(NSString*)guideid
 {
-    NSString* sql = @"insert into U_ACTIVITY ('ID','COMP_ID','GUIDE_ID','ACT_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','INDEX','PREVIOS','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?)";
+    NSString* sql = @"insert into U_ACTIVITY ('ID','COMP_ID','GUIDE_ID','ACT_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','PREVIOS_1','PREVIOS_2','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?)";
     
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
     NSString* cre_dte = [[MDirector sharedInstance] getCurrentDateStringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -1288,11 +1298,12 @@ static MDataBaseManager* _director = nil;
     NSString* desc = act.desc;
     NSString* tarid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_TARGET_UUID_PREV];
     NSString* empid = act.manager.uuid;
-    NSString* index = act.index;
-    NSString* prev = act.previos;
+    //NSString* index = act.index;
+    NSString* prev1 = act.previos1;
+    NSString* prev2 = act.previos2;
     NSString* status = @"0";
     
-    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, act_m_id, name, desc, tarid, empid, index, prev, status, cre_dte];
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, act_m_id, name, desc, tarid, empid, prev1, prev2, status, cre_dte];
     if(b){
         [self insertTarget:act.target withID:tarid];
         [self insertWorkItems:act.workItemArray activityID:uuid guideID:guideid];
