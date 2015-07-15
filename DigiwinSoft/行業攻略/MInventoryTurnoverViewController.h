@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "MGuide.h"
 @interface MInventoryTurnoverViewController : UIViewController
-@property (nonatomic, weak) MGuide *guide;
+@property (nonatomic, strong) MGuide *guide;
 @end

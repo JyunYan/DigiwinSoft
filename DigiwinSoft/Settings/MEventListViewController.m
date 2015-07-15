@@ -12,9 +12,10 @@
 #import "MEventSelectViewController.h"
 #import "MDirector.h"
 #import <MessageUI/MessageUI.h>
+#import "MCustomSegmentedControl.h"
 
 
-#define TAG_TOPVIEW 100
+#define UIBarSystemButtonBackArrow 101
 
 #define TAG_LABEL_EVENT 200
 #define TAG_LABEL_OCCURRENCE_DATE 201
@@ -40,9 +41,9 @@
 @property (nonatomic, strong) NSArray* totalEventArray;
 @property (nonatomic, strong) NSMutableArray* eventArray;
 
-@property (nonatomic, strong) UIImageView* imgblueBar;
-
 @property (nonatomic, strong) MUser* user;
+
+@property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
 
 @end
 
@@ -85,7 +86,6 @@
     CGFloat height = 50;
     
     UIView* topView = [self createSegmentedView:CGRectMake(posX, posY, width, height)];
-    topView.tag = TAG_TOPVIEW;
     [self.view addSubview:topView];
     
     
@@ -131,11 +131,8 @@
 
 -(void) addMainMenu
 {
-    UIButton* backbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 20, 24)];
-    [backbutton setBackgroundImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
-    [backbutton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* left_bar_item = [[UIBarButtonItem alloc] initWithCustomView:backbutton];
-    self.navigationItem.leftBarButtonItem = left_bar_item;
+    UIBarButtonItem* back  =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarSystemButtonBackArrow target:self action:@selector(back:)];
+    self.navigationItem.leftBarButtonItem = back;
 }
 
 - (UIView*)createSegmentedView:(CGRect) rect
@@ -151,7 +148,7 @@
     CGFloat height = viewHeight;
     
     CGFloat textSize = 16.0f;
-    
+
     
     int itemCount1 = [self getEventCountWithStatus:@"0"];
     int itemCount2 = [self getEventCountWithStatus:@"1"];
@@ -162,38 +159,14 @@
     NSString* item3 = [NSString stringWithFormat:@"全部（%d）", itemCount3];
     NSArray *itemArray =[NSArray arrayWithObjects:item1, item2, item3, nil];
     
-    UISegmentedControl* segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
-    segmentedControl.frame = CGRectMake(posX, posY, width, height);
-    segmentedControl.selectedSegmentIndex = 0;
-    segmentedControl.layer.borderColor = [UIColor clearColor].CGColor;
-    segmentedControl.layer.borderWidth = 0.0f;
-    segmentedControl.tintColor=[UIColor clearColor];
-    
-    NSDictionary *normalAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont boldSystemFontOfSize:textSize], NSFontAttributeName,
-                                [UIColor grayColor], NSForegroundColorAttributeName,
-                                nil];
-    [[UISegmentedControl appearance] setTitleTextAttributes:normalAttributes forState:UIControlStateNormal];
-    
-    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      [UIFont boldSystemFontOfSize:textSize], NSFontAttributeName,
-                                      [[MDirector sharedInstance] getCustomBlueColor], NSForegroundColorAttributeName,
-                                      nil];
-    [[UISegmentedControl appearance] setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
-    
-    [segmentedControl addTarget:self action:@selector(changeList:) forControlEvents:UIControlEventValueChanged];
-    [view addSubview:segmentedControl];
-    
-    //imgblueBar
-    _imgblueBar = [[UIImageView alloc]initWithFrame:CGRectMake(5, height - 4, (viewWidth/3)-20, 3)];
-    _imgblueBar.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
-    [segmentedControl addSubview:_imgblueBar];
-    
-    //imgGray
-    UIImageView *imgGray = [[UIImageView alloc]initWithFrame:CGRectMake(0, height - 1, viewWidth, 1)];
-    imgGray.backgroundColor = [UIColor colorWithRed:194.0/255.0 green:194.0/255.0 blue:194.0/255.0 alpha:1.0];
-    [segmentedControl addSubview:imgGray];
-
+    _customSegmentedControl = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(width, height)  BarIndex:0 TextSize:textSize];
+    _customSegmentedControl.frame = CGRectMake(posX, posY, width, height);
+    _customSegmentedControl.selectedSegmentIndex = 0;
+    _customSegmentedControl.layer.borderColor = [UIColor clearColor].CGColor;
+    _customSegmentedControl.layer.borderWidth = 0.0f;
+    _customSegmentedControl.tintColor = [UIColor clearColor];
+    [_customSegmentedControl addTarget:self action:@selector(changeList:) forControlEvents:UIControlEventValueChanged];
+    [view addSubview:_customSegmentedControl];
     
     return view;
 }
@@ -314,69 +287,8 @@
 
 - (void)changeList:(id)sender
 {
-    UIView* view = [self.view viewWithTag:TAG_TOPVIEW];
-    CGFloat viewWidth = view.frame.size.width;
-
     NSInteger index = [sender selectedSegmentIndex];
-    
-    switch (index) {
-        case 0:
-        {
-            //imgblueBar Animation
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.5];
-            [UIView setAnimationDelegate:self];
-            
-            //設定動畫開始時的狀態為目前畫面上的樣子
-            [UIView setAnimationBeginsFromCurrentState:YES];
-            _imgblueBar.frame=CGRectMake(5,
-                                        _imgblueBar.frame.origin.y,
-                                        _imgblueBar.frame.size.width,
-                                        _imgblueBar.frame.size.height);
-            [UIView commitAnimations];
-            
-            break;
-        }
-        case 1:
-        {
-            //imgblueBar Animation
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.5];
-            [UIView setAnimationDelegate:self];
-            
-            //設定動畫開始時的狀態為目前畫面上的樣子
-            [UIView setAnimationBeginsFromCurrentState:YES];
-            _imgblueBar.frame=CGRectMake((viewWidth/3)+5,
-                                        _imgblueBar.frame.origin.y,
-                                        _imgblueBar.frame.size.width,
-                                        _imgblueBar.frame.size.height);
-            [UIView commitAnimations];
-            break;
-        }
-        case 2:
-        {
-            //imgblueBar Animation
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.5];
-            [UIView setAnimationDelegate:self];
-            
-            //設定動畫開始時的狀態為目前畫面上的樣子
-            [UIView setAnimationBeginsFromCurrentState:YES];
-            _imgblueBar.frame=CGRectMake(((viewWidth/3)*2)+5,
-                                        _imgblueBar.frame.origin.y,
-                                        _imgblueBar.frame.size.width,
-                                        _imgblueBar.frame.size.height);
-            [UIView commitAnimations];
-            
-            
-            break;
-        }
-        default:
-        {
-            NSLog(@"Error");
-            break;
-        }
-    }
+    [_customSegmentedControl moveImgblueBar:index];
 
     NSString* status = [NSString stringWithFormat:@"%ld", (long)index];
     [self resetEventDataWithStatus:status];

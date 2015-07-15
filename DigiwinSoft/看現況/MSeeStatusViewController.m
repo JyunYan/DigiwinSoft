@@ -9,9 +9,12 @@
 #import "MSeeStatusViewController.h"
 #import "AppDelegate.h"
 #import "MRouletteViewController.h"
-
+#import "MCustomSegmentedControl.h"
+#import "MConfig.h"
+#import "MRadarChartView.h"
 @interface MSeeStatusViewController ()
-
+@property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
+@property (nonatomic, strong) MRadarChartView* RadarChart;
 @end
 
 @implementation MSeeStatusViewController
@@ -39,7 +42,22 @@
     self.navigationItem.leftBarButtonItem = bar_item;
     
     
-    UIButton *btn= [[UIButton alloc] initWithFrame:CGRectMake(120, 120, 120, 120)];
+    
+    NSArray *itemArray = [NSArray arrayWithObjects:@"經營效能",@"管理表現",@"行業情報",nil];
+    _customSegmentedControl = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(DEVICE_SCREEN_WIDTH, 40) BarIndex:1 TextSize:13.];
+    _customSegmentedControl.frame = CGRectMake(0,44+20,DEVICE_SCREEN_WIDTH, 40);
+    [_customSegmentedControl addTarget:self
+                                action:@selector(actionSegmented:)
+                      forControlEvents:UIControlEventValueChanged];
+    _customSegmentedControl.tintColor=[UIColor clearColor];
+    _customSegmentedControl.selectedSegmentIndex = 1;
+    [self.view addSubview:_customSegmentedControl];
+
+    
+    
+    
+    
+    UIButton *btn= [[UIButton alloc] initWithFrame:CGRectMake(120, 380, 80, 30)];
     [btn addTarget:self action:@selector(toPage8:) forControlEvents:UIControlEventTouchUpInside];
     [btn setTitle:@"toPage8" forState:UIControlStateNormal];
     btn.backgroundColor=[UIColor brownColor];
@@ -51,8 +69,37 @@
     MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
     [self.navigationController pushViewController:MRouletteVC animated:YES];
 }
-#pragma mark - UIButton
+- (void)actionSegmented:(id)sender{
+    NSInteger index = [sender selectedSegmentIndex];
+    [_customSegmentedControl moveImgblueBar:index];
+    
+    switch (index) {
+        case 0:
+        {
+            _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake(30, 120, 250, 250)];
+            _RadarChart.backgroundColor = [UIColor redColor];
+            [self.view addSubview:_RadarChart];
 
+            break;
+        }
+        case 1:
+        {
+            break;
+        }
+        
+        case 2:
+        {
+            break;
+        }
+        default:
+        {
+            NSLog(@"Error");
+            break;
+        }
+    }
+}
+
+#pragma mark - UIButton
 -(void)clickedBtnSetting:(id)sender
 {
     AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);

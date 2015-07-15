@@ -19,19 +19,25 @@
 
     // Configure the view for the selected state
 }
+
 + (instancetype)cellWithTableView:(UITableView *)tableView {
-    static NSString *identifier = @"Cell";
+    static NSString *identifier = @"ReportCell";
     MReportTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
         cell = [[MReportTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     return cell;
 }
+ 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-       
+        
+        UILabel *labTitle = [[UILabel alloc] init];
+        self.labTitle = labTitle;
+        [self.contentView addSubview:labTitle];
+
         UILabel *lab = [[UILabel alloc] init];
         self.lab = lab;
         [self.contentView addSubview:lab];

@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "MInventoryTurnoverViewController.h"
 #import "MDirector.h"
+#import "MCustomSegmentedControl.h"
 
 #import "ASAnimationManager.h"
 @interface MIndustryRaiders2ViewController ()<MIndustryRaidersTableViewCellDelegate>
@@ -26,7 +27,8 @@
 }
 
 @property (nonatomic, assign) NSInteger operateIndex;
-
+@property (nonatomic, strong) NSMutableArray *aryList;
+@property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
 @end
 
 @implementation MIndustryRaiders2ViewController
@@ -91,7 +93,7 @@
 - (void)loadData
 {
     NSArray *aryGuide=[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen];
-    aryList=[NSMutableArray arrayWithArray:aryGuide];
+    _aryList=[NSMutableArray arrayWithArray:aryGuide];
 }
 -(void) addMainMenu
 {
@@ -110,26 +112,14 @@
     
     //Segmented
     NSArray *itemArray = [NSArray arrayWithObjects:@"說明",@"建議對策",nil];
-    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
-    segmentedControl.frame = CGRectMake(0, 20+44+40+10,DEVICE_SCREEN_WIDTH, 40);
-    [segmentedControl addTarget:self
+    _customSegmentedControl = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(DEVICE_SCREEN_WIDTH, 40) BarIndex:1 TextSize:13.];
+    _customSegmentedControl.frame = CGRectMake(0, 20+44+40+10,DEVICE_SCREEN_WIDTH, 40);
+    [_customSegmentedControl addTarget:self
                          action:@selector(actionSegmented:)
                forControlEvents:UIControlEventValueChanged];
-    segmentedControl.tintColor=[UIColor clearColor];
-    segmentedControl.selectedSegmentIndex = 1;
-    [self.view addSubview:segmentedControl];
-    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor grayColor]} forState:UIControlStateNormal];
-    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0]} forState:UIControlStateSelected];
-    
-    //imgGray
-    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,39,DEVICE_SCREEN_WIDTH, 1)];
-    imgGray.backgroundColor=[UIColor colorWithRed:194.0/255.0 green:194.0/255.0 blue:194.0/255.0 alpha:1.0];
-    [segmentedControl addSubview:imgGray];
-
-    //imgblueBar
-    imgblueBar=[[UIImageView alloc]initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/8)*5,36,DEVICE_SCREEN_WIDTH/4, 3)];
-    imgblueBar.backgroundColor=[UIColor colorWithRed:47.0/255.0 green:161.0/255.0 blue:191.0/255.0 alpha:1.0];
-    [segmentedControl addSubview:imgblueBar];
+    _customSegmentedControl.tintColor=[UIColor clearColor];
+    _customSegmentedControl.selectedSegmentIndex = 1;
+    [self.view addSubview:_customSegmentedControl];
     
     //TableView
     tbl=[[UITableView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT-(20+44+40+10+40+35+49))];
@@ -184,7 +174,10 @@
     return NO;
 }
 - (void)actionSegmented:(id)sender{
-    switch ([sender selectedSegmentIndex]) {
+    NSInteger index = [sender selectedSegmentIndex];
+    [_customSegmentedControl moveImgblueBar:index];
+
+    switch (index) {
         case 0:
         {
             [tbl removeFromSuperview];
@@ -193,20 +186,6 @@
             [self.view addSubview:textView];
             [self.view addSubview:labTarget];
             [self.view addSubview:txtField];
-            
-            
-            //imgblueBar Animation
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.5];
-            [UIView setAnimationDelegate:self];
-            
-            //設定動畫開始時的狀態為目前畫面上的樣子
-            [UIView setAnimationBeginsFromCurrentState:YES];
-            imgblueBar.frame=CGRectMake((DEVICE_SCREEN_WIDTH/8)*1,
-                                        imgblueBar.frame.origin.y,
-                                        imgblueBar.frame.size.width,
-                                        imgblueBar.frame.size.height);
-            [UIView commitAnimations];
             break;
         }
         case 1:
@@ -217,19 +196,6 @@
             [textView removeFromSuperview];
             [txtField removeFromSuperview];
             [labTarget removeFromSuperview];
-            
-            //imgblueBar Animation
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.5];
-            [UIView setAnimationDelegate:self];
-            
-            //設定動畫開始時的狀態為目前畫面上的樣子
-            [UIView setAnimationBeginsFromCurrentState:YES];
-            imgblueBar.frame=CGRectMake((DEVICE_SCREEN_WIDTH/8)*5,
-                                        imgblueBar.frame.origin.y,
-                                        imgblueBar.frame.size.width,
-                                        imgblueBar.frame.size.height);
-            [UIView commitAnimations];
             break;
         }
         default:
@@ -243,13 +209,13 @@
 - (void)actionAddPlan:(NSNotification*) notification
 {
     NSString *PassUUID=[notification object];
-    for (int i=0; i<[aryList count]; i++) {
-        MGuide *Guide=aryList[i];
+    for (int i=0; i<[_aryList count]; i++) {
+        MGuide *Guide=_aryList[i];
         //找到相同UUID的Guid。
         if ([Guide.uuid isEqual:PassUUID]){
             //更改裡頭的IsCheck，reload cell。
-            if ([aryList[i]isCheck]==NO) {
-                [aryList[i] setIsCheck:YES];
+            if ([_aryList[i]isCheck]==NO) {
+                [_aryList[i] setIsCheck:YES];
                 NSIndexPath *indexPath=[NSIndexPath indexPathForRow:i inSection:0];
                 [tbl reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
                 NSLog(@"從對策說明勾選:%@",Guide.name);
@@ -264,11 +230,11 @@
 {
     MGuide *PassGuide=[notification object];
     NSString *PassUUID=PassGuide.uuid;
-    for (int i=0; i<[aryList count]; i++) {
-        MGuide *Guide=aryList[i];
+    for (int i=0; i<[_aryList count]; i++) {
+        MGuide *Guide=_aryList[i];
         //找到相同UUID的Guid，置換裡面的Target。
         if ([Guide.uuid isEqual:PassUUID]){
-            [aryList[i]setTarget:PassGuide.target];
+            [_aryList[i]setTarget:PassGuide.target];
             }
     }
     
@@ -286,7 +252,7 @@
 - (void)actionAddMyList:(id)sender{
     
     BOOL b = NO;
-    for (MGuide* guide in aryList) {
+    for (MGuide* guide in _aryList) {
         if (guide.isCheck) {
             b = YES;
             [[MDataBaseManager sharedInstance]insertGuide:guide from:_from];
@@ -306,7 +272,7 @@
 - (void)didAssignManager:(NSNotification*)note
 {
     MGuide* guide = (MGuide*)note.object;
-    [aryList replaceObjectAtIndex:_operateIndex withObject:guide];
+    [_aryList replaceObjectAtIndex:_operateIndex withObject:guide];
     
     [tbl reloadData];
     
@@ -327,7 +293,7 @@
     
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
     _operateIndex = indexPath.row;
-    MGuide* guide = [aryList objectAtIndex:_operateIndex];
+    MGuide* guide = [_aryList objectAtIndex:_operateIndex];
     
     MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithGuide:guide];
     UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MDesignateResponsibleVC];
@@ -344,7 +310,7 @@
                                                object:nil];
     
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
-    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
     
     MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
     MInventoryTurnoverVC.guide=guide;
@@ -360,7 +326,7 @@
                                                object:nil];
     
     NSIndexPath* indexPath = [tbl indexPathForCell:cell];
-    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
     
     [MDirector sharedInstance].selectedPhen=_phen;
     
@@ -381,7 +347,7 @@
     return 30.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [aryList count];
+    return [_aryList count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -389,7 +355,7 @@
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
     
     [cell prepareWithGuide:guide];
 
@@ -397,7 +363,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MGuide* guide = [aryList objectAtIndex:indexPath.row];
+    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
     guide.isCheck = !guide.isCheck;
     
     MIndustryRaidersTableViewCell* cell = (MIndustryRaidersTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];

@@ -63,6 +63,11 @@
 //    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 //    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_player stop];
+}
 #pragma mark - create view
 - (void)loadData
 {
@@ -99,7 +104,6 @@
     _player.view.frame = CGRectMake(0.0, offset,DEVICE_SCREEN_WIDTH, 170.0);
     _player.shouldAutoplay = NO;
     [self.view addSubview: _player.view];
-    
     [_player prepareToPlay];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kkk:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];

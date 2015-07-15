@@ -51,15 +51,24 @@ This method is called by UICollectionView for laying out cells in the visible re
         CGPoint pointInCollectionView = layoutAttributes.frame.origin;
         CGPoint pointInMainView = [self.superView convertPoint:pointInCollectionView fromView:self.collectionView];
         
+//        NSLog(@"pointInMainView:%@",NSStringFromCGPoint(pointInMainView));
+        
         CGPoint centerInCollectionView = layoutAttributes.center;
         CGPoint centerInMainView = [self.superView convertPoint:centerInCollectionView fromView:self.collectionView];
         
+//        NSLog(@"centerInMainView:%@",NSStringFromCGPoint(centerInMainView));
+
         float rotateBy = 0.0f;
         CGPoint translateBy = CGPointZero;
         
         // we find out where this cell is relative to the center of the viewport, and invoke private methods to deduce the
         // amount of rotation to apply找到中心，算出旋轉量
-        if (pointInMainView.x < self.collectionView.frame.size.width+80.0f){
+        
+        NSLog(@"collectionView.frame.size.width:%f",self.collectionView.frame.size.width);
+        
+        if (pointInMainView.x < self.collectionView.frame.size.width){
+            
+            NSLog(@"layoutAttributes:%@",layoutAttributes);
             
             translateBy = [self calculateTranslateBy:horizontalCenter attribs:layoutAttributes];
             rotateBy = [self calculateRotationFromViewPortDistance:pointInMainView.x center:horizontalCenter];
@@ -72,16 +81,24 @@ This method is called by UICollectionView for laying out cells in the visible re
             // a certain point.做兩次變換一次旋轉，做出繞著一個點旋轉的效果
             
             CATransform3D transform = CATransform3DIdentity;
-            transform = CATransform3DTranslate(transform, rotationPoint.x - centerInMainView.x, rotationPoint.y - centerInMainView.y-0, 0.0);
+            transform = CATransform3DTranslate(transform, rotationPoint.x - centerInMainView.x, rotationPoint.y - centerInMainView.y-0, -1.0);
             
+            //(后面3个 数字分别代表不同的轴来翻转)
             transform = CATransform3DRotate(transform, DEGREES_TO_RADIANS(-rotateBy), 0.0, 0.0, -1.0);
+            
             
             // -30.0f to lift the cards up a bit 可調整整個圓的xyz
             transform = CATransform3DTranslate(transform, centerInMainView.x - rotationPoint.x+45, centerInMainView.y-rotationPoint.y-0.0f, 0.0);
             
+            
+//            transform = CATransform3DTranslate(transform, 0, 0, -240);
+//            transform = CATransform3DRotate(transform, DEGREES_TO_RADIANS(-rotateBy), 1, 0, 0);
+//            transform = CATransform3DTranslate(transform, 0, 0, 240);
+            
             layoutAttributes.transform3D = transform;
             
-            // right card is always on top
+            
+            // right card is always on top牌面圖層重疊調整。(原API用途，我們應該用不到)
             layoutAttributes.zIndex = layoutAttributes.indexPath.item;
             
             [modifiedLayoutAttributesArray addObject:layoutAttributes];
@@ -118,6 +135,7 @@ This method is called by UICollectionView for laying out cells in the visible re
     
     //調整toMin,toMax即可調整左右消失的高度，有可能要依照螢幕大小做調整
     float rotateByDegrees = [self remapNumbersToRange:x fromMin:-122 fromMax:258 toMin:-25 toMax:25];
+//    NSLog(@"%f",x);
     return rotateByDegrees;
 }
 

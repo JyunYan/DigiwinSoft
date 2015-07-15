@@ -19,6 +19,7 @@
 #import "MSituation.h"
 #import "MTreasure.h"
 #import "MSkill.h"
+#import "MReport.h"
 
 #import "MCustGuide.h"
 #import "MCustActivity.h"
@@ -66,6 +67,9 @@
 - (NSArray*)loadMyGuideMissionsWithRelese:(BOOL)brelease status:(NSString*)status;
 - (NSArray*)loadMyActivityMissionWithRelese:(BOOL)brelease status:(NSString*)status;
 - (NSArray*)loadMyWorkItemMissionWithRelese:(BOOL)brelease status:(NSString*)status;
+- (NSArray*)loadReports;
+
+- (BOOL)insertReport:(MReport*)report;
 
 #pragma mark - 我的規劃/我的攻略
 // get 我的規劃/我的攻略
