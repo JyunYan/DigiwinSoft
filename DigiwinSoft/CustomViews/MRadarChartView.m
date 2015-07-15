@@ -12,7 +12,7 @@
 @interface MRadarChartView ()<RPRadarChartDataSource, RPRadarChartDelegate>
 
 @property (nonatomic, strong) RPRadarChart* RadarChart;
-@property (nonatomic, strong)NSArray *ary;
+@property (nonatomic, strong)NSArray *aryData;
 @end
 
 @implementation MRadarChartView
@@ -33,14 +33,20 @@
 -(void)data
 {
 
-    _ary=[[NSArray alloc]initWithObjects:@"短期償還能力(60)",@"資產運用效率(75)",@"發展潛力(90)",@"賺錢能力(65)",@"營運效率(50)", nil];
+    NSArray *data1=[[NSArray alloc]initWithObjects:@"最適化存貨周轉(60)",@"data1",nil];
+    NSArray *data2=[[NSArray alloc]initWithObjects:@"提昇供應鏈品質(75)",@"data2",nil];
+    NSArray *data3=[[NSArray alloc]initWithObjects:@"提升生產效率(90)",@"data3",nil];
+    NSArray *data4=[[NSArray alloc]initWithObjects:@"提升生產效率(90)",@"data3",nil];
+    NSArray *data5=[[NSArray alloc]initWithObjects:@"提升生產效率(90)",@"data3",nil];
+    
+    _aryData=[[NSArray alloc]initWithObjects:data1,data2,data3,data4,data5,nil];
 
 }
 -(void)addRadarChart
 {
       
     if(!_RadarChart){
-        _RadarChart = [[RPRadarChart alloc] initWithFrame:CGRectMake(0, 0,250, 250)];
+        _RadarChart = [[RPRadarChart alloc] initWithFrame:CGRectMake(0, 0,150, 150)];
         _RadarChart.dataSource = self;
         _RadarChart.delegate = self;
 
@@ -75,7 +81,7 @@
 // get number of spokes in radar chart
 - (NSInteger)numberOfSopkesInRadarChart:(RPRadarChart*)chart
 {
-    return [_ary count];
+    return [_aryData count];
 }
 
 // get number of datas
@@ -93,9 +99,13 @@
 // get title for each spoke
 - (NSString*)radarChart:(RPRadarChart*)chart titleForSpoke:(NSInteger)atIndex
 {
-    return [NSString stringWithFormat:@"%@", _ary[atIndex]];
+    return [NSString stringWithFormat:@"%@", _aryData[atIndex][0]];
 }
 
+-(NSArray *)radarChart:(RPRadarChart*)chart aryData:(NSArray *)ary;
+{
+    return _aryData;
+}
 // get data value for a specefic data item for a spoke
 - (float)radarChart:(RPRadarChart*)chart valueForData:(NSInteger)dataIndex forSpoke:(NSInteger)spokeIndex
 {
@@ -105,7 +115,6 @@
 // get color legend for a specefic data
 - (UIColor*)radarChart:(RPRadarChart*)chart colorForData:(NSInteger)atIndex
 {
-    
     return [UIColor colorWithRed:134.0/255.0 green:199.0/255.0 blue:214.0/255.0 alpha:1];
 }
 
@@ -114,6 +123,11 @@
 - (void)radarChart:(RPRadarChart *)chart lineTouchedForData:(NSInteger)dataIndex atPosition:(CGPoint)point
 {
     NSLog(@"Line %d touched at (%f,%f)", dataIndex, point.x, point.y);
+}
+- (void)btnTitilClick:(id)sender
+{
+    NSLog(@"%ld",(long)[sender tag]);
+    NSLog(@"成功成功成功");
 }
 
 @end

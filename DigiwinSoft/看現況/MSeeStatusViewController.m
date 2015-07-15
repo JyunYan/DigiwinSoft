@@ -76,7 +76,7 @@
     switch (index) {
         case 0:
         {
-            _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake(30, 120, 250, 250)];
+            _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake(85, 120, 150, 150)];
             _RadarChart.backgroundColor = [UIColor redColor];
             [self.view addSubview:_RadarChart];
 

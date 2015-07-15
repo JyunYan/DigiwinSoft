@@ -41,7 +41,7 @@
 #import <float.h>
 #import <QuartzCore/CALayer.h>
 #import "RPRadarChart.h"
-
+#import <QuartzCore/QuartzCore.h>
 @interface RPRadarChart ()
 
 -(void) drawChartInContext:(CGContextRef) cx forIndex:(NSInteger)index;
@@ -366,44 +366,68 @@ static double colorDistance(RGB e1, RGB e2)
     //Index Lines畫同心圓
     if (drawGuideLines) {
         CGContextSetStrokeColorWithColor(cx, [UIColor whiteColor].CGColor);
-        for (int j = 0; j <= guideLineSteps; j++) {
-             float cur = j*spcr;
-            CGContextStrokeEllipseInRect(cx, CGRectMake(-cur, -cur, cur*2, cur*2));
-        }
+                for (int j= 0; j <= guideLineSteps; j++) {
+            float cur = j*spcr;
+                CGContextStrokeEllipseInRect(cx, CGRectMake(-cur, -cur, cur*2, cur*2));
+            }
+
         CGContextStrokePath(cx);
+//        CGContextStrokeEllipseInRect(cx, CGRectMake(-cur-20, -cur-20, (cur+20)*2, (cur+20)*2));
+
     }
     CGContextSetFillColorWithColor(cx, [UIColor greenColor].CGColor);
     CGContextFillPath(cx);
     //Base lines畫輻射線
-    CGContextSetStrokeColorWithColor(cx, [UIColor whiteColor].CGColor);
-    for (int i = 0; i < numberOfSpokes; i++) {
-        float a = (mvr * i) - M_PI_2;
-        float x = maxSize * cos(a);
-        float y = maxSize * sin(a);
-        CGContextMoveToPoint(cx, 0, 0);
-        CGContextAddLineToPoint(cx, x , y);
-        
-        CGContextStrokePath(cx);
-        //輻射線最後的標題
-        NSString *tx = [dataSource radarChart:self titleForSpoke:i];
-        CGSize s =[tx sizeWithFont:[UIFont fontWithName:@"Helvetica-Bold" size:11]];
-        x -= s.width/2;
-        x += 5;
-        y += (y>0) ? 10 : -20;
+//    CGContextSetStrokeColorWithColor(cx, [UIColor whiteColor].CGColor);
+//    for (int i = 0; i < numberOfSpokes; i++) {
+//        float a = (mvr * i) - M_PI_2;
+//        float x = maxSize * cos(a);
+//        float y = maxSize * sin(a);
+//        CGContextMoveToPoint(cx, 0, 0);
+//        CGContextAddLineToPoint(cx, x , y);
+//        
+//        CGContextStrokePath(cx);
+//        //輻射線最後的標題
+//        NSString *tx = [dataSource radarChart:self titleForSpoke:i];
+//        CGSize s =[tx sizeWithFont:[UIFont fontWithName:@"Helvetica-Bold" size:11]];
+//        x -= s.width/2;
+//        x += 5;
+//        y += (y>0) ? 10 : -20;
 //        CGContextSetFillColorWithColor(cx, [UIColor whiteColor].CGColor);
 //        [tx drawAtPoint:CGPointMake(x, y) withFont: [UIFont fontWithName:@"Helvetica-Bold" size:11]];
+//    }
+    
+    //製作按鍵
+    NSArray *ary=[dataSource radarChart:self aryData:ary];
+    for (int i = 0; i < [ary count]; i++) {
+        NSLog(@"%@",ary[i][0]);
+        NSString *tx =ary[i][0];
+        float a = (mvr * i) - M_PI_2;
+        float x = maxSize * cos(a); //正弦
+        float y = maxSize * sin(a); //餘弦
         
-        //把原畫上的標題改為button
-        CGRect rect=CGRectMake(125+x, 125+y, 70, 40);//同心圓的中心加上圓的誤差距離
+        CGContextMoveToPoint(cx, 0, 0);
+        CGContextAddLineToPoint(cx, x , y);
+        CGContextStrokePath(cx);
+        
+        x -= 35;
+        x += 5;
+        y += (y>0) ? 10 : -40;
+        CGRect rect=CGRectMake(75+x, 75+y, 60, 35);//同心圓的中心加上圓的誤差距離
         UIButton *btnTitle=[[UIButton alloc]initWithFrame:rect];
         btnTitle.titleLabel.numberOfLines=2;
         btnTitle.titleLabel.textAlignment = NSTextAlignmentCenter;
-        btnTitle.titleLabel.font=[UIFont fontWithName:@"Helvetica-Bold" size:14];
-        btnTitle.backgroundColor=[UIColor clearColor
-                                  ];
+        btnTitle.titleLabel.font=[UIFont fontWithName:@"Helvetica-Bold" size:11];
+        btnTitle.backgroundColor=[UIColor whiteColor];
+        [btnTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btnTitle.layer setCornerRadius:8.0]; //设置矩圆角半径
+        [[btnTitle layer] setBorderWidth:2.0f];
+        
+        [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
         [btnTitle setTitle:tx forState:UIControlStateNormal];
         [btnTitle addTarget:self action:@selector(btnTitilClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btnTitle];
+
     }
     
     //Index Texts
@@ -423,8 +447,8 @@ static double colorDistance(RGB e1, RGB e2)
 }
 - (void)btnTitilClick:(id)sender
 {
-//    if(_delegate && [_delegate respondsToSelector:@selector(btnTitilClick:)])
-//        [_delegate btnTargetSetClicked:self];
+    if(delegate && [delegate respondsToSelector:@selector(btnTitilClick:)])
+        [delegate btnTitilClick:self];
 }
 
 #pragma mark - Setters
