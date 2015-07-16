@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface MRadarChartView : UIView
+@property (nonatomic, strong)NSArray *aryRadarChartData;
 
 @end

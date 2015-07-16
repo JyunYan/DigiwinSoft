@@ -245,6 +245,7 @@ static double colorDistance(RGB e1, RGB e2)
         return;
     }
     
+    
     if (bitmapCtx == nil) {
         CGColorSpaceRef colorRef = CGColorSpaceCreateDeviceRGB();
         bitmapCtx = CGBitmapContextCreate(NULL, rect.size.width, rect.size.height, 8, rect.size.width * 4, colorRef, kCGImageAlphaPremultipliedFirst);
@@ -277,10 +278,13 @@ static double colorDistance(RGB e1, RGB e2)
     CGImageRelease(imgRef);
     
     CGContextRestoreGState(bitmapCtx);
+    
 }
-
 -(void) drawChartInContext:(CGContextRef) cx forIndex:(NSInteger)index
 {
+    
+    
+    
     CGContextSetLineWidth(cx, frontLineWidth);
     
     // NSDictionary *d = (key == nil) ? values : [values objectForKey:key] ;
@@ -289,11 +293,22 @@ static double colorDistance(RGB e1, RGB e2)
     UIColor *stColor = lineColor;
     UIColor *dtColor = dotColor;
 
+    float mvr = (2 * M_PI) / numberOfSpokes;
+    float spcr = maxSize / guideLineSteps;
+    
+    
+    //畫灰色實心圓
+    CGContextMoveToPoint(cx,0, 0);
+    CGContextSetRGBFillColor(cx, 184.0f / 255.0f, 184.0f / 255.0f, 184.0f / 255.0f, 1.0f);
+    CGContextAddArc(cx, 0,0, spcr*5,  0,  2*M_PI, 0);
+    CGContextFillPath(cx);
+
+    
+    
     stColor = dtColor = [dataSource radarChart:self colorForData:index];
     flColor = [dtColor colorWithAlphaComponent:1.0]; //多角形區塊透明度
     [colors setObject:stColor atIndexedSubscript:index];
     
-    float mvr = (2*M_PI) / numberOfSpokes;
     float fx =0;
     float fy =0;
     int mi = 0;
@@ -363,20 +378,30 @@ static double colorDistance(RGB e1, RGB e2)
     float mvr = (2 * M_PI) / numberOfSpokes;
     float spcr = maxSize / guideLineSteps;
     
+    
+    
+    
     //Index Lines畫同心圓
     if (drawGuideLines) {
         CGContextSetStrokeColorWithColor(cx, [UIColor whiteColor].CGColor);
-                for (int j= 0; j <= guideLineSteps; j++) {
-            float cur = j*spcr;
-                CGContextStrokeEllipseInRect(cx, CGRectMake(-cur, -cur, cur*2, cur*2));
+                for (int j= 0; j <= guideLineSteps+1; j++) {
+                    float cur = j*spcr;
+                    if (j<6) {
+                        CGContextStrokeEllipseInRect(cx, CGRectMake(-cur, -cur, cur*2, cur*2));
+
+                    }
+                    else//畫最外圍的圓，貼標籤對齊用
+                    {
+//                        CGContextStrokeEllipseInRect(cx, CGRectMake(-cur-12, -cur-12, (cur+12)*2, (cur+12)*2));
+                    }
             }
 
         CGContextStrokePath(cx);
-//        CGContextStrokeEllipseInRect(cx, CGRectMake(-cur-20, -cur-20, (cur+20)*2, (cur+20)*2));
 
     }
     CGContextSetFillColorWithColor(cx, [UIColor greenColor].CGColor);
     CGContextFillPath(cx);
+    
     //Base lines畫輻射線
 //    CGContextSetStrokeColorWithColor(cx, [UIColor whiteColor].CGColor);
 //    for (int i = 0; i < numberOfSpokes; i++) {
@@ -397,11 +422,9 @@ static double colorDistance(RGB e1, RGB e2)
 //        [tx drawAtPoint:CGPointMake(x, y) withFont: [UIFont fontWithName:@"Helvetica-Bold" size:11]];
 //    }
     
-    //製作按鍵
     NSArray *ary=[dataSource radarChart:self aryData:ary];
+    //畫輻射線
     for (int i = 0; i < [ary count]; i++) {
-        NSLog(@"%@",ary[i][0]);
-        NSString *tx =ary[i][0];
         float a = (mvr * i) - M_PI_2;
         float x = maxSize * cos(a); //正弦
         float y = maxSize * sin(a); //餘弦
@@ -409,11 +432,20 @@ static double colorDistance(RGB e1, RGB e2)
         CGContextMoveToPoint(cx, 0, 0);
         CGContextAddLineToPoint(cx, x , y);
         CGContextStrokePath(cx);
+
+    }
+    
+    
+    //製作外圍按鍵
+    for (int i = 0; i < [ary count]; i++) {
+        float a = (mvr * i) - M_PI_2;
+        float x = (maxSize+38) * cos(a); //正弦，更改後面加上的常數，可調整標籤靠近圓的距離
+        float y = (maxSize+22) * sin(a); //餘弦，更改後面加上的常數，可調整標籤靠近圓的距離
         
-        x -= 35;
-        x += 5;
-        y += (y>0) ? 10 : -40;
-        CGRect rect=CGRectMake(75+x, 75+y, 60, 35);//同心圓的中心加上圓的誤差距離
+
+//        y += (y>0) ? 20 : -20;//可微調，判斷外圍標籤上下展開，(y>0)?分上半與下半
+        CGRect rect=CGRectMake(0,0, 60, 35);
+
         UIButton *btnTitle=[[UIButton alloc]initWithFrame:rect];
         btnTitle.titleLabel.numberOfLines=2;
         btnTitle.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -422,10 +454,11 @@ static double colorDistance(RGB e1, RGB e2)
         [btnTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btnTitle.layer setCornerRadius:8.0]; //设置矩圆角半径
         [[btnTitle layer] setBorderWidth:2.0f];
-        
         [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
-        [btnTitle setTitle:tx forState:UIControlStateNormal];
+        [btnTitle setTitle:ary[i][0] forState:UIControlStateNormal];
         [btnTitle addTarget:self action:@selector(btnTitilClick:) forControlEvents:UIControlEventTouchUpInside];
+        btnTitle.center=CGPointMake(75+x,75+y);//加上雷達圖的中心位置
+
         [self addSubview:btnTitle];
 
     }

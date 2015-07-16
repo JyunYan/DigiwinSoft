@@ -12,7 +12,6 @@
 @interface MRadarChartView ()<RPRadarChartDataSource, RPRadarChartDelegate>
 
 @property (nonatomic, strong) RPRadarChart* RadarChart;
-@property (nonatomic, strong)NSArray *aryData;
 @end
 
 @implementation MRadarChartView
@@ -33,14 +32,6 @@
 -(void)data
 {
 
-    NSArray *data1=[[NSArray alloc]initWithObjects:@"最適化存貨周轉(60)",@"data1",nil];
-    NSArray *data2=[[NSArray alloc]initWithObjects:@"提昇供應鏈品質(75)",@"data2",nil];
-    NSArray *data3=[[NSArray alloc]initWithObjects:@"提升生產效率(90)",@"data3",nil];
-    NSArray *data4=[[NSArray alloc]initWithObjects:@"提升生產效率(90)",@"data3",nil];
-    NSArray *data5=[[NSArray alloc]initWithObjects:@"提升生產效率(90)",@"data3",nil];
-    
-    _aryData=[[NSArray alloc]initWithObjects:data1,data2,data3,data4,data5,nil];
-
 }
 -(void)addRadarChart
 {
@@ -51,7 +42,7 @@
         _RadarChart.delegate = self;
 
 
-        _RadarChart.backgroundColor = [UIColor orangeColor];
+        _RadarChart.backgroundColor = [UIColor whiteColor];
         
         
         _RadarChart.backLineWidth=1;  //輻射線與同心圓的線的寬度
@@ -81,7 +72,7 @@
 // get number of spokes in radar chart
 - (NSInteger)numberOfSopkesInRadarChart:(RPRadarChart*)chart
 {
-    return [_aryData count];
+    return [_aryRadarChartData count];
 }
 
 // get number of datas
@@ -93,24 +84,26 @@
 // get max value for this radar chart
 - (float)maximumValueInRadarChart:(RPRadarChart*)chart
 {
-    return 6;
+    return 100;//最大值
 }
 
 // get title for each spoke
 - (NSString*)radarChart:(RPRadarChart*)chart titleForSpoke:(NSInteger)atIndex
 {
-    return [NSString stringWithFormat:@"%@", _aryData[atIndex][0]];
+    return [NSString stringWithFormat:@"%@", _aryRadarChartData[atIndex][0]];
 }
 
 -(NSArray *)radarChart:(RPRadarChart*)chart aryData:(NSArray *)ary;
 {
-    return _aryData;
+    return _aryRadarChartData;
 }
 // get data value for a specefic data item for a spoke
 - (float)radarChart:(RPRadarChart*)chart valueForData:(NSInteger)dataIndex forSpoke:(NSInteger)spokeIndex
 {
-    float data2[] = {2, 3, 4, 5, 6,1};
-    return data2[spokeIndex];
+    NSString *value=_aryRadarChartData[spokeIndex][2];
+    
+    
+    return [value floatValue];
 }
 // get color legend for a specefic data
 - (UIColor*)radarChart:(RPRadarChart*)chart colorForData:(NSInteger)atIndex
