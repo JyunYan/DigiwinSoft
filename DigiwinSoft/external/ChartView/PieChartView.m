@@ -29,7 +29,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self sortValueArr:valueArr colorArr:colorArr];
+//        [self sortValueArr:valueArr colorArr:colorArr];
         self.rotatedView = [[RotatedView alloc]initWithFrame:self.bounds];
         self.rotatedView.mValueArray = valueArr;
         self.rotatedView.mColorArray = colorArr;
@@ -42,21 +42,26 @@
         UIImage *centerImage = [UIImage imageNamed:@"center.png"];
         [self.centerView setBackgroundImage:centerImage forState:UIControlStateNormal];
         [self.centerView setBackgroundImage:centerImage forState:UIControlStateHighlighted];
-        self.centerView.frame = CGRectMake((frame.size.width - centerImage.size.width/2)/2, (frame.size.height - centerImage.size.height/2)/2, centerImage.size.width/2, centerImage.size.height/2);
+//        self.centerView.frame = CGRectMake((frame.size.width - centerImage.size.width/2)/2, (frame.size.height - centerImage.size.height/2)/2, centerImage.size.width/2, centerImage.size.height/2);
+        self.centerView.frame = CGRectMake((frame.size.width - centerImage.size.width/3)/2, (frame.size.height - centerImage.size.height/3)/2, centerImage.size.width/3, centerImage.size.height/3);
         int titleWidth = 65;
-        self.title = [[UILabel alloc]initWithFrame:CGRectMake((centerImage.size.width/2 - titleWidth)/2,35 , titleWidth, 17)];
+//        self.title = [[UILabel alloc]initWithFrame:CGRectMake((centerImage.size.width/2 - titleWidth)/2,35 , titleWidth, 17)];
+        self.title = [[UILabel alloc]initWithFrame:CGRectMake((centerImage.size.width/3 - titleWidth)/2,22 , titleWidth, 17)];
         self.title.backgroundColor = [UIColor clearColor];
         self.title.textAlignment = NSTextAlignmentCenter;
-        self.title.font = [UIFont systemFontOfSize:16];
+//        self.title.font = [UIFont systemFontOfSize:16];
+        self.title.font = [UIFont systemFontOfSize:14];
         self.title.textColor = [self colorFromHexRGB:@"cecece"];
         self.title.text = @"";
         [self.centerView addSubview:self.title];
         
         int amountWidth = 75;
-        self.amountLabel = [[UILabel alloc]initWithFrame:CGRectMake((centerImage.size.width/2 - amountWidth)/2, 53, amountWidth, 22)];
+//        self.amountLabel = [[UILabel alloc]initWithFrame:CGRectMake((centerImage.size.width/2 - amountWidth)/2, 53, amountWidth, 22)];
+        self.amountLabel = [[UILabel alloc]initWithFrame:CGRectMake((centerImage.size.width/3 - amountWidth)/2, 40, amountWidth, 22)];
         self.amountLabel.backgroundColor = [UIColor clearColor];
         self.amountLabel.textAlignment = NSTextAlignmentCenter;
-        self.amountLabel.font = [UIFont boldSystemFontOfSize:21];
+//        self.amountLabel.font = [UIFont boldSystemFontOfSize:21];
+        self.amountLabel.font = [UIFont boldSystemFontOfSize:30];
         self.amountLabel.textColor = [self colorFromHexRGB:@"ffffff"];
         [self.amountLabel setAdjustsFontSizeToFitWidth:YES];
         [self.centerView addSubview:self.amountLabel];
