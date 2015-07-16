@@ -21,15 +21,16 @@
 #define TAG_LABEL_OCCURRENCE_DATE 201
 #define TAG_LABEL_PERSON_IN_CHARGE 202
 
-#define TAG_BUTTON_PERSON_IN_CHARGE 3000
+#define TAG_BUTTON_PERSON_IN_CHARGE 1000
 
-#define TAG_BUTTON_TELEPHONE 4000
-#define TAG_BUTTON_WEIXIN 5000
-#define TAG_BUTTON_LINE 6000
-#define TAG_BUTTON_EMAIL 7000
-#define TAG_BUTTON_SMS 8000
+#define TAG_BUTTON_TELEPHONE 2000
+#define TAG_BUTTON_WEIXIN 3000
+#define TAG_BUTTON_LINE 4000
+#define TAG_BUTTON_EMAIL 5000
+#define TAG_BUTTON_SMS 6000
 
-#define TAG_BAR_VIEW 9000
+#define TAG_BAR_VIEW 7000
+#define TAG_UP_IMAGEVIEW 8000
 
 
 @interface MEventListViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
@@ -314,7 +315,7 @@
 {
     NSInteger row = indexPath.row;
     if (row == _showCellBarIndex)
-        return 120;
+        return 130;
     return 80;
 }
 
@@ -392,14 +393,27 @@
         
         
         /* bottombar */
+        posX = tableWidth / 2;
+        posY = personInChargeButton.frame.origin.y + personInChargeButton.frame.size.height + 10;
+        height = 20;
+        width = 20;
+
+        UIImageView *upImageView = [[UIImageView alloc] init];
+        upImageView.tag = TAG_UP_IMAGEVIEW + row;
+        upImageView.image = [UIImage imageNamed:@"icon_up.png"];
+        upImageView.frame = CGRectMake(posX, posY, width, height);
+        upImageView.center = CGPointMake(personInChargeButton.center.x, upImageView.center.y);
+        [cell addSubview:upImageView];
+
+        
         posX = 0;
-        posY = view.frame.size.height + 20;
+        posY = upImageView.frame.origin.y + upImageView.frame.size.height;
         height = 120 - view.frame.size.height - 20;
         width = tableWidth;
         
         UIView* barView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         barView.tag = TAG_BAR_VIEW + row;
-        barView.backgroundColor = [UIColor lightGrayColor];
+        barView.backgroundColor = [UIColor grayColor];
         [cell addSubview:barView];
         
         
@@ -482,6 +496,8 @@
 
     
     // bottombar
+    UIImageView* upImageView = (UIImageView*)[cell viewWithTag:TAG_UP_IMAGEVIEW + row];
+    
     UIView* barView = [cell viewWithTag:TAG_BAR_VIEW + row];
     
     UIButton* telButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_TELEPHONE + row];
@@ -490,6 +506,8 @@
     UIButton* emailButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_EMAIL + row];
     UIButton* smsButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_SMS + row];
 
+    upImageView.hidden = !(row == _showCellBarIndex);
+    
     barView.hidden = !(row == _showCellBarIndex);
     
     telButton.hidden = !(row == _showCellBarIndex);
