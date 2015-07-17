@@ -21,7 +21,6 @@
 
 @interface MIndustryRaidersTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) UIButton *btnCheck;
 @property (nonatomic, strong) UILabel *labName;
 @property (nonatomic, strong) UIButton *btnManager;
 @property (nonatomic, strong) UIButton *btnTargetSet;

@@ -9,7 +9,6 @@
 /* 行業攻略 p03/05*/
 
 #import "MIndustryRaiders2ViewController.h"
-#import "MIndustryRaidersTableViewCell.h"
 #import "MRaidersDescriptionViewController.h"
 #import "MDesignateResponsibleViewController.h"
 #import "MDataBaseManager.h"
@@ -18,8 +17,11 @@
 #import "MDirector.h"
 #import "MCustomSegmentedControl.h"
 
+#import "MRaidersTableCell.h"
+#import "MRaidersTableHeader.h"
+
 #import "ASAnimationManager.h"
-@interface MIndustryRaiders2ViewController ()<MIndustryRaidersTableViewCellDelegate>
+@interface MIndustryRaiders2ViewController ()<MGuideTableCellDelegate>
 {
     //screenSize
     //CGFloat screenWidth;
@@ -271,7 +273,8 @@
 
 - (void)didAssignManager:(NSNotification*)note
 {
-    MGuide* guide = (MGuide*)note.object;
+    id object = note.object;
+    MGuide* guide = (MGuide*)object;
     [_aryList replaceObjectAtIndex:_operateIndex withObject:guide];
     
     [tbl reloadData];
@@ -284,9 +287,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - MIndustryRaidersTableViewCellDelegate 相關
+#pragma mark - MGuideTableCellDelegate 相關
 
-- (void)btnManagerClicked:(MIndustryRaidersTableViewCell*)cell
+- (void)btnManagerClicked:(MGuideTableCell*)cell
 {
     //
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didAssignManager:) name:kDidAssignManager object:nil];
@@ -301,7 +304,7 @@
     [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
 }
 
--(void)btnTargetSetClicked:(MIndustryRaidersTableViewCell*)cell
+-(void)btnTargetSetClicked:(MGuideTableCell*)cell
 {
     //for p27 帶回目標值與達成日
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -317,7 +320,7 @@
     [self.navigationController pushViewController:MInventoryTurnoverVC animated:YES];
 }
 
-- (void)btnRaidersClicked:(MIndustryRaidersTableViewCell*)cell{
+- (void)btnRaidersClicked:(MGuideTableCell*)cell{
     
     //for p27 帶回目標值與達成日
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -351,12 +354,11 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MIndustryRaidersTableViewCell *cell=(MIndustryRaidersTableViewCell *)[MIndustryRaidersTableViewCell cellWithTableView:tableView];
-    cell.delegate = self;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     MGuide* guide = [_aryList objectAtIndex:indexPath.row];
     
+    CGSize size = CGSizeMake(tableView.frame.size.width, 60.);
+    MGuideTableCell *cell=(MGuideTableCell *)[MGuideTableCell cellWithTableView:tableView size:size];
+    [cell setDelegate:self];
     [cell prepareWithGuide:guide];
 
     return cell;
@@ -366,37 +368,18 @@
     MGuide* guide = [_aryList objectAtIndex:indexPath.row];
     guide.isCheck = !guide.isCheck;
     
-    MIndustryRaidersTableViewCell* cell = (MIndustryRaidersTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    MGuideTableCell* cell = (MGuideTableCell*)[tableView cellForRowAtIndexPath:indexPath];
     [cell prepareWithGuide:guide];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *viewSection = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, 100, 20)];
-    viewSection.backgroundColor=[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1];
-    
-    CGFloat offset = 0;
-    
-    UILabel *labRelation = [self createTitleLabelWithText:@"對策名稱" frame:CGRectMake(offset,0,DEVICE_SCREEN_WIDTH*0.45,30)];
-    [viewSection addSubview:labRelation];
-    
-    offset += labRelation.frame.size.width;
-    
-    UILabel *labMeasure = [self createTitleLabelWithText:@"指派\n負責人" frame:CGRectMake(offset, 0, DEVICE_SCREEN_WIDTH*0.18, 30)];
-    [viewSection addSubview:labMeasure];
-    
-    offset += labMeasure.frame.size.width;
-    
-    UILabel *labTargetSet = [self createTitleLabelWithText:@"目標\n設定" frame:CGRectMake(offset, 0, DEVICE_SCREEN_WIDTH*0.18, 30)];
-    [viewSection addSubview:labTargetSet];
-    
-    offset += labTargetSet.frame.size.width;
-    
-    UILabel *labGrade = [self createTitleLabelWithText:@"攻略" frame:CGRectMake(offset, 0, DEVICE_SCREEN_WIDTH*0.18, 30)];
-    [viewSection addSubview:labGrade];
-    
-    return viewSection;
+    MGuideTableHeader* view = [[MGuideTableHeader alloc] init];
+    view.size = CGSizeMake(tableView.frame.size.width, 30);
+    [view prepare];
+    return view;
 }
+
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Remove seperator inset
@@ -414,20 +397,6 @@
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
-
-- (UILabel*)createTitleLabelWithText:(NSString*)text frame:(CGRect)frame
-{
-    UILabel* label = [[UILabel alloc] initWithFrame:frame];
-    label.backgroundColor=[UIColor clearColor];
-    label.numberOfLines = 2;
-    label.font = [UIFont systemFontOfSize:12.0f];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor =[UIColor grayColor];
-    label.text = text;
-    
-    return label;
-}
-
 
 /*
 #pragma mark - Navigation

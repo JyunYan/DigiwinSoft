@@ -421,6 +421,22 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
+- (NSArray*)loadTargetSampleArray
+{
+    NSMutableArray* array = [NSMutableArray new];
+    NSString* sql = @"select * from M_TARGET";
+    FMResultSet* rs = [self.db executeQuery:sql];
+    while ([rs next]) {
+        MTarget* target = [MTarget new];
+        target.uuid = [rs stringForColumn:@"ID"];
+        target.name = [rs stringForColumn:@"NAME"];
+        target.unit = [rs stringForColumn:@"UNIT"];
+        
+        [array addObject:target];
+    }
+    return array;
+}
+
 // p30
 - (NSArray*)loadEmployeeArray
 {
@@ -554,8 +570,8 @@ static MDataBaseManager* _director = nil;
         return missions;
     }
     
-    // 只有 進度回報&已完成任務 才有對策
-    if(index == 1 || index == 2){
+    // 只有"已完成任務" 才有對策
+    if(index == 2){
         NSArray* array = [self loadMyGuideMissionsWithRelese:release status:status];
         [missions addObjectsFromArray:array];
     }

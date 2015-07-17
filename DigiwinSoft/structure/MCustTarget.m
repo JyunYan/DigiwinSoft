@@ -27,7 +27,6 @@
     
     self.startDate = target.startDate;
     self.completeDate = target.completeDate;
-    
 }
 
 @end

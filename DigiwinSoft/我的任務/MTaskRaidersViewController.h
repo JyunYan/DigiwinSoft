@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MCustGuide.h"
+#import "MCustActivity.h"
 
 @interface MTaskRaidersViewController : UIViewController
 
 - (id)initWithCustGuide:(MCustGuide*) guide Index:(NSInteger) index;
+- (id)initWithCustActivity:(MCustActivity*)activity;
 
 @end
