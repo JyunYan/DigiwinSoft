@@ -10,13 +10,21 @@
 #import "PieChartView.h"
 #import "MDirector.h"
 
+
+#define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
+
+
 @interface MSolutionsPieChartViewController ()<PieChartDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) PieChartView *pieChartView;
 
 @property (nonatomic, strong) UIView *pieContainer;
 
+@property (nonatomic, assign) CGRect pieFrame;
+
+@property (nonatomic, strong) NSMutableArray *valueTitleArray;
 @property (nonatomic, strong) NSMutableArray *valueArray;
+@property (nonatomic, strong) NSMutableArray *valueAngleArray;
 @property (nonatomic, strong) NSMutableArray *colorArray;
 
 @property (nonatomic,strong) UIView *selView;
@@ -87,15 +95,39 @@
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = viewHeight / 2;
     
-    CGRect pieFrame = CGRectMake(posX, posY, width, height);
+    self.pieFrame = CGRectMake(posX, posY, width, height);
+
     
+    self.valueTitleArray = [[NSMutableArray alloc] initWithObjects:
+                            @"財務",
+                            @"生產",
+                            @"銷售",
+                            @"人資",
+                            @"研發",
+                            nil];
+    
+    CGFloat value1 = 70;
+    CGFloat value2 = 70;
+    CGFloat value3 = 95;
+    CGFloat value4 = 75;
+    CGFloat value5 = 85;
+    CGFloat valueSum = value1 + value2 + value3 + value4 + value5;
+
     self.valueArray = [[NSMutableArray alloc] initWithObjects:
-                       [NSNumber numberWithInt:70],
-                       [NSNumber numberWithInt:70],
-                       [NSNumber numberWithInt:95],
-                       [NSNumber numberWithInt:75],
-                       [NSNumber numberWithInt:85],
+                       [NSNumber numberWithInt:value1],
+                       [NSNumber numberWithInt:value2],
+                       [NSNumber numberWithInt:value3],
+                       [NSNumber numberWithInt:value4],
+                       [NSNumber numberWithInt:value5],
                        nil];
+    
+    self.valueAngleArray = [[NSMutableArray alloc] initWithObjects:
+                            [NSNumber numberWithFloat:value1/valueSum * 360.],
+                            [NSNumber numberWithFloat:value2/valueSum * 360.],
+                            [NSNumber numberWithFloat:value3/valueSum * 360.],
+                            [NSNumber numberWithFloat:value4/valueSum * 360.],
+                            [NSNumber numberWithFloat:value5/valueSum * 360.],
+                            nil];
     
     self.colorArray = [NSMutableArray arrayWithObjects:
                        [UIColor colorWithRed:126/255.0 green:178/255.0 blue:242/255.0 alpha:1.0f],
@@ -106,71 +138,137 @@
                        nil];
     
     
-    self.pieContainer = [[UIView alloc]initWithFrame:pieFrame];
+    self.pieContainer = [[UIView alloc]initWithFrame:self.pieFrame];
     self.pieChartView = [[PieChartView alloc] initWithFrame:self.pieContainer.bounds withValue:self.valueArray withColor:self.colorArray];
     self.pieChartView.delegate = self;
     [self.pieContainer addSubview:self.pieChartView];
     [self.pieChartView setAmountText:@"75"];
     [self.pieChartView setTitleText:@"綜合表現"];
     [view addSubview:self.pieContainer];
+
+    
+    CGPoint selCenter = [self getApproximateMidPointForArcWithStartAngle:90. andDegrees:90.];
+    // 選中的 label
+    self.selPieTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.pieFrame.origin.y + self.pieFrame.size.height/2 + 45, self.pieFrame.size.width/2, 21)];
+    self.selPieTitleLabel.center = CGPointMake(selCenter.x, selCenter.y + 10);
+    self.selPieTitleLabel.backgroundColor = [UIColor clearColor];
+    self.selPieTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.selPieTitleLabel.font = [UIFont systemFontOfSize:15];
+    self.selPieTitleLabel.textColor = [UIColor whiteColor];
+    [view addSubview:self.selPieTitleLabel];
+    
+    self.selPieLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.selPieTitleLabel.frame.origin.y + self.selPieTitleLabel.frame.size.height, self.pieFrame.size.width/2, 21)];
+    self.selPieLabel.center = CGPointMake(self.selPieTitleLabel.center.x, self.selPieLabel.center.y);
+    self.selPieLabel.backgroundColor = [UIColor clearColor];
+    self.selPieLabel.textAlignment = NSTextAlignmentCenter;
+    self.selPieLabel.font = [UIFont systemFontOfSize:15];
+    self.selPieLabel.textColor = [UIColor whiteColor];
+    [view addSubview:self.selPieLabel];
     
     
+    CGFloat leftStartAngle2 = 90. + [[self.valueAngleArray objectAtIndex:1] floatValue]/2;
+    CGFloat leftEndAngle2 = leftStartAngle2 + [[self.valueAngleArray objectAtIndex:2] floatValue];
+    CGPoint leftPieCenter2 = [self getApproximateMidPointForArcWithStartAngle:leftStartAngle2 andDegrees:leftEndAngle2];
+    // 左側的 label
+    self.leftPieTitleLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.pieFrame.origin.y + self.pieFrame.size.height/2 + 10, self.pieFrame.size.width/2, 21)];
+    self.leftPieTitleLabel2.center = CGPointMake(leftPieCenter2.x + 20, leftPieCenter2.y);
+    self.leftPieTitleLabel2.backgroundColor = [UIColor clearColor];
+    self.leftPieTitleLabel2.textAlignment = NSTextAlignmentCenter;
+    self.leftPieTitleLabel2.font = [UIFont systemFontOfSize:15];
+    self.leftPieTitleLabel2.textColor = [UIColor whiteColor];
+    [view addSubview:self.leftPieTitleLabel2];
+    
+    self.leftPieLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.leftPieTitleLabel2.frame.origin.y + self.leftPieTitleLabel2.frame.size.height, self.pieFrame.size.width/2, 21)];
+    self.leftPieLabel2.center = CGPointMake(self.leftPieTitleLabel2.center.x, self.leftPieLabel2.center.y);
+    self.leftPieLabel2.backgroundColor = [UIColor clearColor];
+    self.leftPieLabel2.textAlignment = NSTextAlignmentCenter;
+    self.leftPieLabel2.font = [UIFont systemFontOfSize:15];
+    self.leftPieLabel2.textColor = [UIColor whiteColor];
+    [view addSubview:self.leftPieLabel2];
+    
+    
+    CGFloat leftStartAngle1 = leftEndAngle2;
+    CGFloat leftEndAngle1 = leftStartAngle1 + [[self.valueAngleArray objectAtIndex:3] floatValue];
+    CGPoint leftPieCenter1 = [self getApproximateMidPointForArcWithStartAngle:leftStartAngle1 andDegrees:leftEndAngle1];
+    self.leftPieTitleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.pieFrame.origin.y + 20, self.pieFrame.size.width/2, 21)];
+    self.leftPieTitleLabel1.center = CGPointMake(leftPieCenter1.x + 10, leftPieCenter1.y - 25);
+    self.leftPieTitleLabel1.backgroundColor = [UIColor clearColor];
+    self.leftPieTitleLabel1.textAlignment = NSTextAlignmentCenter;
+    self.leftPieTitleLabel1.font = [UIFont systemFontOfSize:15];
+    self.leftPieTitleLabel1.textColor = [UIColor whiteColor];
+    [view addSubview:self.leftPieTitleLabel1];
+    
+    self.leftPieLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.leftPieTitleLabel1.frame.origin.y + self.leftPieTitleLabel1.frame.size.height, self.pieFrame.size.width/2, 21)];
+    self.leftPieLabel1.center = CGPointMake(self.leftPieTitleLabel1.center.x, self.leftPieLabel1.center.y);
+    self.leftPieLabel1.backgroundColor = [UIColor clearColor];
+    self.leftPieLabel1.textAlignment = NSTextAlignmentCenter;
+    self.leftPieLabel1.font = [UIFont systemFontOfSize:15];
+    self.leftPieLabel1.textColor = [UIColor whiteColor];
+    [view addSubview:self.leftPieLabel1];
+    
+    
+    CGFloat rightStartAngle1 = leftEndAngle1;
+    CGFloat rightEndAngle1 = rightStartAngle1 + [[self.valueAngleArray objectAtIndex:4] floatValue];
+    CGPoint rightPieCenter1 = [self getApproximateMidPointForArcWithStartAngle:rightStartAngle1 andDegrees:rightEndAngle1];
     // 右側的 label
-    self.rightPieTitleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(0, pieFrame.origin.y + 20, pieFrame.size.width/2, 21)];
-    self.rightPieTitleLabel1.center = CGPointMake(pieFrame.size.width/2 + 35, self.rightPieTitleLabel1.center.y);
+    self.rightPieTitleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.pieFrame.origin.y + 20, self.pieFrame.size.width/2, 21)];
+    self.rightPieTitleLabel1.center = CGPointMake(rightPieCenter1.x - 10, rightPieCenter1.y - 20);
     self.rightPieTitleLabel1.backgroundColor = [UIColor clearColor];
     self.rightPieTitleLabel1.textAlignment = NSTextAlignmentCenter;
-    self.rightPieTitleLabel1.font = [UIFont systemFontOfSize:17];
+    self.rightPieTitleLabel1.font = [UIFont systemFontOfSize:15];
     self.rightPieTitleLabel1.textColor = [UIColor whiteColor];
     [view addSubview:self.rightPieTitleLabel1];
     
-    self.rightPieLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.rightPieTitleLabel1.frame.origin.y + self.rightPieTitleLabel1.frame.size.height, pieFrame.size.width/2, 21)];
+    self.rightPieLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.rightPieTitleLabel1.frame.origin.y + self.rightPieTitleLabel1.frame.size.height, self.pieFrame.size.width/2, 21)];
     self.rightPieLabel1.center = CGPointMake(self.rightPieTitleLabel1.center.x, self.rightPieLabel1.center.y);
     self.rightPieLabel1.backgroundColor = [UIColor clearColor];
     self.rightPieLabel1.textAlignment = NSTextAlignmentCenter;
-    self.rightPieLabel1.font = [UIFont systemFontOfSize:17];
+    self.rightPieLabel1.font = [UIFont systemFontOfSize:15];
     self.rightPieLabel1.textColor = [UIColor whiteColor];
     [view addSubview:self.rightPieLabel1];
-
     
-    self.rightPieTitleLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(0, pieFrame.origin.y + pieFrame.size.height/2 + 10, pieFrame.size.width/2, 21)];
-    self.rightPieTitleLabel2.center = CGPointMake(pieFrame.size.width/2 + 55, self.rightPieTitleLabel2.center.y);
+    
+    CGFloat rightStartAngle2 = rightEndAngle1;
+    CGFloat rightEndAngle2 = rightStartAngle2 + [[self.valueAngleArray objectAtIndex:0] floatValue];
+    CGPoint rightPieCenter2 = [self getApproximateMidPointForArcWithStartAngle:rightStartAngle2 andDegrees:rightEndAngle2];
+    self.rightPieTitleLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.pieFrame.origin.y + self.pieFrame.size.height/2 + 10, self.pieFrame.size.width/2, 21)];
+    self.rightPieTitleLabel2.center = CGPointMake(rightPieCenter2.x - 10, rightPieCenter2.y);
     self.rightPieTitleLabel2.backgroundColor = [UIColor clearColor];
     self.rightPieTitleLabel2.textAlignment = NSTextAlignmentCenter;
-    self.rightPieTitleLabel2.font = [UIFont systemFontOfSize:17];
+    self.rightPieTitleLabel2.font = [UIFont systemFontOfSize:15];
     self.rightPieTitleLabel2.textColor = [UIColor whiteColor];
     [view addSubview:self.rightPieTitleLabel2];
     
-    self.rightPieLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.rightPieTitleLabel2.frame.origin.y + self.rightPieTitleLabel2.frame.size.height, pieFrame.size.width/2, 21)];
+    self.rightPieLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.rightPieTitleLabel2.frame.origin.y + self.rightPieTitleLabel2.frame.size.height, self.pieFrame.size.width/2, 21)];
     self.rightPieLabel2.center = CGPointMake(self.rightPieTitleLabel2.center.x, self.rightPieLabel2.center.y);
     self.rightPieLabel2.backgroundColor = [UIColor clearColor];
     self.rightPieLabel2.textAlignment = NSTextAlignmentCenter;
-    self.rightPieLabel2.font = [UIFont systemFontOfSize:17];
+    self.rightPieLabel2.font = [UIFont systemFontOfSize:15];
     self.rightPieLabel2.textColor = [UIColor whiteColor];
     [view addSubview:self.rightPieLabel2];
 
     
-    // 選中的 label
-    self.selPieTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, pieFrame.origin.y + pieFrame.size.height/2 + 45, pieFrame.size.width/2, 21)];
-    self.selPieTitleLabel.center = CGPointMake(pieFrame.size.width/2, self.selPieTitleLabel.center.y);
-    self.selPieTitleLabel.backgroundColor = [UIColor clearColor];
-    self.selPieTitleLabel.textAlignment = NSTextAlignmentCenter;
-    self.selPieTitleLabel.font = [UIFont systemFontOfSize:17];
-    self.selPieTitleLabel.textColor = [UIColor whiteColor];
-    [view addSubview:self.selPieTitleLabel];
+    posX = viewWidth - 50;
+    posY = 10;
     
-    self.selPieLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.selPieTitleLabel.frame.origin.y + self.selPieTitleLabel.frame.size.height, pieFrame.size.width/2, 21)];
-    self.selPieLabel.center = CGPointMake(self.selPieTitleLabel.center.x, self.selPieLabel.center.y);
-    self.selPieLabel.backgroundColor = [UIColor clearColor];
-    self.selPieLabel.textAlignment = NSTextAlignmentCenter;
-    self.selPieLabel.font = [UIFont systemFontOfSize:17];
-    self.selPieLabel.textColor = [UIColor whiteColor];
-    [view addSubview:self.selPieLabel];
+    UIImageView* imageViewInfo = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 25, 25)];
+    imageViewInfo.image = [UIImage imageNamed:@"icon_info.png"];
+    [view addSubview:imageViewInfo];
+    
+    
+    posX = viewWidth - 80;
+    posY = self.pieFrame.origin.y + self.pieFrame.size.height - 10;
 
+    UILabel* unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 25)];
+    unitLabel.text = @"單位：PR值";
+    unitLabel.textColor = [UIColor grayColor];
+    unitLabel.font = [UIFont boldSystemFontOfSize:12.];
+    [view addSubview:unitLabel];
+    
     
     //add selected view
     posX = 0;
-    posY = pieFrame.origin.y + pieFrame.size.height;
+    posY = self.pieFrame.origin.y + self.pieFrame.size.height;
     width = viewWidth;
     height = viewHeight - posY;
     
@@ -215,7 +313,7 @@
     posX = 10;
     posY = 10;
     width = selView.frame.size.width - posX * 2;
-    height = selView.frame.size.height - 41;
+    height = selView.frame.size.height - 47;
 
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     _tableView.backgroundColor = [UIColor whiteColor];
@@ -268,52 +366,96 @@
 - (void)selectedFinish:(PieChartView *)pieChartView index:(NSInteger)index percent:(float)per
 {
 //    self.selPieLabel.text = [NSString stringWithFormat:@"%2.2f%@",per*100,@"%"];
-    if (index == 0) {
-        self.rightPieTitleLabel1.text = @"人資";
-        self.rightPieLabel1.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:3]];
 
-        self.rightPieTitleLabel2.text = @"研發";
-        self.rightPieLabel2.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:4]];
-        
-        self.selPieTitleLabel.text = @"財務";
-        self.selPieLabel.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:0]];
-    } else if (index == 1) {
-        self.rightPieTitleLabel1.text = @"研發";
-        self.rightPieLabel1.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:4]];
-        
-        self.rightPieTitleLabel2.text = @"財務";
-        self.rightPieLabel2.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:0]];
-        
-        self.selPieTitleLabel.text = @"生產";
-        self.selPieLabel.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:1]];
-    } else if (index == 2) {
-        self.rightPieTitleLabel1.text = @"財務";
-        self.rightPieLabel1.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:0]];
+    // 選中的 label
+    NSInteger selIndex = index;
+    
+    CGPoint selCenter = [self getApproximateMidPointForArcWithStartAngle:90. andDegrees:90.];
+    selCenter = CGPointMake(selCenter.x, selCenter.y + 10);
+    [self resetPieLabel:self.selPieTitleLabel index:selIndex Array:self.valueTitleArray PosCenter:selCenter];
+    
+    selCenter = CGPointMake(self.selPieTitleLabel.center.x, self.selPieLabel.center.y);
+    [self resetPieLabel:self.selPieLabel index:selIndex Array:self.valueArray PosCenter:selCenter];
+    
+    
+    // 左側的 label
+    NSInteger leftPieIndex2 = index + 1;
+    if (leftPieIndex2 >= 5)
+        leftPieIndex2 = leftPieIndex2 - 5;
+    
+    NSInteger nextLeftPieIndex2 = leftPieIndex2 + 1;
+    if (nextLeftPieIndex2 >= 5)
+        nextLeftPieIndex2 = nextLeftPieIndex2 - 5;
+    
+    CGFloat leftStartAngle2 = 90. + [[self.valueAngleArray objectAtIndex:leftPieIndex2] floatValue]/2;
+    CGFloat leftEndAngle2 = leftStartAngle2 + [[self.valueAngleArray objectAtIndex:nextLeftPieIndex2] floatValue];
+    CGPoint leftPieCenter2 = [self getApproximateMidPointForArcWithStartAngle:leftStartAngle2 andDegrees:leftEndAngle2];
+    leftPieCenter2 = CGPointMake(leftPieCenter2.x + 20, leftPieCenter2.y);
+    [self resetPieLabel:self.leftPieTitleLabel2 index:leftPieIndex2 Array:self.valueTitleArray PosCenter:leftPieCenter2];
+    
+    leftPieCenter2 = CGPointMake(self.leftPieTitleLabel2.center.x, self.leftPieLabel2.center.y);
+    [self resetPieLabel:self.leftPieLabel2 index:leftPieIndex2 Array:self.valueArray PosCenter:leftPieCenter2];
+    
+    
+    //
+    NSInteger leftPieIndex1 = index + 2;
+    if (leftPieIndex1 >= 5)
+        leftPieIndex1 = leftPieIndex1 - 5;
+    
+    NSInteger nextLeftPieIndex1 = leftPieIndex1 + 1;
+    if (nextLeftPieIndex1 >= 5)
+        nextLeftPieIndex1 = nextLeftPieIndex1 - 5;
+    
+    CGFloat leftStartAngle1 = leftEndAngle2;
+    CGFloat leftEndAngle1 = leftStartAngle1 + [[self.valueAngleArray objectAtIndex:nextLeftPieIndex1] floatValue];
+    CGPoint leftPieCenter1 = [self getApproximateMidPointForArcWithStartAngle:leftStartAngle1 andDegrees:leftEndAngle1];
+    leftPieCenter1 = CGPointMake(leftPieCenter1.x + 10, leftPieCenter1.y - 25);
+    [self resetPieLabel:self.leftPieTitleLabel1 index:leftPieIndex1 Array:self.valueTitleArray PosCenter:leftPieCenter1];
+    
+    leftPieCenter1 = CGPointMake(self.leftPieTitleLabel1.center.x, self.leftPieLabel1.center.y);
+    [self resetPieLabel:self.leftPieLabel1 index:leftPieIndex1 Array:self.valueArray PosCenter:leftPieCenter1];
+    
+    
+    // 右側的 label
+    NSInteger rightPieIndex1 = index + 3;
+    if (rightPieIndex1 >= 5)
+        rightPieIndex1 = rightPieIndex1 - 5;
+    
+    NSInteger nextRightPieIndex1 = rightPieIndex1 + 1;
+    if (nextRightPieIndex1 >= 5)
+        nextRightPieIndex1 = nextRightPieIndex1 - 5;
+    
+    CGFloat rightStartAngle1 = leftEndAngle1;
+    CGFloat rightEndAngle1 = rightStartAngle1 + [[self.valueAngleArray objectAtIndex:nextRightPieIndex1] floatValue];
+    CGPoint rightPieCenter1 = [self getApproximateMidPointForArcWithStartAngle:rightStartAngle1 andDegrees:rightEndAngle1];
+    rightPieCenter1 = CGPointMake(rightPieCenter1.x - 10, rightPieCenter1.y - 20);
+    [self resetPieLabel:self.rightPieTitleLabel1 index:rightPieIndex1 Array:self.valueTitleArray PosCenter:rightPieCenter1];
+    
+    rightPieCenter1 = CGPointMake(self.rightPieTitleLabel1.center.x, self.rightPieLabel1.center.y);
+    [self resetPieLabel:self.rightPieLabel1 index:rightPieIndex1 Array:self.valueArray PosCenter:rightPieCenter1];
+    
+    
+    //
+    NSInteger rightPieIndex2 = index + 4;
+    if (rightPieIndex2 >= 5)
+        rightPieIndex2 = rightPieIndex2 - 5;
+    
+    NSInteger nextRightPieIndex2 = rightPieIndex2 + 1;
+    if (nextRightPieIndex2 >= 5)
+        nextRightPieIndex2 = nextRightPieIndex2 - 5;
+    
+    CGFloat rightStartAngle2 = rightEndAngle1;
+    CGFloat rightEndAngle2 = rightStartAngle2 + [[self.valueAngleArray objectAtIndex:nextRightPieIndex2] floatValue];
+    CGPoint rightPieCenter2 = [self getApproximateMidPointForArcWithStartAngle:rightStartAngle2 andDegrees:rightEndAngle2];
+    rightPieCenter2 = CGPointMake(rightPieCenter2.x - 10, rightPieCenter2.y);
+    [self resetPieLabel:self.rightPieTitleLabel2 index:rightPieIndex2 Array:self.valueTitleArray PosCenter:rightPieCenter2];
+    
+    rightPieCenter2 = CGPointMake(self.rightPieTitleLabel2.center.x, self.rightPieLabel2.center.y);
+    [self resetPieLabel:self.rightPieLabel2 index:rightPieIndex2 Array:self.valueArray PosCenter:rightPieCenter2];
 
-        self.rightPieTitleLabel2.text = @"生產";
-        self.rightPieLabel2.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:1]];
-        
-        self.selPieTitleLabel.text = @"銷售";
-        self.selPieLabel.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:2]];
-    } else if (index == 3) {
-        self.rightPieTitleLabel1.text = @"生產";
-        self.rightPieLabel1.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:1]];
-
-        self.rightPieTitleLabel1.text = @"銷售";
-        self.rightPieLabel1.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:2]];
-        
-        self.selPieTitleLabel.text = @"人資";
-        self.selPieLabel.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:3]];
-    } else if (index == 4) {
-        self.rightPieTitleLabel1.text = @"銷售";
-        self.rightPieLabel1.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:2]];
-
-        self.rightPieTitleLabel2.text = @"人資";
-        self.rightPieLabel2.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:3]];
-        
-        self.selPieTitleLabel.text = @"研發";
-        self.selPieLabel.text = [NSString stringWithFormat:@"%@", [self.valueArray objectAtIndex:4]];
-    }
+    
+    
+    //
     [self.rightPieTitleLabel1 setHidden:NO];
     [self.rightPieLabel1 setHidden:NO];
     
@@ -323,8 +465,20 @@
     [self.selPieTitleLabel setHidden:NO];
     [self.selPieLabel setHidden:NO];
     
+    [self.leftPieTitleLabel2 setHidden:NO];
+    [self.leftPieLabel2 setHidden:NO];
+
+    [self.leftPieTitleLabel1 setHidden:NO];
+    [self.leftPieLabel1 setHidden:NO];
+    
     
     [_tableView reloadData];
+}
+
+- (void)resetPieLabel:(UILabel*) label index:(NSInteger)index Array:(NSMutableArray*) array PosCenter:(CGPoint)  posCenter
+{
+    label.text = [NSString stringWithFormat:@"%@", [array objectAtIndex:index]];
+    label.center = posCenter;
 }
 
 - (void)onCenterClick:(PieChartView *)pieChartView
@@ -348,6 +502,29 @@
     
     [self.selPieTitleLabel setHidden:YES];
     [self.selPieLabel setHidden:YES];
+    
+    [self.leftPieTitleLabel2 setHidden:YES];
+    [self.leftPieLabel2 setHidden:YES];
+
+    [self.leftPieTitleLabel1 setHidden:YES];
+    [self.leftPieLabel1 setHidden:YES];
+    
+    
+    [_tableView reloadData];
+}
+
+- (CGPoint)getApproximateMidPointForArcWithStartAngle:(CGFloat)startAngle andDegrees:(CGFloat)endAngle {
+    
+    NSLog(@"start angle %f, end angle %f",startAngle,endAngle);
+    CGFloat midAngle = DEGREES_TO_RADIANS((startAngle + endAngle) / 2);
+    NSLog(@"midangle %f ",midAngle);
+    CGFloat x=0;
+    CGFloat y=0;
+    x= (self.pieFrame.origin.x) + (self.pieFrame.size.width/2 * cos(midAngle));
+    y= (self.pieFrame.origin.y) + (self.pieFrame.size.height/2 * sin(midAngle));
+    
+    CGPoint approximateMidPointCenter = CGPointMake(((x + self.pieFrame.size.width)/2), ((y + self.pieFrame.size.height)/2));
+    return approximateMidPointCenter;
 }
 
 #pragma mark - Table view data source
@@ -388,6 +565,7 @@
     } else {
         cell.textLabel.text = @"提升供應鏈品質（75）";
     }
+    cell.textLabel.font = [UIFont systemFontOfSize:15.];
 
     return cell;
 }
