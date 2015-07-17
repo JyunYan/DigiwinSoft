@@ -14,6 +14,9 @@
 #import "MGoalSettingViewController.h"
 #import "MTaskRaidersViewController.h"
 
+#import "MRaidersTableCell.h"
+#import "MRaidersTableHeader.h"
+
 
 #define TAG_LABEL_ACTIVITY 100
 
@@ -22,13 +25,13 @@
 #define TAG_BUTTON_RAIDERS 3000
 
 
-@interface MTasksDeployedViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface MTasksDeployedViewController ()<UITableViewDelegate, UITableViewDataSource, MActivityTableCellDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
-
 @property (nonatomic, strong) NSMutableArray* activityArray;
-
 @property (nonatomic, strong) CustomIOSAlertView *customIOSAlertView;
+
+@property (nonatomic, assign) NSInteger selectedIndex;
 
 @end
 
@@ -221,6 +224,7 @@
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.bounces = NO;
     [view addSubview:_tableView];
     
     return view;
@@ -389,39 +393,61 @@
     
 }
 
--(void)goAppointResponsible:(id)sender
+#pragma mark - NSNotification method
+
+- (void) resetActivity:(NSNotification*) notification
 {
-    /*
-    UIButton* button = (UIButton*)sender;
-    NSInteger tag = button.tag;
-    NSInteger index = tag - TAG_BUTTON_APPOINT_RESPONSIBLE;
-    MActivity* act = [_activityArray objectAtIndex:index];
-     */
-    MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithGuide:_guide];
+    NSMutableArray* activityArray = [notification object];
+    
+    _activityArray = activityArray;
+    _guide.activityArray = activityArray;
+}
+
+- (void)didAssignManager:(NSNotification*)note
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidAssignManager object:nil];
+    
+    id object = note.object;
+    MCustActivity* activity = (MCustActivity*)object;
+    [_activityArray replaceObjectAtIndex:_selectedIndex withObject:activity];
+    
+    [_tableView reloadData];
+}
+
+#pragma mark - MActivityTableCellDelegate 相關
+
+- (void)btnManagerClicked:(MActivityTableCell *)cell
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didAssignManager:) name:kDidAssignManager object:nil];
+    
+    NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
+    _selectedIndex = indexPath.row;
+    
+    MCustActivity* activity = [_activityArray objectAtIndex:_selectedIndex];
+    
+    MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithCustAvtivity:activity];
     UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MDesignateResponsibleVC];
     MIndustryRaidersNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
 }
 
--(void)goTarget:(id)sender
+- (void)btnTargetSetClicked:(MActivityTableCell *)cell
 {
-    UIButton* button = (UIButton*)sender;
-    NSInteger tag = button.tag;
-    NSInteger index = tag - TAG_BUTTON_TARGET;
-//    MActivity* act = [_activityArray objectAtIndex:index];
+    NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
+    NSInteger index = indexPath.row;
+    //    MActivity* act = [_activityArray objectAtIndex:index];
     
     MGoalSettingViewController* vc = [[MGoalSettingViewController alloc] initWithActivityArray:_activityArray Index:index];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
--(void)goRaiders:(id)sender
+- (void)btnRaidersClicked:(MActivityTableCell *)cell
 {
-    UIButton* button = (UIButton*)sender;
-    NSInteger tag = button.tag;
-    NSInteger index = tag - TAG_BUTTON_RAIDERS;
-//    MActivity* act = [_activityArray objectAtIndex:index];
+    NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
+    NSInteger index = indexPath.row;
+    MCustActivity* act = [_activityArray objectAtIndex:index];
     
-    MTaskRaidersViewController* vc = [[MTaskRaidersViewController alloc] initWithCustGuide:_guide Index:index];
+    MTaskRaidersViewController* vc = [[MTaskRaidersViewController alloc] initWithCustActivity:act];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -435,75 +461,16 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    return 30;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    CGFloat tableWidth = _tableView.frame.size.width;
+    MActivityTableHeader* view = [[MActivityTableHeader alloc] init];
+    view.size = CGSizeMake(tableView.frame.size.width, 30.);
+    [view prepare];
     
-    CGFloat textSize = 13.0f;
-    
-    CGFloat posX = 0;
-    CGFloat posY = 0;
-    CGFloat width = tableWidth - posX * 2;
-    CGFloat height = 40;
-    
-    UIView* header = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    header.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
-    
-    
-
-    width = tableWidth / 2;
-
-    UILabel* activityHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    activityHeaderLabel.text = @"關鍵活動";
-    activityHeaderLabel.textAlignment = NSTextAlignmentCenter;
-    activityHeaderLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    activityHeaderLabel.font = [UIFont systemFontOfSize:textSize];
-    [header addSubview:activityHeaderLabel];
-    
-    
-    posX = activityHeaderLabel.frame.origin.x + activityHeaderLabel.frame.size.width;
-    width = 40;
-
-    UILabel* appointResponsibleHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    appointResponsibleHeaderLabel.text = @"指派負責人";
-    appointResponsibleHeaderLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    appointResponsibleHeaderLabel.textAlignment = NSTextAlignmentCenter;
-    appointResponsibleHeaderLabel.font = [UIFont systemFontOfSize:textSize];
-    appointResponsibleHeaderLabel.numberOfLines = 0;
-    appointResponsibleHeaderLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [header addSubview:appointResponsibleHeaderLabel];
-    
-    
-    posX = appointResponsibleHeaderLabel.frame.origin.x + tableWidth / 6;
-    width = 30;
-
-    UILabel* targetHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    targetHeaderLabel.text = @"目標設定";
-    targetHeaderLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    targetHeaderLabel.textAlignment = NSTextAlignmentCenter;
-    targetHeaderLabel.font = [UIFont systemFontOfSize:textSize];
-    targetHeaderLabel.numberOfLines = 0;
-    targetHeaderLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [header addSubview:targetHeaderLabel];
-    
-    
-    posX = targetHeaderLabel.frame.origin.x + tableWidth / 6;
-    width = 30;
-    
-    UILabel* raidersHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    raidersHeaderLabel.text = @"攻略";
-    raidersHeaderLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    raidersHeaderLabel.textAlignment = NSTextAlignmentCenter;
-    raidersHeaderLabel.font = [UIFont systemFontOfSize:textSize];
-    raidersHeaderLabel.numberOfLines = 0;
-    raidersHeaderLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [header addSubview:raidersHeaderLabel];
-    
-    
-    return header;
+    return view;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -520,73 +487,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
-
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.backgroundColor = [UIColor clearColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        
-        CGFloat tableWidth = tableView.frame.size.width;
-        
-        CGFloat textSize = 13.0f;
-        
-        CGFloat posX = 0;
-        CGFloat posY = 0;
-        CGFloat width = tableWidth - posX * 2;
-        CGFloat height = 50;
-        
-        UIView* view = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        view.backgroundColor = [UIColor whiteColor];
-        [cell addSubview:view];
-        
-        
-        width = tableWidth / 2;
-        // 關鍵活動
-        UILabel* activityLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        activityLabel.tag = TAG_LABEL_ACTIVITY;
-        activityLabel.textAlignment = NSTextAlignmentCenter;
-        activityLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-        activityLabel.font = [UIFont systemFontOfSize:textSize];
-        [cell addSubview:activityLabel];
-        
-        
-        posX = activityLabel.frame.origin.x + activityLabel.frame.size.width;
-        posY = 10;
-        width = 30;
-        height = 30;
-        // 指派負責人
-        UIButton* appointResponsibleButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        appointResponsibleButton.tag = TAG_BUTTON_APPOINT_RESPONSIBLE + row;
-        [appointResponsibleButton setBackgroundImage:[UIImage imageNamed:@"icon_manager.png"] forState:UIControlStateNormal];
-        [appointResponsibleButton addTarget:self action:@selector(goAppointResponsible:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:appointResponsibleButton];
-        
-        
-        posX = appointResponsibleButton.frame.origin.x + tableWidth / 6;
-        // 目標設定
-        UIButton* targetButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        targetButton.tag = TAG_BUTTON_TARGET + row;
-        [targetButton setBackgroundImage:[UIImage imageNamed:@"icon_menu_8.png"] forState:UIControlStateNormal];
-        [targetButton addTarget:self action:@selector(goTarget:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:targetButton];
-        
-        
-        posX = targetButton.frame.origin.x + tableWidth / 6;
-        
-        UIButton* raidersButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        raidersButton.tag = TAG_BUTTON_RAIDERS + row;
-        [raidersButton setBackgroundImage:[UIImage imageNamed:@"icon_raider.png"] forState:UIControlStateNormal];
-        [raidersButton addTarget:self action:@selector(goRaiders:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:raidersButton];
-    }
+    MCustActivity* act = [_activityArray objectAtIndex:row];
     
-    MActivity* activity = [_activityArray objectAtIndex:row];
-
-    UILabel* activityLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_ACTIVITY];
-    activityLabel.text = activity.name;
+    
+    CGSize size = CGSizeMake(tableView.frame.size.width, 50.);
+    MActivityTableCell* cell = [MActivityTableCell cellWithTableView:tableView size:size];
+    [cell setDelegate:self];
+    [cell prepareWithCustActivity:act];
     
     return cell;
 }
@@ -596,17 +503,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - NSNotification method
-
-- (void) resetActivity:(NSNotification*) notification
-{
-    NSMutableArray* activityArray = [notification object];
-    
-    _activityArray = activityArray;
-    
-    _guide.activityArray = activityArray;
 }
 
 @end

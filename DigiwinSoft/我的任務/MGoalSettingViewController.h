@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MActivity.h"
+#import "MCustActivity.h"
+#import "MCustWorkItem.h"
 
 @interface MGoalSettingViewController : UITableViewController
 

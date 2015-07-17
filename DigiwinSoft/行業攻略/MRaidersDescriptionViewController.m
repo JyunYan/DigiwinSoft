@@ -47,6 +47,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kkk:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ggg:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
 
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
@@ -67,6 +71,8 @@
 {
     [super viewWillDisappear:animated];
     [_player stop];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 #pragma mark - create view
 - (void)loadData
@@ -104,10 +110,7 @@
     _player.view.frame = CGRectMake(0.0, offset,DEVICE_SCREEN_WIDTH, 170.0);
     _player.shouldAutoplay = NO;
     [self.view addSubview: _player.view];
-    [_player prepareToPlay];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kkk:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ggg:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+    //[_player prepareToPlay];
     
     offset += _player.view.frame.size.height;
     
@@ -173,7 +176,8 @@
     offset += chart.frame.size.height + 20.;
     
     //議題table
-    tbl=[[UITableView alloc]initWithFrame:CGRectMake(0,offset,MRaidersDescriptionTableViewCell_WIDTH, 120)];
+    CGFloat height = aryList.count * MRaidersDescriptionTableViewCell_HEIGHT + 40.;
+    tbl=[[UITableView alloc]initWithFrame:CGRectMake(0,offset,MRaidersDescriptionTableViewCell_WIDTH, height)];
     tbl.center = CGPointMake(DEVICE_SCREEN_WIDTH/2., tbl.center.y);
     tbl.delegate=self;
     tbl.dataSource = self;

@@ -12,5 +12,7 @@
 @interface MDesignateResponsibleViewController : UIViewController
 
 - (id)initWithGuide:(MGuide*)guide;
+- (id)initWithCustAvtivity:(MCustActivity*)activity;
+- (id)initWithCustWorkItem:(MCustWorkItem*)workitem;
 
 @end

@@ -18,25 +18,59 @@
 #define TAG_FOR_LABEL_ARRIVE_DAY            204
 #define TAG_FOR_THUMBNAIL                   205
 
+#define TYPE_FOR_GUIDE_MANAGER      1001
+#define TYPE_FOR_ACTIVITY_MANAGER   1002
+#define TYPE_FOR_WORKITEM_MANAGER   1003
+
 @interface MDesignateResponsibleViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate,UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
-@property (nonatomic, strong) NSArray* array;    // 員工array
-@property (nonatomic, strong) MGuide* guide;    //對策
-@property (nonatomic, strong) NSArray *arySkills;
+@property (nonatomic, strong) NSArray* array;       //員工array
+@property (nonatomic, strong) NSArray *arySkills;   //職能array
 @property (nonatomic, strong) UILabel* label2;
 @property (nonatomic, strong) UIPickerView *PickerSkill;
 @property (nonatomic, strong) UIToolbar *toolBar;
 @property (nonatomic, strong) UITextField* text_field;
+
+@property (nonatomic, strong) MGuide* guide;            //對策
+@property (nonatomic, strong) MCustActivity* activity;  //關鍵活動
+@property (nonatomic, strong) MCustWorkItem* workitem;  //工作項目
+
+@property (nonatomic, assign) NSInteger type;   //區分 對策or關鍵活動or工作項目
+
 @end
 
 @implementation MDesignateResponsibleViewController
 
 - (id)initWithGuide:(MGuide*)guide
 {
+    //
     self = [super init];
     if(self){
         _guide = guide;
+        _type = TYPE_FOR_GUIDE_MANAGER;
+    }
+    return self;
+}
+
+- (id)initWithCustAvtivity:(MCustActivity*)activity
+{
+    //
+    self = [super init];
+    if(self){
+        _activity = activity;
+        _type = TYPE_FOR_ACTIVITY_MANAGER;
+    }
+    return self;
+}
+
+- (id)initWithCustWorkItem:(MCustWorkItem*)workitem
+{
+    //
+    self = [super init];
+    if(self){
+        _workitem = workitem;
+        _type = TYPE_FOR_WORKITEM_MANAGER;
     }
     return self;
 }
@@ -78,7 +112,7 @@
     [view setBackgroundColor:[UIColor clearColor]];
     
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, DEVICE_SCREEN_WIDTH - 10, 30)];
-    label.text = [NSString stringWithFormat:@"對策名稱 : %@", _guide.name];
+    label.text = [self getCorrectSubjectString];
     label.font = [UIFont systemFontOfSize:18];
     [view addSubview:label];
     
@@ -87,7 +121,7 @@
 
 - (void)createSearchView
 {
-    MSkill* skill = _guide.suggestSkill;
+    MSkill* skill = [self getCorrectSuggestSkill];
     
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 108, self.view.frame.size.width, 100)];
     [view setBackgroundColor:[UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1.0f]];
@@ -99,8 +133,8 @@
 //    label.textColor = [UIColor colorWithRed:163.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1.0];
     [view addSubview:label];
     
-    UITextField* text_field = [self createSearchInputField:CGRectMake(20, 50, DEVICE_SCREEN_WIDTH - 40, 30)];
-    [view addSubview:text_field];
+    _text_field = [self createSearchInputField:CGRectMake(20, 50, DEVICE_SCREEN_WIDTH - 40, 30)];
+    [view addSubview:_text_field];
     
     [self.view addSubview:view];
 }
@@ -142,18 +176,18 @@
     UIView* left = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
     left.backgroundColor = [UIColor clearColor];
     
-    _text_field = [[UITextField alloc] initWithFrame:frame];
-    _text_field.delegate = self;
-    _text_field.backgroundColor = [UIColor whiteColor];
-    _text_field.layer.borderColor = color.CGColor;
-    _text_field.layer.borderWidth = 1.4f;
-    _text_field.rightView = right;
-    _text_field.rightViewMode = UITextFieldViewModeAlways;
-    _text_field.leftView = left;
-    _text_field.leftViewMode = UITextFieldViewModeAlways;
+    UITextField* textfield = [[UITextField alloc] initWithFrame:frame];
+    textfield.delegate = self;
+    textfield.backgroundColor = [UIColor whiteColor];
+    textfield.layer.borderColor = color.CGColor;
+    textfield.layer.borderWidth = 1.4f;
+    textfield.rightView = right;
+    textfield.rightViewMode = UITextFieldViewModeAlways;
+    textfield.leftView = left;
+    textfield.leftViewMode = UITextFieldViewModeAlways;
     
-     [_text_field addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    return _text_field;
+    [textfield addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    return textfield;
 }
 
 - (void)createTableView
@@ -166,64 +200,8 @@
 -(void)textFieldDidChange:(UITextField *)txtFld {
     //NSLog(@"%@", txtFld.text);
 }
-
--(void)searchMatchUser:(id)sender
-{
-    NSArray* array = [[MDataBaseManager sharedInstance] loadEmployeeArray];
-    
-    NSMutableArray* array2 = [NSMutableArray new];
-    for (MUser* user in array) {
-        
-        if(![self hasMatchNameWithEmployee:user])   // 姓名條件
-            continue;
-        if(![self hasMatchSkillWithEmployee:user])  // 職能條件
-            continue;
-        [array2 addObject:user];
-    }
-    _array = array2;
-    
-    //
-    NSString* uuid = _guide.manager.uuid;
-    if(uuid && ![uuid isEqualToString:@""]){
-        
-        for (MUser* user in _array) {
-            if([uuid isEqualToString:user.uuid]){
-                user.bSelected = YES;
-                break;
-            }
-        }
-    }
-    
-    [_tableView reloadData];
-}
-
-- (BOOL)hasMatchNameWithEmployee:(MUser*)employee
-{
-    NSString* cond = _text_field.text;
-    
-    if([cond isEqualToString:@""])
-        return YES;
-    if([employee.name rangeOfString:cond].location != NSNotFound)
-        return YES;
-    return NO;
-}
-
-- (BOOL)hasMatchSkillWithEmployee:(MUser*)employee
-{
-    NSString* cond = self.label2.text;
-    
-    if([cond isEqualToString:@"全部"])
-        return YES;
-    
-    for (MSkill* skill in employee.skillArray) {
-        if([cond isEqualToString:skill.name])
-            return YES;
-    }
-    
-    return NO;
-}
                                         
-#pragma mark - TableView DataSource
+#pragma mark - TableViewDataSource 相關
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -299,16 +277,18 @@
     return cell;
 }
 
+#pragma mark - TableViewDelegate 相關
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MUser* user = [_array objectAtIndex:indexPath.row];
     if(user.bSelected){
         user.bSelected = NO;
-        _guide.manager = nil;
+        [self setCorrectManager:nil];
     }else{
         [self cleanCheck];
         user.bSelected = YES;
-        _guide.manager = user;
+        [self setCorrectManager:user];
     }
     
     [tableView reloadData];
@@ -327,7 +307,90 @@
     [self cancelPicker];
 }
 
+#pragma mark - UIPickerViewDataSource 相關
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    
+    return [_arySkills count] + 1;
+}
+
+#pragma mark - UIPickerViewDlegate 相關
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+
+    if(row == 0)
+        return @"全部";
+    else
+        return [[_arySkills objectAtIndex:row - 1] name];
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if(row == 0)
+        self.label2.text = @"全部";
+    else
+        self.label2.text=[NSString stringWithFormat:@"%@",[[_arySkills objectAtIndex:row - 1] name]];
+}
+
 #pragma mark - other methods
+
+-(void)searchMatchUser:(id)sender
+{
+    NSArray* array = [[MDataBaseManager sharedInstance] loadEmployeeArray];
+    
+    NSMutableArray* array2 = [NSMutableArray new];
+    for (MUser* user in array) {
+        
+        if(![self hasMatchNameWithEmployee:user])   // 姓名條件
+            continue;
+        if(![self hasMatchSkillWithEmployee:user])  // 職能條件
+            continue;
+        [array2 addObject:user];
+    }
+    _array = array2;
+    
+    //
+    NSString* uuid = [self getCorrectUuidString];
+    if(uuid && ![uuid isEqualToString:@""]){
+        
+        for (MUser* user in _array) {
+            if([uuid isEqualToString:user.uuid]){
+                user.bSelected = YES;
+                break;
+            }
+        }
+    }
+    
+    [_tableView reloadData];
+}
+
+- (BOOL)hasMatchNameWithEmployee:(MUser*)employee
+{
+    NSString* cond = _text_field.text;
+    
+    if([cond isEqualToString:@""])
+        return YES;
+    if([employee.name rangeOfString:cond].location != NSNotFound)
+        return YES;
+    return NO;
+}
+
+- (BOOL)hasMatchSkillWithEmployee:(MUser*)employee
+{
+    NSString* cond = self.label2.text;
+    
+    if([cond isEqualToString:@"全部"])
+        return YES;
+    
+    for (MSkill* skill in employee.skillArray) {
+        if([cond isEqualToString:skill.name])
+            return YES;
+    }
+    
+    return NO;
+}
 
 - (void)cleanCheck
 {
@@ -351,18 +414,12 @@
     return str;
 }
 
-- (void)backToPage:(id) sender
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidAssignManager object:_guide];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (void)loadData
 {
     _array = [[MDataBaseManager sharedInstance] loadEmployeeArray];
     _arySkills=[[MDataBaseManager sharedInstance]loadAllSkills];
     
-    NSString* uuid = _guide.manager.uuid;
+    NSString* uuid = [self getCorrectUuidString];
     if(uuid && ![uuid isEqualToString:@""]){
         
         for (MUser* user in _array) {
@@ -381,7 +438,7 @@
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
     CGFloat screenWidth = screenSize.width;
     CGFloat screenHeight = screenSize.height;
-
+    
     //picker
     self.PickerSkill=[[UIPickerView alloc]initWithFrame:CGRectMake(0, screenHeight-140, screenWidth, 140)];
     self.PickerSkill.dataSource = self;
@@ -396,27 +453,6 @@
     [self.view addSubview:self.toolBar];
     
 }
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
-}
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    
-    return [_arySkills count] + 1;
-}
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-
-    if(row == 0)
-        return @"全部";
-    else
-        return [[_arySkills objectAtIndex:row - 1] name];
-}
-
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if(row == 0)
-        self.label2.text = @"全部";
-    else
-        self.label2.text=[NSString stringWithFormat:@"%@",[[_arySkills objectAtIndex:row - 1] name]];
-}
 
 -(void) cancelPicker
 {
@@ -429,6 +465,60 @@
     
     [self.PickerSkill removeFromSuperview];
     [self.toolBar removeFromSuperview];
+}
+
+- (NSString*)getCorrectSubjectString
+{
+    if(_type == TYPE_FOR_GUIDE_MANAGER)
+        return [NSString stringWithFormat:@"對策名稱 : %@", _guide.name];
+    if(_type == TYPE_FOR_ACTIVITY_MANAGER)
+        return [NSString stringWithFormat:@"關鍵活動名稱 : %@", _activity.name];
+    if(_type == TYPE_FOR_WORKITEM_MANAGER)
+        return [NSString stringWithFormat:@"工作項目名稱 : %@", _workitem.name];
+    return @"";
+}
+
+- (MSkill*)getCorrectSuggestSkill
+{
+    if(_type == TYPE_FOR_GUIDE_MANAGER)
+        return _guide.suggestSkill;
+    if(_type == TYPE_FOR_ACTIVITY_MANAGER)
+        return _activity.suggestSkill;
+    if(_type == TYPE_FOR_WORKITEM_MANAGER)
+        return _workitem.suggestSkill;
+    return nil;
+}
+
+- (NSString*)getCorrectUuidString
+{
+    if(_type == TYPE_FOR_GUIDE_MANAGER)
+        return _guide.manager.uuid;
+    if(_type == TYPE_FOR_ACTIVITY_MANAGER)
+        return _activity.manager.uuid;
+    if(_type == TYPE_FOR_WORKITEM_MANAGER)
+        return _workitem.manager.uuid;
+    return nil;
+}
+
+- (void)backToPage:(id) sender
+{
+    if(_type == TYPE_FOR_GUIDE_MANAGER)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidAssignManager object:_guide];
+    if(_type == TYPE_FOR_ACTIVITY_MANAGER)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidAssignManager object:_activity];
+    if(_type == TYPE_FOR_WORKITEM_MANAGER)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidAssignManager object:_workitem];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)setCorrectManager:(MUser*)user
+{
+    if(_type == TYPE_FOR_GUIDE_MANAGER)
+        _guide.manager = user;
+    if(_type == TYPE_FOR_ACTIVITY_MANAGER)
+        _activity.manager = user;
+    if(_type == TYPE_FOR_WORKITEM_MANAGER)
+        _workitem.manager = user;
 }
 
 /*

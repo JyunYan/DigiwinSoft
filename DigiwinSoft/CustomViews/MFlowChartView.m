@@ -18,6 +18,7 @@
 @property (nonatomic,strong) NSMutableArray* unused;
 
 @property (nonatomic, assign) CGFloat radius;
+@property (nonatomic, assign) CGFloat pointSize;
 
 @end
 
@@ -47,6 +48,8 @@
         _unused = [NSMutableArray new];
     [_unused removeAllObjects];
     [_unused addObjectsFromArray:array];
+    
+    _pointSize = (DEVICE_SCREEN_WIDTH <= 320) ? 12. : 14.;
     
     [self preparePoints];
     [self findMainPath];
@@ -307,7 +310,7 @@
     label.backgroundColor = [UIColor clearColor];
     label.numberOfLines = 2;
     label.lineBreakMode = NSLineBreakByWordWrapping;
-    label.font = [UIFont boldSystemFontOfSize:14];
+    label.font = [UIFont boldSystemFontOfSize:_pointSize];
     label.textColor = [UIColor whiteColor];
     label.text = point.activity.name;
     
