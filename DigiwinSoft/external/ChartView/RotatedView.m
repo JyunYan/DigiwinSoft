@@ -126,6 +126,18 @@
 }
 
 
+- (void)drawText:(CGFloat)xPosition yPosition:(CGFloat)yPosition canvasWidth:(CGFloat)canvasWidth canvasHeight:(CGFloat)canvasHeight
+{
+    //Draw Text
+    CGRect textRect = CGRectMake(xPosition, yPosition, canvasWidth, canvasHeight);
+    NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+    textStyle.alignment = NSTextAlignmentLeft;
+    
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: 12], NSForegroundColorAttributeName: UIColor.redColor, NSParagraphStyleAttributeName: textStyle};
+    
+    [@"Hello, World!" drawInRect: textRect withAttributes: textFontAttributes];
+}
+
 - (void)startedAnimate
 {
     [self performSelector:@selector(delayAnimate) withObject:nil afterDelay:0.0f];

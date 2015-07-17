@@ -15,6 +15,10 @@
 @interface MSeeStatusViewController ()
 @property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
+@property (nonatomic, strong) NSArray *aryData;
+@property (nonatomic, strong) NSArray *aryAddData;
+@property (nonatomic, strong) UIButton *btnAdd;
+
 @end
 
 @implementation MSeeStatusViewController
@@ -23,6 +27,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self addMainMenu];
+    [self createBtn];
+    [self createRadarChart];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,16 +59,54 @@
     _customSegmentedControl.selectedSegmentIndex = 1;
     [self.view addSubview:_customSegmentedControl];
 
-    
-    
-    
-    
+
+}
+
+-(void)createBtn
+{
     UIButton *btn= [[UIButton alloc] initWithFrame:CGRectMake(120, 380, 80, 30)];
     [btn addTarget:self action:@selector(toPage8:) forControlEvents:UIControlEventTouchUpInside];
     [btn setTitle:@"toPage8" forState:UIControlStateNormal];
     btn.backgroundColor=[UIColor brownColor];
     [self.view addSubview:btn];
+    
+    
+   _btnAdd=[[UIButton alloc]initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-20, 290, 40, 40)];
+    _btnAdd.backgroundColor=[UIColor brownColor];
+    [_btnAdd addTarget:self
+               action:@selector(btnAddRadar:)
+     forControlEvents:UIControlEventTouchUpInside
+     ];
+    [_btnAdd setTitle:@"Add" forState:UIControlStateNormal];
 
+}
+-(void)createRadarChart
+{
+    _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-75, 120, 150, 150)];
+    NSArray *data0=[[NSArray alloc]initWithObjects:@"最適化存貨周轉(10)",@"data0",@"10",@"value",nil];
+    NSArray *data1=[[NSArray alloc]initWithObjects:@"提昇供應鏈品質(20)",@"data1",@"20",@"value",nil];
+    NSArray *data2=[[NSArray alloc]initWithObjects:@"提升生產效率(30)",@"data2",@"30",@"value",nil];
+    NSArray *data3=[[NSArray alloc]initWithObjects:@"提升生產效率(40)",@"data3",@"40",@"value",nil];
+    _aryData=[[NSMutableArray alloc]initWithObjects:data0,data1,data2,data3,nil];
+    _RadarChart.aryRadarChartData=_aryData;
+
+
+    
+}
+-(void)btnAddRadar:(id)sender
+{
+    [_RadarChart removeFromSuperview];
+    NSArray *data4=[[NSArray alloc]initWithObjects:@"提升生產效率(90)",@"data4",@"90",@"value",nil];
+    NSArray *data5=[[NSArray alloc]initWithObjects:@"提升生產效率(100)",@"data5",@"100",@"value",nil];
+    _aryAddData=[[NSMutableArray alloc]initWithObjects:data4,data5, nil];
+    
+    
+    _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-75, 120, 150, 150)];
+    NSMutableSet *set = [NSMutableSet setWithArray:_aryData];
+    [set addObjectsFromArray:_aryAddData];
+    _aryData=[set allObjects];
+    _RadarChart.aryRadarChartData=_aryData;
+    [self.view addSubview:_RadarChart];
 }
 -(void)toPage8:(id)sender
 {
@@ -76,19 +120,21 @@
     switch (index) {
         case 0:
         {
-            _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake(30, 120, 250, 250)];
-            _RadarChart.backgroundColor = [UIColor redColor];
             [self.view addSubview:_RadarChart];
-
+            [self.view addSubview:_btnAdd];
             break;
         }
         case 1:
         {
+            [_RadarChart removeFromSuperview];
+            [_btnAdd removeFromSuperview];
             break;
         }
         
         case 2:
         {
+            [_RadarChart removeFromSuperview];
+            [_btnAdd removeFromSuperview];
             break;
         }
         default:
