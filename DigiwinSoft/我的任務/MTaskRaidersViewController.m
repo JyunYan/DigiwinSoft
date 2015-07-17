@@ -6,10 +6,14 @@
 //  Copyright (c) 2015年 Jyun. All rights reserved.
 //
 
+// p42
+
 #import "MTaskRaidersViewController.h"
 #import "MDirector.h"
 #import "MDesignateResponsibleViewController.h"
 #import "MGoalSettingViewController.h"
+
+#import "MRaidersTableCell.h"
 
 
 #define TAG_LABEL_WORKITEM 100
@@ -18,19 +22,19 @@
 #define TAG_BUTTON_TARGET 2000
 
 
-@interface MTaskRaidersViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface MTaskRaidersViewController ()<UITableViewDelegate, UITableViewDataSource, MWorkItemTableCellDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
-
-@property (nonatomic, strong) NSMutableArray* workItemArray;
 
 @property (nonatomic, strong) NSMutableArray* activityArray;
 
 @property (nonatomic, assign) NSInteger actIndex;
 
-@property (nonatomic, strong) MActivity* act;
+@property (nonatomic, strong) MCustActivity* act;
 
-@property (nonatomic, strong) MCustGuide* guide;
+//@property (nonatomic, strong) MCustGuide* guide;
+
+@property (nonatomic, assign) NSInteger selectedIndex;
 
 @end
 
@@ -39,14 +43,20 @@
 - (id)initWithCustGuide:(MCustGuide*) guide Index:(NSInteger) index {
     self = [super init];
     if (self) {
-        _guide = guide;
+        //_guide = guide;
         
         _activityArray = guide.activityArray;
         _actIndex = index;
         _act = [_activityArray objectAtIndex:index];
+    }
+    return self;
+}
+
+- (id)initWithCustActivity:(MCustActivity*)activity
+{
+    if(self = [super init]){
         
-        _workItemArray = [NSMutableArray new];
-        [_workItemArray addObjectsFromArray:_act.workItemArray];
+        _act = activity;
     }
     return self;
 }
@@ -279,28 +289,42 @@
     
 }
 
--(void)goAppointResponsible:(id)sender
+- (void)didAssignManager:(NSNotification*)note
 {
-    /*
-     UIButton* button = (UIButton*)sender;
-     NSInteger tag = button.tag;
-     NSInteger index = tag - TAG_BUTTON_APPOINT_RESPONSIBLE;
-     MWorkItem* workItem = [_workItemArray objectAtIndex:index];
-     */
-    MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithGuide:_guide];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidAssignManager object:nil];
+    
+    id object = note.object;
+    MCustWorkItem* workitem = (MCustWorkItem*)object;
+    [_act.workItemArray replaceObjectAtIndex:_selectedIndex withObject:workitem];
+    
+    [_tableView reloadData];
+}
+
+#pragma mark - MWorkItemTableCellDelegate
+
+- (void)btnManagerClicked:(MWorkItemTableCell *)cell
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didAssignManager:) name:kDidAssignManager object:nil];
+    
+    NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
+    _selectedIndex = indexPath.row;
+    
+    MCustWorkItem* workitem = [_act.workItemArray objectAtIndex:_selectedIndex];
+    
+    MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithCustWorkItem:workitem];
     UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MDesignateResponsibleVC];
     MIndustryRaidersNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     [self.navigationController presentViewController:MIndustryRaidersNav animated:YES completion:nil];
 }
 
--(void)goTarget:(id)sender
+- (void)btnTargetSetClicked:(MWorkItemTableCell *)cell
 {
     /*
-    UIButton* button = (UIButton*)sender;
-    NSInteger tag = button.tag;
-    NSInteger index = tag - TAG_BUTTON_TARGET;
-    MWorkItem* workItem = [_workItemArray objectAtIndex:index];
-    */
+     UIButton* button = (UIButton*)sender;
+     NSInteger tag = button.tag;
+     NSInteger index = tag - TAG_BUTTON_TARGET;
+     MWorkItem* workItem = [_workItemArray objectAtIndex:index];
+     */
     MGoalSettingViewController* vc = [[MGoalSettingViewController alloc] initWithActivityArray:_activityArray Index:_actIndex];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -316,7 +340,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return _workItemArray.count;
+    return _act.workItemArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -327,64 +351,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
+    MCustWorkItem* workitem = [_act.workItemArray objectAtIndex:row];
     
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.backgroundColor = [UIColor clearColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        
-        CGFloat tableWidth = tableView.frame.size.width;
-        
-        CGFloat textSize = 13.0f;
-        
-        CGFloat posX = 0;
-        CGFloat posY = 0;
-        CGFloat width = tableWidth - posX * 2;
-        CGFloat height = 50;
-        
-        UIView* view = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        view.backgroundColor = [UIColor whiteColor];
-        [cell addSubview:view];
-        
-        
-        width = tableWidth * 3 / 5;
-        // 工作項目
-        UILabel* workItemLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        workItemLabel.tag = TAG_LABEL_WORKITEM;
-        workItemLabel.textAlignment = NSTextAlignmentCenter;
-        workItemLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-        workItemLabel.font = [UIFont systemFontOfSize:textSize];
-        [cell addSubview:workItemLabel];
-        
-        
-        posX = workItemLabel.frame.origin.x + workItemLabel.frame.size.width;
-        posY = 10;
-        width = 30;
-        height = 30;
-        // 指派負責人
-        UIButton* appointResponsibleButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        appointResponsibleButton.tag = TAG_BUTTON_APPOINT_RESPONSIBLE + row;
-        [appointResponsibleButton setBackgroundImage:[UIImage imageNamed:@"icon_manager.png"] forState:UIControlStateNormal];
-        [appointResponsibleButton addTarget:self action:@selector(goAppointResponsible:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:appointResponsibleButton];
-        
-        
-        posX = appointResponsibleButton.frame.origin.x + tableWidth / 5;
-        // 目標設定
-        UIButton* targetButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        targetButton.tag = TAG_BUTTON_TARGET + row;
-        [targetButton setBackgroundImage:[UIImage imageNamed:@"icon_menu_8.png"] forState:UIControlStateNormal];
-        [targetButton addTarget:self action:@selector(goTarget:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:targetButton];
-    }
-    
-    MWorkItem* workItem = [_workItemArray objectAtIndex:row];
-    
-    UILabel* workItemLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_WORKITEM];
-    workItemLabel.text = workItem.name;
+    CGSize size = CGSizeMake(tableView.frame.size.width, 50.);
+    MWorkItemTableCell* cell = [MWorkItemTableCell cellWithTableView:tableView size:size];
+    [cell setDelegate:self];
+    [cell prepareWithCustWorkItem:workitem];
     
     return cell;
 }
@@ -405,8 +377,6 @@
     _activityArray = activityArray;
 
     _act = [_activityArray objectAtIndex:_actIndex];
-    
-    _guide.activityArray = activityArray;
 }
 
 @end

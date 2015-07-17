@@ -7,9 +7,11 @@
 //
 
 #import "MMyTaskViewController.h"
-#import "AppDelegate.h"
 #import "MTasksDeployedViewController.h"
+#import "MTaskRaidersViewController.h"
 #import "MReportViewController.h"
+
+#import "AppDelegate.h"
 #import "MDataBaseManager.h"
 #import "MCustGuide.h"
 #import "MCustActivity.h"
@@ -204,17 +206,13 @@
     if (segmentedIndex == 0) {
         
         id task=[_taskDataArry objectAtIndex:indexPath.row];
-        if([task isKindOfClass:[MCustGuide class]])
+        if ([task isKindOfClass:[MCustActivity class]])
         {
-            MTasksDeployedViewController* vc = [[MTasksDeployedViewController alloc] init];
-            vc.guide=(MCustGuide *)task;
+            NSLog(@"To Page.42");
+            MTaskRaidersViewController* vc = [[MTaskRaidersViewController alloc] initWithCustActivity:task];
             [self.navigationController pushViewController:vc animated:YES];
         }
         else if([task isKindOfClass:[MCustWorkItem class]])
-        {
-            NSLog(@"To Page.42");
-        }
-        else if ([task isKindOfClass:[MCustActivity class]])
         {
             NSLog(@"NoAction");
         }

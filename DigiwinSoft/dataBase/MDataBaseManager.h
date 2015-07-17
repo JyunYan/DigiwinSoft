@@ -51,6 +51,7 @@
 - (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen;
 - (NSArray*)loadActivitySampleArrayWithGuide:(MGuide*)guide;
 - (NSArray*)loadWorkItemSampleArrayWithActivity:(MActivity*)act;
+- (NSArray*)loadTargetSampleArray;
 
 // get 議題Sample By 對策
 - (NSArray*)loadIssueArrayByGudie:(MGuide*)guide;

@@ -9,6 +9,7 @@
 #import "MGoalSettingViewController.h"
 #import "DownPicker.h"
 #import "MDirector.h"
+#import "MDataBaseManager.h"
 
 
 #define TAG_BUTTON_YES_OR_NO 100
@@ -16,6 +17,9 @@
 
 #define TAG_TEXTFIELD_VALUE 102
 #define TAG_TEXTFIELD_UNIT 103
+
+#define TYPE_FOR_ACTIVITY   1001
+#define TYPE_FOR_WORKITEM   1002
 
 
 @interface MGoalSettingViewController ()<UIGestureRecognizerDelegate, UITextFieldDelegate>
@@ -34,8 +38,12 @@
 @property (nonatomic, strong) UIDatePicker* endDatePicker;
 
 @property (nonatomic, strong) NSMutableArray* activityArray;
-
 @property (nonatomic, assign) NSInteger actIndex;
+
+@property (nonatomic, strong) MCustActivity* act2;
+@property (nonatomic, strong) MCustWorkItem* workitem;
+@property (nonatomic, assign) NSInteger type;
+@property (nonatomic, strong) UITextField* tarTF;
 
 @end
 
@@ -52,13 +60,30 @@
     return self;
 }
 
+- (id)initWithCustActivity:(MCustActivity*)activity
+{
+    if(self = [super init]){
+        _act2 = activity;
+        _type = TYPE_FOR_ACTIVITY;
+    }
+    return self;
+}
+
+- (id)initWithCustWorkItem:(MCustWorkItem*)workitem
+{
+    if(self = [super init]){
+        _workitem = workitem;
+        _type = TYPE_FOR_WORKITEM;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"目標設定";
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     
     [self addMainMenu];
     
@@ -83,6 +108,11 @@
 {
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
     self.navigationController.navigationBar.topItem.backBarButtonItem = back;
+}
+
+- (UILabel*)createLabelWithFrame:(CGRect)frame
+{
+    return nil;
 }
 
 - (UIView*)createTopView:(CGRect) rect
@@ -140,7 +170,6 @@
 {
     CGFloat textSize = 14.0f;
     
-    
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor whiteColor];
     
@@ -171,14 +200,12 @@
     textField.text = _act.target.name;
     [view addSubview:textField];
     
-    NSMutableArray* bandArray = [[NSMutableArray alloc] init];
-    [bandArray addObject:@"如期完工率"];
+    NSArray* array = [[MDataBaseManager sharedInstance] loadTargetSampleArray];
     
-    _downPicker = [[DownPicker alloc] initWithTextField:textField withData:bandArray];
-    [_downPicker setPlaceholder:@"目標設定"];
-    [_downPicker setPlaceholderWhileSelecting:@"選擇一個選項"];
-    [_downPicker addTarget:self action:@selector(dp_Selected:) forControlEvents:UIControlEventValueChanged];
-    
+//    _downPicker = [[DownPicker alloc] initWithTextField:textField withData:bandArray];
+//    [_downPicker setPlaceholder:@"目標設定"];
+//    [_downPicker setPlaceholderWhileSelecting:@"選擇一個選項"];
+//    [_downPicker addTarget:self action:@selector(dp_Selected:) forControlEvents:UIControlEventValueChanged];
     
     return view;
 }
@@ -286,7 +313,6 @@
 - (UIView*)createExecutionTimeView:(CGRect) rect
 {
     CGFloat textSize = 14.0f;
-    
     
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor whiteColor];
@@ -464,6 +490,10 @@
 { 
     [self.view endEditing:YES];
     
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSettingTarget object:_act2];
+    
+    
     _act.target.uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_TARGET_UUID_PREV];
     [_activityArray replaceObjectAtIndex:_actIndex withObject:_act];
     
@@ -533,8 +563,8 @@
 #pragma mark - DownPicker
 
 -(void)dp_Selected:(id)dp {
-    NSString* selectedValue = [_downPicker text];
-    _act.target.name = selectedValue;
+//    NSString* selectedValue = [_downPicker text];
+//    _act.target.name = selectedValue;
 }
 
 #pragma mark - UIGestureRecognizer

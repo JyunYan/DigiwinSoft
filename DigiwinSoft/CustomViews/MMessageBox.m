@@ -85,7 +85,6 @@
     _textLabel.textColor = [UIColor redColor];
     _textLabel.textAlignment = NSTextAlignmentCenter;
     _textLabel.font = [UIFont systemFontOfSize:12.];
-    _textLabel.text = @"61天";
     [self addSubview:_textLabel];
 }
 
