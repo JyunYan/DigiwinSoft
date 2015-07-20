@@ -12,9 +12,11 @@
 #import "MCustomSegmentedControl.h"
 #import "MConfig.h"
 #import "MRadarChartView.h"
+#import "MStatusPieChartViewController.h"
 @interface MSeeStatusViewController ()
 @property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
+@property (nonatomic, strong) MStatusPieChartViewController* pieChartViewController;
 @property (nonatomic, strong) NSMutableArray *aryData;
 @property (nonatomic, strong) NSArray *aryAddData;
 @property (nonatomic, strong) UIButton *btnAdd;
@@ -27,9 +29,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"看現況";
+    
     [self addMainMenu];
     [self createBtn];
     [self createRadarChart];
+    [self createPieChartViewController];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -105,6 +110,29 @@
 
     
 }
+
+-(void)createPieChartViewController
+{
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    
+    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
+    CGFloat screenWidth = screenFrame.size.width;
+    CGFloat screenHeight = screenFrame.size.height;
+    
+    CGFloat posX = 0;
+    CGFloat posY = _customSegmentedControl.frame.origin.y + _customSegmentedControl.frame.size.height + 10;
+    CGFloat width = screenWidth;
+    CGFloat height = screenHeight - posY - navBarHeight + statusBarHeight - 5;
+    
+    _pieChartViewController = [[MStatusPieChartViewController alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    
+    [self addChildViewController:_pieChartViewController];
+    [self.view addSubview:_pieChartViewController.view];
+    
+    [self.view bringSubviewToFront:_customSegmentedControl];
+}
+
 -(void)btnAddRadar:(id)sender
 {
     if ([sender tag]==101) {
@@ -144,6 +172,9 @@
     switch (index) {
         case 0:
         {
+            [_pieChartViewController removeFromParentViewController];
+            [_pieChartViewController.view removeFromSuperview];
+
             [self.view addSubview:_RadarChart];
             [self.view addSubview:_btnAdd];
             [self.view addSubview:_btnAdd1];
@@ -155,6 +186,11 @@
             [_RadarChart removeFromSuperview];
             [_btnAdd removeFromSuperview];
             [_btnAdd1 removeFromSuperview];
+            
+            [self addChildViewController:_pieChartViewController];
+            [self.view addSubview:_pieChartViewController.view];
+            
+            [self.view bringSubviewToFront:_customSegmentedControl];
 
             break;
         }
@@ -164,6 +200,9 @@
             [_RadarChart removeFromSuperview];
             [_btnAdd removeFromSuperview];
             [_btnAdd1 removeFromSuperview];
+
+            [_pieChartViewController removeFromParentViewController];
+            [_pieChartViewController.view removeFromSuperview];
 
             break;
         }
