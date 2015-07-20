@@ -1,5 +1,5 @@
 //
-//  MSolutionsPieChartViewController.h
+//  MStatusPieChartViewController.h
 //  DigiwinSoft
 //
 //  Created by elion chung on 2015/7/16.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MSolutionsPieChartViewController : UIViewController
+@interface MStatusPieChartViewController : UIViewController
 
 - (id)initWithFrame:(CGRect) rect;
 

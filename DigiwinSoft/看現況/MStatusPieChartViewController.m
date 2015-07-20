@@ -1,20 +1,27 @@
 //
-//  MSolutionsPieChartViewController.m
+//  MStatusPieChartViewController.m
 //  DigiwinSoft
 //
 //  Created by elion chung on 2015/7/16.
 //  Copyright (c) 2015年 Jyun. All rights reserved.
 //
 
-#import "MSolutionsPieChartViewController.h"
+#import "MStatusPieChartViewController.h"
 #import "PieChartView.h"
 #import "MDirector.h"
+#import "MRouletteViewController.h"
 
 
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
+#define TAG_STARVIEW_SEL 100
+#define TAG_STARVIEW_LEFT1 200
+#define TAG_STARVIEW_LEFT2 300
+#define TAG_STARVIEW_RIGHT1 400
+#define TAG_STARVIEW_RIGHT2 500
 
-@interface MSolutionsPieChartViewController ()<PieChartDelegate, UITableViewDelegate, UITableViewDataSource>
+
+@interface MStatusPieChartViewController ()<PieChartDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) PieChartView *pieChartView;
 
@@ -29,20 +36,22 @@
 
 @property (nonatomic,strong) UIView *selView;
 
+@property (nonatomic,strong) UIView *pieCenterStarView;
+
 @property (nonatomic,strong) UILabel *rightPieTitleLabel1;
-@property (nonatomic,strong) UILabel *rightPieLabel1;
+@property (nonatomic,strong) UIView *rightPieStarView1;
 
 @property (nonatomic,strong) UILabel *rightPieTitleLabel2;
-@property (nonatomic,strong) UILabel *rightPieLabel2;
+@property (nonatomic,strong) UIView *rightPieStarView2;
 
 @property (nonatomic,strong) UILabel *selPieTitleLabel;
-@property (nonatomic,strong) UILabel *selPieLabel;
+@property (nonatomic,strong) UIView *selPieStarView;
 
 @property (nonatomic,strong) UILabel *leftPieTitleLabel1;
-@property (nonatomic,strong) UILabel *leftPieLabel1;
+@property (nonatomic,strong) UIView *leftPieStarView1;
 
 @property (nonatomic,strong) UILabel *leftPieTitleLabel2;
-@property (nonatomic,strong) UILabel *leftPieLabel2;
+@property (nonatomic,strong) UIView *leftPieStarView2;
 
 @property (nonatomic, assign) CGRect viewRect;
 
@@ -50,7 +59,7 @@
 
 @end
 
-@implementation MSolutionsPieChartViewController
+@implementation MStatusPieChartViewController
 
 - (id)initWithFrame:(CGRect) rect {
     self = [super init];
@@ -90,27 +99,30 @@
     CGFloat viewWidth = rect.size.width;
     CGFloat viewHeight = rect.size.height;
     
+    CGFloat textSize = 13.;
+
+    
     CGFloat posX = 0;
     CGFloat posY = 0;
     CGFloat width = viewWidth - posX * 2;
-    CGFloat height = viewHeight / 2;
+    CGFloat height = viewHeight / 2 + 20;
     
     self.pieFrame = CGRectMake(posX, posY, width, height);
 
     
     self.valueTitleArray = [[NSMutableArray alloc] initWithObjects:
-                            @"財務",
-                            @"生產",
-                            @"銷售",
-                            @"人資",
-                            @"研發",
+                            @[@"財務", [NSNumber numberWithFloat:3.]],
+                            @[@"生產", [NSNumber numberWithFloat:3.]],
+                            @[@"銷售", [NSNumber numberWithFloat:4.5]],
+                            @[@"人資", [NSNumber numberWithFloat:3.]],
+                            @[@"研發", [NSNumber numberWithFloat:4.]],
                             nil];
     
-    CGFloat value1 = 70;
-    CGFloat value2 = 70;
-    CGFloat value3 = 95;
-    CGFloat value4 = 75;
-    CGFloat value5 = 85;
+    CGFloat value1 = 1;
+    CGFloat value2 = 1;
+    CGFloat value3 = 1;
+    CGFloat value4 = 1;
+    CGFloat value5 = 1;
     CGFloat valueSum = value1 + value2 + value3 + value4 + value5;
 
     self.valueArray = [[NSMutableArray alloc] initWithObjects:
@@ -142,110 +154,103 @@
     self.pieChartView = [[PieChartView alloc] initWithFrame:self.pieContainer.bounds withValue:self.valueArray withColor:self.colorArray];
     self.pieChartView.delegate = self;
     [self.pieContainer addSubview:self.pieChartView];
-    [self.pieChartView setAmountText:@"75"];
+//    [self.pieChartView setAmountText:@"75"];
     [self.pieChartView setTitleText:@"綜合表現"];
     [view addSubview:self.pieContainer];
+    
+    self.pieCenterStarView = [self createCenterStarsView:CGRectMake(0, self.pieFrame.size.height/2, self.pieFrame.size.width/5, 15) ImageSize:CGSizeMake(13, 13) StarNum:3.5];
+    self.pieCenterStarView.center = CGPointMake(self.pieFrame.size.width/2, self.pieFrame.size.height/2 + 10);
+    self.pieCenterStarView.backgroundColor = [UIColor clearColor];
+    [view addSubview:self.pieCenterStarView];
 
+    
     
     CGPoint selCenter = [self getApproximateMidPointForArcWithStartAngle:90. andDegrees:90.];
     // 選中的 label
     self.selPieTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.pieFrame.origin.y + self.pieFrame.size.height/2 + 45, self.pieFrame.size.width/2, 21)];
-    self.selPieTitleLabel.center = CGPointMake(selCenter.x, selCenter.y + 10);
+    self.selPieTitleLabel.center = CGPointMake(selCenter.x, selCenter.y);
     self.selPieTitleLabel.backgroundColor = [UIColor clearColor];
     self.selPieTitleLabel.textAlignment = NSTextAlignmentCenter;
-    self.selPieTitleLabel.font = [UIFont systemFontOfSize:15];
+    self.selPieTitleLabel.font = [UIFont systemFontOfSize:textSize];
     self.selPieTitleLabel.textColor = [UIColor whiteColor];
     [view addSubview:self.selPieTitleLabel];
     
-    self.selPieLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.selPieTitleLabel.frame.origin.y + self.selPieTitleLabel.frame.size.height, self.pieFrame.size.width/2, 21)];
-    self.selPieLabel.center = CGPointMake(self.selPieTitleLabel.center.x, self.selPieLabel.center.y);
-    self.selPieLabel.backgroundColor = [UIColor clearColor];
-    self.selPieLabel.textAlignment = NSTextAlignmentCenter;
-    self.selPieLabel.font = [UIFont systemFontOfSize:15];
-    self.selPieLabel.textColor = [UIColor whiteColor];
-    [view addSubview:self.selPieLabel];
-    
+    self.selPieStarView = [self createStarsView:CGRectMake(0, self.selPieTitleLabel.frame.origin.y + self.selPieTitleLabel.frame.size.height, self.pieFrame.size.width/5, 15) ImageSize:CGSizeMake(8, 8) Tag:TAG_STARVIEW_SEL Index:1];
+    self.selPieStarView.center = CGPointMake(self.selPieTitleLabel.center.x, self.selPieStarView.center.y);
+    self.selPieStarView.backgroundColor = [UIColor clearColor];
+    [view addSubview:self.selPieStarView];
+
     
     CGFloat leftStartAngle2 = 90. + [[self.valueAngleArray objectAtIndex:1] floatValue]/2;
     CGFloat leftEndAngle2 = leftStartAngle2 + [[self.valueAngleArray objectAtIndex:2] floatValue];
     CGPoint leftPieCenter2 = [self getApproximateMidPointForArcWithStartAngle:leftStartAngle2 andDegrees:leftEndAngle2];
     // 左側的 label
     self.leftPieTitleLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.pieFrame.origin.y + self.pieFrame.size.height/2 + 10, self.pieFrame.size.width/2, 21)];
-    self.leftPieTitleLabel2.center = CGPointMake(leftPieCenter2.x + 20, leftPieCenter2.y);
+    self.leftPieTitleLabel2.center = CGPointMake(leftPieCenter2.x, leftPieCenter2.y);
     self.leftPieTitleLabel2.backgroundColor = [UIColor clearColor];
     self.leftPieTitleLabel2.textAlignment = NSTextAlignmentCenter;
-    self.leftPieTitleLabel2.font = [UIFont systemFontOfSize:15];
+    self.leftPieTitleLabel2.font = [UIFont systemFontOfSize:textSize];
     self.leftPieTitleLabel2.textColor = [UIColor whiteColor];
     [view addSubview:self.leftPieTitleLabel2];
     
-    self.leftPieLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.leftPieTitleLabel2.frame.origin.y + self.leftPieTitleLabel2.frame.size.height, self.pieFrame.size.width/2, 21)];
-    self.leftPieLabel2.center = CGPointMake(self.leftPieTitleLabel2.center.x, self.leftPieLabel2.center.y);
-    self.leftPieLabel2.backgroundColor = [UIColor clearColor];
-    self.leftPieLabel2.textAlignment = NSTextAlignmentCenter;
-    self.leftPieLabel2.font = [UIFont systemFontOfSize:15];
-    self.leftPieLabel2.textColor = [UIColor whiteColor];
-    [view addSubview:self.leftPieLabel2];
-    
+    self.leftPieStarView2 = [self createStarsView:CGRectMake(0, self.leftPieTitleLabel2.frame.origin.y + self.leftPieTitleLabel2.frame.size.height, self.pieFrame.size.width/5, 15) ImageSize:CGSizeMake(8, 8) Tag:TAG_STARVIEW_LEFT2 Index:2];
+    self.leftPieStarView2.center = CGPointMake(self.leftPieTitleLabel2.center.x, self.leftPieStarView2.center.y);
+    self.leftPieStarView2.backgroundColor = [UIColor clearColor];
+    [view addSubview:self.leftPieStarView2];
+
     
     CGFloat leftStartAngle1 = leftEndAngle2;
     CGFloat leftEndAngle1 = leftStartAngle1 + [[self.valueAngleArray objectAtIndex:3] floatValue];
     CGPoint leftPieCenter1 = [self getApproximateMidPointForArcWithStartAngle:leftStartAngle1 andDegrees:leftEndAngle1];
+    //
     self.leftPieTitleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.pieFrame.origin.y + 20, self.pieFrame.size.width/2, 21)];
-    self.leftPieTitleLabel1.center = CGPointMake(leftPieCenter1.x + 10, leftPieCenter1.y - 25);
+    self.leftPieTitleLabel1.center = CGPointMake(leftPieCenter1.x, leftPieCenter1.y);
     self.leftPieTitleLabel1.backgroundColor = [UIColor clearColor];
     self.leftPieTitleLabel1.textAlignment = NSTextAlignmentCenter;
-    self.leftPieTitleLabel1.font = [UIFont systemFontOfSize:15];
+    self.leftPieTitleLabel1.font = [UIFont systemFontOfSize:textSize];
     self.leftPieTitleLabel1.textColor = [UIColor whiteColor];
     [view addSubview:self.leftPieTitleLabel1];
     
-    self.leftPieLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.leftPieTitleLabel1.frame.origin.y + self.leftPieTitleLabel1.frame.size.height, self.pieFrame.size.width/2, 21)];
-    self.leftPieLabel1.center = CGPointMake(self.leftPieTitleLabel1.center.x, self.leftPieLabel1.center.y);
-    self.leftPieLabel1.backgroundColor = [UIColor clearColor];
-    self.leftPieLabel1.textAlignment = NSTextAlignmentCenter;
-    self.leftPieLabel1.font = [UIFont systemFontOfSize:15];
-    self.leftPieLabel1.textColor = [UIColor whiteColor];
-    [view addSubview:self.leftPieLabel1];
-    
+    self.leftPieStarView1 = [self createStarsView:CGRectMake(0, self.leftPieTitleLabel1.frame.origin.y + self.leftPieTitleLabel1.frame.size.height, self.pieFrame.size.width/5, 15) ImageSize:CGSizeMake(8, 8) Tag:TAG_STARVIEW_LEFT1 Index:3];
+    self.leftPieStarView1.center = CGPointMake(self.leftPieTitleLabel1.center.x, self.leftPieStarView1.center.y);
+    self.leftPieStarView1.backgroundColor = [UIColor clearColor];
+    [view addSubview:self.leftPieStarView1];
+
     
     CGFloat rightStartAngle1 = leftEndAngle1;
     CGFloat rightEndAngle1 = rightStartAngle1 + [[self.valueAngleArray objectAtIndex:4] floatValue];
     CGPoint rightPieCenter1 = [self getApproximateMidPointForArcWithStartAngle:rightStartAngle1 andDegrees:rightEndAngle1];
     // 右側的 label
     self.rightPieTitleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.pieFrame.origin.y + 20, self.pieFrame.size.width/2, 21)];
-    self.rightPieTitleLabel1.center = CGPointMake(rightPieCenter1.x - 10, rightPieCenter1.y - 20);
+    self.rightPieTitleLabel1.center = CGPointMake(rightPieCenter1.x, rightPieCenter1.y);
     self.rightPieTitleLabel1.backgroundColor = [UIColor clearColor];
     self.rightPieTitleLabel1.textAlignment = NSTextAlignmentCenter;
-    self.rightPieTitleLabel1.font = [UIFont systemFontOfSize:15];
+    self.rightPieTitleLabel1.font = [UIFont systemFontOfSize:textSize];
     self.rightPieTitleLabel1.textColor = [UIColor whiteColor];
     [view addSubview:self.rightPieTitleLabel1];
     
-    self.rightPieLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.rightPieTitleLabel1.frame.origin.y + self.rightPieTitleLabel1.frame.size.height, self.pieFrame.size.width/2, 21)];
-    self.rightPieLabel1.center = CGPointMake(self.rightPieTitleLabel1.center.x, self.rightPieLabel1.center.y);
-    self.rightPieLabel1.backgroundColor = [UIColor clearColor];
-    self.rightPieLabel1.textAlignment = NSTextAlignmentCenter;
-    self.rightPieLabel1.font = [UIFont systemFontOfSize:15];
-    self.rightPieLabel1.textColor = [UIColor whiteColor];
-    [view addSubview:self.rightPieLabel1];
-    
+    self.rightPieStarView1 = [self createStarsView:CGRectMake(0, self.rightPieTitleLabel1.frame.origin.y + self.rightPieTitleLabel1.frame.size.height, self.pieFrame.size.width/5, 15) ImageSize:CGSizeMake(8, 8) Tag:TAG_STARVIEW_RIGHT1 Index:4];
+    self.rightPieStarView1.center = CGPointMake(self.rightPieTitleLabel1.center.x, self.rightPieStarView1.center.y);
+    self.rightPieStarView1.backgroundColor = [UIColor clearColor];
+    [view addSubview:self.rightPieStarView1];
+
     
     CGFloat rightStartAngle2 = rightEndAngle1;
     CGFloat rightEndAngle2 = rightStartAngle2 + [[self.valueAngleArray objectAtIndex:0] floatValue];
     CGPoint rightPieCenter2 = [self getApproximateMidPointForArcWithStartAngle:rightStartAngle2 andDegrees:rightEndAngle2];
+    //
     self.rightPieTitleLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.pieFrame.origin.y + self.pieFrame.size.height/2 + 10, self.pieFrame.size.width/2, 21)];
-    self.rightPieTitleLabel2.center = CGPointMake(rightPieCenter2.x - 10, rightPieCenter2.y);
+    self.rightPieTitleLabel2.center = CGPointMake(rightPieCenter2.x, rightPieCenter2.y);
     self.rightPieTitleLabel2.backgroundColor = [UIColor clearColor];
     self.rightPieTitleLabel2.textAlignment = NSTextAlignmentCenter;
-    self.rightPieTitleLabel2.font = [UIFont systemFontOfSize:15];
+    self.rightPieTitleLabel2.font = [UIFont systemFontOfSize:textSize];
     self.rightPieTitleLabel2.textColor = [UIColor whiteColor];
     [view addSubview:self.rightPieTitleLabel2];
     
-    self.rightPieLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(0, self.rightPieTitleLabel2.frame.origin.y + self.rightPieTitleLabel2.frame.size.height, self.pieFrame.size.width/2, 21)];
-    self.rightPieLabel2.center = CGPointMake(self.rightPieTitleLabel2.center.x, self.rightPieLabel2.center.y);
-    self.rightPieLabel2.backgroundColor = [UIColor clearColor];
-    self.rightPieLabel2.textAlignment = NSTextAlignmentCenter;
-    self.rightPieLabel2.font = [UIFont systemFontOfSize:15];
-    self.rightPieLabel2.textColor = [UIColor whiteColor];
-    [view addSubview:self.rightPieLabel2];
+    self.rightPieStarView2 = [self createStarsView:CGRectMake(0, self.rightPieTitleLabel2.frame.origin.y + self.rightPieTitleLabel2.frame.size.height, self.pieFrame.size.width/5, 15) ImageSize:CGSizeMake(8, 8) Tag:TAG_STARVIEW_RIGHT2 Index:0];
+    self.rightPieStarView2.center = CGPointMake(self.rightPieTitleLabel2.center.x, self.rightPieStarView2.center.y);
+    self.rightPieStarView2.backgroundColor = [UIColor clearColor];
+    [view addSubview:self.rightPieStarView2];
 
     
     posX = viewWidth - 50;
@@ -268,13 +273,89 @@
     
     //add selected view
     posX = 0;
-    posY = self.pieFrame.origin.y + self.pieFrame.size.height;
+    posY = self.pieFrame.origin.y + self.pieFrame.size.height - 10;
     width = viewWidth;
     height = viewHeight - posY;
     
     UIView *selView = [self createSelView:CGRectMake(posX, posY, width, height)];
     [view addSubview:selView];
 
+    
+    return view;
+}
+
+-(UIView*) createCenterStarsView:(CGRect) rect ImageSize:(CGSize) imageSize StarNum:(CGFloat) starNum
+{
+    UIView* view = [[UIView alloc] initWithFrame:rect];
+    
+    
+    CGFloat viewWidth = rect.size.width;
+    CGFloat viewHeight = rect.size.height;
+    
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    
+    CGFloat posX = (viewWidth - width * 5) / 2;
+    CGFloat posY = (viewHeight - height) / 2;
+    
+    
+    for (int i = 0; i < 5; i++)
+    {
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+        if (i < starNum) {
+            imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
+        } else {
+            if (i < starNum + 0.5) {
+                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
+            } else {
+                imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
+            }
+        }
+        [view addSubview:imageView];
+        
+        posX = posX + width;
+    }
+    
+    
+    return view;
+}
+
+-(UIView*) createStarsView:(CGRect) rect ImageSize:(CGSize) imageSize Tag:(NSInteger) tag Index:(NSInteger)index
+{
+    UIView* view = [[UIView alloc] initWithFrame:rect];
+    
+    
+    CGFloat viewWidth = rect.size.width;
+    CGFloat viewHeight = rect.size.height;
+    
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    
+    CGFloat posX = (viewWidth - width * 5) / 2;
+    CGFloat posY = (viewHeight - height) / 2;
+
+    
+    NSArray* titleArray = [self.valueTitleArray objectAtIndex:index];
+    CGFloat starNum = [[titleArray objectAtIndex:1] floatValue];
+    
+    for (int i = 0; i < 5; i++)
+    {
+        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+        imageView.tag = tag + i;
+        if (i < (NSInteger)starNum) {
+            imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
+        } else {
+            if (i < starNum) {
+                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
+            } else {
+                imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
+            }
+        }
+        [view addSubview:imageView];
+        
+        posX = posX + width;
+    }
+    
     
     return view;
 }
@@ -369,116 +450,119 @@
 
     // 選中的 label
     NSInteger selIndex = index;
-    
+
     CGPoint selCenter = [self getApproximateMidPointForArcWithStartAngle:90. andDegrees:90.];
-    selCenter = CGPointMake(selCenter.x, selCenter.y + 10);
-    [self resetPieLabel:self.selPieTitleLabel index:selIndex Array:self.valueTitleArray PosCenter:selCenter];
+    selCenter = CGPointMake(selCenter.x, selCenter.y);
+    [self resetPieLabel:self.selPieTitleLabel Index:selIndex Array:self.valueTitleArray PosCenter:selCenter];
     
-    selCenter = CGPointMake(self.selPieTitleLabel.center.x, self.selPieLabel.center.y);
-    [self resetPieLabel:self.selPieLabel index:selIndex Array:self.valueArray PosCenter:selCenter];
+    [self resetPieStarView:self.selPieStarView Index:selIndex PosCenter:CGPointMake(self.selPieTitleLabel.center.x, self.selPieTitleLabel.frame.origin.y + self.selPieTitleLabel.frame.size.height + self.selPieStarView.frame.size.height/2) Tag:TAG_STARVIEW_SEL];
     
     
     // 左側的 label
-    NSInteger leftPieIndex2 = index + 1;
+    NSInteger leftPieIndex2 = selIndex + 1;
     if (leftPieIndex2 >= 5)
         leftPieIndex2 = leftPieIndex2 - 5;
     
-    NSInteger nextLeftPieIndex2 = leftPieIndex2 + 1;
-    if (nextLeftPieIndex2 >= 5)
-        nextLeftPieIndex2 = nextLeftPieIndex2 - 5;
-    
-    CGFloat leftStartAngle2 = 90. + [[self.valueAngleArray objectAtIndex:leftPieIndex2] floatValue]/2;
-    CGFloat leftEndAngle2 = leftStartAngle2 + [[self.valueAngleArray objectAtIndex:nextLeftPieIndex2] floatValue];
+    CGFloat leftStartAngle2 = 90. + [[self.valueAngleArray objectAtIndex:selIndex] floatValue]/2;
+    CGFloat leftEndAngle2 = leftStartAngle2 + [[self.valueAngleArray objectAtIndex:leftPieIndex2] floatValue];
     CGPoint leftPieCenter2 = [self getApproximateMidPointForArcWithStartAngle:leftStartAngle2 andDegrees:leftEndAngle2];
-    leftPieCenter2 = CGPointMake(leftPieCenter2.x + 20, leftPieCenter2.y);
-    [self resetPieLabel:self.leftPieTitleLabel2 index:leftPieIndex2 Array:self.valueTitleArray PosCenter:leftPieCenter2];
+    leftPieCenter2 = CGPointMake(leftPieCenter2.x, leftPieCenter2.y);
+    [self resetPieLabel:self.leftPieTitleLabel2 Index:leftPieIndex2 Array:self.valueTitleArray PosCenter:leftPieCenter2];
     
-    leftPieCenter2 = CGPointMake(self.leftPieTitleLabel2.center.x, self.leftPieLabel2.center.y);
-    [self resetPieLabel:self.leftPieLabel2 index:leftPieIndex2 Array:self.valueArray PosCenter:leftPieCenter2];
-    
-    
+    [self resetPieStarView:self.leftPieStarView2 Index:leftPieIndex2 PosCenter:CGPointMake(self.leftPieTitleLabel2.center.x, self.leftPieTitleLabel2.frame.origin.y + self.leftPieTitleLabel2.frame.size.height + self.leftPieStarView2.frame.size.height/2) Tag:TAG_STARVIEW_LEFT2];
+
+
     //
-    NSInteger leftPieIndex1 = index + 2;
+    NSInteger leftPieIndex1 = leftPieIndex2 + 1;
     if (leftPieIndex1 >= 5)
         leftPieIndex1 = leftPieIndex1 - 5;
     
-    NSInteger nextLeftPieIndex1 = leftPieIndex1 + 1;
-    if (nextLeftPieIndex1 >= 5)
-        nextLeftPieIndex1 = nextLeftPieIndex1 - 5;
-    
     CGFloat leftStartAngle1 = leftEndAngle2;
-    CGFloat leftEndAngle1 = leftStartAngle1 + [[self.valueAngleArray objectAtIndex:nextLeftPieIndex1] floatValue];
+    CGFloat leftEndAngle1 = leftStartAngle1 + [[self.valueAngleArray objectAtIndex:leftPieIndex1] floatValue];
     CGPoint leftPieCenter1 = [self getApproximateMidPointForArcWithStartAngle:leftStartAngle1 andDegrees:leftEndAngle1];
-    leftPieCenter1 = CGPointMake(leftPieCenter1.x + 10, leftPieCenter1.y - 25);
-    [self resetPieLabel:self.leftPieTitleLabel1 index:leftPieIndex1 Array:self.valueTitleArray PosCenter:leftPieCenter1];
+    leftPieCenter1 = CGPointMake(leftPieCenter1.x, leftPieCenter1.y);
+    [self resetPieLabel:self.leftPieTitleLabel1 Index:leftPieIndex1 Array:self.valueTitleArray PosCenter:leftPieCenter1];
     
-    leftPieCenter1 = CGPointMake(self.leftPieTitleLabel1.center.x, self.leftPieLabel1.center.y);
-    [self resetPieLabel:self.leftPieLabel1 index:leftPieIndex1 Array:self.valueArray PosCenter:leftPieCenter1];
-    
-    
+    [self resetPieStarView:self.leftPieStarView1 Index:leftPieIndex1 PosCenter:CGPointMake(self.leftPieTitleLabel1.center.x, self.leftPieTitleLabel1.frame.origin.y + self.leftPieTitleLabel1.frame.size.height + self.leftPieTitleLabel1.frame.size.height/2) Tag:TAG_STARVIEW_LEFT1];
+
+ 
     // 右側的 label
-    NSInteger rightPieIndex1 = index + 3;
+    NSInteger rightPieIndex1 = leftPieIndex1 + 1;
     if (rightPieIndex1 >= 5)
         rightPieIndex1 = rightPieIndex1 - 5;
     
-    NSInteger nextRightPieIndex1 = rightPieIndex1 + 1;
-    if (nextRightPieIndex1 >= 5)
-        nextRightPieIndex1 = nextRightPieIndex1 - 5;
-    
     CGFloat rightStartAngle1 = leftEndAngle1;
-    CGFloat rightEndAngle1 = rightStartAngle1 + [[self.valueAngleArray objectAtIndex:nextRightPieIndex1] floatValue];
+    CGFloat rightEndAngle1 = rightStartAngle1 + [[self.valueAngleArray objectAtIndex:rightPieIndex1] floatValue];
     CGPoint rightPieCenter1 = [self getApproximateMidPointForArcWithStartAngle:rightStartAngle1 andDegrees:rightEndAngle1];
-    rightPieCenter1 = CGPointMake(rightPieCenter1.x - 10, rightPieCenter1.y - 20);
-    [self resetPieLabel:self.rightPieTitleLabel1 index:rightPieIndex1 Array:self.valueTitleArray PosCenter:rightPieCenter1];
+    rightPieCenter1 = CGPointMake(rightPieCenter1.x, rightPieCenter1.y);
+    [self resetPieLabel:self.rightPieTitleLabel1 Index:rightPieIndex1 Array:self.valueTitleArray PosCenter:rightPieCenter1];
     
-    rightPieCenter1 = CGPointMake(self.rightPieTitleLabel1.center.x, self.rightPieLabel1.center.y);
-    [self resetPieLabel:self.rightPieLabel1 index:rightPieIndex1 Array:self.valueArray PosCenter:rightPieCenter1];
-    
+    [self resetPieStarView:self.rightPieStarView1 Index:rightPieIndex1 PosCenter:CGPointMake(self.rightPieTitleLabel1.center.x, self.rightPieTitleLabel1.frame.origin.y + self.rightPieTitleLabel1.frame.size.height + self.rightPieTitleLabel1.frame.size.height/2) Tag:TAG_STARVIEW_RIGHT1];
+
     
     //
-    NSInteger rightPieIndex2 = index + 4;
+    NSInteger rightPieIndex2 = rightPieIndex1 + 1;
     if (rightPieIndex2 >= 5)
         rightPieIndex2 = rightPieIndex2 - 5;
     
-    NSInteger nextRightPieIndex2 = rightPieIndex2 + 1;
-    if (nextRightPieIndex2 >= 5)
-        nextRightPieIndex2 = nextRightPieIndex2 - 5;
-    
     CGFloat rightStartAngle2 = rightEndAngle1;
-    CGFloat rightEndAngle2 = rightStartAngle2 + [[self.valueAngleArray objectAtIndex:nextRightPieIndex2] floatValue];
+    CGFloat rightEndAngle2 = rightStartAngle2 + [[self.valueAngleArray objectAtIndex:rightPieIndex2] floatValue];
     CGPoint rightPieCenter2 = [self getApproximateMidPointForArcWithStartAngle:rightStartAngle2 andDegrees:rightEndAngle2];
-    rightPieCenter2 = CGPointMake(rightPieCenter2.x - 10, rightPieCenter2.y);
-    [self resetPieLabel:self.rightPieTitleLabel2 index:rightPieIndex2 Array:self.valueTitleArray PosCenter:rightPieCenter2];
+    rightPieCenter2 = CGPointMake(rightPieCenter2.x, rightPieCenter2.y);
+    [self resetPieLabel:self.rightPieTitleLabel2 Index:rightPieIndex2 Array:self.valueTitleArray PosCenter:rightPieCenter2];
     
-    rightPieCenter2 = CGPointMake(self.rightPieTitleLabel2.center.x, self.rightPieLabel2.center.y);
-    [self resetPieLabel:self.rightPieLabel2 index:rightPieIndex2 Array:self.valueArray PosCenter:rightPieCenter2];
+    [self resetPieStarView:self.rightPieStarView2 Index:rightPieIndex2 PosCenter:CGPointMake(self.rightPieTitleLabel2.center.x, self.rightPieTitleLabel2.frame.origin.y + self.rightPieTitleLabel2.frame.size.height + self.rightPieTitleLabel2.frame.size.height/2) Tag:TAG_STARVIEW_RIGHT2];
 
     
     
     //
     [self.rightPieTitleLabel1 setHidden:NO];
-    [self.rightPieLabel1 setHidden:NO];
+    [self.rightPieStarView1 setHidden:NO];
     
     [self.rightPieTitleLabel2 setHidden:NO];
-    [self.rightPieLabel2 setHidden:NO];
+    [self.rightPieStarView2 setHidden:NO];
     
     [self.selPieTitleLabel setHidden:NO];
-    [self.selPieLabel setHidden:NO];
+    [self.selPieStarView setHidden:NO];
     
     [self.leftPieTitleLabel2 setHidden:NO];
-    [self.leftPieLabel2 setHidden:NO];
+    [self.leftPieStarView2 setHidden:NO];
 
     [self.leftPieTitleLabel1 setHidden:NO];
-    [self.leftPieLabel1 setHidden:NO];
+    [self.leftPieStarView1 setHidden:NO];
     
     
     [_tableView reloadData];
 }
 
-- (void)resetPieLabel:(UILabel*) label index:(NSInteger)index Array:(NSMutableArray*) array PosCenter:(CGPoint)  posCenter
+- (void)resetPieLabel:(UILabel*) label Index:(NSInteger)index Array:(NSMutableArray*) array PosCenter:(CGPoint) posCenter
 {
-    label.text = [NSString stringWithFormat:@"%@", [array objectAtIndex:index]];
+    NSArray* titleArray = [array objectAtIndex:index];
+    label.text = [NSString stringWithFormat:@"%@", [titleArray objectAtIndex:0]];
     label.center = posCenter;
+}
+
+- (void)resetPieStarView:(UIView*) view Index:(NSInteger)index PosCenter:(CGPoint) posCenter Tag:(NSInteger) tag
+{
+    NSArray* titleArray = [self.valueTitleArray objectAtIndex:index];
+    CGFloat starNum = [[titleArray objectAtIndex:1] floatValue];
+    
+    for (int i = 0; i < 5; i++)
+    {
+        UIImageView* imageView = (UIImageView*)[view viewWithTag:tag + i];
+        if (i < (NSInteger)starNum) {
+            imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
+        } else {
+            if (i < starNum) {
+                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
+            } else {
+                imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
+            }
+        }
+        [view addSubview:imageView];
+    }
+
+    view.center = posCenter;
 }
 
 - (void)onCenterClick:(PieChartView *)pieChartView
@@ -490,38 +574,43 @@
     [self.pieContainer addSubview:self.pieChartView];
     [self.pieChartView reloadChart];
     
-    [self.pieChartView setAmountText:@"75"];
+//    [self.pieChartView setAmountText:@"75"];
     [self.pieChartView setTitleText:@"綜合表現"];
     
     
     [self.rightPieTitleLabel1 setHidden:YES];
-    [self.rightPieLabel1 setHidden:YES];
+    [self.rightPieStarView1 setHidden:YES];
     
     [self.rightPieTitleLabel2 setHidden:YES];
-    [self.rightPieLabel2 setHidden:YES];
+    [self.rightPieStarView2 setHidden:YES];
     
     [self.selPieTitleLabel setHidden:YES];
-    [self.selPieLabel setHidden:YES];
+    [self.selPieStarView setHidden:YES];
     
     [self.leftPieTitleLabel2 setHidden:YES];
-    [self.leftPieLabel2 setHidden:YES];
+    [self.leftPieStarView2 setHidden:YES];
 
     [self.leftPieTitleLabel1 setHidden:YES];
-    [self.leftPieLabel1 setHidden:YES];
+    [self.leftPieStarView1 setHidden:YES];
     
     
     [_tableView reloadData];
 }
 
 - (CGPoint)getApproximateMidPointForArcWithStartAngle:(CGFloat)startAngle andDegrees:(CGFloat)endAngle {
-    
     NSLog(@"start angle %f, end angle %f",startAngle,endAngle);
     CGFloat midAngle = DEGREES_TO_RADIANS((startAngle + endAngle) / 2);
     NSLog(@"midangle %f ",midAngle);
-    CGFloat x=0;
-    CGFloat y=0;
-    x= (self.pieFrame.origin.x) + (self.pieFrame.size.width/2 * cos(midAngle));
-    y= (self.pieFrame.origin.y) + (self.pieFrame.size.height/2 * sin(midAngle));
+    CGFloat x = 0;
+    CGFloat y = 0;
+    
+    CGFloat radius = self.pieFrame.size.height*9/13;
+    
+    CGFloat offsetX = radius * cos(midAngle);
+    CGFloat offsetY = radius * sin(midAngle);
+    
+    x = (self.pieFrame.origin.x) + offsetX;
+    y = (self.pieFrame.origin.y) + offsetY - 20;
     
     CGPoint approximateMidPointCenter = CGPointMake(((x + self.pieFrame.size.width)/2), ((y + self.pieFrame.size.height)/2));
     return approximateMidPointCenter;
@@ -575,6 +664,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
+    [self.navigationController pushViewController:MRouletteVC animated:YES];
 }
 
 @end
