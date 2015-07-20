@@ -115,7 +115,7 @@
     }else
     {
         NSArray *data7=[[NSArray alloc]initWithObjects:@"增加資料四號(0)",@"data4",@"0",@"value",nil];
-        NSArray *data8=[[NSArray alloc]initWithObjects:@"增加資料五號(700)",@"data5",@"70",@"value",nil];
+        NSArray *data8=[[NSArray alloc]initWithObjects:@"增加資料五號(70)",@"data5",@"70",@"value",nil];
         _aryAddData=[[NSMutableArray alloc]initWithObjects:data7,data8, nil];
     }
     

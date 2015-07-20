@@ -15,6 +15,7 @@
 		382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */; };
 		383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F831B4BD9CD00472513 /* MReportViewController.m */; };
 		383E2F871B4BF32800472513 /* MReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F861B4BF32800472513 /* MReportTableViewCell.m */; };
+		38C7F9B11B5C9CA200390B82 /* MGanttTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C7F9B01B5C9CA200390B82 /* MGanttTableViewCell.m */; };
 		38DCDD8D1B4E18B2008B57A2 /* RVCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */; };
 		38DCDD8E1B4E18B2008B57A2 /* RVCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8C1B4E18B2008B57A2 /* RVCollectionViewLayout.m */; };
 		38DCDD911B4E199F008B57A2 /* MRouletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD901B4E199F008B57A2 /* MRouletteViewController.m */; };
@@ -22,6 +23,7 @@
 		38DCDD951B4E22FD008B57A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38DCDD941B4E22FD008B57A2 /* Foundation.framework */; };
 		38DCDD971B4E2308008B57A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38DCDD961B4E2308008B57A2 /* UIKit.framework */; };
 		38E6F3FE1B411EAF00245DA1 /* MLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E6F3FD1B411EAF00245DA1 /* MLoginViewController.m */; };
+		38F3BF8C1B58CF94007BBC30 /* MGanttViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F3BF8B1B58CF94007BBC30 /* MGanttViewController.m */; };
 		38FD52F21B54BF7100AC03F4 /* RPRadarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FD52F11B54BF7100AC03F4 /* RPRadarChart.m */; };
 		38FD52F81B54C2F600AC03F4 /* MRadarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FD52F71B54C2F600AC03F4 /* MRadarChartView.m */; };
 		3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03AA111B3B9B1900923ABB /* MEventSelectViewController.m */; };
@@ -206,6 +208,8 @@
 		383E2F831B4BD9CD00472513 /* MReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MReportViewController.m; sourceTree = "<group>"; };
 		383E2F851B4BF32800472513 /* MReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MReportTableViewCell.h; path = structure/MReportTableViewCell.h; sourceTree = "<group>"; };
 		383E2F861B4BF32800472513 /* MReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MReportTableViewCell.m; path = structure/MReportTableViewCell.m; sourceTree = "<group>"; };
+		38C7F9B01B5C9CA200390B82 /* MGanttTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGanttTableViewCell.m; path = structure/MGanttTableViewCell.m; sourceTree = "<group>"; };
+		38C7F9B21B5CDB1500390B82 /* MGanttTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGanttTableViewCell.h; path = structure/MGanttTableViewCell.h; sourceTree = "<group>"; };
 		38DCDD891B4E18B2008B57A2 /* RVCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewCell.h; sourceTree = "<group>"; };
 		38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVCollectionViewCell.m; sourceTree = "<group>"; };
 		38DCDD8B1B4E18B2008B57A2 /* RVCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewLayout.h; sourceTree = "<group>"; };
@@ -217,6 +221,8 @@
 		38DCDD961B4E2308008B57A2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		38E6F3FC1B411EAF00245DA1 /* MLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLoginViewController.h; sourceTree = "<group>"; };
 		38E6F3FD1B411EAF00245DA1 /* MLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLoginViewController.m; sourceTree = "<group>"; };
+		38F3BF8A1B58CF94007BBC30 /* MGanttViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGanttViewController.h; sourceTree = "<group>"; };
+		38F3BF8B1B58CF94007BBC30 /* MGanttViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGanttViewController.m; sourceTree = "<group>"; };
 		38FD52F01B54BF7100AC03F4 /* RPRadarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPRadarChart.h; sourceTree = "<group>"; };
 		38FD52F11B54BF7100AC03F4 /* RPRadarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPRadarChart.m; sourceTree = "<group>"; };
 		38FD52F61B54C2F600AC03F4 /* MRadarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRadarChartView.h; path = CustomViews/MRadarChartView.h; sourceTree = "<group>"; };
@@ -607,6 +613,8 @@
 				3AE9972D1B54B41B005D590C /* MTaskRaidersViewController.m */,
 				3A81B9461B4CDAB600EAF996 /* MGoalSettingViewController.h */,
 				3A81B9471B4CDAB600EAF996 /* MGoalSettingViewController.m */,
+				38F3BF8A1B58CF94007BBC30 /* MGanttViewController.h */,
+				38F3BF8B1B58CF94007BBC30 /* MGanttViewController.m */,
 			);
 			path = "我的任務";
 			sourceTree = "<group>";
@@ -890,6 +898,8 @@
 		DC1014481B3287D000EF7A6F /* structure */ = {
 			isa = PBXGroup;
 			children = (
+				38C7F9B21B5CDB1500390B82 /* MGanttTableViewCell.h */,
+				38C7F9B01B5C9CA200390B82 /* MGanttTableViewCell.m */,
 				382998331B3983060045B3BD /* MIndustryRaidersTableViewCell.h */,
 				382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */,
 				382998361B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.h */,
@@ -1158,6 +1168,7 @@
 				D06C2D411B381850009D2082 /* FMDatabase.m in Sources */,
 				DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */,
 				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
+				38C7F9B11B5C9CA200390B82 /* MGanttTableViewCell.m in Sources */,
 				DCF46B211B43A34F00C771BB /* MCustGuide.m in Sources */,
 				3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */,
 				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
@@ -1190,6 +1201,7 @@
 				3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */,
 				3AE997381B550CF5005D590C /* RotatedView.m in Sources */,
 				DCF46AB91B41279900C771BB /* iCarousel.m in Sources */,
+				38F3BF8C1B58CF94007BBC30 /* MGanttViewController.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
 				DCB3FDF21B56AB4F00ED5BFA /* MRaidersTableCell.m in Sources */,
 				38DCDD8D1B4E18B2008B57A2 /* RVCollectionViewCell.m in Sources */,

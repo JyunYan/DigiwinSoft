@@ -13,7 +13,7 @@
 #import "MDesignateResponsibleViewController.h"
 #import "MGoalSettingViewController.h"
 #import "MTaskRaidersViewController.h"
-
+#import "MGanttViewController.h"
 #import "MRaidersTableCell.h"
 #import "MRaidersTableHeader.h"
 
@@ -380,7 +380,9 @@
 
 -(void)actionGanttChart:(id)sender
 {
-    
+    MGanttViewController *GanttVC=[[MGanttViewController alloc]init];
+    [self  presentViewController:GanttVC animated:YES completion:nil];
+    NSLog(@"甘特圖");
 }
 
 -(void)addActivity:(id)sender
