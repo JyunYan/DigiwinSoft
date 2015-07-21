@@ -20,6 +20,8 @@
 #define TAG_STARVIEW_RIGHT1 400
 #define TAG_STARVIEW_RIGHT2 500
 
+#define TAG_STARVIEW_PIE_CENTER 600
+
 
 @interface MStatusPieChartViewController ()<PieChartDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -302,10 +304,11 @@
     for (int i = 0; i < 5; i++)
     {
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        if (i < starNum) {
+        imageView.tag = TAG_STARVIEW_PIE_CENTER + i;
+        if (i < (NSInteger)starNum) {
             imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
         } else {
-            if (i < starNum + 0.5) {
+            if (i < starNum) {
                 imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
             } else {
                 imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
@@ -435,6 +438,54 @@
     return view;
 }
 
+#pragma mark - reset view
+
+- (void)resetPieLabel:(UILabel*) label Index:(NSInteger)index Array:(NSMutableArray*) array PosCenter:(CGPoint) posCenter
+{
+    NSArray* titleArray = [array objectAtIndex:index];
+    label.text = [NSString stringWithFormat:@"%@", [titleArray objectAtIndex:0]];
+    label.center = posCenter;
+}
+
+- (void)resetPieStarView:(UIView*) view Index:(NSInteger)index PosCenter:(CGPoint) posCenter Tag:(NSInteger) tag
+{
+    NSArray* titleArray = [self.valueTitleArray objectAtIndex:index];
+    CGFloat starNum = [[titleArray objectAtIndex:1] floatValue];
+    
+    for (int i = 0; i < 5; i++)
+    {
+        UIImageView* imageView = (UIImageView*)[view viewWithTag:tag + i];
+        if (i < (NSInteger)starNum) {
+            imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
+        } else {
+            if (i < starNum) {
+                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
+            } else {
+                imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
+            }
+        }
+    }
+    
+    view.center = posCenter;
+}
+
+- (void)resetCenterStarViewWithStarNum:(CGFloat) starNum
+{
+    for (int i = 0; i < 5; i++)
+    {
+        UIImageView* imageView = (UIImageView*)[_pieCenterStarView viewWithTag:TAG_STARVIEW_PIE_CENTER + i];
+        if (i < (NSInteger)starNum) {
+            imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
+        } else {
+            if (i < starNum) {
+                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
+            } else {
+                imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
+            }
+        }
+    }
+}
+
 #pragma mark - UIButton
 
 - (void)actionMaturityModel:(id)sender
@@ -535,36 +586,6 @@
     [_tableView reloadData];
 }
 
-- (void)resetPieLabel:(UILabel*) label Index:(NSInteger)index Array:(NSMutableArray*) array PosCenter:(CGPoint) posCenter
-{
-    NSArray* titleArray = [array objectAtIndex:index];
-    label.text = [NSString stringWithFormat:@"%@", [titleArray objectAtIndex:0]];
-    label.center = posCenter;
-}
-
-- (void)resetPieStarView:(UIView*) view Index:(NSInteger)index PosCenter:(CGPoint) posCenter Tag:(NSInteger) tag
-{
-    NSArray* titleArray = [self.valueTitleArray objectAtIndex:index];
-    CGFloat starNum = [[titleArray objectAtIndex:1] floatValue];
-    
-    for (int i = 0; i < 5; i++)
-    {
-        UIImageView* imageView = (UIImageView*)[view viewWithTag:tag + i];
-        if (i < (NSInteger)starNum) {
-            imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
-        } else {
-            if (i < starNum) {
-                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
-            } else {
-                imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
-            }
-        }
-        [view addSubview:imageView];
-    }
-
-    view.center = posCenter;
-}
-
 - (void)onCenterClick:(PieChartView *)pieChartView
 {
     self.pieChartView.delegate = nil;
@@ -576,6 +597,7 @@
     
 //    [self.pieChartView setAmountText:@"75"];
     [self.pieChartView setTitleText:@"綜合表現"];
+    [self resetCenterStarViewWithStarNum:3.5];
     
     
     [self.rightPieTitleLabel1 setHidden:YES];
