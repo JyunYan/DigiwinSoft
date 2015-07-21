@@ -20,6 +20,8 @@
 #import "MRaidersTableCell.h"
 #import "MRaidersTableHeader.h"
 
+#import "MFlowChartView2.h"
+
 #import "ASAnimationManager.h"
 @interface MIndustryRaiders2ViewController ()<MGuideTableCellDelegate>
 {
