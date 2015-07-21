@@ -75,16 +75,22 @@
     [self addTextLabel];
 }
 
+- (void)setTopText:(NSString *)topText
+{
+    _topText = topText;
+    
+    if(_textLabel)
+        _textLabel.text = topText;
+}
+
 - (void)addTextLabel
 {
-    if(_textLabel)
-        return;
-    
     _textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height - 4)];
     _textLabel.backgroundColor = [UIColor clearColor];
     _textLabel.textColor = [UIColor redColor];
     _textLabel.textAlignment = NSTextAlignmentCenter;
     _textLabel.font = [UIFont systemFontOfSize:12.];
+    _textLabel.text = _topText;
     [self addSubview:_textLabel];
 }
 

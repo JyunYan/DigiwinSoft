@@ -271,8 +271,8 @@ static MDataBaseManager* _director = nil;
 - (NSArray*)loadPhenArray
 {
     NSString* uuid = [MDirector sharedInstance].currentUser.industryId;
-    NSString* sql = @"select p.*, t.NAME, t.UNIT from R_IND_PHEN as rip inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID inner join M_TARGET as t on t.ID = p.TAR_ID where rip.IND_ID = ?";
-    // select p.*, t.NAME, t.UNIT
+    NSString* sql = @"select p.*, t.NAME, t.UNIT, t.TREND from R_IND_PHEN as rip inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID inner join M_TARGET as t on t.ID = p.TAR_ID where rip.IND_ID = ?";
+    // select p.*, t.NAME, t.UNIT, t.TREND
     // from R_IND_PHEN as rip
     // inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID
     // inner join M_TARGET as t on t.ID = p.TAR_ID
@@ -292,6 +292,7 @@ static MDataBaseManager* _director = nil;
         target.uuid = [rs stringForColumn:@"TAR_ID"];
         target.name = [rs stringForColumn:@"NAME"];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         
         [self loadTargetDetailWithTarget:target];
         
@@ -303,8 +304,8 @@ static MDataBaseManager* _director = nil;
 // p5, p25
 - (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen
 {
-    NSString* sql = @"select g.*, t.NAME, t.UNIT from R_PHEN_GUIDE as rpg inner join M_GUIDE as g on g.ID = rpg.GUIDE_ID inner join M_TARGET as t on t.ID = g.TAR_ID where rpg.PHEN_ID = ?";
-    // select g.*, t.NAME, t.UNIT
+    NSString* sql = @"select g.*, t.NAME, t.UNIT, t.TREND from R_PHEN_GUIDE as rpg inner join M_GUIDE as g on g.ID = rpg.GUIDE_ID inner join M_TARGET as t on t.ID = g.TAR_ID where rpg.PHEN_ID = ?";
+    // select g.*, t.NAME, t.UNIT, t.TREND
     // from R_PHEN_GUIDE as rpg
     // inner join M_GUIDE as g on g.ID = rpg.GUIDE_ID
     // inner join M_TARGET as t on t.ID = g.TAR_ID
@@ -327,6 +328,7 @@ static MDataBaseManager* _director = nil;
         target.uuid = [rs stringForColumn:@"TAR_ID"];
         target.name = [rs stringForColumnIndex:6];  // 指標name
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         
         [self loadTargetDetailWithTarget:target];
         
@@ -343,8 +345,8 @@ static MDataBaseManager* _director = nil;
 
 - (NSArray*)loadActivitySampleArrayWithGuide:(MGuide*)guide
 {
-    NSString* sql = @"select ma.*, mt.NAME, mt.UNIT from R_GUIDE_ACT as rga inner join M_ACTIVITY as ma on rga.ACT_ID = ma.ID inner join M_TARGET as mt on ma.TAR_ID = mt.ID where rga.GUIDE_ID = ?";
-    // select ma.*, mt.NAME, mt.UNIT
+    NSString* sql = @"select ma.*, mt.NAME, mt.UNIT, mt.TREND from R_GUIDE_ACT as rga inner join M_ACTIVITY as ma on rga.ACT_ID = ma.ID inner join M_TARGET as mt on ma.TAR_ID = mt.ID where rga.GUIDE_ID = ?";
+    // select ma.*, mt.NAME, mt.UNIT, mt.TREND
     // from R_GUIDE_ACT as rga
     // inner join M_ACTIVITY as ma on rga.ACT_ID = ma.ID
     // inner join M_TARGET as mt on ma.TAR_ID = mt.ID
@@ -368,6 +370,7 @@ static MDataBaseManager* _director = nil;
         MTarget* target = act.target;
         target.uuid = [rs stringForColumn:@"TAR_ID"];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         target.name = [rs stringForColumnIndex:6];
         
         [self loadTargetDetailWithTarget:target];
@@ -385,8 +388,8 @@ static MDataBaseManager* _director = nil;
 
 - (NSArray*)loadWorkItemSampleArrayWithActivity:(MActivity*)act
 {
-    NSString* sql = @"select mw.*, mt.NAME, mt.UNIT from M_WORK_ITEM as mw inner join M_TARGET as mt on mw.TAR_ID = mt.ID where mw.ACT_ID = ?";
-    // select mw.*, mt.NAME, mt.UNIT
+    NSString* sql = @"select mw.*, mt.NAME, mt.UNIT, mt.TREND from M_WORK_ITEM as mw inner join M_TARGET as mt on mw.TAR_ID = mt.ID where mw.ACT_ID = ?";
+    // select mw.*, mt.NAME, mt.UNIT, mt.TREND
     // from M_WORK_ITEM as mw
     // inner join M_TARGET as mt on mw.TAR_ID = mt.ID
     // where mw.ACT_ID = 'act-001'
@@ -398,8 +401,8 @@ static MDataBaseManager* _director = nil;
         MWorkItem* item = [MWorkItem new];
         item.uuid = [rs stringForColumn:@"ID"];
         item.desc = [rs stringForColumn:@"DESCRIPTION"];
-        item.index = [rs stringForColumn:@"INDEX"];
-        item.previos = [rs stringForColumn:@"PREVIOS"];
+        item.previos1 = [rs stringForColumn:@"PREVIOS_1"];
+        item.previos2 = [rs stringForColumn:@"PREVIOS_2"];
         item.name = [rs stringForColumnIndex:2];
         
         item.act_id = act.uuid;
@@ -408,6 +411,7 @@ static MDataBaseManager* _director = nil;
         MTarget* target = item.target;
         target.uuid = [rs stringForColumn:@"TAR_ID"];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         target.name = [rs stringForColumnIndex:7];
         
         [self loadTargetDetailWithTarget:target];
@@ -431,6 +435,7 @@ static MDataBaseManager* _director = nil;
         target.uuid = [rs stringForColumn:@"ID"];
         target.name = [rs stringForColumn:@"NAME"];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         
         [array addObject:target];
     }
@@ -475,8 +480,8 @@ static MDataBaseManager* _director = nil;
 - (NSArray*)loadIssueArrayByGudie:(MGuide*)guide
 {
     NSString* industryId = [MDirector sharedInstance].currentUser.industryId;
-    NSString* sql = @"select tar.NAME, tar.UNIT, iss.*, rit.* from R_GUIDE_ISSUE as rgi inner join M_ISSUE as iss on iss.ID = rgi.ISSUE_ID inner join M_TARGET as tar on iss.TAR_ID = tar.ID inner join R_IND_TAR as rit on rit.TAR_ID = tar.ID where rgi.GUIDE_ID = ? AND rit.IND_ID = ?";
-    // select iss.NAME, tar.NAME, tar.UNIT, rit.*
+    NSString* sql = @"select tar.NAME, tar.UNIT, tar.TREND, iss.*, rit.* from R_GUIDE_ISSUE as rgi inner join M_ISSUE as iss on iss.ID = rgi.ISSUE_ID inner join M_TARGET as tar on iss.TAR_ID = tar.ID inner join R_IND_TAR as rit on rit.TAR_ID = tar.ID where rgi.GUIDE_ID = ? AND rit.IND_ID = ?";
+    // select tar.NAME, tar.UNIT, tar.TREND, iss.*, rit.*
     // from R_GUIDE_ISSUE as rgi
     // inner join M_ISSUE as iss on iss.ID = rgi.ISSUE_ID
     // inner join M_TARGET as tar on iss.TAR_ID = tar.ID
@@ -490,14 +495,15 @@ static MDataBaseManager* _director = nil;
         
         MIssue* issue = [MIssue new];
         issue.uuid = [rs stringForColumn:@"ID"];
-        issue.name = [rs stringForColumnIndex:4];   // 議題name
+        issue.name = [rs stringForColumnIndex:5];   // 議題name
         issue.desc = [rs stringForColumn:@"DESCRIPTION"];
         issue.reads = [rs stringForColumn:@"READS"];
         
         MTarget* target = issue.target;
-        target.uuid = [rs stringForColumnIndex:3];  //指標id
+        target.uuid = [rs stringForColumnIndex:4];  //指標id
         target.name = [rs stringForColumnIndex:0];   //指標name
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         
         target.top = [rs stringForColumn:@"TOP"];
         target.avg = [rs stringForColumn:@"AVG"];
@@ -533,6 +539,7 @@ static MDataBaseManager* _director = nil;
         target.uuid = [rs stringForColumn:@"ID"];
         target.name = [rs stringForColumn:@"NAME"];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         
         target.valueR = [rs stringForColumn:@"VALUE_R"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
@@ -622,9 +629,11 @@ static MDataBaseManager* _director = nil;
         target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
         target.name = [rs stringForColumnIndex:15];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         target.startDate = [rs stringForColumn:@"START_DATE"];
         target.completeDate = [rs stringForColumn:@"COMPLETED"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
+        target.type = [rs stringForColumn:@"TYPE"];
         
         [self loadTargetDetailWithCustTarget:target];
         
@@ -685,9 +694,11 @@ static MDataBaseManager* _director = nil;
         target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
         target.name = [rs stringForColumnIndex:14];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         target.startDate = [rs stringForColumn:@"START_DATE"];
         target.completeDate = [rs stringForColumn:@"COMPLETED"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
+        target.type = [rs stringForColumn:@"TYPE"];
         
         [self loadTargetDetailWithCustTarget:target];
         
@@ -724,8 +735,8 @@ static MDataBaseManager* _director = nil;
         item.uuid = [rs stringForColumnIndex:0];
         item.name = [rs stringForColumnIndex:5];
         item.desc = [rs stringForColumn:@"DESCRIPTION"];
-        item.index = [rs stringForColumn:@"INDEX"];
-        item.previos = [rs stringForColumn:@"PREVIOS"];
+        item.previos1 = [rs stringForColumn:@"PREVIOS_1"];
+        item.previos2 = [rs stringForColumn:@"PREVIOS_2"];
         item.status = [rs stringForColumn:@"STATUS"];
         item.comp_id = [rs stringForColumn:@"COMP_ID"];
         item.guide_id = [rs stringForColumn:@"GUIDE_ID"];
@@ -739,9 +750,11 @@ static MDataBaseManager* _director = nil;
         target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
         target.name = [rs stringForColumnIndex:15];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         target.startDate = [rs stringForColumn:@"START_DATE"];
         target.completeDate = [rs stringForColumn:@"COMPLETED"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
+        target.type = [rs stringForColumn:@"TYPE"];
         
         [self loadTargetDetailWithCustTarget:target];
         
@@ -864,6 +877,8 @@ static MDataBaseManager* _director = nil;
         target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
         target.name = [rs stringForColumnIndex:15];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
+        target.type = [rs stringForColumn:@"TYPE"];
         target.startDate = [rs stringForColumn:@"START_DATE"];
         target.completeDate = [rs stringForColumn:@"COMPLETED"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
@@ -953,6 +968,8 @@ static MDataBaseManager* _director = nil;
         target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
         target.name = [rs stringForColumnIndex:15];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
+        target.type = [rs stringForColumn:@"TYPE"];
         target.startDate = [rs stringForColumn:@"START_DATE"];
         target.completeDate = [rs stringForColumn:@"COMPLETED"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
@@ -1008,6 +1025,8 @@ static MDataBaseManager* _director = nil;
         target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
         target.name = [rs stringForColumnIndex:14];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
+        target.type = [rs stringForColumn:@"TYPE"];
         target.startDate = [rs stringForColumn:@"START_DATE"];
         target.completeDate = [rs stringForColumn:@"COMPLETED"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
@@ -1042,8 +1061,8 @@ static MDataBaseManager* _director = nil;
         item.uuid = [rs stringForColumnIndex:0];
         item.name = [rs stringForColumnIndex:5];
         item.desc = [rs stringForColumn:@"DESCRIPTION"];
-        item.index = [rs stringForColumn:@"INDEX"];
-        item.previos = [rs stringForColumn:@"PREVIOS"];
+        item.previos1 = [rs stringForColumn:@"PREVIOS_1"];
+        item.previos2 = [rs stringForColumn:@"PREVIOS_2"];
         item.status = [rs stringForColumn:@"STATUS"];
         item.comp_id = [rs stringForColumn:@"COMP_ID"];
         item.guide_id = [rs stringForColumn:@"GUIDE_ID"];
@@ -1057,6 +1076,8 @@ static MDataBaseManager* _director = nil;
         target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
         target.name = [rs stringForColumnIndex:15];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
+        target.type = [rs stringForColumn:@"TYPE"];
         target.startDate = [rs stringForColumn:@"START_DATE"];
         target.completeDate = [rs stringForColumn:@"COMPLETED"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
@@ -1100,6 +1121,7 @@ static MDataBaseManager* _director = nil;
         target.uuid = [rs stringForColumnIndex:4];
         target.name = [rs stringForColumn:@"NAME"];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         target.valueR = [rs stringForColumn:@"VALUE_R"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
         
@@ -1135,6 +1157,7 @@ static MDataBaseManager* _director = nil;
         target.uuid = [rs stringForColumnIndex:5];
         target.name = [rs stringForColumnIndex:6];
         target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
         target.valueR = [rs stringForColumn:@"VALUE_R"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
         
@@ -1339,7 +1362,7 @@ static MDataBaseManager* _director = nil;
 
 - (BOOL)insertWorkItem:(MWorkItem*)item activityID:(NSString*)actid guideID:(NSString*)guideid
 {
-    NSString* sql = @"insert into U_WORK_ITEM ('ID','COMP_ID','GUIDE_ID','ACT_ID','WI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','INDEX','PREVIOS','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    NSString* sql = @"insert into U_WORK_ITEM ('ID','COMP_ID','GUIDE_ID','ACT_ID','WI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','PREVIOS_1','PREVIOS_2','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
     
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
     NSString* cre_dte = [[MDirector sharedInstance] getCurrentDateStringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -1350,11 +1373,12 @@ static MDataBaseManager* _director = nil;
     NSString* desc = item.desc;
     NSString* tarid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_TARGET_UUID_PREV];
     NSString* empid = item.manager.uuid;
-    NSString* index = item.index;
-    NSString* previos = item.previos;
+    //NSString* index = item.index;
+    NSString* previos1 = item.previos1;
+    NSString* previos2 = item.previos2;
     NSString* status = @"0";
     
-    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, actid, wi_m_id, name, desc, tarid, empid, index, previos, status, cre_dte];
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, actid, wi_m_id, name, desc, tarid, empid, previos1, previos2, status, cre_dte];
     if(b)
         [self insertTarget:item.target withID:tarid];
     else
@@ -1363,13 +1387,97 @@ static MDataBaseManager* _director = nil;
     return b;
 }
 
+- (void)insertCustActivitys:(NSArray*)array
+{
+    for (MCustActivity* act in array) {
+        [self insertCustActivity:act];
+    }
+}
+
+- (BOOL)insertCustActivity:(MCustActivity*)act
+{
+    NSString* sql = @"insert or replace into U_ACTIVITY ('ID','COMP_ID','GUIDE_ID','ACT_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','PREVIOS_1','PREVIOS_2','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?)";
+    
+    NSString* guideid = act.guide_id;
+    
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* cre_dte = act.cre_dte;
+    NSString* uuid = act.uuid;
+    NSString* act_m_id = act.act_m_id;
+    NSString* name = act.name;
+    NSString* desc = act.desc;
+    NSString* tarid = act.custTarget.uuid;
+    NSString* empid = act.manager.uuid;
+    //NSString* index = act.index;
+    NSString* prev1 = act.previos1;
+    NSString* prev2 = act.previos2;
+    NSString* status = @"0";
+    
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, act_m_id, name, desc, tarid, empid, prev1, prev2, status, cre_dte];
+    if(b){
+        [self insertCustTarget:act.custTarget withID:tarid];
+        [self insertCustWorkItems:act.workItemArray];
+    }else{
+        NSLog(@"add activity failed : %@", [self.db lastErrorMessage]);
+    }
+    
+    return b;
+}
+
+- (void)insertCustWorkItems:(NSArray*)array
+{
+    for (MCustWorkItem* item in array) {
+        [self insertCustWorkItem:(MCustWorkItem*)item];
+    }
+}
+
+- (BOOL)insertCustWorkItem:(MCustWorkItem*)item
+{
+    NSString* sql = @"insert or replace into U_WORK_ITEM ('ID','COMP_ID','GUIDE_ID','ACT_ID','WI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','PREVIOS_1','PREVIOS_2','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    
+    NSString* guideid = item.guide_id;
+    NSString* actid = item.act_id;
+    
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* cre_dte = item.cre_dte;
+    
+    NSString* uuid = item.uuid;
+    NSString* wi_m_id = item.wi_m_id;
+    NSString* name = item.name;
+    NSString* desc = item.desc;
+    NSString* tarid = item.custTarget.uuid;
+    NSString* empid = item.manager.uuid;
+    //NSString* index = item.index;
+    NSString* previos1 = item.previos1;
+    NSString* previos2 = item.previos2;
+    NSString* status = item.status;
+    
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, actid, wi_m_id, name, desc, tarid, empid, previos1, previos2, status, cre_dte];
+    if(b)
+        [self insertCustTarget:item.custTarget withID:tarid];
+    else
+        NSLog(@"add work item failed : %@", [self.db lastErrorMessage]);
+    
+    return b;
+}
+
 - (BOOL)insertTarget:(MTarget*)target withID:(NSString*)uuid
 {
-    NSString* sql = @"insert into U_TARGET ('ID','TAR_M_ID','NAME','VALUE_T','UNIT','START_DATE','COMPLETED') values(?,?,?,?,?,?,?)";
-    // ('ID','TAR_M_ID','NAME','VALUE_T','UNIT','START_DATE','COMPLETED')
-    // values(?,?,?,?,?,?,?)
+    NSString* sql = @"insert into U_TARGET ('ID','TAR_M_ID','NAME','VALUE_T','UNIT','START_DATE','COMPLETED','TREND','TYPE') values(?,?,?,?,?,?,?,?,?)";
+    // ('ID','TAR_M_ID','NAME','VALUE_T','UNIT','START_DATE','COMPLETED','TREND','TYPE')
+    // values(?,?,?,?,?,?,?,?,?)
     
-    BOOL b = [self.db executeUpdate:sql, uuid, target.uuid, target.name, target.valueT, target.unit, target.startDate, target.completeDate];
+    BOOL b = [self.db executeUpdate:sql, uuid, target.uuid, target.name, target.valueT, target.unit, target.startDate, target.completeDate,target.trend, @"1"];
+    if(!b)
+        NSLog(@"add target failed [%@] : %@", uuid, [self.db lastErrorMessage]);
+    return b;
+}
+
+- (BOOL)insertCustTarget:(MCustTarget*)target withID:(NSString*)uuid
+{
+    NSString* sql = @"insert or replace into U_TARGET ('ID','TAR_M_ID','NAME','VALUE_T','UNIT','START_DATE','COMPLETED','TREND','TYPE') values(?,?,?,?,?,?,?,?,?)";
+    
+    BOOL b = [self.db executeUpdate:sql, uuid, target.uuid, target.name, target.valueT, target.unit, target.startDate, target.completeDate,target.trend, target.type];
     if(!b)
         NSLog(@"add target failed [%@] : %@", uuid, [self.db lastErrorMessage]);
     return b;

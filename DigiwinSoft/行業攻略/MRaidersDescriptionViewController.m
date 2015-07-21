@@ -48,9 +48,6 @@
 {
     [super viewWillAppear:YES];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kkk:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ggg:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
-    
     self.automaticallyAdjustsScrollViewInsets = NO;
 
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
@@ -63,6 +60,8 @@
     [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = bar_item;
+    
+    [_player prepareToPlay];
 
 //    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 //    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
@@ -70,10 +69,8 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [_player stop];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 #pragma mark - create view
 - (void)loadData
 {
@@ -85,6 +82,10 @@
     if(_player.playbackState == MPMoviePlaybackStatePlaying){
         [_player setFullscreen:YES animated:YES];
         NSLog(@"ppp");
+    }
+    if(_player.playbackState == MPMoviePlaybackStateStopped){
+        [_player setFullscreen:NO animated:YES];
+        NSLog(@"end1");
     }
 }
 
@@ -110,7 +111,9 @@
     _player.view.frame = CGRectMake(0.0, offset,DEVICE_SCREEN_WIDTH, 170.0);
     _player.shouldAutoplay = NO;
     [self.view addSubview: _player.view];
-    //[_player prepareToPlay];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kkk:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ggg:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
     
     offset += _player.view.frame.size.height;
     

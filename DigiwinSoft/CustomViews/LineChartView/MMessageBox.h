@@ -10,6 +10,7 @@
 
 @interface MMessageBox : UIView
 
-@property (nonatomic,strong) UILabel* textLabel;
+@property (nonatomic, strong) UILabel* textLabel;
+@property (nonatomic, strong) NSString* topText;
 
 @end

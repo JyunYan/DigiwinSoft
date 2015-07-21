@@ -286,7 +286,11 @@
 
 -(void)actionNotify:(id)sender
 {
+    NSArray* array = _act.workItemArray;
+    [[MDataBaseManager sharedInstance] insertCustWorkItems:array];
     
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:@"成功發送通知" delegate:nil cancelButtonTitle:@"確認" otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)didAssignManager:(NSNotification*)note
@@ -298,6 +302,14 @@
     [_act.workItemArray replaceObjectAtIndex:_selectedIndex withObject:workitem];
     
     [_tableView reloadData];
+}
+
+- (void)didSettingTarget:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidSettingTarget object:nil];
+    
+    MCustWorkItem* workitem = (MCustWorkItem*)notification.object;
+    [_act.workItemArray replaceObjectAtIndex:_selectedIndex withObject:workitem];
 }
 
 #pragma mark - MWorkItemTableCellDelegate
@@ -319,13 +331,13 @@
 
 - (void)btnTargetSetClicked:(MWorkItemTableCell *)cell
 {
-    /*
-     UIButton* button = (UIButton*)sender;
-     NSInteger tag = button.tag;
-     NSInteger index = tag - TAG_BUTTON_TARGET;
-     MWorkItem* workItem = [_workItemArray objectAtIndex:index];
-     */
-    MGoalSettingViewController* vc = [[MGoalSettingViewController alloc] initWithActivityArray:_activityArray Index:_actIndex];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSettingTarget:) name:kDidSettingTarget object:nil];
+    
+    NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
+    _selectedIndex = indexPath.row;
+    MCustWorkItem* workitem = [_act.workItemArray objectAtIndex:_selectedIndex];
+    
+    MGoalSettingViewController* vc = [[MGoalSettingViewController alloc] initWithCustWorkItem:workitem];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

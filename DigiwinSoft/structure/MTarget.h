@@ -24,6 +24,8 @@
 @property (nonatomic, strong) NSString* valueR; //實際值;
 @property (nonatomic, strong) NSString* valueT; //目標值;
 
+@property (nonatomic, strong) NSString* trend; //趨勢 0:越大越好 1:越小越好
+
 @property (nonatomic, strong) NSString* startDate;  //開始執行日
 @property (nonatomic, strong) NSString* completeDate; //預計達成日
 

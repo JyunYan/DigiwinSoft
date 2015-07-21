@@ -12,6 +12,7 @@
 @interface MCustTarget : MTarget
 
 @property (nonatomic, strong) NSString* tar_uuid;
+@property (nonatomic, strong) NSString* type;   //類型 0:Y/N 1:數值
 
 - (void)copyFromTarget:(MTarget*)target;
 

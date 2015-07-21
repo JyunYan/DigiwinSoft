@@ -14,6 +14,7 @@
 
 @property (nonatomic) CGFloat gapX;
 @property (nonatomic, strong) MDashedLine* dashLineView;
+@property (nonatomic, strong) NSString* topString;
 
 @end
 
@@ -27,6 +28,8 @@
         _points = [NSMutableArray new];
         _scale = 1.;
         _gapX = 0.;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDefaultText:) name:@"didDrawTopBox" object:nil];
     }
     
     return self;
@@ -40,6 +43,8 @@
         _points = [NSMutableArray new];
         _scale = 1.;
         _gapX = 0.;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDefaultText:) name:@"didDrawTopBox" object:nil];
     }
     
     return self;
@@ -71,6 +76,14 @@
         
         [_points addObject:coord];
     }
+    
+    [self setTopString];
+}
+
+- (void)setTopString
+{
+    MCoordinate* coord = [_points lastObject];
+    _topString = coord.target.valueR;
 }
 
 - (void)resetPoints
@@ -217,9 +230,10 @@
     if(_dashLineView)
         return;
     
-    _dashLineView = [[MDashedLine alloc] initWithFrame:CGRectMake(0, 0, 24, self.bounds.size.height)];
+    _dashLineView = [[MDashedLine alloc] initWithFrame:CGRectMake(0, 0, 32, self.bounds.size.height)];
     _dashLineView.center = CGPointMake(self.bounds.size.width, self.bounds.size.height / 2.);
     _dashLineView.backgroundColor = [UIColor clearColor];
+    _dashLineView.topText = _topString;
     [self addSubview:_dashLineView];
     
     UIPanGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
