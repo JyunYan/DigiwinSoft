@@ -93,6 +93,11 @@
 - (void)insertWorkItems:(NSArray*)array activityID:(NSString*)actid guideID:(NSString*)guideid;
 - (BOOL)insertWorkItem:(MWorkItem*)item activityID:(NSString*)actid guideID:(NSString*)guideid;
 
+- (void)insertCustActivitys:(NSArray*)array;
+- (BOOL)insertCustActivity:(MCustActivity*)act;
+- (void)insertCustWorkItems:(NSArray*)array;
+- (BOOL)insertCustWorkItem:(MCustWorkItem*)item;
+
 // 更新對策 release 狀態 Yes:攻略 No:規劃
 - (BOOL)updateGuide:(MCustGuide*)guide release:(BOOL)release;
 

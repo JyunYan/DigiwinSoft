@@ -13,6 +13,8 @@
 
 @interface MGoalSettingViewController : UITableViewController
 
-- (id)initWithActivityArray:(NSMutableArray*) activityArray Index:(NSInteger) index;
+//- (id)initWithActivityArray:(NSMutableArray*) activityArray Index:(NSInteger) index;
+- (id)initWithCustActivity:(MCustActivity*)activity;
+- (id)initWithCustWorkItem:(MCustWorkItem*)workitem;
 
 @end

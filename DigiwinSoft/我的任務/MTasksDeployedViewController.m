@@ -390,7 +390,11 @@
 
 -(void)actionNotify:(id)sender
 {
+    NSArray* array = _guide.activityArray;
+    [[MDataBaseManager sharedInstance] insertCustActivitys:array];
     
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:@"成功發送通知" delegate:nil cancelButtonTitle:@"確認" otherButtonTitles:nil];
+    [alert show];
 }
 
 #pragma mark - NSNotification method
@@ -414,6 +418,14 @@
     [_tableView reloadData];
 }
 
+- (void)didSettingTarget:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidSettingTarget object:nil];
+    
+    MCustActivity* act = (MCustActivity*)notification.object;
+    [_activityArray replaceObjectAtIndex:_selectedIndex withObject:act];
+}
+
 #pragma mark - MActivityTableCellDelegate 相關
 
 - (void)btnManagerClicked:(MActivityTableCell *)cell
@@ -433,19 +445,22 @@
 
 - (void)btnTargetSetClicked:(MActivityTableCell *)cell
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSettingTarget:) name:kDidSettingTarget object:nil];
+    
     NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
-    NSInteger index = indexPath.row;
+    _selectedIndex = indexPath.row;
     //    MActivity* act = [_activityArray objectAtIndex:index];
     
-    MGoalSettingViewController* vc = [[MGoalSettingViewController alloc] initWithActivityArray:_activityArray Index:index];
+    MCustActivity* act = [_guide.activityArray objectAtIndex:_selectedIndex];
+    MGoalSettingViewController* vc = [[MGoalSettingViewController alloc] initWithCustActivity:act];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)btnRaidersClicked:(MActivityTableCell *)cell
 {
     NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
-    NSInteger index = indexPath.row;
-    MCustActivity* act = [_activityArray objectAtIndex:index];
+    _selectedIndex = indexPath.row;
+    MCustActivity* act = [_activityArray objectAtIndex:_selectedIndex];
     
     MTaskRaidersViewController* vc = [[MTaskRaidersViewController alloc] initWithCustActivity:act];
     [self.navigationController pushViewController:vc animated:YES];

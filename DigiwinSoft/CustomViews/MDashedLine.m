@@ -71,6 +71,7 @@
     _topBox = [[MMessageBox alloc] initWithFrame:frame];
     _topBox.center = CGPointMake(self.bounds.size.width/2., -22);
     _topBox.backgroundColor = [UIColor clearColor];
+    [_topBox setTopText:_topText];
     [self addSubview:_topBox];
     
     //_topBox.hidden = YES;
@@ -93,7 +94,10 @@
 
 - (void)setTopText:(NSString *)topText
 {
-    _topBox.textLabel.text = topText;
+    _topText = topText;
+    
+    if(_topBox)
+        [_topBox setTopText:topText];
 }
 
 - (void)setBottomText:(NSString *)bottomText

@@ -36,25 +36,27 @@
 
 @implementation MMyTaskViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    [self addMainMenu];
+    
+    self.title = @"我的任務";
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-     self.title = @"我的任務";
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     NSArray *ary=[[MDataBaseManager sharedInstance]loadMyMissionsWithIndex:0];
     _taskDataArry=[[NSMutableArray alloc]initWithArray:ary];
     
-    [self createTableView];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self loadData];
-    [self addMainMenu];
+    
     [self createSegmentedView];
-
+    [self createTableView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -97,6 +99,9 @@
 
 - (void)createSegmentedView
 {
+    if(_customSegmentedControl)
+        return;
+    
     CGFloat width = self.view.frame.size.width - 10;
     CGFloat height = 40;
 
@@ -123,11 +128,15 @@
 
 - (void)createTableView
 {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,_customSegmentedControl.frame.origin.y+_customSegmentedControl.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - 64-40-49)];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    
-    [self.view addSubview:_tableView];
+    if(_tableView){
+        [_tableView reloadData];
+    }else{
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,_customSegmentedControl.frame.origin.y+_customSegmentedControl.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - 64-40-49)];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        [self.view addSubview:_tableView];
+
+    }
 }
 
 #pragma mark - TableView DataSource

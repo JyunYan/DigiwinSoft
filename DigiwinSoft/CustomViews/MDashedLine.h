@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSString* topText;
 @property (nonatomic, strong) NSString* bottomText;
 
+- (void)setTopText:(NSString *)topText;
 - (void)hideTopBox:(BOOL)hide;
 
 @end

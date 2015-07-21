@@ -23,6 +23,8 @@
         
         _upMax = @"0";
         _upMin = @"0";
+        
+        _trend = @"0";
     }
     return self;
 }

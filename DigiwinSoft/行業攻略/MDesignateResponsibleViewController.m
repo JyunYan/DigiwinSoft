@@ -456,7 +456,6 @@
 
 -(void) cancelPicker
 {
-    
     NSInteger row = [self.PickerSkill selectedRowInComponent:0];
     if(row == 0)
         self.label2.text = @"全部";

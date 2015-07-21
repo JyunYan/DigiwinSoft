@@ -10,6 +10,15 @@
 
 @implementation MCustTarget
 
+- (id)init
+{
+    self = [super init];
+    if(self){
+        _type = @"1";
+    }
+    return self;
+}
+
 - (void)copyFromTarget:(MTarget*)target
 {
     self.tar_uuid = target.uuid;

@@ -116,6 +116,12 @@
 		DC3DF9DB1B4E6C0B0065DF5D /* MDashedLine.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9DA1B4E6C0B0065DF5D /* MDashedLine.m */; };
 		DC3DF9DE1B4ED13E0065DF5D /* MConcentricCircles.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */; };
 		DC3DF9E11B4EE40B0065DF5D /* MMessageBox.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9E01B4EE40B0065DF5D /* MMessageBox.m */; };
+		DC5877731B5DCCCF00D5AC5D /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC58776D1B5DCCCF00D5AC5D /* Icon-60@2x.png */; };
+		DC5877741B5DCCCF00D5AC5D /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC58776E1B5DCCCF00D5AC5D /* Icon-60@3x.png */; };
+		DC5877751B5DCCCF00D5AC5D /* Icon-Small-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC58776F1B5DCCCF00D5AC5D /* Icon-Small-40@2x.png */; };
+		DC5877761B5DCCCF00D5AC5D /* Icon-Small-40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5877701B5DCCCF00D5AC5D /* Icon-Small-40@3x.png */; };
+		DC5877771B5DCCCF00D5AC5D /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5877711B5DCCCF00D5AC5D /* Icon-Small@2x.png */; };
+		DC5877781B5DCCCF00D5AC5D /* Icon-Small@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5877721B5DCCCF00D5AC5D /* Icon-Small@3x.png */; };
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
 		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
@@ -123,6 +129,8 @@
 		DCB3FDEF1B55F67B00ED5BFA /* MFlowChartPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDEE1B55F67B00ED5BFA /* MFlowChartPoint.m */; };
 		DCB3FDF21B56AB4F00ED5BFA /* MRaidersTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDF11B56AB4F00ED5BFA /* MRaidersTableCell.m */; };
 		DCB3FDF51B56C00C00ED5BFA /* MRaidersTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDF41B56C00C00ED5BFA /* MRaidersTableHeader.m */; };
+		DCB3FDF91B5A375900ED5BFA /* MRadioGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDF81B5A375900ED5BFA /* MRadioGroupView.m */; };
+		DCB3FDFC1B5A395900ED5BFA /* MRadioButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDFB1B5A395900ED5BFA /* MRadioButtonView.m */; };
 		DCCAB1AC1B4F841500AA1CD2 /* ASAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCAB1AB1B4F841500AA1CD2 /* ASAnimationManager.m */; };
 		DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AA81B40E04A00C771BB /* MEvent.m */; };
 		DCF46AAC1B41103700C771BB /* MSituation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAB1B41103700C771BB /* MSituation.m */; };
@@ -379,6 +387,12 @@
 		DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MConcentricCircles.m; path = CustomViews/MConcentricCircles.m; sourceTree = "<group>"; };
 		DC3DF9DF1B4EE40B0065DF5D /* MMessageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMessageBox.h; path = CustomViews/MMessageBox.h; sourceTree = "<group>"; };
 		DC3DF9E01B4EE40B0065DF5D /* MMessageBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMessageBox.m; path = CustomViews/MMessageBox.m; sourceTree = "<group>"; };
+		DC58776D1B5DCCCF00D5AC5D /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
+		DC58776E1B5DCCCF00D5AC5D /* Icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@3x.png"; sourceTree = "<group>"; };
+		DC58776F1B5DCCCF00D5AC5D /* Icon-Small-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-40@2x.png"; sourceTree = "<group>"; };
+		DC5877701B5DCCCF00D5AC5D /* Icon-Small-40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-40@3x.png"; sourceTree = "<group>"; };
+		DC5877711B5DCCCF00D5AC5D /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		DC5877721B5DCCCF00D5AC5D /* Icon-Small@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@3x.png"; sourceTree = "<group>"; };
 		DC6A52B11B3D2E6E001A373F /* MDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDirector.h; sourceTree = "<group>"; };
 		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
 		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
@@ -392,6 +406,10 @@
 		DCB3FDF11B56AB4F00ED5BFA /* MRaidersTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersTableCell.m; path = CustomViews/MRaidersTableCell.m; sourceTree = "<group>"; };
 		DCB3FDF31B56C00C00ED5BFA /* MRaidersTableHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaidersTableHeader.h; path = CustomViews/MRaidersTableHeader.h; sourceTree = "<group>"; };
 		DCB3FDF41B56C00C00ED5BFA /* MRaidersTableHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersTableHeader.m; path = CustomViews/MRaidersTableHeader.m; sourceTree = "<group>"; };
+		DCB3FDF71B5A375900ED5BFA /* MRadioGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRadioGroupView.h; path = CustomViews/RadioGroupView/MRadioGroupView.h; sourceTree = "<group>"; };
+		DCB3FDF81B5A375900ED5BFA /* MRadioGroupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRadioGroupView.m; path = CustomViews/RadioGroupView/MRadioGroupView.m; sourceTree = "<group>"; };
+		DCB3FDFA1B5A395900ED5BFA /* MRadioButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRadioButtonView.h; path = CustomViews/RadioGroupView/MRadioButtonView.h; sourceTree = "<group>"; };
+		DCB3FDFB1B5A395900ED5BFA /* MRadioButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRadioButtonView.m; path = CustomViews/RadioGroupView/MRadioButtonView.m; sourceTree = "<group>"; };
 		DCCAB1AA1B4F841500AA1CD2 /* ASAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASAnimationManager.h; sourceTree = "<group>"; };
 		DCCAB1AB1B4F841500AA1CD2 /* ASAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASAnimationManager.m; sourceTree = "<group>"; };
 		DCF46AA71B40E04A00C771BB /* MEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEvent.h; path = structure/MEvent.h; sourceTree = "<group>"; };
@@ -808,6 +826,12 @@
 		DC0ADF4F1B316E340019236D = {
 			isa = PBXGroup;
 			children = (
+				DC58776D1B5DCCCF00D5AC5D /* Icon-60@2x.png */,
+				DC58776E1B5DCCCF00D5AC5D /* Icon-60@3x.png */,
+				DC58776F1B5DCCCF00D5AC5D /* Icon-Small-40@2x.png */,
+				DC5877701B5DCCCF00D5AC5D /* Icon-Small-40@3x.png */,
+				DC5877711B5DCCCF00D5AC5D /* Icon-Small@2x.png */,
+				DC5877721B5DCCCF00D5AC5D /* Icon-Small@3x.png */,
 				38DCDD961B4E2308008B57A2 /* UIKit.framework */,
 				38DCDD941B4E22FD008B57A2 /* Foundation.framework */,
 				38DCDD921B4E22ED008B57A2 /* CoreGraphics.framework */,
@@ -936,9 +960,21 @@
 			name = structure;
 			sourceTree = "<group>";
 		};
+		DCB3FDF61B5A373200ED5BFA /* RadioGroupView */ = {
+			isa = PBXGroup;
+			children = (
+				DCB3FDF71B5A375900ED5BFA /* MRadioGroupView.h */,
+				DCB3FDF81B5A375900ED5BFA /* MRadioGroupView.m */,
+				DCB3FDFA1B5A395900ED5BFA /* MRadioButtonView.h */,
+				DCB3FDFB1B5A395900ED5BFA /* MRadioButtonView.m */,
+			);
+			name = RadioGroupView;
+			sourceTree = "<group>";
+		};
 		DCF46AB21B41258F00C771BB /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				DCB3FDF61B5A373200ED5BFA /* RadioGroupView */,
 				38FD52F61B54C2F600AC03F4 /* MRadarChartView.h */,
 				38FD52F71B54C2F600AC03F4 /* MRadarChartView.m */,
 				DCF46AB31B41265800C771BB /* MRaiderCarouselView.h */,
@@ -1078,6 +1114,7 @@
 				3AFF625F1B438A46005B6238 /* icon_menu_11.png in Resources */,
 				DCF46B0C1B42AAF300C771BB /* icon_red_circle.png in Resources */,
 				DCF46AFB1B42AAF300C771BB /* check_box_on.png in Resources */,
+				DC5877771B5DCCCF00D5AC5D /* Icon-Small@2x.png in Resources */,
 				DCF46AFF1B42AAF300C771BB /* icon_back.png in Resources */,
 				DCF46AFA1B42AAF300C771BB /* check_box_off.png in Resources */,
 				DCF46AFE1B42AAF300C771BB /* icon_alarm.png in Resources */,
@@ -1096,6 +1133,7 @@
 				3A5EA3651B576C1400B5360F /* icon_up.png in Resources */,
 				DCF46B151B42AAF300C771BB /* tab_icon_2.png in Resources */,
 				DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */,
+				DC5877761B5DCCCF00D5AC5D /* Icon-Small-40@3x.png in Resources */,
 				DCF46ABE1B41504100C771BB /* dataStore.sqlite in Resources */,
 				DCF46B081B42AAF300C771BB /* icon_more.png in Resources */,
 				3AFF625A1B438A46005B6238 /* icon_menu_6.png in Resources */,
@@ -1121,14 +1159,18 @@
 				DCF46B131B42AAF300C771BB /* star_fill.png in Resources */,
 				DCF46B061B42AAF300C771BB /* icon_list.png in Resources */,
 				3AFF625E1B438A46005B6238 /* icon_menu_10.png in Resources */,
+				DC5877741B5DCCCF00D5AC5D /* Icon-60@3x.png in Resources */,
+				DC5877751B5DCCCF00D5AC5D /* Icon-Small-40@2x.png in Resources */,
 				DCF46B141B42AAF300C771BB /* tab_icon_1.png in Resources */,
 				DCF46B051B42AAF300C771BB /* icon_info.png in Resources */,
 				3A03AA1D1B3BD5CA00923ABB /* downArrow@3x.png in Resources */,
+				DC5877731B5DCCCF00D5AC5D /* Icon-60@2x.png in Resources */,
 				DCF46B001B42AAF300C771BB /* icon_blue_circle.png in Resources */,
 				3A8399791B4E1D50008B0150 /* icon_arrow_up_right.png in Resources */,
 				3AFF625D1B438A46005B6238 /* icon_menu_9.png in Resources */,
 				3AFF62561B438A46005B6238 /* icon_menu_2.png in Resources */,
 				3A5EA3601B57455D00B5360F /* center.png in Resources */,
+				DC5877781B5DCCCF00D5AC5D /* Icon-Small@3x.png in Resources */,
 				DC0ADF691B316E340019236D /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1227,6 +1269,7 @@
 				DCF46B2A1B454FA800C771BB /* MCustWorkItem.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
 				DCF46ACD1B4236CB00C771BB /* MTarget.m in Sources */,
+				DCB3FDFC1B5A395900ED5BFA /* MRadioButtonView.m in Sources */,
 				DC3DF9D51B4E23360065DF5D /* MTarChartView.m in Sources */,
 				383E2F871B4BF32800472513 /* MReportTableViewCell.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
@@ -1243,6 +1286,7 @@
 				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
 				DC3DF9E11B4EE40B0065DF5D /* MMessageBox.m in Sources */,
 				DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */,
+				DCB3FDF91B5A375900ED5BFA /* MRadioGroupView.m in Sources */,
 				3AB4CE1A1B32848B00143374 /* MMyTaskViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
