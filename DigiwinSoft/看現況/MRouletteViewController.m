@@ -10,7 +10,7 @@
 #import "RVCollectionViewCell.h"
 #import "RVCollectionViewLayout.h"
 #import "MConfig.h"
-@interface MRouletteViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate>
+@interface MRouletteViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView * mCollection;
 @property (nonatomic, strong) NSMutableArray * imagesArray;
 @property (nonatomic, strong) NSMutableArray * imageNamesArray;
@@ -24,12 +24,10 @@
     // Do any additional setup after loading the view.
     self.title=@"Roulette";
     
-    UIImageView *backgroundImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT)];
+    UIImageView *backgroundImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 64.-49.)];
     backgroundImageView.image=[UIImage imageNamed:@"bg_status.png"];
     [self.view addSubview:backgroundImageView];
     
-    
-    [self initImages];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -45,14 +43,14 @@
 {
     
     RVCollectionViewLayout* flowLayout = [[RVCollectionViewLayout alloc]init];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    //[flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     
-    _mCollection=[[UICollectionView alloc]initWithFrame:CGRectMake(1, 85,DEVICE_SCREEN_WIDTH-2,150)collectionViewLayout:flowLayout];
+    _mCollection=[[UICollectionView alloc]initWithFrame:CGRectMake(1, 85,DEVICE_SCREEN_WIDTH-2,150) collectionViewLayout:flowLayout];
     _mCollection.delegate=self;
     _mCollection.dataSource=self;
     _mCollection.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
     
-    [_mCollection registerClass:[RVCollectionViewCell class] forCellWithReuseIdentifier:@"ItemIdentifier"];
+    [_mCollection registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"ItemIdentifier"];
     _mCollection.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     _mCollection.showsHorizontalScrollIndicator = NO;
     _mCollection.showsVerticalScrollIndicator = NO;
@@ -72,9 +70,10 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RVCollectionViewCell *cell = (RVCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"ItemIdentifier" forIndexPath:indexPath];
-    cell.imageView = self.imagesArray[indexPath.item];
-    cell.imageName = self.imageNamesArray[indexPath.item];
+    UICollectionViewCell *cell = (RVCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"ItemIdentifier" forIndexPath:indexPath];
+    //cell.imageView = self.imagesArray[indexPath.item];
+    //cell.imageName = self.imageNamesArray[indexPath.item];
+    cell.backgroundColor = [UIColor redColor];
     return cell;
 }
 
@@ -103,39 +102,6 @@
     [visibleCards enumerateObjectsUsingBlock:^(RVCollectionViewCell * visibleCell, NSUInteger idx, BOOL *stop) {
 //        NSLog(@"visible cell: %@", visibleCell.imageName);
     }];
-}
-
-
-- (void) initImages {
-    
-    NSMutableArray *aryName=[[NSMutableArray alloc]initWithObjects:@"測試測試測試測試測試測試",@"測試2號測試2號測試2號",@"測試3號測試3號測試3號",nil];
-    
-    self.imagesArray =[NSMutableArray array];
-    self.imageNamesArray = [NSMutableArray array];
-    int count=0;
-    
-    for (NSString *name in aryName) {
-        
-        UILabel *labItem=[[UILabel alloc]initWithFrame:CGRectMake(0, 10, 85, 40)];
-        labItem.text=name;
-        labItem.font=[UIFont boldSystemFontOfSize:14.0f];
-        labItem.numberOfLines=2;
-        labItem.textColor=[UIColor whiteColor];
-        labItem.backgroundColor=[UIColor brownColor];
-
-        [self.imagesArray addObject:labItem];
-        self.imageNamesArray[count] = [NSString stringWithFormat:@"%d",count];
-        count++;
-    }
-}
-#pragma mark --UICollectionViewDelegate
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 

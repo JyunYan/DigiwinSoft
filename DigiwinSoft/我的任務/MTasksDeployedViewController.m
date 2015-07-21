@@ -13,7 +13,7 @@
 #import "MDesignateResponsibleViewController.h"
 #import "MGoalSettingViewController.h"
 #import "MTaskRaidersViewController.h"
-#import "MGanttViewController.h"
+#import "MGanttViewController2.h"
 #import "MRaidersTableCell.h"
 #import "MRaidersTableHeader.h"
 
@@ -380,8 +380,7 @@
 
 -(void)actionGanttChart:(id)sender
 {
-    MGanttViewController *GanttVC=[[MGanttViewController alloc]init];
-    GanttVC.guide=_guide;
+    MGanttViewController2 *GanttVC=[[MGanttViewController2 alloc]initWithCustGuide:_guide];
     [self  presentViewController:GanttVC animated:YES completion:nil];
 }
 

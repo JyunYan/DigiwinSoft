@@ -13,6 +13,7 @@
 #import "MCustActivity.h"
 
 #define TIME_LINE_WIDTH 36
+
 @interface MGanttViewController ()
 @property (nonatomic, strong) UITableView* mTable;
 @property (nonatomic, strong) NSMutableArray* activityArray;

@@ -15,7 +15,6 @@
 		382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */; };
 		383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F831B4BD9CD00472513 /* MReportViewController.m */; };
 		383E2F871B4BF32800472513 /* MReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F861B4BF32800472513 /* MReportTableViewCell.m */; };
-		38C7F9B11B5C9CA200390B82 /* MGanttTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C7F9B01B5C9CA200390B82 /* MGanttTableViewCell.m */; };
 		38DCDD8D1B4E18B2008B57A2 /* RVCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */; };
 		38DCDD8E1B4E18B2008B57A2 /* RVCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8C1B4E18B2008B57A2 /* RVCollectionViewLayout.m */; };
 		38DCDD911B4E199F008B57A2 /* MRouletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD901B4E199F008B57A2 /* MRouletteViewController.m */; };
@@ -131,6 +130,9 @@
 		DC5877821B5DECC900D5AC5D /* MMessageBox.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877811B5DECC900D5AC5D /* MMessageBox.m */; };
 		DC5877851B5DEE6B00D5AC5D /* MFlowChartView2.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877841B5DEE6B00D5AC5D /* MFlowChartView2.m */; };
 		DC5877881B5DFE3700D5AC5D /* MFlowChartPoint2.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877871B5DFE3700D5AC5D /* MFlowChartPoint2.m */; };
+		DC58778B1B5E618800D5AC5D /* MGanttViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58778A1B5E618800D5AC5D /* MGanttViewController2.m */; };
+		DC58779A1B5E7F2A00D5AC5D /* MGanttDashView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877971B5E7F2A00D5AC5D /* MGanttDashView.m */; };
+		DC58779B1B5E7F2B00D5AC5D /* MGanttTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877991B5E7F2A00D5AC5D /* MGanttTableViewCell.m */; };
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
 		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
@@ -223,8 +225,6 @@
 		383E2F831B4BD9CD00472513 /* MReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MReportViewController.m; sourceTree = "<group>"; };
 		383E2F851B4BF32800472513 /* MReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MReportTableViewCell.h; path = structure/MReportTableViewCell.h; sourceTree = "<group>"; };
 		383E2F861B4BF32800472513 /* MReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MReportTableViewCell.m; path = structure/MReportTableViewCell.m; sourceTree = "<group>"; };
-		38C7F9B01B5C9CA200390B82 /* MGanttTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGanttTableViewCell.m; path = structure/MGanttTableViewCell.m; sourceTree = "<group>"; };
-		38C7F9B21B5CDB1500390B82 /* MGanttTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGanttTableViewCell.h; path = structure/MGanttTableViewCell.h; sourceTree = "<group>"; };
 		38DCDD891B4E18B2008B57A2 /* RVCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewCell.h; sourceTree = "<group>"; };
 		38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVCollectionViewCell.m; sourceTree = "<group>"; };
 		38DCDD8B1B4E18B2008B57A2 /* RVCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewLayout.h; sourceTree = "<group>"; };
@@ -417,6 +417,12 @@
 		DC5877841B5DEE6B00D5AC5D /* MFlowChartView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MFlowChartView2.m; path = CustomViews/MFlowChartView2.m; sourceTree = "<group>"; };
 		DC5877861B5DFE3700D5AC5D /* MFlowChartPoint2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MFlowChartPoint2.h; path = structure/MFlowChartPoint2.h; sourceTree = "<group>"; };
 		DC5877871B5DFE3700D5AC5D /* MFlowChartPoint2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MFlowChartPoint2.m; path = structure/MFlowChartPoint2.m; sourceTree = "<group>"; };
+		DC5877891B5E618800D5AC5D /* MGanttViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGanttViewController2.h; sourceTree = "<group>"; };
+		DC58778A1B5E618800D5AC5D /* MGanttViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGanttViewController2.m; sourceTree = "<group>"; };
+		DC5877961B5E7F2A00D5AC5D /* MGanttDashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGanttDashView.h; path = CustomViews/GanttChart/MGanttDashView.h; sourceTree = "<group>"; };
+		DC5877971B5E7F2A00D5AC5D /* MGanttDashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGanttDashView.m; path = CustomViews/GanttChart/MGanttDashView.m; sourceTree = "<group>"; };
+		DC5877981B5E7F2A00D5AC5D /* MGanttTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGanttTableViewCell.h; path = CustomViews/GanttChart/MGanttTableViewCell.h; sourceTree = "<group>"; };
+		DC5877991B5E7F2A00D5AC5D /* MGanttTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGanttTableViewCell.m; path = CustomViews/GanttChart/MGanttTableViewCell.m; sourceTree = "<group>"; };
 		DC6A52B11B3D2E6E001A373F /* MDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDirector.h; sourceTree = "<group>"; };
 		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
 		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
@@ -651,6 +657,8 @@
 				3A81B9471B4CDAB600EAF996 /* MGoalSettingViewController.m */,
 				38F3BF8A1B58CF94007BBC30 /* MGanttViewController.h */,
 				38F3BF8B1B58CF94007BBC30 /* MGanttViewController.m */,
+				DC5877891B5E618800D5AC5D /* MGanttViewController2.h */,
+				DC58778A1B5E618800D5AC5D /* MGanttViewController2.m */,
 			);
 			path = "我的任務";
 			sourceTree = "<group>";
@@ -937,8 +945,6 @@
 		DC1014481B3287D000EF7A6F /* structure */ = {
 			isa = PBXGroup;
 			children = (
-				38C7F9B21B5CDB1500390B82 /* MGanttTableViewCell.h */,
-				38C7F9B01B5C9CA200390B82 /* MGanttTableViewCell.m */,
 				382998331B3983060045B3BD /* MIndustryRaidersTableViewCell.h */,
 				382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */,
 				382998361B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.h */,
@@ -1000,6 +1006,17 @@
 			name = LineChartView;
 			sourceTree = "<group>";
 		};
+		DC5877951B5E7F0A00D5AC5D /* GanttChart */ = {
+			isa = PBXGroup;
+			children = (
+				DC5877961B5E7F2A00D5AC5D /* MGanttDashView.h */,
+				DC5877971B5E7F2A00D5AC5D /* MGanttDashView.m */,
+				DC5877981B5E7F2A00D5AC5D /* MGanttTableViewCell.h */,
+				DC5877991B5E7F2A00D5AC5D /* MGanttTableViewCell.m */,
+			);
+			name = GanttChart;
+			sourceTree = "<group>";
+		};
 		DCB3FDF61B5A373200ED5BFA /* RadioGroupView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1014,6 +1031,7 @@
 		DCF46AB21B41258F00C771BB /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				DC5877951B5E7F0A00D5AC5D /* GanttChart */,
 				DC5877791B5DEC3700D5AC5D /* LineChartView */,
 				DCB3FDF61B5A373200ED5BFA /* RadioGroupView */,
 				38FD52F61B54C2F600AC03F4 /* MRadarChartView.h */,
@@ -1244,7 +1262,6 @@
 				DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */,
 				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
 				DC58777F1B5DECA600D5AC5D /* MDashedLine.m in Sources */,
-				38C7F9B11B5C9CA200390B82 /* MGanttTableViewCell.m in Sources */,
 				DCF46B211B43A34F00C771BB /* MCustGuide.m in Sources */,
 				3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */,
 				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
@@ -1282,6 +1299,7 @@
 				DCB3FDF21B56AB4F00ED5BFA /* MRaidersTableCell.m in Sources */,
 				38DCDD8D1B4E18B2008B57A2 /* RVCollectionViewCell.m in Sources */,
 				DCF46B241B43C2F400C771BB /* MCustTarget.m in Sources */,
+				DC58779B1B5E7F2B00D5AC5D /* MGanttTableViewCell.m in Sources */,
 				DC3DF9D21B4E17C90065DF5D /* MTarMeterView.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */,
@@ -1303,6 +1321,7 @@
 				DC5877851B5DEE6B00D5AC5D /* MFlowChartView2.m in Sources */,
 				382998301B3982BE0045B3BD /* MInventoryTurnoverViewController.m in Sources */,
 				3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */,
+				DC58778B1B5E618800D5AC5D /* MGanttViewController2.m in Sources */,
 				D06C2D441B381850009D2082 /* FMDatabaseQueue.m in Sources */,
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
 				DCF46AB51B41265800C771BB /* MRaiderCarouselView.m in Sources */,
@@ -1310,6 +1329,7 @@
 				3A5374071B538E88002C2836 /* MCustomSegmentedControl.m in Sources */,
 				DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */,
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,
+				DC58779A1B5E7F2A00D5AC5D /* MGanttDashView.m in Sources */,
 				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,
 				3AE997371B550CF5005D590C /* RenderView.m in Sources */,
 				3A47255D1B5E3DEB00DB9FFE /* MInformationDetailViewController.m in Sources */,
