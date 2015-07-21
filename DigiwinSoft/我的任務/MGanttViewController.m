@@ -9,11 +9,13 @@
 #import "MGanttViewController.h"
 #import "MConfig.h"
 #import "MGanttTableViewCell.h"
+#import "MCustTarget.h"
+#import "MCustActivity.h"
 
 #define TIME_LINE_WIDTH 36
 @interface MGanttViewController ()
 @property (nonatomic, strong) UITableView* mTable;
-@property (nonatomic, strong) NSMutableArray* aryData;
+@property (nonatomic, strong) NSMutableArray* activityArray;
 
 
 @end
@@ -24,11 +26,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor whiteColor];
-    
-    [self prepareData];
-    [self createTableView];
-
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,7 +39,7 @@
     
     
     UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(DEVICE_SCREEN_WIDTH-90,65, 140, 25)];
-    labTitle.text=@"防止製造批量浮增";
+    labTitle.text=_guide.name;//@"防止製造批量浮增";
     labTitle.font=[UIFont systemFontOfSize:14];
     labTitle.backgroundColor=[UIColor clearColor];
     labTitle.transform= CGAffineTransformMakeRotation(M_PI_2 * 1);
@@ -63,13 +60,15 @@
     imgGray.backgroundColor=[UIColor colorWithRed:193.0/255.0 green:193.0/255.0 blue:193.0/255.0 alpha:1.0];
     [self.view addSubview:imgGray];
 
+    [self prepareData];
+    [self createTableView];
     
 }
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    [self createtimeline];
-
+    
+    [self createTimeline];
     // Force your tableview margins (this may be a bad idea)
     if ([_mTable respondsToSelector:@selector(setSeparatorInset:)]) {
         [_mTable setSeparatorInset:UIEdgeInsetsZero];
@@ -79,10 +78,8 @@
         [_mTable setLayoutMargins:UIEdgeInsetsZero];
     }
 }
-
 - (BOOL)prefersStatusBarHidden {
     return YES;
-    
 }
 - (void)goToBackPage:(id) sender
 {
@@ -91,21 +88,14 @@
 -(void)prepareData
 {
     
-    
-    
-    NSDictionary *dis0=[[NSDictionary alloc]initWithObjectsAndKeys:[UIImage imageNamed:@"icon_menu_5.png"],@"imgHead",[NSNumber numberWithInt:5],@"bar",@"不可能的任務0",@"name", nil];
-    
-    NSDictionary *dis1=[[NSDictionary alloc]initWithObjectsAndKeys:[UIImage imageNamed:@"icon_menu_6.png"],@"imgHead",[NSNumber numberWithInt:3],@"bar",@"不可能的任務1",@"name", nil];
-
-    NSDictionary *dis2=[[NSDictionary alloc]initWithObjectsAndKeys:[UIImage imageNamed:@"icon_menu_7.png"],@"imgHead",[NSNumber numberWithInt:8],@"bar",@"不可能的任務2",@"name", nil];
-    
-//    NSDictionary *dis3=[[NSDictionary alloc]initWithObjectsAndKeys:[UIImage imageNamed:@"icon_close.png"],@"imgHead",[NSNumber numberWithInt:8],@"bar",@"不可能的任務2",@"name", nil];
+    _activityArray=_guide.activityArray;
+//    NSDictionary *dis0=[[NSDictionary alloc]initWithObjectsAndKeys:[UIImage imageNamed:@"icon_manager.png"],@"imgHead",[NSNumber numberWithInt:5],@"bar",@"不可能的任務0",@"name", nil];
+//    
+//    NSDictionary *dis1=[[NSDictionary alloc]initWithObjectsAndKeys:[UIImage imageNamed:@"icon_manager.png"],@"imgHead",[NSNumber numberWithInt:3],@"bar",@"不可能的任務1",@"name", nil];
 //
-//    NSDictionary *dis4=[[NSDictionary alloc]initWithObjectsAndKeys:[UIImage imageNamed:@"icon_close.png"],@"imgHead",[NSNumber numberWithInt:8],@"bar",@"不可能的任務2",@"name", nil];
-
-
-    _aryData=[[NSMutableArray alloc]initWithObjects:dis2,dis1,dis0, nil];
-   
+//    NSDictionary *dis2=[[NSDictionary alloc]initWithObjectsAndKeys:[UIImage imageNamed:@"icon_manager.png"],@"imgHead",[NSNumber numberWithInt:8],@"bar",@"不可能的任務2",@"name", nil];
+//
+//    _aryData=[[NSMutableArray alloc]initWithObjects:dis2,dis1,dis0, nil];
 }
 -(void)createTableView
 {
@@ -118,23 +108,91 @@
     [self.view addSubview:_mTable];
     
 }
--(void)createtimeline
+-(void)createTimeline
 {
     UIView *timeline=[[UIView alloc]initWithFrame:CGRectMake(_mTable.frame.size.width-TIME_LINE_WIDTH,0, TIME_LINE_WIDTH, _mTable.contentSize.height)];
-    timeline.backgroundColor=[UIColor lightGrayColor];
+    timeline.backgroundColor=[UIColor whiteColor];
+    [_mTable addSubview:timeline];
+    
+    //比較出最早的日期
+    NSString *myData;
+    NSString *date1;
+  
+    for (MCustActivity *Activity in _activityArray) {
+        NSString *date2=Activity.custTarget.startDate;
+        if(date1){
+            myData=date2?date1:[self compareDate:date1 withDate:date2];
+        }else
+        {
+            date1=date2;
+            myData=date2;
+        }
+    }
+    
+//    NSLog(@"最早的日期是:%@",myData);
     
     
-    for (NSInteger i=0; i<20; i++) {
+    if ([myData isEqualToString:@""]) {
+        return;//避免使用者沒設置最早日期，接下去跑會閃退
+    }
+    
+    //timeline上的日期label(從最早的日期往後算兩年)
+    NSString *month=[myData substringWithRange:NSMakeRange(5, 2)];
+    NSString *year=[myData substringWithRange:NSMakeRange(0, 4)];
+    
+    NSInteger iMonth = [month integerValue];
+    NSInteger iyear = [year integerValue];
+
+    for (NSInteger i=0; i<24; i++) {
+        NSString *strDate;
+        if (iMonth==13) {
+            iMonth=1;
+            iyear++;
+            strDate=[NSString stringWithFormat:@"%ld/%02ld/01",(long)iyear,(long)iMonth];
+        }
+        else
+        {
+            strDate=[NSString stringWithFormat:@"%02ld/01",(long)iMonth];
+        }
+        iMonth++;
+
+        
         UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(-17,(80*i)+70, 70, 20)];
-        lab.text=@"2015/07/20";
+        lab.text=strDate;
         lab.transform=CGAffineTransformMakeRotation(M_PI_2 * 1);
         lab.font=[UIFont systemFontOfSize:12];
+        lab.textColor=[UIColor blackColor];
+        lab.backgroundColor=[UIColor clearColor];
+        lab.textAlignment = NSTextAlignmentCenter;
         [timeline addSubview:lab];
 
     }
    
     
-    [_mTable addSubview:timeline];
+    
+}
+//得到較早的日期
+-(NSString *)compareDate:(NSString*)date01 withDate:(NSString*)date02{
+    NSString *MyString;
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    NSDate *dt1 = [[NSDate alloc] init];
+    NSDate *dt2 = [[NSDate alloc] init];
+    dt1 = [df dateFromString:date01];
+    dt2 = [df dateFromString:date02];
+    NSComparisonResult result = [dt1 compare:dt2];
+    switch (result)
+    {
+            //date02比date01大
+        case NSOrderedAscending: MyString=[df stringFromDate:dt1]; break;
+            //date02比date01小
+        case NSOrderedDescending: MyString=[df stringFromDate:dt2]; break;
+            //date02=date01
+//        case NSOrderedSame: ci=0; break;
+        default: NSLog(@"erorr dates %@, %@", dt2, dt1); break;
+    }
+    
+    return MyString;
 }
 #pragma mark - TableViewDataSource 相關
 
@@ -145,7 +203,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20+2;//後面兩個cell是放label用
+    return 24+2;//後面兩個cell是放label用
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -161,25 +219,56 @@
 {
     MGanttTableViewCell *cell=(MGanttTableViewCell *)[MGanttTableViewCell cellWithTableView:tableView];
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    
+    for (int i=0; i<[_activityArray count]; i++) {
+        
+        NSString *startDate=[[_activityArray[i]custTarget]startDate];
+        NSString *completeDate=[[_activityArray[i]custTarget]completeDate];
+        
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"yyyy-MM-dd"];
+        NSDate *dt1 = [[NSDate alloc] init];
+        NSDate *dt2 = [[NSDate alloc] init];
+        dt1 = [df dateFromString:startDate];
+        dt2 = [df dateFromString:completeDate];
+
+        //長度
+        NSTimeInterval time=[dt2 timeIntervalSinceDate:dt1];
+        int days=((int)time)/(3600*24);
+        NSString *dateContent=[[NSString alloc] initWithFormat:@"時程%i天",days];
+        NSLog(@"%@",dateContent);
+        
+        //起始點
+        NSString *startMonth=[startDate substringWithRange:NSMakeRange(5, 2)];
+        NSInteger iMonth = [startMonth integerValue];
+
+        
+        
+        
+        
+        UIImageView* imgBar=[[UIImageView alloc]initWithFrame:CGRectMake(MGanttTableViewCell_WIDTH-TIME_LINE_WIDTH-(50*i)-5, 0, 10, MGanttTableViewCell_HEIGHT)];
+        imgBar.backgroundColor=[UIColor colorWithRed:112.0/255.0 green:200.0/255.0 blue:223.0/255.0 alpha:1];
+        [cell addSubview:imgBar];
+    }
+
     return cell;
 }
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    CGFloat tableWidth=tableView.frame.size.width;
     UIView* header = [[UIView alloc] init];
     header.backgroundColor = [UIColor whiteColor];
-    NSInteger i=((_mTable.frame.size.width-TIME_LINE_WIDTH)/[_aryData count]);
-    NSLog(@"間隔:%ld",(long)i);
-    
-    for (NSInteger count=0; count<[_aryData count]; count++) {
-        UIImageView *imgViewHead=[[UIImageView alloc]initWithFrame:CGRectMake((i*count)+20, 20, 40, 40)];
-        imgViewHead.image=[_aryData[count] objectForKey:@"imgHead"];
+    NSInteger i=50;
+    for (NSInteger count=0; count<[_activityArray count]; count++) {
+        UIImageView *imgViewHead=[[UIImageView alloc]initWithFrame:CGRectMake(tableWidth-TIME_LINE_WIDTH-(i*count)-50, 20, 40, 40)];
+        imgViewHead.image=[UIImage imageNamed:@"icon_manager.png"];
         imgViewHead.backgroundColor=[UIColor clearColor];
         imgViewHead.transform=CGAffineTransformMakeRotation(M_PI_2 * 1);
         [header addSubview:imgViewHead];
 
     }
     //Head與timeline中間的線
-    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(_mTable.frame.size.width-TIME_LINE_WIDTH, 0,1, DEVICE_SCREEN_HEIGHT)];
+    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(_mTable.frame.size.width-TIME_LINE_WIDTH-1, 0,1, DEVICE_SCREEN_HEIGHT)];
     imgGray.backgroundColor=[UIColor colorWithRed:193.0/255.0 green:193.0/255.0 blue:193.0/255.0 alpha:1.0];
     [header addSubview:imgGray];
     

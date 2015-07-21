@@ -7,7 +7,7 @@
 //
 
 #import "MGanttTableViewCell.h"
-
+#define TIME_LINE_WIDTH 36
 @implementation MGanttTableViewCell
 
 - (void)awakeFromNib {
@@ -46,18 +46,6 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
-//        Bar的長度還要再依資料設計演算法
-//        1.直接畫一個view貼到cell0，圖層提到最上面。
-//        2.依cell分段決定是否要畫。
-//        PS. bar最後有一個label
-        for (int i=1; i<=3; i++) {
-            UIImageView* imgBar=[[UIImageView alloc]initWithFrame:CGRectMake((((MGanttTableViewCell_WIDTH/3)*i))-((MGanttTableViewCell_WIDTH/3)/2)-10, 0, 10, MGanttTableViewCell_HEIGHT)];
-            imgBar.backgroundColor=[UIColor colorWithRed:112.0/255.0 green:200.0/255.0 blue:223.0/255.0 alpha:1];
-            [self.contentView addSubview:imgBar];
-        }
-        
-               
        }
     return self;
 }

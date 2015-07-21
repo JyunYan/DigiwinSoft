@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MCustGuide.h"
 @interface MGanttViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
-
+@property (nonatomic, strong) MCustGuide* guide;
 @end

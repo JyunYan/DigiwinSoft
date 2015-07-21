@@ -381,8 +381,8 @@
 -(void)actionGanttChart:(id)sender
 {
     MGanttViewController *GanttVC=[[MGanttViewController alloc]init];
+    GanttVC.guide=_guide;
     [self  presentViewController:GanttVC animated:YES completion:nil];
-    NSLog(@"甘特圖");
 }
 
 -(void)addActivity:(id)sender
