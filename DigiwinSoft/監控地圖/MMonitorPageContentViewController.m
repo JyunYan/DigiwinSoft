@@ -140,11 +140,7 @@
     posY = segView.frame.origin.y + segView.frame.size.height;
     height = viewHeight - posY;
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [view addSubview:_tableView];
+    
     
     
     return view;

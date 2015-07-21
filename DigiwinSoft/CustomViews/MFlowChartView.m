@@ -14,8 +14,8 @@
 @interface MFlowChartView ()
 
 @property (nonatomic,strong) NSMutableArray* points;
-@property (nonatomic,strong) NSMutableArray* used;
-@property (nonatomic,strong) NSMutableArray* unused;
+@property (nonatomic,strong) NSMutableArray* used;  //已決定位置的item
+@property (nonatomic,strong) NSMutableArray* unused;//未決定位置的item
 
 @property (nonatomic, assign) CGFloat radius;
 @property (nonatomic, assign) CGFloat pointSize;
@@ -32,11 +32,6 @@
     }
     return self;
 }
-
-//- (void)setFrame:(CGRect)frame
-//{
-//    self.frame = frame;
-//}
 
 - (void)setItems:(NSArray*)array
 {
