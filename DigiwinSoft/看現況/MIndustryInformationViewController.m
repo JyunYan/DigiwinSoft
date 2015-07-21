@@ -7,6 +7,7 @@
 //
 
 #import "MIndustryInformationViewController.h"
+#import "MInformationDetailViewController.h"
 
 
 #define TAG_BUTTON_SWITCH 100
@@ -348,7 +349,7 @@
     blueIcon.hidden = NO;
     
     titleLabel.text = @"大陸工信部將發放FDD-LTE正式執照";
-    descLabel.text = @"據傳大陸工信部將在最近幾天內發放FDD-LTE執照給中國電信，中國據傳大陸工信部將在最近幾天內發放FDD-LTE執照給中國電信";
+    descLabel.text = @"據傳大陸工信部將在最近幾天內發放正式的FDD-LTE執照給中國電信、中國聯通。先前已獲頒TD-LTE執照的中國移動也正積極向工信部申請FDD-LTE執照";
     
     CGSize size = [descLabel sizeThatFits:CGSizeMake(descLabel.frame.size.width, MAXFLOAT)];
     if (size.height > descLabel.frame.size.height) {
@@ -366,6 +367,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    MInformationDetailViewController* vc = [[MInformationDetailViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

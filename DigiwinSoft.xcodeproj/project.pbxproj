@@ -40,6 +40,7 @@
 		3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A03F96E1B3A60A0000F345B /* QuartzCore.framework */; };
 		3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */; };
 		3A47255A1B5DE5EF00DB9FFE /* MIndustryInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4725591B5DE5EF00DB9FFE /* MIndustryInformationViewController.m */; };
+		3A47255D1B5E3DEB00DB9FFE /* MInformationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A47255C1B5E3DEB00DB9FFE /* MInformationDetailViewController.m */; };
 		3A5374041B535EEB002C2836 /* MReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5374031B535EEB002C2836 /* MReport.m */; };
 		3A5374071B538E88002C2836 /* MCustomSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5374061B538E88002C2836 /* MCustomSegmentedControl.m */; };
 		3A54DDFC1B40DD1100A6849A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */; };
@@ -263,6 +264,8 @@
 		3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTasksDeployedViewController.m; sourceTree = "<group>"; };
 		3A4725581B5DE5EF00DB9FFE /* MIndustryInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryInformationViewController.h; sourceTree = "<group>"; };
 		3A4725591B5DE5EF00DB9FFE /* MIndustryInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIndustryInformationViewController.m; sourceTree = "<group>"; };
+		3A47255B1B5E3DEB00DB9FFE /* MInformationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MInformationDetailViewController.h; sourceTree = "<group>"; };
+		3A47255C1B5E3DEB00DB9FFE /* MInformationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MInformationDetailViewController.m; sourceTree = "<group>"; };
 		3A5374021B535EEB002C2836 /* MReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MReport.h; path = structure/MReport.h; sourceTree = "<group>"; };
 		3A5374031B535EEB002C2836 /* MReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MReport.m; path = structure/MReport.m; sourceTree = "<group>"; };
 		3A5374051B538E88002C2836 /* MCustomSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCustomSegmentedControl.h; path = CustomViews/MCustomSegmentedControl.h; sourceTree = "<group>"; };
@@ -666,6 +669,8 @@
 				3AD851831B5CFBFA00486E1D /* MStatusPieChartViewController.m */,
 				3A4725581B5DE5EF00DB9FFE /* MIndustryInformationViewController.h */,
 				3A4725591B5DE5EF00DB9FFE /* MIndustryInformationViewController.m */,
+				3A47255B1B5E3DEB00DB9FFE /* MInformationDetailViewController.h */,
+				3A47255C1B5E3DEB00DB9FFE /* MInformationDetailViewController.m */,
 			);
 			path = "看現況";
 			sourceTree = "<group>";
@@ -1296,6 +1301,7 @@
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,
 				3AB4CE391B32C0C800143374 /* ASFileManager.m in Sources */,
 				3AE997371B550CF5005D590C /* RenderView.m in Sources */,
+				3A47255D1B5E3DEB00DB9FFE /* MInformationDetailViewController.m in Sources */,
 				DCF46B2A1B454FA800C771BB /* MCustWorkItem.m in Sources */,
 				3AB4CE2C1B32895C00143374 /* UIViewController+MMDrawerController.m in Sources */,
 				DCF46ACD1B4236CB00C771BB /* MTarget.m in Sources */,

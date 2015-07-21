@@ -38,7 +38,6 @@
     [self addMainMenu];
     
     
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
     
     CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
