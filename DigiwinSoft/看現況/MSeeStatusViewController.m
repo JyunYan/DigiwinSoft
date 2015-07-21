@@ -13,10 +13,12 @@
 #import "MConfig.h"
 #import "MRadarChartView.h"
 #import "MStatusPieChartViewController.h"
+#import "MIndustryInformationViewController.h"
 @interface MSeeStatusViewController ()
 @property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
 @property (nonatomic, strong) MStatusPieChartViewController* pieChartViewController;
+@property (nonatomic, strong) MIndustryInformationViewController* industryInformationViewController;
 @property (nonatomic, strong) NSMutableArray *aryData;
 @property (nonatomic, strong) NSArray *aryAddData;
 @property (nonatomic, strong) UIButton *btnAdd;
@@ -35,6 +37,7 @@
     [self createBtn];
     [self createRadarChart];
     [self createPieChartViewController];
+    [self createIndustryInformationViewController];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -133,6 +136,23 @@
     [self.view bringSubviewToFront:_customSegmentedControl];
 }
 
+-(void)createIndustryInformationViewController
+{
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    
+    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
+    CGFloat screenWidth = screenFrame.size.width;
+    CGFloat screenHeight = screenFrame.size.height;
+    
+    CGFloat posX = 0;
+    CGFloat posY = _customSegmentedControl.frame.origin.y + _customSegmentedControl.frame.size.height + 10;
+    CGFloat width = screenWidth;
+    CGFloat height = screenHeight - posY - navBarHeight + statusBarHeight - 5;
+    
+    _industryInformationViewController = [[MIndustryInformationViewController alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+}
+
 -(void)btnAddRadar:(id)sender
 {
     if ([sender tag]==101) {
@@ -174,6 +194,9 @@
         {
             [_pieChartViewController removeFromParentViewController];
             [_pieChartViewController.view removeFromSuperview];
+            
+            [_industryInformationViewController removeFromParentViewController];
+            [_industryInformationViewController.view removeFromSuperview];
 
             [self.view addSubview:_RadarChart];
             [self.view addSubview:_btnAdd];
@@ -186,6 +209,9 @@
             [_RadarChart removeFromSuperview];
             [_btnAdd removeFromSuperview];
             [_btnAdd1 removeFromSuperview];
+            
+            [_industryInformationViewController removeFromParentViewController];
+            [_industryInformationViewController.view removeFromSuperview];
             
             [self addChildViewController:_pieChartViewController];
             [self.view addSubview:_pieChartViewController.view];
@@ -203,6 +229,11 @@
 
             [_pieChartViewController removeFromParentViewController];
             [_pieChartViewController.view removeFromSuperview];
+            
+            [self addChildViewController:_industryInformationViewController];
+            [self.view addSubview:_industryInformationViewController.view];
+            
+            [self.view bringSubviewToFront:_customSegmentedControl];
 
             break;
         }
