@@ -12,12 +12,15 @@
 #import "MCustomSegmentedControl.h"
 #import "MConfig.h"
 #import "MRadarChartView.h"
+#import "MStatusPieChartViewController.h"
 @interface MSeeStatusViewController ()
 @property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
-@property (nonatomic, strong) NSArray *aryData;
+@property (nonatomic, strong) MStatusPieChartViewController* pieChartViewController;
+@property (nonatomic, strong) NSMutableArray *aryData;
 @property (nonatomic, strong) NSArray *aryAddData;
 @property (nonatomic, strong) UIButton *btnAdd;
+@property (nonatomic, strong) UIButton *btnAdd1;
 
 @end
 
@@ -26,9 +29,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"看現況";
+    
     [self addMainMenu];
     [self createBtn];
     [self createRadarChart];
+    [self createPieChartViewController];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,13 +77,25 @@
     [self.view addSubview:btn];
     
     
-   _btnAdd=[[UIButton alloc]initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-20, 290, 40, 40)];
+   _btnAdd=[[UIButton alloc]initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-40, 290, 40, 40)];
     _btnAdd.backgroundColor=[UIColor brownColor];
     [_btnAdd addTarget:self
                action:@selector(btnAddRadar:)
      forControlEvents:UIControlEventTouchUpInside
      ];
-    [_btnAdd setTitle:@"Add" forState:UIControlStateNormal];
+    _btnAdd.tag=101;
+    [_btnAdd setTitle:@"Add1" forState:UIControlStateNormal];
+    
+    
+    _btnAdd1=[[UIButton alloc]initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)+20, 290, 40, 40)];
+    _btnAdd1.backgroundColor=[UIColor brownColor];
+    [_btnAdd1 addTarget:self
+                action:@selector(btnAddRadar:)
+      forControlEvents:UIControlEventTouchUpInside
+     ];
+    _btnAdd1.tag=102;
+    [_btnAdd1 setTitle:@"Add2" forState:UIControlStateNormal];
+
 
 }
 -(void)createRadarChart
@@ -86,25 +104,59 @@
     NSArray *data0=[[NSArray alloc]initWithObjects:@"最適化存貨周轉(10)",@"data0",@"10",@"value",nil];
     NSArray *data1=[[NSArray alloc]initWithObjects:@"提昇供應鏈品質(20)",@"data1",@"20",@"value",nil];
     NSArray *data2=[[NSArray alloc]initWithObjects:@"提升生產效率(30)",@"data2",@"30",@"value",nil];
-    NSArray *data3=[[NSArray alloc]initWithObjects:@"提升生產效率(40)",@"data3",@"40",@"value",nil];
-    _aryData=[[NSMutableArray alloc]initWithObjects:data0,data1,data2,data3,nil];
+    _aryData=[[NSMutableArray alloc]initWithObjects:data0,data1,data2,nil];
     _RadarChart.aryRadarChartData=_aryData;
 
 
     
 }
+
+-(void)createPieChartViewController
+{
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    
+    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
+    CGFloat screenWidth = screenFrame.size.width;
+    CGFloat screenHeight = screenFrame.size.height;
+    
+    CGFloat posX = 0;
+    CGFloat posY = _customSegmentedControl.frame.origin.y + _customSegmentedControl.frame.size.height + 10;
+    CGFloat width = screenWidth;
+    CGFloat height = screenHeight - posY - navBarHeight + statusBarHeight - 5;
+    
+    _pieChartViewController = [[MStatusPieChartViewController alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    
+    [self addChildViewController:_pieChartViewController];
+    [self.view addSubview:_pieChartViewController.view];
+    
+    [self.view bringSubviewToFront:_customSegmentedControl];
+}
+
 -(void)btnAddRadar:(id)sender
 {
+    if ([sender tag]==101) {
+        NSArray *data4=[[NSArray alloc]initWithObjects:@"增加資料一號(90)",@"data4",@"90",@"value",nil];
+        NSArray *data5=[[NSArray alloc]initWithObjects:@"增加資料二號(100)",@"data5",@"100",@"value",nil];
+        NSArray *data6=[[NSArray alloc]initWithObjects:@"增加資料三號(20)",@"data5",@"20",@"value",nil];
+        _aryAddData=[[NSMutableArray alloc]initWithObjects:data4,data5,data6, nil];
+    }else
+    {
+        NSArray *data7=[[NSArray alloc]initWithObjects:@"增加資料四號(0)",@"data4",@"0",@"value",nil];
+        NSArray *data8=[[NSArray alloc]initWithObjects:@"增加資料五號(70)",@"data5",@"70",@"value",nil];
+        _aryAddData=[[NSMutableArray alloc]initWithObjects:data7,data8, nil];
+    }
+    
+    for (NSArray *MyAddData in _aryAddData) {
+        if ([_aryData containsObject:MyAddData])  //是否存在陣列裡
+        {
+            [_aryData removeObject:MyAddData];
+        } else
+            [_aryData addObject:MyAddData];
+    }
+    
     [_RadarChart removeFromSuperview];
-    NSArray *data4=[[NSArray alloc]initWithObjects:@"提升生產效率(90)",@"data4",@"90",@"value",nil];
-    NSArray *data5=[[NSArray alloc]initWithObjects:@"提升生產效率(100)",@"data5",@"100",@"value",nil];
-    _aryAddData=[[NSMutableArray alloc]initWithObjects:data4,data5, nil];
-    
-    
     _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-75, 120, 150, 150)];
-    NSMutableSet *set = [NSMutableSet setWithArray:_aryData];
-    [set addObjectsFromArray:_aryAddData];
-    _aryData=[set allObjects];
     _RadarChart.aryRadarChartData=_aryData;
     [self.view addSubview:_RadarChart];
 }
@@ -120,14 +172,26 @@
     switch (index) {
         case 0:
         {
+            [_pieChartViewController removeFromParentViewController];
+            [_pieChartViewController.view removeFromSuperview];
+
             [self.view addSubview:_RadarChart];
             [self.view addSubview:_btnAdd];
+            [self.view addSubview:_btnAdd1];
+
             break;
         }
         case 1:
         {
             [_RadarChart removeFromSuperview];
             [_btnAdd removeFromSuperview];
+            [_btnAdd1 removeFromSuperview];
+            
+            [self addChildViewController:_pieChartViewController];
+            [self.view addSubview:_pieChartViewController.view];
+            
+            [self.view bringSubviewToFront:_customSegmentedControl];
+
             break;
         }
         
@@ -135,6 +199,11 @@
         {
             [_RadarChart removeFromSuperview];
             [_btnAdd removeFromSuperview];
+            [_btnAdd1 removeFromSuperview];
+
+            [_pieChartViewController removeFromParentViewController];
+            [_pieChartViewController.view removeFromSuperview];
+
             break;
         }
         default:

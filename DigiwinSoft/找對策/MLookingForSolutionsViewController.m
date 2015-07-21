@@ -8,7 +8,6 @@
 
 #import "MLookingForSolutionsViewController.h"
 #import "AppDelegate.h"
-#import "MSolutionsPieChartViewController.h"
 
 @interface MLookingForSolutionsViewController ()
 
@@ -19,26 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
     
     [self addMainMenu];
-    
-    
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    
-    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    CGFloat screenWidth = screenFrame.size.width;
-    CGFloat screenHeight = screenFrame.size.height;
-    
-    CGFloat posX = 0;
-    CGFloat posY = statusBarHeight + navBarHeight + 10;
-    CGFloat width = screenWidth;
-    CGFloat height = screenHeight - posY - navBarHeight + statusBarHeight - 5;
-    
-    MSolutionsPieChartViewController* vc = [[MSolutionsPieChartViewController alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    [self addChildViewController:vc];
-    [self.view addSubview:vc.view];
 }
 
 - (void)didReceiveMemoryWarning {
