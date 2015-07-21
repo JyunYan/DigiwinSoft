@@ -13,6 +13,8 @@
 #import "MDesignateResponsibleViewController.h"
 #import "MGoalSettingViewController.h"
 
+#import "MFlowChartView2.h"
+
 #import "MRaidersTableCell.h"
 
 
@@ -65,55 +67,39 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = _act.name;
-    self.view.backgroundColor = [UIColor lightGrayColor];
-    
+    self.view.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     
     [self addMainMenu];
     
-    
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    
-    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    CGFloat screenWidth = screenFrame.size.width;
-    CGFloat screenHeight = screenFrame.size.height;
-    
-    
-    CGFloat posX = 0;
-    CGFloat posY = statusBarHeight + navBarHeight;
-    CGFloat width = screenWidth;
+
+    CGFloat posY = 64.;
     CGFloat height = 50;
     
-    UIView* descView = [self createDescView:CGRectMake(posX, posY, width, height)];
+    UIView* descView = [self createDescView:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, height)];
     [self.view addSubview:descView];
     
+    posY += descView.frame.size.height + 10;
     
-    posX = 10;
-    posY = descView.frame.origin.y + descView.frame.size.height + 10;
-    width = screenWidth - posX * 2;
-    height = 130;
+    // 工作項目
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(10, posY, 100, 20)];
+    label.text = @"工作項目";
+    label.font = [UIFont boldSystemFontOfSize:14.];
+    label.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:label];
     
-    UIView* graohicView = [self createGraphicView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:graohicView];
+    posY += label.frame.size.height;
     
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, posY, DEVICE_SCREEN_WIDTH - 20, DEVICE_SCREEN_HEIGHT - posY - 49. - 42.)];
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
     
-    posX = 0;
-    posY = graohicView.frame.origin.y + graohicView.frame.size.height;
-    width = screenWidth;
-    height = screenHeight - posY - navBarHeight + statusBarHeight - 47;
+    posY += _tableView.frame.size.height;
     
-    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:listView];
-    
-    
-    posX = 0;
-    posY = listView.frame.origin.y + listView.frame.size.height;
-    width = screenWidth;
-    height = 42;
-    
-    UIView* bottomView = [self createBottomView:CGRectMake(posX, posY, width, height)];
+    //  buttons
+    UIView* bottomView = [self createBottomView:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, 42.)];
     [self.view addSubview:bottomView];
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetActivity:) name:@"ResetActivity" object:nil];
 }
@@ -166,62 +152,6 @@
     [view addSubview:descLabel];
     
 
-    return view;
-}
-
-- (UIView*)createGraphicView:(CGRect) rect
-{
-    CGFloat textSize = 13.0f;
-    
-    
-    UIView* view = [[UIView alloc] initWithFrame:rect];
-    view.backgroundColor = [UIColor whiteColor];
-    
-    CGFloat viewWidth = rect.size.width;
-    CGFloat viewHeight = rect.size.height;
-    
-    CGFloat posX = 0;
-    CGFloat posY = 0;
-    CGFloat width = viewWidth;
-    CGFloat height = 20;
-    // 工作項目
-    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    titleLabel.text = @"工作項目";
-    titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
-    titleLabel.backgroundColor = [UIColor lightGrayColor];
-    [view addSubview:titleLabel];
-    
-    
-    return view;
-}
-
-- (UIView*)createListView:(CGRect) rect
-{
-    UIView* view = [[UIView alloc] initWithFrame:rect];
-    view.backgroundColor = [UIColor clearColor];
-    
-    CGFloat viewWidth = rect.size.width;
-    CGFloat viewHeight = rect.size.height;
-    
-    CGFloat posX = 10;
-    CGFloat posY = 0;
-    CGFloat width = viewWidth - posX * 2;
-    CGFloat height = viewHeight - posY;
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [view addSubview:_tableView];
-    
-    
-    height = 1;
-    
-    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    lineView.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
-    [view addSubview:lineView];
-
-    
     return view;
 }
 
@@ -373,6 +303,28 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CGFloat width = tableView.frame.size.width;
+    return width * 0.6;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    CGFloat width = tableView.frame.size.width;
+    CGFloat height = width * 0.6;
+    
+    MFlowChartView2* chart = [[MFlowChartView2 alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    chart.backgroundColor = [UIColor whiteColor];
+    [chart setItems:_act.workItemArray];
+    
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, height-2., width, 2.)];
+    view.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
+    [chart addSubview:view];
+    
+    return chart;
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -387,7 +339,6 @@
     NSMutableArray* activityArray = [notification object];
 
     _activityArray = activityArray;
-
     _act = [_activityArray objectAtIndex:_actIndex];
 }
 

@@ -28,8 +28,6 @@
         _points = [NSMutableArray new];
         _scale = 1.;
         _gapX = 0.;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDefaultText:) name:@"didDrawTopBox" object:nil];
     }
     
     return self;
@@ -43,8 +41,6 @@
         _points = [NSMutableArray new];
         _scale = 1.;
         _gapX = 0.;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDefaultText:) name:@"didDrawTopBox" object:nil];
     }
     
     return self;
