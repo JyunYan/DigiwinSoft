@@ -94,12 +94,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetActivity:) name:@"ResetActivity" object:nil];
 }
 
-- (void)viewDidUnload {
-    [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
