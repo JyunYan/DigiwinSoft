@@ -11,8 +11,10 @@
 #define MGanttTableViewCell_WIDTH (DEVICE_SCREEN_WIDTH-70)
 #define MGanttTableViewCell_HEIGHT 80
 @interface MGanttTableViewCell : UITableViewCell
-@property (nonatomic, strong) UIImage *imgHead;
-@property (nonatomic, strong) UIImage *imgbar;
-@property (nonatomic, strong) UILabel *labtitle;
+@property (nonatomic, strong) UIImageView* imgViewHead;
+@property (nonatomic, strong) UILabel *labTitle;
+
+- (void)createtimeBar:(NSString*)startDate :(NSString*)completeDate :(NSString*)earlyDate :(NSString*)title;
+
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 @end

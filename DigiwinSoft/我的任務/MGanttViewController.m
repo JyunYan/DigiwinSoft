@@ -223,34 +223,7 @@
     
     for (int i=0; i<[_activityArray count]; i++) {
         
-        NSString *startDate=[[_activityArray[i]custTarget]startDate];
-        NSString *completeDate=[[_activityArray[i]custTarget]completeDate];
-        
-        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-        [df setDateFormat:@"yyyy-MM-dd"];
-        NSDate *dt1 = [[NSDate alloc] init];
-        NSDate *dt2 = [[NSDate alloc] init];
-        dt1 = [df dateFromString:startDate];
-        dt2 = [df dateFromString:completeDate];
-
-        //長度
-        NSTimeInterval time=[dt2 timeIntervalSinceDate:dt1];
-        int days=((int)time)/(3600*24);
-        NSString *dateContent=[[NSString alloc] initWithFormat:@"時程%i天",days];
-        NSLog(@"%@",dateContent);
-        
-        //起始點
-        NSString *startMonth=[startDate substringWithRange:NSMakeRange(5, 2)];
-        NSInteger iMonth = [startMonth integerValue];
-
-        
-        
-        
-        
-        UIImageView* imgBar=[[UIImageView alloc]initWithFrame:CGRectMake(MGanttTableViewCell_WIDTH-TIME_LINE_WIDTH-(50*i)-5, 0, 10, MGanttTableViewCell_HEIGHT)];
-        imgBar.backgroundColor=[UIColor colorWithRed:112.0/255.0 green:200.0/255.0 blue:223.0/255.0 alpha:1];
-        [cell addSubview:imgBar];
-    }
+        }
 
     return cell;
 }
