@@ -67,8 +67,10 @@
 
 -(void)back:(id)sender
 {
-    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleTabBar];
+    //AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
+    //[delegate toggleTabBar];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source

@@ -133,6 +133,7 @@
 		DC58778B1B5E618800D5AC5D /* MGanttViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58778A1B5E618800D5AC5D /* MGanttViewController2.m */; };
 		DC58779A1B5E7F2A00D5AC5D /* MGanttDashView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877971B5E7F2A00D5AC5D /* MGanttDashView.m */; };
 		DC58779B1B5E7F2B00D5AC5D /* MGanttTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877991B5E7F2A00D5AC5D /* MGanttTableViewCell.m */; };
+		DC58779E1B5F44B400D5AC5D /* MCircleLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */; };
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
 		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
@@ -423,6 +424,8 @@
 		DC5877971B5E7F2A00D5AC5D /* MGanttDashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGanttDashView.m; path = CustomViews/GanttChart/MGanttDashView.m; sourceTree = "<group>"; };
 		DC5877981B5E7F2A00D5AC5D /* MGanttTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGanttTableViewCell.h; path = CustomViews/GanttChart/MGanttTableViewCell.h; sourceTree = "<group>"; };
 		DC5877991B5E7F2A00D5AC5D /* MGanttTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGanttTableViewCell.m; path = CustomViews/GanttChart/MGanttTableViewCell.m; sourceTree = "<group>"; };
+		DC58779C1B5F44B400D5AC5D /* MCircleLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCircleLayout.h; path = CustomViews/MCircleLayout.h; sourceTree = "<group>"; };
+		DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCircleLayout.m; path = CustomViews/MCircleLayout.m; sourceTree = "<group>"; };
 		DC6A52B11B3D2E6E001A373F /* MDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDirector.h; sourceTree = "<group>"; };
 		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
 		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
@@ -1064,6 +1067,8 @@
 				DCB3FDF11B56AB4F00ED5BFA /* MRaidersTableCell.m */,
 				DCB3FDF31B56C00C00ED5BFA /* MRaidersTableHeader.h */,
 				DCB3FDF41B56C00C00ED5BFA /* MRaidersTableHeader.m */,
+				DC58779C1B5F44B400D5AC5D /* MCircleLayout.h */,
+				DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1276,6 +1281,7 @@
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
 				3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */,
 				DCB3FDF51B56C00C00ED5BFA /* MRaidersTableHeader.m in Sources */,
+				DC58779E1B5F44B400D5AC5D /* MCircleLayout.m in Sources */,
 				382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */,
 				DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */,
 				382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */,

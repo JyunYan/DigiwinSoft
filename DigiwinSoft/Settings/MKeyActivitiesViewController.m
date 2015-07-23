@@ -13,6 +13,8 @@
 #import "MWorkItem.h"
 #import "MDirector.h"
 
+#import "MTasksDeployedViewController.h"
+
 
 #define TAG_LABEL_WORK_ITEM 200
 #define TAG_LABEL_APPOINT_RESPONSIBLE 201
@@ -47,29 +49,17 @@
 
     [self addMainMenu];
     
-    
-    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    
-    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    CGFloat screenWidth = screenFrame.size.width;
-    CGFloat screenHeight = screenFrame.size.height;
-    
-    
     CGFloat posX = 0;
-    CGFloat posY = 0;
-    CGFloat width = screenWidth;
+    CGFloat posY = 64.;
     CGFloat height = 130;
     
-    UIView* topView = [self createTopView:CGRectMake(posX, posY, width, height)];
+    UIView* topView = [self createTopView:CGRectMake(posX, posY, DEVICE_SCREEN_WIDTH, height)];
     [self.view addSubview:topView];
     
+    posY += topView.frame.size.height;
+    height = self.view.frame.size.height - posY;
     
-    posX = 0;
-    posY = topView.frame.origin.y + topView.frame.size.height;
-    width = screenWidth;
-    height = screenHeight - posY - navBarHeight;
-    
-    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
+    UIView* listView = [self createListView:CGRectMake(0., posY, DEVICE_SCREEN_WIDTH, height)];
     [self.view addSubview:listView];
 }
 
@@ -203,8 +193,10 @@
 
 -(void)goTasksDeployed:(id)sender
 {
-    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleTasksDeployedWithCustGuide:_guide];
+    //AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
+    //[delegate toggleTasksDeployedWithCustGuide:_guide];
+    MTasksDeployedViewController* vc = [[MTasksDeployedViewController alloc] initWithCustGuide:_guide];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Table view data source

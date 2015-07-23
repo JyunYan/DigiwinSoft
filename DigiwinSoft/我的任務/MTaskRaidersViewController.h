@@ -12,6 +12,8 @@
 
 @interface MTaskRaidersViewController : UIViewController
 
+@property (nonatomic, assign) NSInteger tabBarExisted;
+
 - (id)initWithCustGuide:(MCustGuide*) guide Index:(NSInteger) index;
 - (id)initWithCustActivity:(MCustActivity*)activity;
 

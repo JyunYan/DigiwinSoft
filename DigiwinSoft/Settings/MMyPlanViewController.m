@@ -73,6 +73,8 @@
 {
     UIBarButtonItem* back  =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarSystemButtonBackArrow target:self action:@selector(back:)];
     self.navigationItem.leftBarButtonItem = back;
+    //UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    //self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
 
 - (UIView*)createListView:(CGRect) rect
@@ -100,8 +102,10 @@
 
 -(void)back:(id)sender
 {
-    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleTabBar];
+    //AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
+    //[delegate toggleTabBar];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
