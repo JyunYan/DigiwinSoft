@@ -55,41 +55,23 @@
 
     [self addMainMenu];
     
-    
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    
-    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    CGFloat screenWidth = screenFrame.size.width;
-    CGFloat screenHeight = screenFrame.size.height;
-    
-    
-    CGFloat posX = 0;
-    CGFloat posY = statusBarHeight + navBarHeight;
-    CGFloat width = screenWidth;
+    CGFloat posY = 64.;
     CGFloat height = 130;
     
-    UIView* topView = [self createTopView:CGRectMake(posX, posY, width, height)];
+    UIView* topView = [self createTopView:CGRectMake(0., posY, DEVICE_SCREEN_WIDTH, height)];
     [self.view addSubview:topView];
     
     
-    posX = 0;
-    posY = topView.frame.origin.y + topView.frame.size.height;
-    width = screenWidth;
-    height = screenHeight - posY - navBarHeight + statusBarHeight - 47;
+    posY += topView.frame.size.height;
+    height = self.view.frame.size.height - posY -42.;
     
-    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:listView];
+    _tableView = [self createListView:CGRectMake(0., posY, DEVICE_SCREEN_WIDTH, height)];
+    [self.view addSubview:_tableView];
     
-    
-    posX = 0;
-    posY = listView.frame.origin.y + listView.frame.size.height;
-    width = screenWidth;
+    posY = _tableView.frame.origin.y + _tableView.frame.size.height;
     height = 42;
     
-    UIView* bottomView = [self createBottomView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:bottomView];
-    
+    [self createBottomView:CGRectMake(0., posY, DEVICE_SCREEN_WIDTH, height)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetActivity:) name:@"ResetActivity" object:nil];
 }
@@ -201,74 +183,44 @@
     return view;
 }
 
-- (UIView*)createListView:(CGRect) rect
+- (UITableView*)createListView:(CGRect) rect
 {
-    UIView* view = [[UIView alloc] initWithFrame:rect];
-    view.backgroundColor = [UIColor clearColor];
+    CGRect frame = CGRectMake(rect.origin.x + 10., rect.origin.y + 10., rect.size.width - 20., rect.size.height -10.);
+    UITableView* table = [[UITableView alloc] initWithFrame:frame];
+    table.backgroundColor = [UIColor whiteColor];
+    table.delegate = self;
+    table.dataSource = self;
+    table.bounces = NO;
+    //table.contentInset = UIEdgeInsetsMake(10., 10., 0, 10.);
     
-    CGFloat viewWidth = rect.size.width;
-    CGFloat viewHeight = rect.size.height;
-    
-    CGFloat posX = 20;
-    CGFloat posY = 20;
-    CGFloat width = viewWidth - posX * 2;
-    CGFloat height = viewHeight - posY;
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.bounces = NO;
-    [view addSubview:_tableView];
-    
-    return view;
+    return table;
 }
 
-- (UIView*)createBottomView:(CGRect) rect
+- (void)createBottomView:(CGRect) rect
 {
     CGFloat textSize = 14.0f;
     
-    
-    UIView* view = [[UIView alloc] initWithFrame:rect];
-    view.backgroundColor = [UIColor clearColor];
-    
-    CGFloat viewWidth = rect.size.width;
-    CGFloat viewHeight = rect.size.height;
-    
-    CGFloat posX = 20;
-    CGFloat posY = 0;
-    CGFloat width = viewWidth - posX * 2;
-    CGFloat height = viewHeight - posY;
-    
-    UIView* buttonView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    buttonView.backgroundColor = [UIColor whiteColor];
-    [view addSubview:buttonView];
-    
-    
-    posX = 1;
-    posY = 0;
-    width = buttonView.frame.size.width / 2 - posX * 2;
-    height = viewHeight - 2;
+    CGFloat posX = 0;
+    CGFloat posY = rect.origin.y;
+    CGFloat width = rect.size.width / 2.;
+    CGFloat height = rect.size.height;
 
     UIButton* addActButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     addActButton.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
     [addActButton setTitle:@"新增關鍵活動" forState:UIControlStateNormal];
     addActButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [addActButton addTarget:self action:@selector(addActivity:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonView addSubview:addActButton];
+    [self.view addSubview:addActButton];
     
     
-    posX = addActButton.frame.origin.x + addActButton.frame.size.width + 2;
+    posX += addActButton.frame.size.width;
     
     UIButton* notifyButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     notifyButton.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
     [notifyButton setTitle:@"通知" forState:UIControlStateNormal];
     notifyButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [notifyButton addTarget:self action:@selector(actionNotify:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonView addSubview:notifyButton];
-
-
-    return view;
+    [self.view addSubview:notifyButton];
 }
 
 - (UIView*)createDescView:(CGRect) rect
@@ -458,6 +410,7 @@
     MCustActivity* act = [_activityArray objectAtIndex:_selectedIndex];
     
     MTaskRaidersViewController* vc = [[MTaskRaidersViewController alloc] initWithCustActivity:act];
+    vc.tabBarExisted = NO;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -37,6 +37,10 @@
 		3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9641B3A4F26000F345B /* MMyRaidersViewController.m */; };
 		3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */; };
 		3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A03F96E1B3A60A0000F345B /* QuartzCore.framework */; };
+		3A0542EC1B5F58F400EC7878 /* MStatusLineChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0542EB1B5F58F400EC7878 /* MStatusLineChartViewController.m */; };
+		3A0542EF1B5F7B2600EC7878 /* MStatusLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0542EE1B5F7B2600EC7878 /* MStatusLineChartView.m */; };
+		3A0542F21B5F9D8E00EC7878 /* MLineChartView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0542F11B5F9D8E00EC7878 /* MLineChartView2.m */; };
+		3A0542F51B5FA00C00EC7878 /* MTarChartView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0542F41B5FA00C00EC7878 /* MTarChartView2.m */; };
 		3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */; };
 		3A47255A1B5DE5EF00DB9FFE /* MIndustryInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4725591B5DE5EF00DB9FFE /* MIndustryInformationViewController.m */; };
 		3A47255D1B5E3DEB00DB9FFE /* MInformationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A47255C1B5E3DEB00DB9FFE /* MInformationDetailViewController.m */; };
@@ -83,6 +87,9 @@
 		3AE997361B550CF5005D590C /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE997311B550CF5005D590C /* PieChartView.m */; };
 		3AE997371B550CF5005D590C /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE997331B550CF5005D590C /* RenderView.m */; };
 		3AE997381B550CF5005D590C /* RotatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE997351B550CF5005D590C /* RotatedView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3AF1DD021B608B07006ADBBD /* icon_arrow_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF1DD001B608B07006ADBBD /* icon_arrow_left.png */; };
+		3AF1DD031B608B07006ADBBD /* icon_arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF1DD011B608B07006ADBBD /* icon_arrow_right.png */; };
+		3AF1DD061B60A302006ADBBD /* MChartRangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1DD051B60A302006ADBBD /* MChartRangeView.m */; };
 		3AFF62551B438A46005B6238 /* icon_menu_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624A1B438A46005B6238 /* icon_menu_1.png */; };
 		3AFF62561B438A46005B6238 /* icon_menu_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624B1B438A46005B6238 /* icon_menu_2.png */; };
 		3AFF62571B438A46005B6238 /* icon_menu_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624C1B438A46005B6238 /* icon_menu_3.png */; };
@@ -133,6 +140,7 @@
 		DC58778B1B5E618800D5AC5D /* MGanttViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58778A1B5E618800D5AC5D /* MGanttViewController2.m */; };
 		DC58779A1B5E7F2A00D5AC5D /* MGanttDashView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877971B5E7F2A00D5AC5D /* MGanttDashView.m */; };
 		DC58779B1B5E7F2B00D5AC5D /* MGanttTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877991B5E7F2A00D5AC5D /* MGanttTableViewCell.m */; };
+		DC58779E1B5F44B400D5AC5D /* MCircleLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */; };
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
 		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
@@ -262,6 +270,14 @@
 		3A03F96B1B3A5B3E000F345B /* MEventListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEventListViewController.h; sourceTree = "<group>"; };
 		3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEventListViewController.m; sourceTree = "<group>"; };
 		3A03F96E1B3A60A0000F345B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3A0542EA1B5F58F400EC7878 /* MStatusLineChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MStatusLineChartViewController.h; sourceTree = "<group>"; };
+		3A0542EB1B5F58F400EC7878 /* MStatusLineChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MStatusLineChartViewController.m; sourceTree = "<group>"; };
+		3A0542ED1B5F7B2600EC7878 /* MStatusLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MStatusLineChartView.h; path = CustomViews/MStatusLineChartView.h; sourceTree = "<group>"; };
+		3A0542EE1B5F7B2600EC7878 /* MStatusLineChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MStatusLineChartView.m; path = CustomViews/MStatusLineChartView.m; sourceTree = "<group>"; };
+		3A0542F01B5F9D8E00EC7878 /* MLineChartView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLineChartView2.h; path = CustomViews/LineChartView/MLineChartView2.h; sourceTree = "<group>"; };
+		3A0542F11B5F9D8E00EC7878 /* MLineChartView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MLineChartView2.m; path = CustomViews/LineChartView/MLineChartView2.m; sourceTree = "<group>"; };
+		3A0542F31B5FA00C00EC7878 /* MTarChartView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarChartView2.h; path = CustomViews/MTarChartView2.h; sourceTree = "<group>"; };
+		3A0542F41B5FA00C00EC7878 /* MTarChartView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarChartView2.m; path = CustomViews/MTarChartView2.m; sourceTree = "<group>"; };
 		3A1363AC1B4A186000BA05F2 /* MTasksDeployedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTasksDeployedViewController.h; sourceTree = "<group>"; };
 		3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTasksDeployedViewController.m; sourceTree = "<group>"; };
 		3A4725581B5DE5EF00DB9FFE /* MIndustryInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryInformationViewController.h; sourceTree = "<group>"; };
@@ -343,6 +359,10 @@
 		3AE997331B550CF5005D590C /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
 		3AE997341B550CF5005D590C /* RotatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotatedView.h; sourceTree = "<group>"; };
 		3AE997351B550CF5005D590C /* RotatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotatedView.m; sourceTree = "<group>"; };
+		3AF1DD001B608B07006ADBBD /* icon_arrow_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_arrow_left.png; sourceTree = "<group>"; };
+		3AF1DD011B608B07006ADBBD /* icon_arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_arrow_right.png; sourceTree = "<group>"; };
+		3AF1DD041B60A302006ADBBD /* MChartRangeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MChartRangeView.h; path = CustomViews/LineChartView/MChartRangeView.h; sourceTree = "<group>"; };
+		3AF1DD051B60A302006ADBBD /* MChartRangeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MChartRangeView.m; path = CustomViews/LineChartView/MChartRangeView.m; sourceTree = "<group>"; };
 		3AFF624A1B438A46005B6238 /* icon_menu_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_1.png; sourceTree = "<group>"; };
 		3AFF624B1B438A46005B6238 /* icon_menu_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_2.png; sourceTree = "<group>"; };
 		3AFF624C1B438A46005B6238 /* icon_menu_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_3.png; sourceTree = "<group>"; };
@@ -423,6 +443,8 @@
 		DC5877971B5E7F2A00D5AC5D /* MGanttDashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGanttDashView.m; path = CustomViews/GanttChart/MGanttDashView.m; sourceTree = "<group>"; };
 		DC5877981B5E7F2A00D5AC5D /* MGanttTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGanttTableViewCell.h; path = CustomViews/GanttChart/MGanttTableViewCell.h; sourceTree = "<group>"; };
 		DC5877991B5E7F2A00D5AC5D /* MGanttTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGanttTableViewCell.m; path = CustomViews/GanttChart/MGanttTableViewCell.m; sourceTree = "<group>"; };
+		DC58779C1B5F44B400D5AC5D /* MCircleLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCircleLayout.h; path = CustomViews/MCircleLayout.h; sourceTree = "<group>"; };
+		DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCircleLayout.m; path = CustomViews/MCircleLayout.m; sourceTree = "<group>"; };
 		DC6A52B11B3D2E6E001A373F /* MDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDirector.h; sourceTree = "<group>"; };
 		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
 		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
@@ -685,6 +707,8 @@
 				3A4725591B5DE5EF00DB9FFE /* MIndustryInformationViewController.m */,
 				3A47255B1B5E3DEB00DB9FFE /* MInformationDetailViewController.h */,
 				3A47255C1B5E3DEB00DB9FFE /* MInformationDetailViewController.m */,
+				3A0542EA1B5F58F400EC7878 /* MStatusLineChartViewController.h */,
+				3A0542EB1B5F58F400EC7878 /* MStatusLineChartViewController.m */,
 			);
 			path = "看現況";
 			sourceTree = "<group>";
@@ -737,6 +761,8 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3AF1DD001B608B07006ADBBD /* icon_arrow_left.png */,
+				3AF1DD011B608B07006ADBBD /* icon_arrow_right.png */,
 				3AE08C4F1B5CCEBC00B46895 /* icon_star_empty.png */,
 				3AE08C501B5CCEBC00B46895 /* icon_star_full.png */,
 				3AE08C511B5CCEBC00B46895 /* icon_star_half.png */,
@@ -1002,6 +1028,10 @@
 				DC58777B1B5DEC8100D5AC5D /* MLineChartView.m */,
 				DC5877801B5DECC900D5AC5D /* MMessageBox.h */,
 				DC5877811B5DECC900D5AC5D /* MMessageBox.m */,
+				3A0542F01B5F9D8E00EC7878 /* MLineChartView2.h */,
+				3A0542F11B5F9D8E00EC7878 /* MLineChartView2.m */,
+				3AF1DD041B60A302006ADBBD /* MChartRangeView.h */,
+				3AF1DD051B60A302006ADBBD /* MChartRangeView.m */,
 			);
 			name = LineChartView;
 			sourceTree = "<group>";
@@ -1052,6 +1082,8 @@
 				DC3DF9D11B4E17C90065DF5D /* MTarMeterView.m */,
 				DC3DF9D31B4E23360065DF5D /* MTarChartView.h */,
 				DC3DF9D41B4E23360065DF5D /* MTarChartView.m */,
+				3A0542F31B5FA00C00EC7878 /* MTarChartView2.h */,
+				3A0542F41B5FA00C00EC7878 /* MTarChartView2.m */,
 				DC3DF9DC1B4ED13E0065DF5D /* MConcentricCircles.h */,
 				DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */,
 				DCB3FDE71B54ABA900ED5BFA /* MFlowChartView.h */,
@@ -1064,6 +1096,10 @@
 				DCB3FDF11B56AB4F00ED5BFA /* MRaidersTableCell.m */,
 				DCB3FDF31B56C00C00ED5BFA /* MRaidersTableHeader.h */,
 				DCB3FDF41B56C00C00ED5BFA /* MRaidersTableHeader.m */,
+				DC58779C1B5F44B400D5AC5D /* MCircleLayout.h */,
+				DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */,
+				3A0542ED1B5F7B2600EC7878 /* MStatusLineChartView.h */,
+				3A0542EE1B5F7B2600EC7878 /* MStatusLineChartView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1169,6 +1205,7 @@
 				DCF46B021B42AAF300C771BB /* icon_down.png in Resources */,
 				DCF46B0A1B42AAF300C771BB /* icon_raider.png in Resources */,
 				3AFF625F1B438A46005B6238 /* icon_menu_11.png in Resources */,
+				3AF1DD031B608B07006ADBBD /* icon_arrow_right.png in Resources */,
 				DCF46B0C1B42AAF300C771BB /* icon_red_circle.png in Resources */,
 				DCF46AFB1B42AAF300C771BB /* check_box_on.png in Resources */,
 				DC5877771B5DCCCF00D5AC5D /* Icon-Small@2x.png in Resources */,
@@ -1214,6 +1251,7 @@
 				DCF46AF51B42AAF300C771BB /* bg_industry_raider.jpg in Resources */,
 				3AE08C521B5CCEBC00B46895 /* icon_star_empty.png in Resources */,
 				DCF46AF61B42AAF300C771BB /* bg_status.png in Resources */,
+				3AF1DD021B608B07006ADBBD /* icon_arrow_left.png in Resources */,
 				DCF46B1D1B42B4C000C771BB /* icon_cloud_2.png in Resources */,
 				DCF46AF71B42AAF300C771BB /* button_search.png in Resources */,
 				DCF46B131B42AAF300C771BB /* star_fill.png in Resources */,
@@ -1263,6 +1301,7 @@
 				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
 				DC58777F1B5DECA600D5AC5D /* MDashedLine.m in Sources */,
 				DCF46B211B43A34F00C771BB /* MCustGuide.m in Sources */,
+				3A0542F21B5F9D8E00EC7878 /* MLineChartView2.m in Sources */,
 				3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */,
 				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
 				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
@@ -1276,6 +1315,7 @@
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
 				3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */,
 				DCB3FDF51B56C00C00ED5BFA /* MRaidersTableHeader.m in Sources */,
+				DC58779E1B5F44B400D5AC5D /* MCircleLayout.m in Sources */,
 				382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */,
 				DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */,
 				382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */,
@@ -1309,6 +1349,7 @@
 				DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */,
 				DCB3FDEF1B55F67B00ED5BFA /* MFlowChartPoint.m in Sources */,
 				DC3DF9DE1B4ED13E0065DF5D /* MConcentricCircles.m in Sources */,
+				3A0542EF1B5F7B2600EC7878 /* MStatusLineChartView.m in Sources */,
 				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
 				3A03AA231B3BFF0500923ABB /* MEventDetailViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
@@ -1318,6 +1359,7 @@
 				DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */,
 				DCF46AC11B418E6B00C771BB /* MPhenomenon.m in Sources */,
 				3AFF62621B438D08005B6238 /* MSettingTableViewCell.m in Sources */,
+				3AF1DD061B60A302006ADBBD /* MChartRangeView.m in Sources */,
 				DC5877851B5DEE6B00D5AC5D /* MFlowChartView2.m in Sources */,
 				382998301B3982BE0045B3BD /* MInventoryTurnoverViewController.m in Sources */,
 				3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */,
@@ -1354,7 +1396,9 @@
 				3829982F1B3982BE0045B3BD /* MIndustryRaiders2ViewController.m in Sources */,
 				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
 				DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */,
+				3A0542F51B5FA00C00EC7878 /* MTarChartView2.m in Sources */,
 				DCB3FDF91B5A375900ED5BFA /* MRadioGroupView.m in Sources */,
+				3A0542EC1B5F58F400EC7878 /* MStatusLineChartViewController.m in Sources */,
 				3AB4CE1A1B32848B00143374 /* MMyTaskViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

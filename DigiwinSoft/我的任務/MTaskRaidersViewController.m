@@ -50,6 +50,7 @@
         _activityArray = guide.activityArray;
         _actIndex = index;
         _act = [_activityArray objectAtIndex:index];
+        _tabBarExisted = YES;
     }
     return self;
 }
@@ -59,6 +60,8 @@
     if(self = [super init]){
         
         _act = activity;
+        _tabBarExisted = YES;
+        
     }
     return self;
 }
@@ -88,8 +91,8 @@
     [self.view addSubview:label];
     
     posY += label.frame.size.height;
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, posY, DEVICE_SCREEN_WIDTH - 20, DEVICE_SCREEN_HEIGHT - posY - 49. - 42.)];
+    height = (_tabBarExisted) ? (DEVICE_SCREEN_HEIGHT - posY - 49. - 42.) : (DEVICE_SCREEN_HEIGHT - posY - 42.);
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, posY, DEVICE_SCREEN_WIDTH - 20, height)];
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -98,16 +101,9 @@
     posY += _tableView.frame.size.height;
     
     //  buttons
-    UIView* bottomView = [self createBottomView:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, 42.)];
-    [self.view addSubview:bottomView];
+    [self createBottomView:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, 42.)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetActivity:) name:@"ResetActivity" object:nil];
-}
-
-- (void)viewDidUnload {
-    [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -155,51 +151,30 @@
     return view;
 }
 
-- (UIView*)createBottomView:(CGRect) rect
+- (void)createBottomView:(CGRect) rect
 {
     CGFloat textSize = 14.0f;
     
-    
-    UIView* view = [[UIView alloc] initWithFrame:rect];
-    view.backgroundColor = [UIColor clearColor];
-    
-    CGFloat viewWidth = rect.size.width;
-    CGFloat viewHeight = rect.size.height;
-    
-    CGFloat posX = 10;
-    CGFloat posY = 0;
-    CGFloat width = viewWidth - posX * 2;
-    CGFloat height = viewHeight - posY;
-    
-    UIView* buttonView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    buttonView.backgroundColor = [UIColor whiteColor];
-    [view addSubview:buttonView];
-    
-    
-    posX = 1;
-    posY = 0;
-    width = buttonView.frame.size.width / 2 - posX * 2;
-    height = viewHeight - 2;
+    CGFloat posX = rect.origin.x;
+    CGFloat posY = rect.origin.y;
+    CGFloat width = rect.size.width / 2.;
+    CGFloat height = rect.size.height;
     
     UIButton* addActButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     addActButton.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
     [addActButton setTitle:@"新增關鍵活動" forState:UIControlStateNormal];
     addActButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [addActButton addTarget:self action:@selector(addActivity:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonView addSubview:addActButton];
+    [self.view addSubview:addActButton];
     
-    
-    posX = addActButton.frame.origin.x + addActButton.frame.size.width + 2;
+    posX += addActButton.frame.size.width;
     
     UIButton* notifyButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     notifyButton.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
     [notifyButton setTitle:@"通知" forState:UIControlStateNormal];
     notifyButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [notifyButton addTarget:self action:@selector(actionNotify:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonView addSubview:notifyButton];
-    
-    
-    return view;
+    [self.view addSubview:notifyButton];
 }
 
 #pragma mark - UIButton
