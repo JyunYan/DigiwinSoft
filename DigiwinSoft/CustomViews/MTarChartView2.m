@@ -16,6 +16,8 @@
 @property (nonatomic) UIColor* grayColor;
 @property (nonatomic) UIColor* darkGrayColor;
 
+@property (nonatomic, strong) MLineChartView2* quartz;
+
 @end
 
 @implementation MTarChartView2
@@ -93,13 +95,76 @@
 - (void)drawRect:(CGRect)rect
 {
     // 折線圖
-    MLineChartView2* quartz = [[MLineChartView2 alloc] init];
-    quartz.frame = [[MDirector sharedInstance] getScaledRect:CGRectMake(192,1078-830,742,630)];
-    quartz.points = (NSMutableArray*)_historys;
-    quartz.scale = quartz.frame.size.height / 120.;
-    quartz.backgroundColor = [UIColor clearColor];
+    _quartz = [[MLineChartView2 alloc] init];
+    _quartz.frame = [[MDirector sharedInstance] getScaledRect:CGRectMake(112,1078-830,856,520)];
+    _quartz.points = (NSMutableArray*)_historys;
+    _quartz.scale = _quartz.frame.size.height / 150.;
+    _quartz.backgroundColor = [UIColor clearColor];
     //quartz.backgroundColor = [UIColor redColor];
-    [self addSubview:quartz];
+    [self addSubview:_quartz];
+    
+    /* 區間年份 */
+    [self drawYearLabel:_quartz.frame];
+
+    // add button
+    [self addButtonView:_quartz.frame];
+}
+
+- (void) drawYearLabel:(CGRect)quartzRect
+{
+    CGFloat posX = quartzRect.origin.x;
+    CGFloat posY = 80;
+    CGFloat width = quartzRect.size.width / 3;
+    CGFloat height = 30;
+    
+    NSInteger subCount = _historys.count / 3;
+
+    UILabel* label;
+    for (int i = 0; i < 3; i++)
+    {
+        NSInteger index = subCount * (i + 1) - 1;
+        NSString* end = [[[_historys objectAtIndex:index] datetime] substringToIndex:4];
+
+        label = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor colorWithRed:85./255. green:85./255. blue:85./255. alpha:1.];
+        label.font = [UIFont systemFontOfSize:13.];
+        label.text = end;
+        [self addSubview:label];
+        
+        posX += width;
+    }
+}
+
+- (void)addButtonView:(CGRect)quartzRect
+{
+    UIButton* leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, quartzRect.origin.y, 34, quartzRect.size.height)];
+    leftButton.backgroundColor = [UIColor grayColor];
+    [leftButton setImage:[UIImage imageNamed:@"icon_arrow_left.png"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(actionLeft:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:leftButton];
+    
+    UIButton* rightButton = [[UIButton alloc] initWithFrame:CGRectMake(quartzRect.origin.x + quartzRect.size.width - 1, quartzRect.origin.y, 34, quartzRect.size.height)];
+    rightButton.backgroundColor = [UIColor grayColor];
+    [rightButton setImage:[UIImage imageNamed:@"icon_arrow_right.png"] forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(actionRight:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:rightButton];
+}
+
+#pragma mark - UIButton
+
+- (void)actionLeft:(id)sender
+{
+    NSString* direction = @"left";
+    [_quartz moveRange:direction];
+    [self.delegate moveRange:direction];
+}
+
+- (void)actionRight:(id)sender
+{
+    NSString* direction = @"right";
+    [_quartz moveRange:direction];
+    [self.delegate moveRange:direction];
 }
 
 @end

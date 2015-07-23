@@ -14,4 +14,6 @@
 @property (nonatomic) CGFloat scale;
 @property (nonatomic, strong) NSMutableArray* points;
 
+- (void)moveRange:(NSString*) direction;
+
 @end

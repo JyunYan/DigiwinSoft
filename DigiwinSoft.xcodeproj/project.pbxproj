@@ -87,6 +87,9 @@
 		3AE997361B550CF5005D590C /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE997311B550CF5005D590C /* PieChartView.m */; };
 		3AE997371B550CF5005D590C /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE997331B550CF5005D590C /* RenderView.m */; };
 		3AE997381B550CF5005D590C /* RotatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE997351B550CF5005D590C /* RotatedView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3AF1DD021B608B07006ADBBD /* icon_arrow_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF1DD001B608B07006ADBBD /* icon_arrow_left.png */; };
+		3AF1DD031B608B07006ADBBD /* icon_arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AF1DD011B608B07006ADBBD /* icon_arrow_right.png */; };
+		3AF1DD061B60A302006ADBBD /* MChartRangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF1DD051B60A302006ADBBD /* MChartRangeView.m */; };
 		3AFF62551B438A46005B6238 /* icon_menu_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624A1B438A46005B6238 /* icon_menu_1.png */; };
 		3AFF62561B438A46005B6238 /* icon_menu_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624B1B438A46005B6238 /* icon_menu_2.png */; };
 		3AFF62571B438A46005B6238 /* icon_menu_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF624C1B438A46005B6238 /* icon_menu_3.png */; };
@@ -356,6 +359,10 @@
 		3AE997331B550CF5005D590C /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
 		3AE997341B550CF5005D590C /* RotatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotatedView.h; sourceTree = "<group>"; };
 		3AE997351B550CF5005D590C /* RotatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotatedView.m; sourceTree = "<group>"; };
+		3AF1DD001B608B07006ADBBD /* icon_arrow_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_arrow_left.png; sourceTree = "<group>"; };
+		3AF1DD011B608B07006ADBBD /* icon_arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_arrow_right.png; sourceTree = "<group>"; };
+		3AF1DD041B60A302006ADBBD /* MChartRangeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MChartRangeView.h; path = CustomViews/LineChartView/MChartRangeView.h; sourceTree = "<group>"; };
+		3AF1DD051B60A302006ADBBD /* MChartRangeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MChartRangeView.m; path = CustomViews/LineChartView/MChartRangeView.m; sourceTree = "<group>"; };
 		3AFF624A1B438A46005B6238 /* icon_menu_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_1.png; sourceTree = "<group>"; };
 		3AFF624B1B438A46005B6238 /* icon_menu_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_2.png; sourceTree = "<group>"; };
 		3AFF624C1B438A46005B6238 /* icon_menu_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_3.png; sourceTree = "<group>"; };
@@ -754,6 +761,8 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3AF1DD001B608B07006ADBBD /* icon_arrow_left.png */,
+				3AF1DD011B608B07006ADBBD /* icon_arrow_right.png */,
 				3AE08C4F1B5CCEBC00B46895 /* icon_star_empty.png */,
 				3AE08C501B5CCEBC00B46895 /* icon_star_full.png */,
 				3AE08C511B5CCEBC00B46895 /* icon_star_half.png */,
@@ -1021,6 +1030,8 @@
 				DC5877811B5DECC900D5AC5D /* MMessageBox.m */,
 				3A0542F01B5F9D8E00EC7878 /* MLineChartView2.h */,
 				3A0542F11B5F9D8E00EC7878 /* MLineChartView2.m */,
+				3AF1DD041B60A302006ADBBD /* MChartRangeView.h */,
+				3AF1DD051B60A302006ADBBD /* MChartRangeView.m */,
 			);
 			name = LineChartView;
 			sourceTree = "<group>";
@@ -1194,6 +1205,7 @@
 				DCF46B021B42AAF300C771BB /* icon_down.png in Resources */,
 				DCF46B0A1B42AAF300C771BB /* icon_raider.png in Resources */,
 				3AFF625F1B438A46005B6238 /* icon_menu_11.png in Resources */,
+				3AF1DD031B608B07006ADBBD /* icon_arrow_right.png in Resources */,
 				DCF46B0C1B42AAF300C771BB /* icon_red_circle.png in Resources */,
 				DCF46AFB1B42AAF300C771BB /* check_box_on.png in Resources */,
 				DC5877771B5DCCCF00D5AC5D /* Icon-Small@2x.png in Resources */,
@@ -1239,6 +1251,7 @@
 				DCF46AF51B42AAF300C771BB /* bg_industry_raider.jpg in Resources */,
 				3AE08C521B5CCEBC00B46895 /* icon_star_empty.png in Resources */,
 				DCF46AF61B42AAF300C771BB /* bg_status.png in Resources */,
+				3AF1DD021B608B07006ADBBD /* icon_arrow_left.png in Resources */,
 				DCF46B1D1B42B4C000C771BB /* icon_cloud_2.png in Resources */,
 				DCF46AF71B42AAF300C771BB /* button_search.png in Resources */,
 				DCF46B131B42AAF300C771BB /* star_fill.png in Resources */,
@@ -1346,6 +1359,7 @@
 				DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */,
 				DCF46AC11B418E6B00C771BB /* MPhenomenon.m in Sources */,
 				3AFF62621B438D08005B6238 /* MSettingTableViewCell.m in Sources */,
+				3AF1DD061B60A302006ADBBD /* MChartRangeView.m in Sources */,
 				DC5877851B5DEE6B00D5AC5D /* MFlowChartView2.m in Sources */,
 				382998301B3982BE0045B3BD /* MInventoryTurnoverViewController.m in Sources */,
 				3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */,

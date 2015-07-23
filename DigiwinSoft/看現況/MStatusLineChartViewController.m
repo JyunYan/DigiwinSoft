@@ -52,7 +52,7 @@
     MStatusLineChartView* lineChartView = [[MStatusLineChartView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     [lineChartView setHistoryArray:_historyArray];
     [lineChartView setBackgroundColor:[UIColor whiteColor]];
-    lineChartView.contentSize = [[MDirector sharedInstance] getScaledSize:CGSizeMake(1080,1880)];
+    lineChartView.contentSize = [[MDirector sharedInstance] getScaledSize:CGSizeMake(1080,1700)];
     [self.view addSubview:lineChartView];
     
     

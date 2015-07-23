@@ -702,7 +702,11 @@
         return;
     MGuide* guide = [aryGuide objectAtIndex:0];
     NSArray* array = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:guide.target];
-    MStatusLineChartViewController* vc = [[MStatusLineChartViewController alloc] initWithHistoryArray:array];
+    NSArray* newArray = [NSArray new];
+    newArray = [newArray arrayByAddingObjectsFromArray:array];
+    newArray = [newArray arrayByAddingObjectsFromArray:array];
+    newArray = [newArray arrayByAddingObjectsFromArray:array];
+    MStatusLineChartViewController* vc = [[MStatusLineChartViewController alloc] initWithHistoryArray:newArray];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
