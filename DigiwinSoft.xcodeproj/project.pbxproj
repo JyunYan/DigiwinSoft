@@ -37,6 +37,10 @@
 		3A03F9671B3A4F26000F345B /* MMyRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F9641B3A4F26000F345B /* MMyRaidersViewController.m */; };
 		3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */; };
 		3A03F96F1B3A60A0000F345B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A03F96E1B3A60A0000F345B /* QuartzCore.framework */; };
+		3A0542EC1B5F58F400EC7878 /* MStatusLineChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0542EB1B5F58F400EC7878 /* MStatusLineChartViewController.m */; };
+		3A0542EF1B5F7B2600EC7878 /* MStatusLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0542EE1B5F7B2600EC7878 /* MStatusLineChartView.m */; };
+		3A0542F21B5F9D8E00EC7878 /* MLineChartView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0542F11B5F9D8E00EC7878 /* MLineChartView2.m */; };
+		3A0542F51B5FA00C00EC7878 /* MTarChartView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0542F41B5FA00C00EC7878 /* MTarChartView2.m */; };
 		3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */; };
 		3A47255A1B5DE5EF00DB9FFE /* MIndustryInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4725591B5DE5EF00DB9FFE /* MIndustryInformationViewController.m */; };
 		3A47255D1B5E3DEB00DB9FFE /* MInformationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A47255C1B5E3DEB00DB9FFE /* MInformationDetailViewController.m */; };
@@ -263,6 +267,14 @@
 		3A03F96B1B3A5B3E000F345B /* MEventListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEventListViewController.h; sourceTree = "<group>"; };
 		3A03F96C1B3A5B3E000F345B /* MEventListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEventListViewController.m; sourceTree = "<group>"; };
 		3A03F96E1B3A60A0000F345B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3A0542EA1B5F58F400EC7878 /* MStatusLineChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MStatusLineChartViewController.h; sourceTree = "<group>"; };
+		3A0542EB1B5F58F400EC7878 /* MStatusLineChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MStatusLineChartViewController.m; sourceTree = "<group>"; };
+		3A0542ED1B5F7B2600EC7878 /* MStatusLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MStatusLineChartView.h; path = CustomViews/MStatusLineChartView.h; sourceTree = "<group>"; };
+		3A0542EE1B5F7B2600EC7878 /* MStatusLineChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MStatusLineChartView.m; path = CustomViews/MStatusLineChartView.m; sourceTree = "<group>"; };
+		3A0542F01B5F9D8E00EC7878 /* MLineChartView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLineChartView2.h; path = CustomViews/LineChartView/MLineChartView2.h; sourceTree = "<group>"; };
+		3A0542F11B5F9D8E00EC7878 /* MLineChartView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MLineChartView2.m; path = CustomViews/LineChartView/MLineChartView2.m; sourceTree = "<group>"; };
+		3A0542F31B5FA00C00EC7878 /* MTarChartView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarChartView2.h; path = CustomViews/MTarChartView2.h; sourceTree = "<group>"; };
+		3A0542F41B5FA00C00EC7878 /* MTarChartView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarChartView2.m; path = CustomViews/MTarChartView2.m; sourceTree = "<group>"; };
 		3A1363AC1B4A186000BA05F2 /* MTasksDeployedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTasksDeployedViewController.h; sourceTree = "<group>"; };
 		3A1363AD1B4A186000BA05F2 /* MTasksDeployedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTasksDeployedViewController.m; sourceTree = "<group>"; };
 		3A4725581B5DE5EF00DB9FFE /* MIndustryInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryInformationViewController.h; sourceTree = "<group>"; };
@@ -688,6 +700,8 @@
 				3A4725591B5DE5EF00DB9FFE /* MIndustryInformationViewController.m */,
 				3A47255B1B5E3DEB00DB9FFE /* MInformationDetailViewController.h */,
 				3A47255C1B5E3DEB00DB9FFE /* MInformationDetailViewController.m */,
+				3A0542EA1B5F58F400EC7878 /* MStatusLineChartViewController.h */,
+				3A0542EB1B5F58F400EC7878 /* MStatusLineChartViewController.m */,
 			);
 			path = "看現況";
 			sourceTree = "<group>";
@@ -1005,6 +1019,8 @@
 				DC58777B1B5DEC8100D5AC5D /* MLineChartView.m */,
 				DC5877801B5DECC900D5AC5D /* MMessageBox.h */,
 				DC5877811B5DECC900D5AC5D /* MMessageBox.m */,
+				3A0542F01B5F9D8E00EC7878 /* MLineChartView2.h */,
+				3A0542F11B5F9D8E00EC7878 /* MLineChartView2.m */,
 			);
 			name = LineChartView;
 			sourceTree = "<group>";
@@ -1055,6 +1071,8 @@
 				DC3DF9D11B4E17C90065DF5D /* MTarMeterView.m */,
 				DC3DF9D31B4E23360065DF5D /* MTarChartView.h */,
 				DC3DF9D41B4E23360065DF5D /* MTarChartView.m */,
+				3A0542F31B5FA00C00EC7878 /* MTarChartView2.h */,
+				3A0542F41B5FA00C00EC7878 /* MTarChartView2.m */,
 				DC3DF9DC1B4ED13E0065DF5D /* MConcentricCircles.h */,
 				DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */,
 				DCB3FDE71B54ABA900ED5BFA /* MFlowChartView.h */,
@@ -1069,6 +1087,8 @@
 				DCB3FDF41B56C00C00ED5BFA /* MRaidersTableHeader.m */,
 				DC58779C1B5F44B400D5AC5D /* MCircleLayout.h */,
 				DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */,
+				3A0542ED1B5F7B2600EC7878 /* MStatusLineChartView.h */,
+				3A0542EE1B5F7B2600EC7878 /* MStatusLineChartView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1268,6 +1288,7 @@
 				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
 				DC58777F1B5DECA600D5AC5D /* MDashedLine.m in Sources */,
 				DCF46B211B43A34F00C771BB /* MCustGuide.m in Sources */,
+				3A0542F21B5F9D8E00EC7878 /* MLineChartView2.m in Sources */,
 				3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */,
 				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
 				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
@@ -1315,6 +1336,7 @@
 				DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */,
 				DCB3FDEF1B55F67B00ED5BFA /* MFlowChartPoint.m in Sources */,
 				DC3DF9DE1B4ED13E0065DF5D /* MConcentricCircles.m in Sources */,
+				3A0542EF1B5F7B2600EC7878 /* MStatusLineChartView.m in Sources */,
 				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
 				3A03AA231B3BFF0500923ABB /* MEventDetailViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
@@ -1360,7 +1382,9 @@
 				3829982F1B3982BE0045B3BD /* MIndustryRaiders2ViewController.m in Sources */,
 				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
 				DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */,
+				3A0542F51B5FA00C00EC7878 /* MTarChartView2.m in Sources */,
 				DCB3FDF91B5A375900ED5BFA /* MRadioGroupView.m in Sources */,
+				3A0542EC1B5F58F400EC7878 /* MStatusLineChartViewController.m in Sources */,
 				3AB4CE1A1B32848B00143374 /* MMyTaskViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

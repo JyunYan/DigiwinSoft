@@ -369,6 +369,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     MInformationDetailViewController* vc = [[MInformationDetailViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

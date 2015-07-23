@@ -10,6 +10,8 @@
 #import "PieChartView.h"
 #import "MDirector.h"
 #import "MRouletteViewController.h"
+#import "MStatusLineChartViewController.h"
+#import "MDataBaseManager.h"
 
 
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
@@ -687,8 +689,22 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
-    [self.navigationController pushViewController:MRouletteVC animated:YES];
+//    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
+//    [self.navigationController pushViewController:MRouletteVC animated:YES];
+    
+    
+    NSArray *aryList=[[MDataBaseManager sharedInstance] loadPhenArray];
+    if (aryList.count == 0)
+        return;
+    MPhenomenon* phen = aryList[0];
+    NSArray *aryGuide=[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:phen];
+    if (aryGuide.count == 0)
+        return;
+    MGuide* guide = [aryGuide objectAtIndex:0];
+    NSArray* array = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:guide.target];
+    MStatusLineChartViewController* vc = [[MStatusLineChartViewController alloc] initWithHistoryArray:array];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

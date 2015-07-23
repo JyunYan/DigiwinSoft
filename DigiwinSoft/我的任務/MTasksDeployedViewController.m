@@ -74,7 +74,6 @@
     [self createBottomView:CGRectMake(0., posY, DEVICE_SCREEN_WIDTH, height)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetActivity:) name:@"ResetActivity" object:nil];
-    
 }
 
 - (void)didReceiveMemoryWarning {

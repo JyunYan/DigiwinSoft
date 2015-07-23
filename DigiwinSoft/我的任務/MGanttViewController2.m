@@ -67,7 +67,7 @@
 - (UILabel*)createGuideTitleLabelWithFrame:(CGRect)frame
 {
     UILabel *labTitle=[[UILabel alloc]initWithFrame:frame];
-    labTitle.text=_guide.name;//@"防止製造批量浮增";
+    labTitle.text=_guide.name;
     labTitle.font=[UIFont systemFontOfSize:14];
     labTitle.backgroundColor=[UIColor clearColor];
     //labTitle.transform= CGAffineTransformMakeRotation(M_PI_2 * 1);
@@ -90,7 +90,7 @@
 {
     UIScrollView* scrollView = [[UIScrollView alloc] initWithFrame:frame];
     scrollView.backgroundColor = [UIColor whiteColor];
-    scrollView.contentSize = CGSizeMake(MONTH_INTERVAL*25, frame.size.height);
+    scrollView.contentSize = CGSizeMake(MONTH_INTERVAL*27, frame.size.height);
     
     // 虛線底圖
     MGanttDashView* view = [[MGanttDashView alloc] initWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height)];
@@ -124,16 +124,79 @@
     bottomLine.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     [view addSubview:bottomLine];
     
-    // month label
-    CGFloat x = MONTH_INTERVAL/2.;
-    while ((x + MONTH_INTERVAL) < frame.size.width) {
-        UILabel* label = [self createLabelWithFrame:CGRectMake(x, 0, MONTH_INTERVAL, frame.size.height) text:@"07/20"];
-        [view addSubview:label];
-        
-        x += MONTH_INTERVAL;
+    
+    NSString *earlyDate=[self getEarlyDate];
+    
+       if ([earlyDate isEqualToString:@""]) {
+        return view;//避免使用者所有startDate都沒設置，接下去跑會閃退
     }
     
-    return view;
+    //timeline上的日期label(從最早的日期往後算兩年)
+    NSString *month=[earlyDate substringWithRange:NSMakeRange(5, 2)];
+    NSString *year=[earlyDate substringWithRange:NSMakeRange(0, 4)];
+    
+    NSInteger iMonth = [month integerValue];
+    NSInteger iyear = [year integerValue];
+    
+    for (NSInteger i=0; i<24; i++) {
+        NSString *strDate;
+        if (iMonth==13) {
+            iMonth=1;
+            iyear++;
+            strDate=[NSString stringWithFormat:@"%ld/%02ld/01",(long)iyear,(long)iMonth];
+        }
+        else
+        {
+            strDate=[NSString stringWithFormat:@"%02ld/01",(long)iMonth];
+        }
+        iMonth++;
+     
+        UILabel* label = [self createLabelWithFrame:CGRectMake((MONTH_INTERVAL*i)+(MONTH_INTERVAL/2), 0, MONTH_INTERVAL, frame.size.height) text:strDate];
+        [view addSubview:label];
+    }
+      return view;
+}
+//得到最早的日期
+-(NSString *)getEarlyDate
+{
+    NSString *myData;
+    NSString *date1;
+    
+    for (MCustActivity *Activity in _guide.activityArray) {
+        NSString *date2=Activity.custTarget.startDate;
+        if(date1){
+            myData=date2?date1:[self compareDate:date1 withDate:date2];
+        }else
+        {
+            date1=date2;
+            myData=date2;
+        }
+    }
+    
+    return myData;
+}
+//計算最早的日期
+-(NSString *)compareDate:(NSString*)date01 withDate:(NSString*)date02{
+    NSString *MyString;
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    NSDate *dt1 = [[NSDate alloc] init];
+    NSDate *dt2 = [[NSDate alloc] init];
+    dt1 = [df dateFromString:date01];
+    dt2 = [df dateFromString:date02];
+    NSComparisonResult result = [dt1 compare:dt2];
+    switch (result)
+    {
+            //date02比date01大
+        case NSOrderedAscending: MyString=[df stringFromDate:dt1]; break;
+            //date02比date01小
+        case NSOrderedDescending: MyString=[df stringFromDate:dt2]; break;
+            //date02=date01
+    // case NSOrderedSame: ci=0; break;
+        default: NSLog(@"erorr dates %@, %@", dt2, dt1); break;
+    }
+    
+    return MyString;
 }
 
 - (UITableView*)createTableViewWithFrame:(CGRect)frame
@@ -183,7 +246,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60.;
+    return 40.;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -191,7 +254,19 @@
     MGanttTableViewCell *cell=(MGanttTableViewCell *)[MGanttTableViewCell cellWithTableView:tableView];
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     
-    return cell;
+    //頭像
+    cell.imgViewHead.image=[UIImage imageNamed:@"icon_manager.png"];
+    
+    //時程bar，title
+    NSString *startDate=[[_guide.activityArray[indexPath.row] custTarget] startDate];
+    NSString *completeDate=[[_guide.activityArray[indexPath.row] custTarget] completeDate];
+    NSString *earlyDate=[self getEarlyDate];
+    NSString *title=[[_guide.activityArray[indexPath.row] custTarget]name];
+    if (startDate.length!=0&&completeDate.length!=0&&earlyDate.length!=0)//起始日，完成日，最早日期，皆需有值
+    {
+        [cell createtimeBar: startDate: completeDate: earlyDate: title];
+    }
+        return cell;
 }
 
 @end
