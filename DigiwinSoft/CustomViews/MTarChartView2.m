@@ -113,8 +113,8 @@
 - (void) drawYearLabel:(CGRect)quartzRect
 {
     CGFloat posX = quartzRect.origin.x;
-    CGFloat posY = 80;
-    CGFloat width = quartzRect.size.width / 3;
+    CGFloat posY = quartzRect.origin.y + 5;
+    CGFloat width = quartzRect.size.width / 3 - 10;
     CGFloat height = 30;
     
     NSInteger subCount = _historys.count / 3;
@@ -126,25 +126,27 @@
         NSString* end = [[[_historys objectAtIndex:index] datetime] substringToIndex:4];
 
         label = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        label.textAlignment = NSTextAlignmentCenter;
+        label.textAlignment = NSTextAlignmentRight;
         label.textColor = [UIColor colorWithRed:85./255. green:85./255. blue:85./255. alpha:1.];
         label.font = [UIFont systemFontOfSize:13.];
         label.text = end;
         [self addSubview:label];
         
-        posX += width;
+        posX = posX + width + 10;
     }
 }
 
 - (void)addButtonView:(CGRect)quartzRect
 {
-    UIButton* leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, quartzRect.origin.y, 34, quartzRect.size.height)];
+    CGFloat buttonWidth = (self.bounds.size.width - quartzRect.size.width + 2.) / 2.;
+    
+    UIButton* leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, quartzRect.origin.y, buttonWidth, quartzRect.size.height)];
     leftButton.backgroundColor = [UIColor grayColor];
     [leftButton setImage:[UIImage imageNamed:@"icon_arrow_left.png"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(actionLeft:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:leftButton];
     
-    UIButton* rightButton = [[UIButton alloc] initWithFrame:CGRectMake(quartzRect.origin.x + quartzRect.size.width - 1, quartzRect.origin.y, 34, quartzRect.size.height)];
+    UIButton* rightButton = [[UIButton alloc] initWithFrame:CGRectMake(quartzRect.origin.x + quartzRect.size.width - 1, quartzRect.origin.y, buttonWidth, quartzRect.size.height)];
     rightButton.backgroundColor = [UIColor grayColor];
     [rightButton setImage:[UIImage imageNamed:@"icon_arrow_right.png"] forState:UIControlStateNormal];
     [rightButton addTarget:self action:@selector(actionRight:) forControlEvents:UIControlEventTouchUpInside];

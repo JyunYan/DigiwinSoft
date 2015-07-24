@@ -212,7 +212,11 @@
     MCoordinate* coord2 = [_points objectAtIndex:subCount2];
     CGFloat posX = (coord1.x + coord2.x) / 2.;
     
-    _chartRangeView.center = CGPointMake(posX, self.bounds.size.height/2);;
+    [UIView animateWithDuration:0.1f
+                     animations:^{
+                         _chartRangeView.center = CGPointMake(posX, self.bounds.size.height/2);;
+                     }
+     ];
 }
 
 #pragma mark - 

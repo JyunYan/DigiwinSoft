@@ -37,17 +37,17 @@
     [self addMainMenu];
     
     
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+
     CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
     CGFloat screenWidth = screenFrame.size.width;
     CGFloat screenHeight = screenFrame.size.height;
     
     
     CGFloat posX = 0;
-    CGFloat posY = statusBarHeight;
+    CGFloat posY = 0;
     CGFloat width = screenWidth;
-    CGFloat height = screenHeight + statusBarHeight - 74;
+    CGFloat height = screenHeight + navBarHeight - 79;
     
     MStatusLineChartView* lineChartView = [[MStatusLineChartView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     [lineChartView setHistoryArray:_historyArray];
