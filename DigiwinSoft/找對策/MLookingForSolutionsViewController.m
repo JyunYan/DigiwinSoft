@@ -9,6 +9,7 @@
 #import "MLookingForSolutionsViewController.h"
 #import "AppDelegate.h"
 #import "MConfig.h"
+#import "MIndustryRaiders2ViewController.h"
 
 #define TAG_TABLE 101
 #define TAG_TABLE_RESULT 102
@@ -186,35 +187,50 @@
     static NSString *indentifier=@"Cell";
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:indentifier];
     if (cell==nil) {
-        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifier];
+        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:indentifier];
     }
 
     switch (tableView.tag) {
         case TAG_TABLE:
         {
-            cell.backgroundColor=[UIColor whiteColor];
+            UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(20,10, _tbl.frame.size.width-40, 20)];
+            labTitle.text=@"最適化存貨周轉";
+            labTitle.font=[UIFont systemFontOfSize:13];
+            labTitle.backgroundColor=[UIColor clearColor];
+            [cell addSubview:labTitle];
+            
+            UILabel *labNum=[[UILabel alloc]initWithFrame:CGRectMake(20,30, 40, 20)];
+            labNum.backgroundColor=[UIColor clearColor];
+            labNum.textColor=[UIColor colorWithRed:138.0/255.0 green:206.0/255.0 blue:225.0/255.0 alpha:1.0];
+            labNum.font= [UIFont fontWithName:@"TrebuchetMS-Bold" size:12];
+            labNum.text=[self convertToCommaType:@"12345"];
+            [cell addSubview:labNum];
+            
+            UIImageView *img = [[UIImageView alloc]initWithFrame:CGRectMake(60,30, 20, 20)];
+            img.image=[UIImage imageNamed:@"icon_menu_5.png"];
+            img.tintColor=[UIColor colorWithRed:138.0/255.0 green:206.0/255.0 blue:225.0/255.0 alpha:1.0];
+            [cell addSubview:img];
+            
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle=UITableViewCellSelectionStyleNone;
             return cell;
         }
         case TAG_TABLE_RESULT:
         {
+            //title
             cell.backgroundColor=[UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1.0];
-            cell.textLabel.text=_aryResult[indexPath.row];
             cell.textLabel.textColor=[UIColor whiteColor];
+            cell.textLabel.attributedText=_aryResult[indexPath.row];
             cell.textLabel.font=[UIFont systemFontOfSize:13];
+            
+            //number
+            cell.detailTextLabel.text=[self convertToCommaType:@"12345678"];
+            cell.detailTextLabel.font=[UIFont systemFontOfSize:12];
+            cell.detailTextLabel.textAlignment = NSTextAlignmentRight;
             
             UIView *selectedView = [[UIView alloc]init];
             selectedView.backgroundColor = [UIColor colorWithRed:28.0/255.0 green:169.0/255.0  blue:189.0/255.0  alpha:1.0];
             cell.selectedBackgroundView =  selectedView;
-            
-            UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 70, 10)];
-            lab.textColor=[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
-            lab.font=[UIFont systemFontOfSize:12];
-            lab.backgroundColor=[UIColor clearColor];
-            lab.text=@"12345678";
-            lab.textAlignment = NSTextAlignmentRight;
-            cell.accessoryView=lab;
             
             return cell;
         }
@@ -226,11 +242,30 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    _textField.text=_aryResult[indexPath.row];
-    [_textField resignFirstResponder];
-    [UIView animateWithDuration:0.3 animations:^() {
-        _tblResult.alpha = 0.0;
-    }];
+    
+    switch (tableView.tag) {
+        case TAG_TABLE:
+        {
+            MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] init];
+//            [MIndustryRaiders2VC setPhen:phen];
+            [MIndustryRaiders2VC setFrom:GUIDE_FROM_ISSUE];
+            [self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
+            break;
+        }
+        case TAG_TABLE_RESULT:
+        {
+            _textField.attributedText=_aryResult[indexPath.row];
+            _textField.textColor=[UIColor whiteColor];
+            [_textField resignFirstResponder];
+            [UIView animateWithDuration:0.3 animations:^() {
+                _tblResult.alpha = 0.0;
+            }];
+            break;
+        }
+        default:
+            break;
+    }
+
     
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -264,7 +299,13 @@
     for (NSString * str in _aryPrepareData) {
         
         if ([str rangeOfString:theTextField.text].location != NSNotFound) {
-            [_aryResult addObject:str];
+            NSRange search = [str rangeOfString:theTextField.text];
+            NSString *infoString = str;
+            UIColor *color=[UIColor colorWithRed:242.0/255.0 green:136.0/255.0 blue:136.0/255.0 alpha:1.0];
+            NSMutableAttributedString *attString=[[NSMutableAttributedString alloc] initWithString:infoString];
+            [attString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(search.location, theTextField.text.length)];
+            [_aryResult addObject:attString];
+            
         }
     }
     _tblResult.alpha = 1.0;
@@ -280,5 +321,15 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+#pragma other
+-(NSString*)convertToCommaType:(NSString*)str
+{
+    NSNumberFormatter *formatter = [NSNumberFormatter new];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber *num=[NSNumber numberWithInteger:[str integerValue]];
+    NSString *formatted = [formatter stringFromNumber:num];
+    return formatted;
 }
 @end

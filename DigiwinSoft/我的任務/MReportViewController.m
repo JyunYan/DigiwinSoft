@@ -68,7 +68,6 @@
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
     self.navigationItem.leftBarButtonItem = back;
     
-
     
     if([_task isKindOfClass:[MCustGuide class]])
     {
