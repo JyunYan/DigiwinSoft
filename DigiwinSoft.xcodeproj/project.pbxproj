@@ -49,6 +49,7 @@
 		3A54DDFC1B40DD1100A6849A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A54DDFB1B40DD1100A6849A /* MediaPlayer.framework */; };
 		3A54EDE11B4636DB00BDA945 /* MCustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */; };
 		3A5B9E9D1B3D0756005DE125 /* MRecommendTreasuresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5B9E9C1B3D0756005DE125 /* MRecommendTreasuresViewController.m */; };
+		3A5E41FC1B65DDEB00799084 /* MLabelPieChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E41FB1B65DDEB00799084 /* MLabelPieChartViewController.m */; };
 		3A5EA3601B57455D00B5360F /* center.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5EA35F1B57455D00B5360F /* center.png */; };
 		3A5EA3651B576C1400B5360F /* icon_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A5EA3641B576C1400B5360F /* icon_up.png */; };
 		3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A711B831B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m */; };
@@ -293,6 +294,8 @@
 		3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustomAlertView.m; path = CustomViews/MCustomAlertView.m; sourceTree = "<group>"; };
 		3A5B9E9B1B3D0756005DE125 /* MRecommendTreasuresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRecommendTreasuresViewController.h; sourceTree = "<group>"; };
 		3A5B9E9C1B3D0756005DE125 /* MRecommendTreasuresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRecommendTreasuresViewController.m; sourceTree = "<group>"; };
+		3A5E41FA1B65DDEB00799084 /* MLabelPieChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLabelPieChartViewController.h; sourceTree = "<group>"; };
+		3A5E41FB1B65DDEB00799084 /* MLabelPieChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLabelPieChartViewController.m; sourceTree = "<group>"; };
 		3A5EA35F1B57455D00B5360F /* center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = center.png; sourceTree = "<group>"; };
 		3A5EA3641B576C1400B5360F /* icon_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_up.png; sourceTree = "<group>"; };
 		3A711B821B3800C100E94211 /* NSMutableArray+SWUtilityButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+SWUtilityButtons.h"; sourceTree = "<group>"; };
@@ -703,6 +706,8 @@
 				38DCDD901B4E199F008B57A2 /* MRouletteViewController.m */,
 				3AD851821B5CFBFA00486E1D /* MStatusPieChartViewController.h */,
 				3AD851831B5CFBFA00486E1D /* MStatusPieChartViewController.m */,
+				3A5E41FA1B65DDEB00799084 /* MLabelPieChartViewController.h */,
+				3A5E41FB1B65DDEB00799084 /* MLabelPieChartViewController.m */,
 				3A4725581B5DE5EF00DB9FFE /* MIndustryInformationViewController.h */,
 				3A4725591B5DE5EF00DB9FFE /* MIndustryInformationViewController.m */,
 				3A47255B1B5E3DEB00DB9FFE /* MInformationDetailViewController.h */,
@@ -1342,6 +1347,7 @@
 				DC58779B1B5E7F2B00D5AC5D /* MGanttTableViewCell.m in Sources */,
 				DC3DF9D21B4E17C90065DF5D /* MTarMeterView.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
+				3A5E41FC1B65DDEB00799084 /* MLabelPieChartViewController.m in Sources */,
 				383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */,
 				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
