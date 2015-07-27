@@ -59,6 +59,10 @@
 {
     NSInteger subCount = _historyArray.count / 3;
     NSInteger startIndex = subCount * _rangeIndex;
+    if (_rangeIndex < 2) {
+        // 銜接到下一區間的起點
+        subCount++;
+    }
 
     return NSMakeRange(startIndex, subCount);
 }

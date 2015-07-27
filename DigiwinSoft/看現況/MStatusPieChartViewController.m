@@ -704,8 +704,10 @@
     NSArray* array = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:guide.target];
     NSArray* newArray = [NSArray new];
     newArray = [newArray arrayByAddingObjectsFromArray:array];
-    newArray = [newArray arrayByAddingObjectsFromArray:array];
-    newArray = [newArray arrayByAddingObjectsFromArray:array];
+    newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(1, array.count-1)]];
+    newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(0, 1)]];
+    newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(array.count-1, 1)]];
+    newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(1, array.count-1)]];
     MStatusLineChartViewController* vc = [[MStatusLineChartViewController alloc] initWithHistoryArray:newArray];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];

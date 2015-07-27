@@ -33,7 +33,7 @@
     // 右矩形
     CGContextBeginPath(context);
     CGContextSetRGBFillColor(context, 139./255., 137./255., 137./255., 0.6);
-    CGContextAddRect(context, CGRectMake(rect.size.width*3/5 - 5, 0, rect.size.width*2/5 + 2, rect.size.height));
+    CGContextAddRect(context, CGRectMake(rect.size.width*3/5 + 3, 0, rect.size.width*2/5 + 2, rect.size.height));
     CGContextClosePath(context);
     CGContextDrawPath(context, kCGPathEOFill);
 }
