@@ -37,7 +37,7 @@
 {
       
     if(!_RadarChart){
-        _RadarChart = [[RPRadarChart alloc] initWithFrame:CGRectMake(0, 0,150, 150)];
+        _RadarChart = [[RPRadarChart alloc] initWithFrame:CGRectMake(0, 0,200, 200)];
         _RadarChart.dataSource = self;
         _RadarChart.delegate = self;
 
@@ -45,7 +45,7 @@
         _RadarChart.backgroundColor = [UIColor whiteColor];
         
         
-        _RadarChart.backLineWidth=1;  //輻射線與同心圓的線的寬度
+        _RadarChart.backLineWidth=1.5;  //輻射線與同心圓的線的寬度
         _RadarChart.frontLineWidth=1;  //多角形的線框的寬度
         _RadarChart.dotRadius=0;//多角形的點的大小
 //        _RadarChart.lineColor=[UIColor blackColor];

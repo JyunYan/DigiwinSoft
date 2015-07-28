@@ -37,7 +37,8 @@
 //  Object to be an NSNumber with float values.
 //
 //--------------- 
-
+#define RADAR_CHART_WIDTH 200
+#define RADAR_CHART_HEIGHT 200
 #import <float.h>
 #import <QuartzCore/CALayer.h>
 #import "RPRadarChart.h"
@@ -457,7 +458,7 @@ static double colorDistance(RGB e1, RGB e2)
         [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
         [btnTitle setTitle:ary[i][0] forState:UIControlStateNormal];
         [btnTitle addTarget:self action:@selector(btnTitilClick:) forControlEvents:UIControlEventTouchUpInside];
-        btnTitle.center=CGPointMake(75+x,75+y);//加上雷達圖的中心位置
+        btnTitle.center=CGPointMake((RADAR_CHART_WIDTH/2)+x,(RADAR_CHART_HEIGHT/2)+y);//加上雷達圖的中心位置
 
         [self addSubview:btnTitle];
 
