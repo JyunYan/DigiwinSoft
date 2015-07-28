@@ -17,12 +17,13 @@
 #import "MCustActivity.h"
 #import "MCustWorkItem.h"
 #import "MCustomSegmentedControl.h"
+#import "MMissionTableCell.h"
 
 #define TAG_IMAGE_VIEW_TYPE     201
 #define TAG_LABEL_TASK_NAME     202
 
 
-@interface MMyTaskViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface MMyTaskViewController ()<UITableViewDelegate, UITableViewDataSource, MMissionTableCellDelegate>
 {
     NSArray *aryPrepare;
     NSArray *aryRepost;
@@ -30,16 +31,30 @@
 }
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
-@property (nonatomic, strong) NSMutableArray* taskDataArry;
+@property (nonatomic, strong) NSArray* taskDataArry;
+
+@property (nonatomic, assign) NSInteger segmentIndex;
 
 @end
 
 @implementation MMyTaskViewController
 
+- (id)init
+{
+    self = [super init];
+    if(self){
+        _segmentIndex = 0;
+        _taskDataArry = [NSMutableArray new];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self addMainMenu];
+    [self createSegmentedView];
+    [self createTableView];
     
     self.title = @"我的任務";
 }
@@ -50,13 +65,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    NSArray *ary=[[MDataBaseManager sharedInstance]loadMyMissionsWithIndex:0];
-    _taskDataArry=[[NSMutableArray alloc]initWithArray:ary];
-    
-    [self loadData];
-    
-    [self createSegmentedView];
-    [self createTableView];
+    [self refresh];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,7 +94,30 @@
     //已完成任務
     aryFinish=[[MDataBaseManager sharedInstance]loadMyMissionsWithIndex:2];
     
+    NSInteger index = _segmentIndex;
+    if(index == 0)
+        _taskDataArry = aryPrepare;
+    if(index == 1)
+        _taskDataArry = aryRepost;
+    if(index == 2)
+        _taskDataArry = aryFinish;
+       
 }
+
+- (void)refresh
+{
+    [self loadData];
+    
+    NSString *title0=[NSString stringWithFormat:@"待佈署任務(%lu)",(unsigned long)[aryPrepare count]];
+    NSString *title1=[NSString stringWithFormat:@"進度回報(%lu)",(unsigned long)[aryRepost count]];
+    NSString *title2=[NSString stringWithFormat:@"已完成任務(%lu)",(unsigned long)[aryFinish count]];
+    [_customSegmentedControl setTitle:title0 forSegmentAtIndex:0];
+    [_customSegmentedControl setTitle:title1 forSegmentAtIndex:1];
+    [_customSegmentedControl setTitle:title2 forSegmentAtIndex:2];
+    
+    [_tableView reloadData];
+}
+
 #pragma mark - create view
 -(void) addMainMenu
 {
@@ -153,60 +185,22 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    return MISSION_TABLE_CELL_HEIGHT;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    static NSString *cellIdentifier = @"MissionTableCell";
+    MMissionTableCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        //
-        UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 20, 20, 20)];
-        imageView.tag = TAG_IMAGE_VIEW_TYPE;
-        [imageView setBackgroundColor:[UIColor clearColor]];
-        [cell addSubview:imageView];
-        
-        //
-        UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(60, 10, 300, 40)];
-        [label setBackgroundColor:[UIColor clearColor]];
-        label.text = @"";
-        label.tag = TAG_LABEL_TASK_NAME;
-        [cell addSubview:label];
-        
+    if (cell == nil){
+        cell = [[MMissionTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.delegate = self;
     }
-    
-    UILabel* label = (UILabel*) [cell viewWithTag:TAG_LABEL_TASK_NAME];
-    UIImageView* imageView =(UIImageView*) [cell viewWithTag:TAG_IMAGE_VIEW_TYPE];
 
-    id task=[_taskDataArry objectAtIndex:indexPath.row];
-    if([task isKindOfClass:[MCustGuide class]])
-    {
-        MCustGuide *guid=(MCustGuide *)task;
-        label.text = guid.name;
-        imageView.image = [UIImage imageNamed:@"icon_menu_11.png"];
-    }else if([task isKindOfClass:[MCustWorkItem class]])
-    {
-        MCustWorkItem *WorkItem=(MCustWorkItem *)task;
-        label.text = WorkItem.name;
-        imageView.image = [UIImage imageNamed:@"icon_menu_10.png"];
-    }else if ([task isKindOfClass:[MCustActivity class]])
-    {
-        MCustActivity *Activity=(MCustActivity *)task;
-        label.text = Activity.name;
-        imageView.image = [UIImage imageNamed:@"icon_menu_9.png"];
-    }
-    else
-    {
-        
-    }
+    id task = [_taskDataArry objectAtIndex:indexPath.row];
+    [cell prepareWithObject:task segmentIndex:_segmentIndex];
+    
     return cell;
 }
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
@@ -232,15 +226,16 @@
 
     }else if (segmentedIndex == 1)
     {
+        NSLog(@"xxx");
         MReportViewController* MReportVC = [[MReportViewController alloc] init];
         
         id task=[_taskDataArry objectAtIndex:indexPath.row];
         MReportVC.task=task;
         UINavigationController* MReportNav = [[UINavigationController alloc] initWithRootViewController:MReportVC];
         MReportNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
-        [self.navigationController presentViewController:MReportNav animated:YES completion:nil];
-    }else
-    {
+        [self presentViewController:MReportNav animated:NO completion:nil];
+        //[self.navigationController pushViewController:MReportVC animated:YES];
+    }else{
         
     }
 }
@@ -262,6 +257,21 @@
     }
 }
 
+#pragma mark - MMissionTableCellDelegate
+
+- (void)actionToAccepted:(MMissionTableCell *)cell
+{
+    NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
+    id obj = [_taskDataArry objectAtIndex:indexPath.row];
+    if([obj isKindOfClass:[MCustWorkItem class]]){
+        MCustWorkItem* item = (MCustWorkItem*)obj;
+        item.accepted = @"1";
+        
+        [[MDataBaseManager sharedInstance] insertCustWorkItem:item];
+        [self refresh];
+    }
+}
+
 #pragma mark - UIButton
 - (void)actionToSearch:(id)sender
 {
@@ -274,32 +284,24 @@
 }
 - (void)actionToShowNextPage:(id)sender
 {
-    [_taskDataArry removeAllObjects];
-
-    NSInteger index = [sender selectedSegmentIndex];
+    _segmentIndex = [sender selectedSegmentIndex];
+    
+    NSInteger index = _segmentIndex;
     [_customSegmentedControl moveImgblueBar:index];
 
     switch (index) {
         case 0:
-        {
-            [_taskDataArry addObjectsFromArray:aryPrepare];
+            _taskDataArry = aryPrepare;
             break;
-        }
         case 1:
-        {
-            [_taskDataArry addObjectsFromArray:aryRepost];
+            _taskDataArry = aryRepost;
             break;
-        }
         case 2:
-        {
-            [_taskDataArry addObjectsFromArray:aryFinish];
+            _taskDataArry = aryFinish;
             break;
-        }
         default:
-        {
             NSLog(@"Error");
             break;
-        }
     }
 
     [_tableView reloadData];

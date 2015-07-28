@@ -8,6 +8,7 @@
 
 #import "MDataBaseManager.h"
 #import "MDirector.h"
+#import "MMonitorData.h"
 
 @implementation MDataBaseManager
 
@@ -477,7 +478,7 @@ static MDataBaseManager* _director = nil;
 }
 
 // p25
-- (NSArray*)loadIssueArrayByGudie:(MGuide*)guide
+- (NSArray*)loadIssueArrayByGudieID:(NSString*)guideid
 {
     NSString* industryId = [MDirector sharedInstance].currentUser.industryId;
     NSString* sql = @"select tar.NAME, tar.UNIT, tar.TREND, iss.*, rit.* from R_GUIDE_ISSUE as rgi inner join M_ISSUE as iss on iss.ID = rgi.ISSUE_ID inner join M_TARGET as tar on iss.TAR_ID = tar.ID inner join R_IND_TAR as rit on rit.TAR_ID = tar.ID where rgi.GUIDE_ID = ? AND rit.IND_ID = ?";
@@ -490,7 +491,7 @@ static MDataBaseManager* _director = nil;
     
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, guide.uuid, industryId];
+    FMResultSet* rs = [self.db executeQuery:sql, guideid, industryId];
     while([rs next]){
         
         MIssue* issue = [MIssue new];
@@ -562,32 +563,25 @@ static MDataBaseManager* _director = nil;
 {
     NSMutableArray* missions = [NSMutableArray new];
     
-    BOOL release;
-    NSString* status;
     if(index == 0){         //待佈屬任務
-        release = NO;
-        status = @"0";
+        NSArray* array2 = [self loadMyActivityMissionWithRelese:NO status:@"0"];                //規劃的關鍵活動
+        [missions addObjectsFromArray:array2];
+        NSArray* array3 = [self loadMyWorkItemMissionWithRelese:YES status:@"0" accepted:@"0"]; //攻略&未接受的工作項目
+        [missions addObjectsFromArray:array3];
     }else if(index == 1){   //進度回報
-        release = YES;
-        status = @"0";
+        NSArray* array2 = [self loadMyActivityMissionWithRelese:YES status:@"0"];               //攻略的關鍵活動
+        [missions addObjectsFromArray:array2];
+        NSArray* array3 = [self loadMyWorkItemMissionWithRelese:YES status:@"0" accepted:@"1"]; //攻略&已接受的工作項目
+        [missions addObjectsFromArray:array3];
     }else if(index == 2){   //已完成任務
-        release = YES;
-        status = @"2";
+        NSArray* array2 = [self loadMyActivityMissionWithRelese:YES status:@"2"];               //攻略&已完成的關鍵活動
+        [missions addObjectsFromArray:array2];
+        NSArray* array3 = [self loadMyWorkItemMissionWithRelese:YES status:@"2" accepted:@"1"]; //攻略&已完成的工作項目
+        [missions addObjectsFromArray:array3];
     }else{
         return missions;
     }
     
-    // 只有"已完成任務" 才有對策
-    if(index == 2){
-        NSArray* array = [self loadMyGuideMissionsWithRelese:release status:status];
-        [missions addObjectsFromArray:array];
-    }
-    
-    NSArray* array2 = [self loadMyActivityMissionWithRelese:release status:status];
-    [missions addObjectsFromArray:array2];
-
-    NSArray* array3 = [self loadMyWorkItemMissionWithRelese:release status:status];
-    [missions addObjectsFromArray:array3];
     
     // sort by created date
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"cre_dte" ascending:YES];  // YES:升冪 NO:降冪
@@ -714,13 +708,13 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
-- (NSArray*)loadMyWorkItemMissionWithRelese:(BOOL)brelease status:(NSString*)status
+- (NSArray*)loadMyWorkItemMissionWithRelese:(BOOL)brelease status:(NSString*)status accepted:(NSString*)accepted
 {
     NSMutableArray* array = [NSMutableArray new];
     
     NSString* rel = brelease ? @"1" : @"0";
     NSString* empid = [MDirector sharedInstance].currentUser.uuid;
-    NSString* sql = @"select uw.*, ut.* from U_GUIDE as ug inner join U_WORK_ITEM as uw on ug.ID = uw.GUIDE_ID inner join U_TARGET as ut on uw.TAR_ID = ut.ID where ug.RELEASE = ? and uw.EMP_ID = ? ";
+    NSString* sql = @"select uw.*, ut.* from U_GUIDE as ug inner join U_WORK_ITEM as uw on ug.ID = uw.GUIDE_ID inner join U_TARGET as ut on uw.TAR_ID = ut.ID where ug.RELEASE = ? and uw.EMP_ID = ? and uw.ACCEPTED = ? ";
     if(!status)
         return array;
     else if([status isEqualToString:@"2"])
@@ -728,7 +722,12 @@ static MDataBaseManager* _director = nil;
     else
         sql = [sql stringByAppendingString:@"and uw.STATUS <> 2"];  //未開始or進行中
     
-    FMResultSet* rs = [self.db executeQuery:sql, rel, empid];
+//    if(!status)
+//        return array;
+//    else
+//        sql = [sql stringByAppendingFormat:@"and uw.STATUS = '%@'", status];  //未開始or進行中or已完成
+    
+    FMResultSet* rs = [self.db executeQuery:sql, rel, empid, accepted];
     while ([rs next]) {
         
         MCustWorkItem* item = [MCustWorkItem new];
@@ -743,12 +742,13 @@ static MDataBaseManager* _director = nil;
         item.act_id = [rs stringForColumn:@"ACT_ID"];
         item.wi_m_id = [rs stringForColumn:@"WI_M_ID"];
         item.cre_dte = [rs stringForColumn:@"CREATE_DATE"];
+        item.accepted = [rs stringForColumn:@"ACCEPTED"];
         
         // 指標
         MCustTarget* target = item.custTarget;
         target.uuid = [rs stringForColumn:@"TAR_ID"];
         target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
-        target.name = [rs stringForColumnIndex:15];
+        target.name = [rs stringForColumnIndex:16];
         target.unit = [rs stringForColumn:@"UNIT"];
         target.trend = [rs stringForColumn:@"TREND"];
         target.startDate = [rs stringForColumn:@"START_DATE"];
@@ -1069,12 +1069,13 @@ static MDataBaseManager* _director = nil;
         item.act_id = [rs stringForColumn:@"ACT_ID"];
         item.wi_m_id = [rs stringForColumn:@"WI_M_ID"];
         item.cre_dte = [rs stringForColumn:@"CREATE_DATE"];
+        item.accepted = [rs stringForColumn:@"ACCEPTED"];
         
         // 指標
         MCustTarget* target = item.custTarget;
         target.uuid = [rs stringForColumn:@"TAR_ID"];
         target.tar_uuid = [rs stringForColumn:@"TAR_M_ID"];
-        target.name = [rs stringForColumnIndex:15];
+        target.name = [rs stringForColumnIndex:16];
         target.unit = [rs stringForColumn:@"UNIT"];
         target.trend = [rs stringForColumn:@"TREND"];
         target.type = [rs stringForColumn:@"TYPE"];
@@ -1090,6 +1091,54 @@ static MDataBaseManager* _director = nil;
         
         [array addObject:item];
     }
+    return array;
+}
+
+#pragma mark - 監控地圖
+
+- (NSArray*)loadMonitorGuideData
+{
+    NSMutableArray* array = [NSMutableArray new];
+    
+    NSArray* guides = [self loadMyRaidersArray];
+    for (MCustGuide* guide in guides) {
+        NSArray* issues = [self loadMonitorIssueWithGudieID:guide.gui_uuid];
+        
+        MMonitorData* data = [MMonitorData new];
+        data.guide = guide;
+        data.issueArray = issues;
+        
+        [array addObject:data];
+    }
+    
+    return array;
+}
+
+- (NSArray*)loadMonitorIssueWithGudieID:(NSString*)guideid
+{
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select * from R_GUIDE_ISSUE as rgi inner join M_ISSUE as mi on mi.ID = rgi.ISSUE_ID inner join R_COMP_ISSUE as rci on rci.ISSUE_ID = mi.ID where rgi.GUIDE_ID = ? and rci.COMP_ID = ?";
+    //select *
+    //from R_GUIDE_ISSUE as rgi
+    //inner join M_ISSUE as mi on mi.ID = rgi.ISSUE_ID
+    //inner join R_COMP_ISSUE as rci on rci.ISSUE_ID = mi.ID
+    //where rgi.GUIDE_ID = 'gui-002' and rci.COMP_ID = 'cmp-001'
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, guideid, compid];
+    while ([rs next]) {
+        MIssue* issue = [MIssue new];
+        issue.uuid = [rs stringForColumn:@"ID"];
+        issue.name = [rs stringForColumn:@"NAME"];   // 議題name
+        issue.desc = [rs stringForColumn:@"DESCRIPTION"];
+        issue.reads = [rs stringForColumn:@"READS"];
+        issue.gainR = [rs stringForColumn:@"R_GAIN"];
+        issue.gainP = [rs stringForColumn:@"P_GAIN"];
+        
+        [array addObject:issue];
+    }
+    
     return array;
 }
 
@@ -1362,7 +1411,7 @@ static MDataBaseManager* _director = nil;
 
 - (BOOL)insertWorkItem:(MWorkItem*)item activityID:(NSString*)actid guideID:(NSString*)guideid
 {
-    NSString* sql = @"insert into U_WORK_ITEM ('ID','COMP_ID','GUIDE_ID','ACT_ID','WI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','PREVIOS_1','PREVIOS_2','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    NSString* sql = @"insert into U_WORK_ITEM ('ID','COMP_ID','GUIDE_ID','ACT_ID','WI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','PREVIOS_1','PREVIOS_2','STATUS', 'ACCEPTED','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
     NSString* cre_dte = [[MDirector sharedInstance] getCurrentDateStringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -1377,8 +1426,9 @@ static MDataBaseManager* _director = nil;
     NSString* previos1 = item.previos1;
     NSString* previos2 = item.previos2;
     NSString* status = @"0";
+    NSString* accepted = @"0";
     
-    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, actid, wi_m_id, name, desc, tarid, empid, previos1, previos2, status, cre_dte];
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, actid, wi_m_id, name, desc, tarid, empid, previos1, previos2, status, accepted, cre_dte];
     if(b)
         [self insertTarget:item.target withID:tarid];
     else
@@ -1433,7 +1483,7 @@ static MDataBaseManager* _director = nil;
 
 - (BOOL)insertCustWorkItem:(MCustWorkItem*)item
 {
-    NSString* sql = @"insert or replace into U_WORK_ITEM ('ID','COMP_ID','GUIDE_ID','ACT_ID','WI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','PREVIOS_1','PREVIOS_2','STATUS','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    NSString* sql = @"insert or replace into U_WORK_ITEM ('ID','COMP_ID','GUIDE_ID','ACT_ID','WI_M_ID','NAME','DESCRIPTION','TAR_ID','EMP_ID','PREVIOS_1','PREVIOS_2','STATUS','ACCEPTED','CREATE_DATE') values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     
     NSString* guideid = item.guide_id;
     NSString* actid = item.act_id;
@@ -1451,8 +1501,9 @@ static MDataBaseManager* _director = nil;
     NSString* previos1 = item.previos1;
     NSString* previos2 = item.previos2;
     NSString* status = item.status;
+    NSString* accepted = item.accepted;
     
-    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, actid, wi_m_id, name, desc, tarid, empid, previos1, previos2, status, cre_dte];
+    BOOL b = [self.db executeUpdate:sql, uuid, compid, guideid, actid, wi_m_id, name, desc, tarid, empid, previos1, previos2, status, accepted, cre_dte];
     if(b)
         [self insertCustTarget:item.custTarget withID:tarid];
     else

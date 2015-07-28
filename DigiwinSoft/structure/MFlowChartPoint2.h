@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import "MCustWorkItem.h"
+#import "MCustActivity.h"
 
 #define TYPE_FOR_NONE   101
 #define TYPE_FOR_ITEM   102
@@ -27,6 +28,7 @@
 
 @property (nonatomic, assign) NSInteger arrowDirection;
 @property (nonatomic, strong) MCustWorkItem* workitem;
+@property (nonatomic, strong) MCustActivity* activity;
 @property (nonatomic, strong) NSString* title;
 
 @end

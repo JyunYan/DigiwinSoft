@@ -76,6 +76,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetActivity:) name:@"ResetActivity" object:nil];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    // save data
+    NSArray* array = _guide.activityArray;
+    [[MDataBaseManager sharedInstance] insertCustActivitys:array];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -337,8 +346,8 @@
 
 -(void)actionNotify:(id)sender
 {
-    NSArray* array = _guide.activityArray;
-    [[MDataBaseManager sharedInstance] insertCustActivitys:array];
+    //NSArray* array = _guide.activityArray;
+    //[[MDataBaseManager sharedInstance] insertCustActivitys:array];
     
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:@"成功發送通知" delegate:nil cancelButtonTitle:@"確認" otherButtonTitles:nil];
     [alert show];

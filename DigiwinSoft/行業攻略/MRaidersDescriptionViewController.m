@@ -16,8 +16,9 @@
 #import "MGuide.h"
 #import "MTarget.h"
 #import "MFlowChartView.h"
+#import "MActFlowChart.h"
 
-@interface MRaidersDescriptionViewController ()
+@interface MRaidersDescriptionViewController ()<UITextFieldDelegate>
 {
     CGFloat screenWidth;
     CGFloat screenHeight;
@@ -74,7 +75,7 @@
 #pragma mark - create view
 - (void)loadData
 {
-    aryList=[[MDataBaseManager sharedInstance]loadIssueArrayByGudie:_guide];
+    aryList=[[MDataBaseManager sharedInstance] loadIssueArrayByGudieID:_guide.uuid];
 }
 
 -(void)kkk:(NSNotification*)note
@@ -140,12 +141,13 @@
     //scroll
     UIScrollView *scroll=[[UIScrollView alloc]initWithFrame:frame];
     scroll.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
+    scroll.showsVerticalScrollIndicator = NO;
     [self.view addSubview:scroll];
     
     //對策name
     UITextField* title = [[UITextField alloc]initWithFrame:CGRectMake(0,offset, DEVICE_SCREEN_WIDTH, 44)];
+    title.delegate = self;
     title.text=_guide.name;
-    title.userInteractionEnabled = NO;
     title.backgroundColor=[UIColor whiteColor];
     title.font = [UIFont systemFontOfSize:14];
     [scroll addSubview:title];
@@ -171,12 +173,17 @@
     
     offset += textView.frame.size.height + 2.;
     
-    MFlowChartView* chart = [[MFlowChartView alloc] initWithFrame:CGRectMake(0, offset, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_WIDTH/6.*4.)];
+//    MFlowChartView* chart = [[MFlowChartView alloc] initWithFrame:CGRectMake(0, offset, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_WIDTH/6.*4.)];
+//    chart.backgroundColor = [UIColor whiteColor];
+//    [chart setItems:_guide.activityArray];
+//    [scroll addSubview:chart];
+    
+    MActFlowChart* chart = [[MActFlowChart alloc] initWithFrame:CGRectMake(0, offset, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_WIDTH*0.6)];
     chart.backgroundColor = [UIColor whiteColor];
     [chart setItems:_guide.activityArray];
     [scroll addSubview:chart];
     
-    offset += chart.frame.size.height + 20.;
+    offset += chart.frame.size.height + 10.;
     
     //議題table
     CGFloat height = aryList.count * MRaidersDescriptionTableViewCell_HEIGHT + 40.;
@@ -241,6 +248,13 @@
 - (void)goToBackPage:(id) sender
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UITextfieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return NO;
 }
 
 #pragma mark - UITableViewDelegate

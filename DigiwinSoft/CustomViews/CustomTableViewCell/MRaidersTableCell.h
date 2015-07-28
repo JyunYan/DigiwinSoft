@@ -27,6 +27,9 @@
 - (UIButton*)createButtonWithImage:(UIImage*)image frame:(CGRect)frame;
 - (UILabel*)createLabelWithFrame:(CGRect)frame font:(UIFont*)font textAlignment:(NSTextAlignment)textAlignment;
 
+- (UIImage*)imageWithCustTarget:(MCustTarget*)taregt;
+- (UIImage*)imageWithTarget:(MTarget*)taregt;
+
 @end
 
 /**

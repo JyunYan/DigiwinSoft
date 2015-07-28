@@ -26,6 +26,7 @@
 -(CGRect) getScaledRect:(CGRect)frame;
 
 #pragma mark - get color methods
+- (UIColor*)getCustomOrangeColor;
 - (UIColor *)getCustomGrayColor;
 - (UIColor *)getCustomLightGrayColor;
 - (UIColor *)getCustomBlueColor;

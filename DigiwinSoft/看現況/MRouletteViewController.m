@@ -45,7 +45,7 @@
     RVCollectionViewLayout* flowLayout = [[RVCollectionViewLayout alloc]init];
     //[flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     
-    _mCollection=[[UICollectionView alloc]initWithFrame:CGRectMake(1, 85,DEVICE_SCREEN_WIDTH-2,150) collectionViewLayout:flowLayout];
+    _mCollection=[[UICollectionView alloc]initWithFrame:CGRectMake(1, 85,DEVICE_SCREEN_WIDTH-2,300) collectionViewLayout:flowLayout];
     _mCollection.delegate=self;
     _mCollection.dataSource=self;
     _mCollection.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
@@ -65,7 +65,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.imagesArray count];
+    return 5;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -102,6 +102,16 @@
     [visibleCards enumerateObjectsUsingBlock:^(RVCollectionViewCell * visibleCell, NSUInteger idx, BOOL *stop) {
 //        NSLog(@"visible cell: %@", visibleCell.imageName);
     }];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake((DEVICE_SCREEN_WIDTH - 20)/3., 80.);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 10.;
 }
 
 

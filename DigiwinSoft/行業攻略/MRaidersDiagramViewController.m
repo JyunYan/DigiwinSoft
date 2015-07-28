@@ -62,7 +62,7 @@
 
     //Label
     UILabel *labReason=[[UILabel alloc]initWithFrame:CGRectMake(20,80, screenWidth-40, 15)];
-    labReason.text=[NSString stringWithFormat:@"緣起:%@",[MDirector sharedInstance].selectedPhen.subject];
+    labReason.text=[NSString stringWithFormat:@"緣起 : %@",[MDirector sharedInstance].selectedPhen.subject];
     labReason.backgroundColor=[UIColor clearColor];
     [labReason setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labReason];
@@ -74,7 +74,7 @@
     
     //Label
     UILabel *labTarget=[[UILabel alloc]initWithFrame:CGRectMake(20,125, 200, 15)];
-    labTarget.text=[NSString stringWithFormat:@"指標:%@",[MDirector sharedInstance].selectedPhen.target.name];;
+    labTarget.text=[NSString stringWithFormat:@"指標 : %@",[MDirector sharedInstance].selectedPhen.target.name];;
     labTarget.backgroundColor=[UIColor clearColor];
     [labTarget setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labTarget];
@@ -82,9 +82,9 @@
     //Label
     UILabel *labValue=[[UILabel alloc]initWithFrame:CGRectMake(labTarget.frame.origin.x+labTarget.frame.size.width+5,125,100, 15)];
     
-    NSString *valueR=[MDirector sharedInstance].selectedPhen.target.valueR;
+    NSString *valueT=[MDirector sharedInstance].selectedPhen.target.valueT;
     NSString *unit=[MDirector sharedInstance].selectedPhen.target.unit;
-    labValue.text=[NSString stringWithFormat:@"現值:%@%@",valueR,unit];
+    labValue.text=[NSString stringWithFormat:@"目標值 : %@%@",valueT,unit];
     labValue.backgroundColor=[UIColor clearColor];
     [labValue setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labValue];
@@ -114,14 +114,14 @@
     
     //Label
     UILabel *labTarget2=[[UILabel alloc]initWithFrame:CGRectMake(20,imgGray.frame.origin.y+60, 200, 15)];
-    labTarget2.text=[NSString stringWithFormat:@"指標:%@",_guide.target.name];
+    labTarget2.text=[NSString stringWithFormat:@"指標 : %@",_guide.target.name];
     labTarget2.backgroundColor=[UIColor clearColor];
     [labTarget2 setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labTarget2];
     
     //Label
     UILabel *labValue2=[[UILabel alloc]initWithFrame:CGRectMake(labTarget2.frame.origin.x+labTarget2.frame.size.width+5,imgGray.frame.origin.y+60,100, 15)];
-    labValue2.text=[NSString stringWithFormat:@"現值:%@%@",_guide.target.valueR,_guide.target.unit];
+    labValue2.text=[NSString stringWithFormat:@"目標值 : %@%@",_guide.target.valueT,_guide.target.unit];
     labValue2.backgroundColor=[UIColor clearColor];
     [labValue2 setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labValue2];

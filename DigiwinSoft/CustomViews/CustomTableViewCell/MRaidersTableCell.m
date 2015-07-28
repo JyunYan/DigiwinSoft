@@ -32,6 +32,32 @@
     return label;
 }
 
+- (UIImage*)imageWithTarget:(MTarget*)taregt
+{
+    
+    NSString* end = taregt.completeDate;
+    BOOL b = (end && ![end isEqualToString:@""]);
+    
+    if(b)
+        return [UIImage imageNamed:@"icon_menu_8_blue.png"];
+    else
+        return [UIImage imageNamed:@"icon_menu_8.png"];
+}
+
+- (UIImage*)imageWithCustTarget:(MCustTarget*)taregt
+{
+    NSString* start = taregt.startDate;
+    BOOL b1 = (start && ![start isEqualToString:@""]);
+    
+    NSString* end = taregt.completeDate;
+    BOOL b2 = (end && ![end isEqualToString:@""]);
+    
+    if(b1 && b2)
+        return [UIImage imageNamed:@"icon_menu_8_blue.png"];
+    else
+        return [UIImage imageNamed:@"icon_menu_8.png"];
+}
+
 @end
 
 /** 對策 **/
@@ -154,6 +180,10 @@
         self.managerLabel.text = @"";
     }
     
+    // 目標設定button
+    UIImage* image = [self imageWithTarget:guide.target];
+    [self.btnTargetSet setImage:image forState:UIControlStateNormal];
+    
     // star
     NSInteger count = [guide.review integerValue];
     for (int i=0;i<_stars.count;i++) {
@@ -264,6 +294,10 @@
         [self.btnManager setImage:[UIImage imageNamed:@"icon_manager.png"] forState:UIControlStateNormal];
         self.managerLabel.text = @"";
     }
+    
+    // 目標設定button
+    UIImage* image = [self imageWithCustTarget:activity.custTarget];
+    [self.btnTargetSet setImage:image forState:UIControlStateNormal];
 }
 
 @end
@@ -350,6 +384,10 @@
         [self.btnManager setImage:[UIImage imageNamed:@"icon_manager.png"] forState:UIControlStateNormal];
         self.managerLabel.text = @"";
     }
+    
+    // 目標設定button
+    UIImage* image = [self imageWithCustTarget:workitem.custTarget];
+    [self.btnTargetSet setImage:image forState:UIControlStateNormal];
 }
 
 @end

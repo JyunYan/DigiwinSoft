@@ -1,14 +1,15 @@
 //
-//  MFlowChartView2.h
+//  MActFlowChart.h
 //  DigiwinSoft
 //
-//  Created by Jyun on 2015/7/21.
+//  Created by Jyun on 2015/7/23.
 //  Copyright (c) 2015年 Jyun. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <UIKit/UIKit.h>\
+
 #import "MConfig.h"
-#import "MCustWorkItem.h"
+#import "MCustActivity.h"
 #import "MFlowChartPoint2.h"
 
 #define ARROW_DIRECTION_NONE    0
@@ -17,7 +18,7 @@
 #define ARROW_DIRECTION_DOWN    3
 #define ARROW_DIRECTION_RIGHT   4
 
-@interface MFlowChartView2 : UIView
+@interface MActFlowChart : UIView
 
 - (void)setItems:(NSArray*)array;
 

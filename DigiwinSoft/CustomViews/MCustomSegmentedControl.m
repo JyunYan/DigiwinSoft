@@ -61,7 +61,7 @@
     
     //imgblueBar Animation
     [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationDuration:0.2];
     [UIView setAnimationDelegate:self];
     
     //設定動畫開始時的狀態為目前畫面上的樣子

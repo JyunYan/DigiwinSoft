@@ -16,6 +16,8 @@
     if(self){
         
         _custTarget = [MCustTarget new];
+        _status = @"0";
+        _accepted = @"0";
     }
     return self;
 }
