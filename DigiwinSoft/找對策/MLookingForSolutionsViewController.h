@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MLookingForSolutionsViewController : UIViewController
+@interface MLookingForSolutionsViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
 @end

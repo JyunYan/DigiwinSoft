@@ -8,11 +8,15 @@
 
 #import "MLineChartView2.h"
 #import "MCoordinate.h"
+#import "MChartRangeView.h"
 
 @interface MLineChartView2()<UIGestureRecognizerDelegate>
 
 @property (nonatomic) CGFloat gapX;
 @property (nonatomic, strong) NSString* topString;
+@property (nonatomic, assign) NSInteger rangeIndex;
+
+@property (nonatomic, strong) MChartRangeView* chartRangeView;
 
 @end
 
@@ -26,6 +30,7 @@
         _points = [NSMutableArray new];
         _scale = 1.;
         _gapX = 0.;
+        _rangeIndex = 0.;
     }
     
     return self;
@@ -39,6 +44,7 @@
         _points = [NSMutableArray new];
         _scale = 1.;
         _gapX = 0.;
+        _rangeIndex = 0.;
     }
     
     return self;
@@ -119,6 +125,9 @@
     [self drawLineWithContext:context];
     
     CGContextRestoreGState(context);
+    
+    // add chart range view
+    [self addChartRangeView];
 }
 
 - (void)fillAreaWithContext:(CGContextRef)context
@@ -180,6 +189,55 @@
     }
     
     CGContextStrokePath(context);
+}
+
+- (void)addChartRangeView
+{
+    if(_chartRangeView)
+        return;
+    
+    _chartRangeView = [[MChartRangeView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width*5/3 + 10, self.bounds.size.height)];
+    _chartRangeView.backgroundColor = [UIColor clearColor];
+    [self addSubview:_chartRangeView];
+    
+    [self resetChartRangeViewPoint];
+}
+
+- (void)resetChartRangeViewPoint
+{
+    NSInteger subCount1 = _points.count / 3 * _rangeIndex + _points.count / 6 - 1;
+    NSInteger subCount2 = subCount1 + 1;
+    
+    MCoordinate* coord1 = [_points objectAtIndex:subCount1];
+    MCoordinate* coord2 = [_points objectAtIndex:subCount2];
+    CGFloat posX = (coord1.x + coord2.x) / 2.;
+    
+    [UIView animateWithDuration:0.1f
+                     animations:^{
+                         _chartRangeView.center = CGPointMake(posX, self.bounds.size.height/2);;
+                     }
+     ];
+}
+
+#pragma mark - 
+
+- (void)moveRange:(NSString*) direction
+{
+    if ([direction isEqualToString:@"left"]) {
+        if (_rangeIndex > 0)
+            _rangeIndex--;
+        else
+            return;
+    } else if ([direction isEqualToString:@"right"]) {
+        if (_rangeIndex < 2)
+            _rangeIndex++;
+        else
+            return;
+    } else {
+        return;
+    }    
+    
+    [self resetChartRangeViewPoint];
 }
 
 @end

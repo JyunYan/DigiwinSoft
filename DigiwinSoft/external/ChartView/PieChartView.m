@@ -29,7 +29,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-//        [self sortValueArr:valueArr colorArr:colorArr];
+        [self sortValueArr:valueArr colorArr:colorArr];
         self.rotatedView = [[RotatedView alloc]initWithFrame:self.bounds];
         self.rotatedView.mValueArray = valueArr;
         self.rotatedView.mColorArray = colorArr;
@@ -43,15 +43,19 @@
         [self.centerView setBackgroundImage:centerImage forState:UIControlStateNormal];
         [self.centerView setBackgroundImage:centerImage forState:UIControlStateHighlighted];
 //        self.centerView.frame = CGRectMake((frame.size.width - centerImage.size.width/2)/2, (frame.size.height - centerImage.size.height/2)/2, centerImage.size.width/2, centerImage.size.height/2);
-        self.centerView.frame = CGRectMake((frame.size.width - centerImage.size.width/3)/2, (frame.size.height - centerImage.size.height/3)/2, centerImage.size.width/3, centerImage.size.height/3);
-        int titleWidth = 65;
+        CGFloat centerImageSize = (centerImage.size.width/3 - 10) * frame.size.height / 178.5;
+        self.centerView.frame = CGRectMake((frame.size.width - centerImageSize)/2, (frame.size.height - centerImageSize)/2, centerImageSize, centerImageSize);
+//        int titleWidth = 65;
+        int titleWidth = 65 * frame.size.height / 178.5;
+        int titleHeight = 20 * frame.size.height / 178.5;
 //        self.title = [[UILabel alloc]initWithFrame:CGRectMake((centerImage.size.width/2 - titleWidth)/2,35 , titleWidth, 17)];
-        self.title = [[UILabel alloc]initWithFrame:CGRectMake((centerImage.size.width/3 - titleWidth)/2,22 , titleWidth, 17)];
+        self.title = [[UILabel alloc]initWithFrame:CGRectMake((centerImageSize - titleWidth)/2, centerImageSize/2 - titleHeight, titleWidth, titleHeight)];
         self.title.backgroundColor = [UIColor clearColor];
         self.title.textAlignment = NSTextAlignmentCenter;
 //        self.title.font = [UIFont systemFontOfSize:16];
-        self.title.font = [UIFont systemFontOfSize:14];
-        self.title.textColor = [self colorFromHexRGB:@"cecece"];
+        self.title.font = [UIFont systemFontOfSize:14. * frame.size.height / 178.5];
+//        self.title.textColor = [self colorFromHexRGB:@"cecece"];
+        self.title.textColor = [self colorFromHexRGB:@"ff0000"];
         self.title.text = @"";
         [self.centerView addSubview:self.title];
         

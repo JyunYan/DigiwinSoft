@@ -175,7 +175,7 @@
             [UIView animateWithDuration:0.1f
                              animations:^{
                                  if (! button.selected) {
-                                     button.transform = CGAffineTransformScale(button.transform, 6./5., 6./5.);
+                                     button.transform = CGAffineTransformMakeScale(1.2, 1.2);
                                  }
                              }
              ];
@@ -186,7 +186,7 @@
             [UIView animateWithDuration:0.1f
                              animations:^{
                                  if (button.selected) {
-                                     button.transform = CGAffineTransformScale(button.transform, 5./6., 5./6.);
+                                     button.transform = CGAffineTransformMakeScale(1., 1.);
                                  }
                              }
              ];
