@@ -305,26 +305,7 @@ static NSString * const kTableViewPanState = @"state";
     
     // Offset the contentView origin so that it appears correctly w/rt the enclosing scroll view (to which we moved it).
     CGRect frame = self.contentView.frame;
-    frame.origin.x = [self leftUtilityButtonsWidth];
-    _contentCellView.frame = frame;
-    
-    self.cellScrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame) + [self utilityButtonsPadding], CGRectGetHeight(self.frame));
-    
-    if (!self.cellScrollView.isTracking && !self.cellScrollView.isDecelerating)
-    {
-        self.cellScrollView.contentOffset = [self contentOffsetForCellState:_cellState];
-    }
-    
-    [self updateCellState];
-}
-
-- (void)resetLayoutSubviewsWithOffsetX:(CGFloat) offsetX
-{
-    [super layoutSubviews];
-    
-    // Offset the contentView origin so that it appears correctly w/rt the enclosing scroll view (to which we moved it).
-    CGRect frame = self.contentView.frame;
-    frame.origin.x = [self leftUtilityButtonsWidth] + offsetX;
+    frame.origin.x = [self leftUtilityButtonsWidth] + self.offsetX;
     _contentCellView.frame = frame;
     
     self.cellScrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame) + [self utilityButtonsPadding], CGRectGetHeight(self.frame));
