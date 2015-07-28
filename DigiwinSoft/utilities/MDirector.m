@@ -54,6 +54,11 @@ static MDirector* _director = nil;
 
 #pragma mark - get color methods
 
+- (UIColor*)getCustomOrangeColor
+{
+    return [UIColor colorWithRed:255.0f/255.0f green:199.0f/255.0f blue:102.0f/255.0f alpha:1.0f];
+}
+
 - (UIColor *)getCustomGrayColor
 {
     return [UIColor colorWithRed:120.0f/255.0f green:120.0f/255.0f blue:120.0f/255.0f alpha:1.0f];

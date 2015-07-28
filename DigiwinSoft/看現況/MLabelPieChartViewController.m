@@ -99,16 +99,31 @@
         [self.valueArray addObject:[NSNumber numberWithInt:value]];
         [self.valueAngleArray addObject:[NSNumber numberWithFloat:value/count * 360.]];
         
-        if (i % 5 == 0)
+        NSArray* titleArray = [self.valueTitleArray objectAtIndex:i];
+        NSString* titleStr = [titleArray objectAtIndex:0];
+
+        if ([titleStr isEqualToString:@"財務"]) {
             [self.colorArray addObject:[UIColor colorWithRed:126./255. green:178./255. blue:242./255. alpha:1.]];
-        else if (i % 5 == 1)
+        } else if ([titleStr isEqualToString:@"生產"]) {
             [self.colorArray addObject:[UIColor colorWithRed:146./255. green:204./255. blue:115./255. alpha:1.]];
-        else if (i % 5 == 2)
+        } else if ([titleStr isEqualToString:@"銷售"]) {
             [self.colorArray addObject:[UIColor colorWithRed:249./255. green:179./255. blue:124./255. alpha:1.]];
-        else if (i % 5 == 3)
+        } else if ([titleStr isEqualToString:@"人資"]) {
             [self.colorArray addObject:[UIColor colorWithRed:253./255. green:139./255. blue:231./255. alpha:1.]];
-        else if (i % 5 == 4)
+        } else if ([titleStr isEqualToString:@"研發"]) {
             [self.colorArray addObject:[UIColor colorWithRed:188./255. green:156./255. blue:225./255. alpha:1.]];
+        } else {
+            if (i % 5 == 0)
+                [self.colorArray addObject:[UIColor colorWithRed:126./255. green:178./255. blue:242./255. alpha:1.]];
+            else if (i % 5 == 1)
+                [self.colorArray addObject:[UIColor colorWithRed:146./255. green:204./255. blue:115./255. alpha:1.]];
+            else if (i % 5 == 2)
+                [self.colorArray addObject:[UIColor colorWithRed:249./255. green:179./255. blue:124./255. alpha:1.]];
+            else if (i % 5 == 3)
+                [self.colorArray addObject:[UIColor colorWithRed:253./255. green:139./255. blue:231./255. alpha:1.]];
+            else if (i % 5 == 4)
+                [self.colorArray addObject:[UIColor colorWithRed:188./255. green:156./255. blue:225./255. alpha:1.]];
+        }
     }
     
     
@@ -195,11 +210,11 @@
         if (i < (NSInteger)starNum) {
             imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
         } else {
-            if (i < starNum) {
-                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
-            } else {
+//            if (i < starNum) {
+//                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
+//            } else {
                 imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
-            }
+//            }
         }
         [view addSubview:imageView];
         
@@ -236,11 +251,11 @@
         if (i < (NSInteger)starNum) {
             imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
         } else {
-            if (i < starNum) {
-                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
-            } else {
+//            if (i < starNum) {
+//                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
+//            } else {
                 imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
-            }
+//            }
         }
         [view addSubview:imageView];
         
@@ -272,11 +287,11 @@
         if (i < (NSInteger)starNum) {
             imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
         } else {
-            if (i < starNum) {
-                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
-            } else {
+//            if (i < starNum) {
+//                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
+//            } else {
                 imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
-            }
+//            }
         }
     }
     
@@ -291,11 +306,11 @@
         if (i < (NSInteger)starNum) {
             imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
         } else {
-            if (i < starNum) {
-                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
-            } else {
+//            if (i < starNum) {
+//                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
+//            } else {
                 imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
-            }
+//            }
         }
     }
 }

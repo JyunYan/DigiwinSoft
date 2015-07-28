@@ -11,11 +11,11 @@
 		382998301B3982BE0045B3BD /* MInventoryTurnoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982A1B3982BE0045B3BD /* MInventoryTurnoverViewController.m */; };
 		382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982C1B3982BE0045B3BD /* MRaidersDescriptionViewController.m */; };
 		382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */; };
-		382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */; };
-		382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */; };
 		383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F831B4BD9CD00472513 /* MReportViewController.m */; };
+
 		383E2F871B4BF32800472513 /* MReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F861B4BF32800472513 /* MReportTableViewCell.m */; };
 		38CCC4941B6767EA00CF9731 /* MEfficacyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CCC4931B6767EA00CF9731 /* MEfficacyViewController.m */; };
+
 		38DCDD8D1B4E18B2008B57A2 /* RVCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */; };
 		38DCDD8E1B4E18B2008B57A2 /* RVCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8C1B4E18B2008B57A2 /* RVCollectionViewLayout.m */; };
 		38DCDD911B4E199F008B57A2 /* MRouletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD901B4E199F008B57A2 /* MRouletteViewController.m */; };
@@ -69,7 +69,6 @@
 		3A8399791B4E1D50008B0150 /* icon_arrow_up_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A8399781B4E1D50008B0150 /* icon_arrow_up_right.png */; };
 		3A8D5B881B4F7F4F0025374B /* MMonitorDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8D5B871B4F7F4F0025374B /* MMonitorDetailViewController.m */; };
 		3A8D5B8B1B4F800B0025374B /* MMonitorPageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8D5B8A1B4F800B0025374B /* MMonitorPageContentViewController.m */; };
-		3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */; };
 		3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */; };
 		3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE101B32831500143374 /* MMonitorMapViewController.m */; };
 		3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE131B32839300143374 /* MSeeStatusViewController.m */; };
@@ -103,7 +102,6 @@
 		3AFF625D1B438A46005B6238 /* icon_menu_9.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF62521B438A46005B6238 /* icon_menu_9.png */; };
 		3AFF625E1B438A46005B6238 /* icon_menu_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF62531B438A46005B6238 /* icon_menu_10.png */; };
 		3AFF625F1B438A46005B6238 /* icon_menu_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFF62541B438A46005B6238 /* icon_menu_11.png */; };
-		3AFF62621B438D08005B6238 /* MSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */; };
 		509160991B4510330065C176 /* icon_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 509160981B4510330065C176 /* icon_close.png */; };
 		D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */; };
 		D06C2D291B37AC88009D2082 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D06C2D281B37AC88009D2082 /* libsqlite3.dylib */; };
@@ -137,7 +135,6 @@
 		DC58777C1B5DEC8100D5AC5D /* MLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58777B1B5DEC8100D5AC5D /* MLineChartView.m */; };
 		DC58777F1B5DECA600D5AC5D /* MDashedLine.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58777E1B5DECA600D5AC5D /* MDashedLine.m */; };
 		DC5877821B5DECC900D5AC5D /* MMessageBox.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877811B5DECC900D5AC5D /* MMessageBox.m */; };
-		DC5877851B5DEE6B00D5AC5D /* MFlowChartView2.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877841B5DEE6B00D5AC5D /* MFlowChartView2.m */; };
 		DC5877881B5DFE3700D5AC5D /* MFlowChartPoint2.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877871B5DFE3700D5AC5D /* MFlowChartPoint2.m */; };
 		DC58778B1B5E618800D5AC5D /* MGanttViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58778A1B5E618800D5AC5D /* MGanttViewController2.m */; };
 		DC58779A1B5E7F2A00D5AC5D /* MGanttDashView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877971B5E7F2A00D5AC5D /* MGanttDashView.m */; };
@@ -148,11 +145,27 @@
 		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
 		DCB3FDE91B54ABA900ED5BFA /* MFlowChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDE81B54ABA900ED5BFA /* MFlowChartView.m */; };
 		DCB3FDEF1B55F67B00ED5BFA /* MFlowChartPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDEE1B55F67B00ED5BFA /* MFlowChartPoint.m */; };
-		DCB3FDF21B56AB4F00ED5BFA /* MRaidersTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDF11B56AB4F00ED5BFA /* MRaidersTableCell.m */; };
 		DCB3FDF51B56C00C00ED5BFA /* MRaidersTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDF41B56C00C00ED5BFA /* MRaidersTableHeader.m */; };
 		DCB3FDF91B5A375900ED5BFA /* MRadioGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDF81B5A375900ED5BFA /* MRadioGroupView.m */; };
 		DCB3FDFC1B5A395900ED5BFA /* MRadioButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDFB1B5A395900ED5BFA /* MRadioButtonView.m */; };
 		DCCAB1AC1B4F841500AA1CD2 /* ASAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCAB1AB1B4F841500AA1CD2 /* ASAnimationManager.m */; };
+		DCE951781B60C1B700E3C059 /* MWorkItemFlowChart.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951771B60C1B700E3C059 /* MWorkItemFlowChart.m */; };
+		DCE9517B1B60C27F00E3C059 /* MActFlowChart.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE9517A1B60C27F00E3C059 /* MActFlowChart.m */; };
+		DCE951891B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE9517E1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m */; };
+		DCE9518A1B60E6AC00E3C059 /* MMyPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951801B60E6AC00E3C059 /* MMyPlanTableViewCell.m */; };
+		DCE9518B1B60E6AC00E3C059 /* MRaidersDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951821B60E6AC00E3C059 /* MRaidersDescriptionTableViewCell.m */; };
+		DCE9518C1B60E6AC00E3C059 /* MRaidersTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951841B60E6AC00E3C059 /* MRaidersTableCell.m */; };
+		DCE9518D1B60E6AC00E3C059 /* MReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951861B60E6AC00E3C059 /* MReportTableViewCell.m */; };
+		DCE9518E1B60E6AC00E3C059 /* MSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951881B60E6AC00E3C059 /* MSettingTableViewCell.m */; };
+		DCE951911B60E72900E3C059 /* MMissionTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951901B60E72900E3C059 /* MMissionTableCell.m */; };
+		DCE951941B612FA500E3C059 /* MReportEditTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951931B612FA500E3C059 /* MReportEditTableCell.m */; };
+		DCE951961B61B7BB00E3C059 /* icon_menu_8_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE951951B61B7BB00E3C059 /* icon_menu_8_blue.png */; };
+		DCE951991B668FBB00E3C059 /* icon_arrow_green.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE951971B668FBB00E3C059 /* icon_arrow_green.png */; };
+		DCE9519A1B668FBB00E3C059 /* icon_arrow_red.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE951981B668FBB00E3C059 /* icon_arrow_red.png */; };
+		DCE951A11B66B5E600E3C059 /* MMonitorData.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951A01B66B5E600E3C059 /* MMonitorData.m */; };
+		DCE951A71B66C3F000E3C059 /* MMonitorMapView1.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951A61B66C3F000E3C059 /* MMonitorMapView1.m */; };
+		DCE951AA1B66C6E200E3C059 /* MMonitorTableCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951A91B66C6E200E3C059 /* MMonitorTableCell1.m */; };
+		DCE951AD1B66E03C00E3C059 /* MMeterView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951AC1B66E03C00E3C059 /* MMeterView.m */; };
 		DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AA81B40E04A00C771BB /* MEvent.m */; };
 		DCF46AAC1B41103700C771BB /* MSituation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAB1B41103700C771BB /* MSituation.m */; };
 		DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAE1B4116F000C771BB /* MTreasure.m */; };
@@ -227,16 +240,13 @@
 		3829982C1B3982BE0045B3BD /* MRaidersDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRaidersDescriptionViewController.m; sourceTree = "<group>"; };
 		3829982D1B3982BE0045B3BD /* MRaidersDiagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRaidersDiagramViewController.h; sourceTree = "<group>"; };
 		3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRaidersDiagramViewController.m; sourceTree = "<group>"; };
-		382998331B3983060045B3BD /* MIndustryRaidersTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MIndustryRaidersTableViewCell.h; path = structure/MIndustryRaidersTableViewCell.h; sourceTree = "<group>"; };
-		382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustryRaidersTableViewCell.m; path = structure/MIndustryRaidersTableViewCell.m; sourceTree = "<group>"; };
-		382998361B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaidersDescriptionTableViewCell.h; path = structure/MRaidersDescriptionTableViewCell.h; sourceTree = "<group>"; };
-		382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersDescriptionTableViewCell.m; path = structure/MRaidersDescriptionTableViewCell.m; sourceTree = "<group>"; };
 		383E2F821B4BD9CD00472513 /* MReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MReportViewController.h; sourceTree = "<group>"; };
 		383E2F831B4BD9CD00472513 /* MReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MReportViewController.m; sourceTree = "<group>"; };
 		383E2F851B4BF32800472513 /* MReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MReportTableViewCell.h; path = structure/MReportTableViewCell.h; sourceTree = "<group>"; };
 		383E2F861B4BF32800472513 /* MReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MReportTableViewCell.m; path = structure/MReportTableViewCell.m; sourceTree = "<group>"; };
 		38CCC4921B6767EA00CF9731 /* MEfficacyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEfficacyViewController.h; sourceTree = "<group>"; };
 		38CCC4931B6767EA00CF9731 /* MEfficacyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEfficacyViewController.m; sourceTree = "<group>"; };
+
 		38DCDD891B4E18B2008B57A2 /* RVCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewCell.h; sourceTree = "<group>"; };
 		38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVCollectionViewCell.m; sourceTree = "<group>"; };
 		38DCDD8B1B4E18B2008B57A2 /* RVCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewLayout.h; sourceTree = "<group>"; };
@@ -327,8 +337,6 @@
 		3A8D5B871B4F7F4F0025374B /* MMonitorDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMonitorDetailViewController.m; sourceTree = "<group>"; };
 		3A8D5B891B4F800B0025374B /* MMonitorPageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMonitorPageContentViewController.h; sourceTree = "<group>"; };
 		3A8D5B8A1B4F800B0025374B /* MMonitorPageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMonitorPageContentViewController.m; sourceTree = "<group>"; };
-		3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMyPlanTableViewCell.h; path = CustomViews/MMyPlanTableViewCell.h; sourceTree = "<group>"; };
-		3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMyPlanTableViewCell.m; path = CustomViews/MMyPlanTableViewCell.m; sourceTree = "<group>"; };
 		3AB4CE081B32822500143374 /* MIndustryRaidersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryRaidersViewController.h; sourceTree = "<group>"; };
 		3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIndustryRaidersViewController.m; sourceTree = "<group>"; };
 		3AB4CE0F1B32831500143374 /* MMonitorMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMonitorMapViewController.h; sourceTree = "<group>"; };
@@ -380,8 +388,6 @@
 		3AFF62521B438A46005B6238 /* icon_menu_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_9.png; sourceTree = "<group>"; };
 		3AFF62531B438A46005B6238 /* icon_menu_10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_10.png; sourceTree = "<group>"; };
 		3AFF62541B438A46005B6238 /* icon_menu_11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_11.png; sourceTree = "<group>"; };
-		3AFF62601B438D08005B6238 /* MSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSettingTableViewCell.h; path = CustomViews/MSettingTableViewCell.h; sourceTree = "<group>"; };
-		3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSettingTableViewCell.m; path = CustomViews/MSettingTableViewCell.m; sourceTree = "<group>"; };
 		509160981B4510330065C176 /* icon_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_close.png; sourceTree = "<group>"; };
 		D06C2D251B37A5CD009D2082 /* MDataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDataBaseManager.h; sourceTree = "<group>"; };
 		D06C2D261B37A5CD009D2082 /* MDataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDataBaseManager.m; sourceTree = "<group>"; };
@@ -439,8 +445,6 @@
 		DC58777E1B5DECA600D5AC5D /* MDashedLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDashedLine.m; path = CustomViews/LineChartView/MDashedLine.m; sourceTree = "<group>"; };
 		DC5877801B5DECC900D5AC5D /* MMessageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMessageBox.h; path = CustomViews/LineChartView/MMessageBox.h; sourceTree = "<group>"; };
 		DC5877811B5DECC900D5AC5D /* MMessageBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMessageBox.m; path = CustomViews/LineChartView/MMessageBox.m; sourceTree = "<group>"; };
-		DC5877831B5DEE6B00D5AC5D /* MFlowChartView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MFlowChartView2.h; path = CustomViews/MFlowChartView2.h; sourceTree = "<group>"; };
-		DC5877841B5DEE6B00D5AC5D /* MFlowChartView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MFlowChartView2.m; path = CustomViews/MFlowChartView2.m; sourceTree = "<group>"; };
 		DC5877861B5DFE3700D5AC5D /* MFlowChartPoint2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MFlowChartPoint2.h; path = structure/MFlowChartPoint2.h; sourceTree = "<group>"; };
 		DC5877871B5DFE3700D5AC5D /* MFlowChartPoint2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MFlowChartPoint2.m; path = structure/MFlowChartPoint2.m; sourceTree = "<group>"; };
 		DC5877891B5E618800D5AC5D /* MGanttViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGanttViewController2.h; sourceTree = "<group>"; };
@@ -460,8 +464,6 @@
 		DCB3FDE81B54ABA900ED5BFA /* MFlowChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MFlowChartView.m; path = CustomViews/MFlowChartView.m; sourceTree = "<group>"; };
 		DCB3FDED1B55F67B00ED5BFA /* MFlowChartPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MFlowChartPoint.h; path = structure/MFlowChartPoint.h; sourceTree = "<group>"; };
 		DCB3FDEE1B55F67B00ED5BFA /* MFlowChartPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MFlowChartPoint.m; path = structure/MFlowChartPoint.m; sourceTree = "<group>"; };
-		DCB3FDF01B56AB4F00ED5BFA /* MRaidersTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaidersTableCell.h; path = CustomViews/MRaidersTableCell.h; sourceTree = "<group>"; };
-		DCB3FDF11B56AB4F00ED5BFA /* MRaidersTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersTableCell.m; path = CustomViews/MRaidersTableCell.m; sourceTree = "<group>"; };
 		DCB3FDF31B56C00C00ED5BFA /* MRaidersTableHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaidersTableHeader.h; path = CustomViews/MRaidersTableHeader.h; sourceTree = "<group>"; };
 		DCB3FDF41B56C00C00ED5BFA /* MRaidersTableHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersTableHeader.m; path = CustomViews/MRaidersTableHeader.m; sourceTree = "<group>"; };
 		DCB3FDF71B5A375900ED5BFA /* MRadioGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRadioGroupView.h; path = CustomViews/RadioGroupView/MRadioGroupView.h; sourceTree = "<group>"; };
@@ -470,6 +472,37 @@
 		DCB3FDFB1B5A395900ED5BFA /* MRadioButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRadioButtonView.m; path = CustomViews/RadioGroupView/MRadioButtonView.m; sourceTree = "<group>"; };
 		DCCAB1AA1B4F841500AA1CD2 /* ASAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASAnimationManager.h; sourceTree = "<group>"; };
 		DCCAB1AB1B4F841500AA1CD2 /* ASAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASAnimationManager.m; sourceTree = "<group>"; };
+		DCE951761B60C1B700E3C059 /* MWorkItemFlowChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWorkItemFlowChart.h; path = CustomViews/FlowChartView/MWorkItemFlowChart.h; sourceTree = "<group>"; };
+		DCE951771B60C1B700E3C059 /* MWorkItemFlowChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWorkItemFlowChart.m; path = CustomViews/FlowChartView/MWorkItemFlowChart.m; sourceTree = "<group>"; };
+		DCE951791B60C27F00E3C059 /* MActFlowChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MActFlowChart.h; path = CustomViews/FlowChartView/MActFlowChart.h; sourceTree = "<group>"; };
+		DCE9517A1B60C27F00E3C059 /* MActFlowChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MActFlowChart.m; path = CustomViews/FlowChartView/MActFlowChart.m; sourceTree = "<group>"; };
+		DCE9517D1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MIndustryRaidersTableViewCell.h; path = CustomViews/CustomTableViewCell/MIndustryRaidersTableViewCell.h; sourceTree = "<group>"; };
+		DCE9517E1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustryRaidersTableViewCell.m; path = CustomViews/CustomTableViewCell/MIndustryRaidersTableViewCell.m; sourceTree = "<group>"; };
+		DCE9517F1B60E6AC00E3C059 /* MMyPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMyPlanTableViewCell.h; path = CustomViews/CustomTableViewCell/MMyPlanTableViewCell.h; sourceTree = "<group>"; };
+		DCE951801B60E6AC00E3C059 /* MMyPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMyPlanTableViewCell.m; path = CustomViews/CustomTableViewCell/MMyPlanTableViewCell.m; sourceTree = "<group>"; };
+		DCE951811B60E6AC00E3C059 /* MRaidersDescriptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaidersDescriptionTableViewCell.h; path = CustomViews/CustomTableViewCell/MRaidersDescriptionTableViewCell.h; sourceTree = "<group>"; };
+		DCE951821B60E6AC00E3C059 /* MRaidersDescriptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersDescriptionTableViewCell.m; path = CustomViews/CustomTableViewCell/MRaidersDescriptionTableViewCell.m; sourceTree = "<group>"; };
+		DCE951831B60E6AC00E3C059 /* MRaidersTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRaidersTableCell.h; path = CustomViews/CustomTableViewCell/MRaidersTableCell.h; sourceTree = "<group>"; };
+		DCE951841B60E6AC00E3C059 /* MRaidersTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRaidersTableCell.m; path = CustomViews/CustomTableViewCell/MRaidersTableCell.m; sourceTree = "<group>"; };
+		DCE951851B60E6AC00E3C059 /* MReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MReportTableViewCell.h; path = CustomViews/CustomTableViewCell/MReportTableViewCell.h; sourceTree = "<group>"; };
+		DCE951861B60E6AC00E3C059 /* MReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MReportTableViewCell.m; path = CustomViews/CustomTableViewCell/MReportTableViewCell.m; sourceTree = "<group>"; };
+		DCE951871B60E6AC00E3C059 /* MSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSettingTableViewCell.h; path = CustomViews/CustomTableViewCell/MSettingTableViewCell.h; sourceTree = "<group>"; };
+		DCE951881B60E6AC00E3C059 /* MSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSettingTableViewCell.m; path = CustomViews/CustomTableViewCell/MSettingTableViewCell.m; sourceTree = "<group>"; };
+		DCE9518F1B60E72900E3C059 /* MMissionTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMissionTableCell.h; path = CustomViews/CustomTableViewCell/MMissionTableCell.h; sourceTree = "<group>"; };
+		DCE951901B60E72900E3C059 /* MMissionTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMissionTableCell.m; path = CustomViews/CustomTableViewCell/MMissionTableCell.m; sourceTree = "<group>"; };
+		DCE951921B612FA500E3C059 /* MReportEditTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MReportEditTableCell.h; path = CustomViews/CustomTableViewCell/MReportEditTableCell.h; sourceTree = "<group>"; };
+		DCE951931B612FA500E3C059 /* MReportEditTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MReportEditTableCell.m; path = CustomViews/CustomTableViewCell/MReportEditTableCell.m; sourceTree = "<group>"; };
+		DCE951951B61B7BB00E3C059 /* icon_menu_8_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_8_blue.png; sourceTree = "<group>"; };
+		DCE951971B668FBB00E3C059 /* icon_arrow_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_arrow_green.png; sourceTree = "<group>"; };
+		DCE951981B668FBB00E3C059 /* icon_arrow_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_arrow_red.png; sourceTree = "<group>"; };
+		DCE9519F1B66B5E600E3C059 /* MMonitorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorData.h; path = structure/MMonitorData.h; sourceTree = "<group>"; };
+		DCE951A01B66B5E600E3C059 /* MMonitorData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorData.m; path = structure/MMonitorData.m; sourceTree = "<group>"; };
+		DCE951A51B66C3F000E3C059 /* MMonitorMapView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorMapView1.h; path = CustomViews/MonitorMapView/MMonitorMapView1.h; sourceTree = "<group>"; };
+		DCE951A61B66C3F000E3C059 /* MMonitorMapView1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorMapView1.m; path = CustomViews/MonitorMapView/MMonitorMapView1.m; sourceTree = "<group>"; };
+		DCE951A81B66C6E200E3C059 /* MMonitorTableCell1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorTableCell1.h; path = CustomViews/CustomTableViewCell/MMonitorTableCell1.h; sourceTree = "<group>"; };
+		DCE951A91B66C6E200E3C059 /* MMonitorTableCell1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorTableCell1.m; path = CustomViews/CustomTableViewCell/MMonitorTableCell1.m; sourceTree = "<group>"; };
+		DCE951AB1B66E03C00E3C059 /* MMeterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMeterView.h; path = CustomViews/MonitorMapView/MMeterView.h; sourceTree = "<group>"; };
+		DCE951AC1B66E03C00E3C059 /* MMeterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMeterView.m; path = CustomViews/MonitorMapView/MMeterView.m; sourceTree = "<group>"; };
 		DCF46AA71B40E04A00C771BB /* MEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEvent.h; path = structure/MEvent.h; sourceTree = "<group>"; };
 		DCF46AA81B40E04A00C771BB /* MEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEvent.m; path = structure/MEvent.m; sourceTree = "<group>"; };
 		DCF46AAA1B41103700C771BB /* MSituation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSituation.h; path = structure/MSituation.h; sourceTree = "<group>"; };
@@ -771,6 +804,8 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				DCE951971B668FBB00E3C059 /* icon_arrow_green.png */,
+				DCE951981B668FBB00E3C059 /* icon_arrow_red.png */,
 				3AF1DD001B608B07006ADBBD /* icon_arrow_left.png */,
 				3AF1DD011B608B07006ADBBD /* icon_arrow_right.png */,
 				3AE08C4F1B5CCEBC00B46895 /* icon_star_empty.png */,
@@ -802,21 +837,39 @@
 				DCF46AD31B42AAF300C771BB /* button_search.png */,
 				DCF46AD41B42AAF300C771BB /* Button-Favorite-List-Normal.png */,
 				DCF46AD51B42AAF300C771BB /* Button-Favorite-List-Pressed.png */,
+				3A5EA35F1B57455D00B5360F /* center.png */,
 				DCF46AD61B42AAF300C771BB /* check_box_off.png */,
 				DCF46AD71B42AAF300C771BB /* check_box_on.png */,
 				DCF46AD81B42AAF300C771BB /* checkbox_empty.png */,
 				DCF46AD91B42AAF300C771BB /* checkbox_fill.png */,
 				DCF46ADA1B42AAF300C771BB /* icon_alarm.png */,
+				3A8399781B4E1D50008B0150 /* icon_arrow_up_right.png */,
 				DCF46ADB1B42AAF300C771BB /* icon_back.png */,
 				DCF46ADC1B42AAF300C771BB /* icon_blue_circle.png */,
+				509160981B4510330065C176 /* icon_close.png */,
+				DCF46B1B1B42B4C000C771BB /* icon_cloud_2.png */,
 				DCF46ADD1B42AAF300C771BB /* icon_cloud.png */,
 				DCF46ADE1B42AAF300C771BB /* icon_down.png */,
+				3A7E31E51B4BD82800790026 /* icon_email.png */,
 				DCF46ADF1B42AAF300C771BB /* icon_gray_circle.png */,
 				DCF46AE01B42AAF300C771BB /* icon_gray_dot.png */,
 				DCF46AE11B42AAF300C771BB /* icon_info.png */,
-				509160981B4510330065C176 /* icon_close.png */,
+				3A7E31E61B4BD82800790026 /* icon_line.png */,
+				DCF46B1C1B42B4C000C771BB /* icon_list_2.png */,
 				DCF46AE21B42AAF300C771BB /* icon_list.png */,
 				DCF46AE31B42AAF300C771BB /* icon_manager.png */,
+				3AFF624A1B438A46005B6238 /* icon_menu_1.png */,
+				3AFF624B1B438A46005B6238 /* icon_menu_2.png */,
+				3AFF624C1B438A46005B6238 /* icon_menu_3.png */,
+				3AFF624D1B438A46005B6238 /* icon_menu_4.png */,
+				3AFF624E1B438A46005B6238 /* icon_menu_5.png */,
+				3AFF624F1B438A46005B6238 /* icon_menu_6.png */,
+				3AFF62501B438A46005B6238 /* icon_menu_7.png */,
+				DCE951951B61B7BB00E3C059 /* icon_menu_8_blue.png */,
+				3AFF62511B438A46005B6238 /* icon_menu_8.png */,
+				3AFF62521B438A46005B6238 /* icon_menu_9.png */,
+				3AFF62531B438A46005B6238 /* icon_menu_10.png */,
+				3AFF62541B438A46005B6238 /* icon_menu_11.png */,
 				DCF46AE41B42AAF300C771BB /* icon_more.png */,
 				DCF46AE51B42AAF300C771BB /* icon_phone.png */,
 				DCF46AE61B42AAF300C771BB /* icon_raider.png */,
@@ -824,6 +877,12 @@
 				DCF46AE81B42AAF300C771BB /* icon_red_circle.png */,
 				DCF46AE91B42AAF300C771BB /* icon_search.png */,
 				DCF46AEA1B42AAF300C771BB /* icon_setting.png */,
+				3A7E31E71B4BD82800790026 /* icon_sms.png */,
+				3AE08C4F1B5CCEBC00B46895 /* icon_star_empty.png */,
+				3AE08C501B5CCEBC00B46895 /* icon_star_full.png */,
+				3AE08C511B5CCEBC00B46895 /* icon_star_half.png */,
+				3A5EA3641B576C1400B5360F /* icon_up.png */,
+				3A7E31E81B4BD82800790026 /* icon_weixin.png */,
 				DCF46AEB1B42AAF300C771BB /* rect_blue.png */,
 				DCF46AEC1B42AAF300C771BB /* rect_blue2.png */,
 				DCF46AED1B42AAF300C771BB /* rect_white.png */,
@@ -834,6 +893,7 @@
 				DCF46AF21B42AAF300C771BB /* tab_icon_3.png */,
 				DCF46AF31B42AAF300C771BB /* tab_icon_4.png */,
 				DCF46AF41B42AAF300C771BB /* tab_icon_5.png */,
+				DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -981,12 +1041,6 @@
 		DC1014481B3287D000EF7A6F /* structure */ = {
 			isa = PBXGroup;
 			children = (
-				382998331B3983060045B3BD /* MIndustryRaidersTableViewCell.h */,
-				382998341B3983060045B3BD /* MIndustryRaidersTableViewCell.m */,
-				382998361B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.h */,
-				382998371B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m */,
-				383E2F851B4BF32800472513 /* MReportTableViewCell.h */,
-				383E2F861B4BF32800472513 /* MReportTableViewCell.m */,
 				DC1014491B32985600EF7A6F /* MUser.h */,
 				DC10144A1B32985600EF7A6F /* MUser.m */,
 				DC10144C1B32B66200EF7A6F /* MGuide.h */,
@@ -1025,6 +1079,8 @@
 				DC5877871B5DFE3700D5AC5D /* MFlowChartPoint2.m */,
 				3A5374021B535EEB002C2836 /* MReport.h */,
 				3A5374031B535EEB002C2836 /* MReport.m */,
+				DCE9519F1B66B5E600E3C059 /* MMonitorData.h */,
+				DCE951A01B66B5E600E3C059 /* MMonitorData.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -1068,9 +1124,59 @@
 			name = RadioGroupView;
 			sourceTree = "<group>";
 		};
+		DCE951751B60C14D00E3C059 /* FlowChartView */ = {
+			isa = PBXGroup;
+			children = (
+				DCE951761B60C1B700E3C059 /* MWorkItemFlowChart.h */,
+				DCE951771B60C1B700E3C059 /* MWorkItemFlowChart.m */,
+				DCE951791B60C27F00E3C059 /* MActFlowChart.h */,
+				DCE9517A1B60C27F00E3C059 /* MActFlowChart.m */,
+			);
+			name = FlowChartView;
+			sourceTree = "<group>";
+		};
+		DCE9517C1B60E5FF00E3C059 /* CustomTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				DCE9517D1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.h */,
+				DCE9517E1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m */,
+				DCE9517F1B60E6AC00E3C059 /* MMyPlanTableViewCell.h */,
+				DCE951801B60E6AC00E3C059 /* MMyPlanTableViewCell.m */,
+				DCE951811B60E6AC00E3C059 /* MRaidersDescriptionTableViewCell.h */,
+				DCE951821B60E6AC00E3C059 /* MRaidersDescriptionTableViewCell.m */,
+				DCE951831B60E6AC00E3C059 /* MRaidersTableCell.h */,
+				DCE951841B60E6AC00E3C059 /* MRaidersTableCell.m */,
+				DCE951851B60E6AC00E3C059 /* MReportTableViewCell.h */,
+				DCE951861B60E6AC00E3C059 /* MReportTableViewCell.m */,
+				DCE951871B60E6AC00E3C059 /* MSettingTableViewCell.h */,
+				DCE951881B60E6AC00E3C059 /* MSettingTableViewCell.m */,
+				DCE9518F1B60E72900E3C059 /* MMissionTableCell.h */,
+				DCE951901B60E72900E3C059 /* MMissionTableCell.m */,
+				DCE951921B612FA500E3C059 /* MReportEditTableCell.h */,
+				DCE951931B612FA500E3C059 /* MReportEditTableCell.m */,
+				DCE951A81B66C6E200E3C059 /* MMonitorTableCell1.h */,
+				DCE951A91B66C6E200E3C059 /* MMonitorTableCell1.m */,
+			);
+			name = CustomTableViewCell;
+			sourceTree = "<group>";
+		};
+		DCE9519B1B66B42300E3C059 /* MonitorMapView */ = {
+			isa = PBXGroup;
+			children = (
+				DCE951A51B66C3F000E3C059 /* MMonitorMapView1.h */,
+				DCE951A61B66C3F000E3C059 /* MMonitorMapView1.m */,
+				DCE951AB1B66E03C00E3C059 /* MMeterView.h */,
+				DCE951AC1B66E03C00E3C059 /* MMeterView.m */,
+			);
+			name = MonitorMapView;
+			sourceTree = "<group>";
+		};
 		DCF46AB21B41258F00C771BB /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				DCE9519B1B66B42300E3C059 /* MonitorMapView */,
+				DCE9517C1B60E5FF00E3C059 /* CustomTableViewCell */,
+				DCE951751B60C14D00E3C059 /* FlowChartView */,
 				DC5877951B5E7F0A00D5AC5D /* GanttChart */,
 				DC5877791B5DEC3700D5AC5D /* LineChartView */,
 				DCB3FDF61B5A373200ED5BFA /* RadioGroupView */,
@@ -1080,10 +1186,6 @@
 				DCF46AB41B41265800C771BB /* MRaiderCarouselView.m */,
 				DCF46AC81B422C0000C771BB /* MCarouselItemView.h */,
 				DCF46AC91B422C0000C771BB /* MCarouselItemView.m */,
-				3AFF62601B438D08005B6238 /* MSettingTableViewCell.h */,
-				3AFF62611B438D08005B6238 /* MSettingTableViewCell.m */,
-				3AA70C141B4513A300FC0DBF /* MMyPlanTableViewCell.h */,
-				3AA70C151B4513A300FC0DBF /* MMyPlanTableViewCell.m */,
 				3A54EDDF1B4636DB00BDA945 /* MCustomAlertView.h */,
 				3A54EDE01B4636DB00BDA945 /* MCustomAlertView.m */,
 				DC8135271B49BB29003B56AA /* MTarInfoChartView.h */,
@@ -1098,12 +1200,8 @@
 				DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */,
 				DCB3FDE71B54ABA900ED5BFA /* MFlowChartView.h */,
 				DCB3FDE81B54ABA900ED5BFA /* MFlowChartView.m */,
-				DC5877831B5DEE6B00D5AC5D /* MFlowChartView2.h */,
-				DC5877841B5DEE6B00D5AC5D /* MFlowChartView2.m */,
 				3A5374051B538E88002C2836 /* MCustomSegmentedControl.h */,
 				3A5374061B538E88002C2836 /* MCustomSegmentedControl.m */,
-				DCB3FDF01B56AB4F00ED5BFA /* MRaidersTableCell.h */,
-				DCB3FDF11B56AB4F00ED5BFA /* MRaidersTableCell.m */,
 				DCB3FDF31B56C00C00ED5BFA /* MRaidersTableHeader.h */,
 				DCB3FDF41B56C00C00ED5BFA /* MRaidersTableHeader.m */,
 				DC58779C1B5F44B400D5AC5D /* MCircleLayout.h */,
@@ -1229,8 +1327,10 @@
 				DCF46B0E1B42AAF300C771BB /* icon_setting.png in Resources */,
 				3AE08C531B5CCEBC00B46895 /* icon_star_full.png in Resources */,
 				3A03AA1B1B3BD5CA00923ABB /* downArrow.png in Resources */,
+				DCE9519A1B668FBB00E3C059 /* icon_arrow_red.png in Resources */,
 				DCF46B181B42AAF300C771BB /* tab_icon_5.png in Resources */,
 				DCF46B1E1B42B4C000C771BB /* icon_list_2.png in Resources */,
+				DCE951991B668FBB00E3C059 /* icon_arrow_green.png in Resources */,
 				DCF46B041B42AAF300C771BB /* icon_gray_dot.png in Resources */,
 				3AFF625C1B438A46005B6238 /* icon_menu_8.png in Resources */,
 				DCF46B071B42AAF300C771BB /* icon_manager.png in Resources */,
@@ -1246,6 +1346,7 @@
 				DCF46AFC1B42AAF300C771BB /* checkbox_empty.png in Resources */,
 				3AE08C541B5CCEBC00B46895 /* icon_star_half.png in Resources */,
 				DCF46B121B42AAF300C771BB /* star_empty.png in Resources */,
+				DCE951961B61B7BB00E3C059 /* icon_menu_8_blue.png in Resources */,
 				DCF46B0F1B42AAF300C771BB /* rect_blue.png in Resources */,
 				3A03AA1C1B3BD5CA00923ABB /* downArrow@2x.png in Resources */,
 				DCF46B111B42AAF300C771BB /* rect_white.png in Resources */,
@@ -1298,11 +1399,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A8D5B8B1B4F800B0025374B /* MMonitorPageContentViewController.m in Sources */,
+				DCE951AA1B66C6E200E3C059 /* MMonitorTableCell1.m in Sources */,
 				D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */,
 				3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */,
 				3A81B9481B4CDAB600EAF996 /* MGoalSettingViewController.m in Sources */,
 				DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */,
 				DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */,
+				DCE951941B612FA500E3C059 /* MReportEditTableCell.m in Sources */,
 				DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */,
 				D06C2D431B381850009D2082 /* FMDatabasePool.m in Sources */,
 				3AD851841B5CFBFA00486E1D /* MStatusPieChartViewController.m in Sources */,
@@ -1312,8 +1415,11 @@
 				DC58777F1B5DECA600D5AC5D /* MDashedLine.m in Sources */,
 				DCF46B211B43A34F00C771BB /* MCustGuide.m in Sources */,
 				3A0542F21B5F9D8E00EC7878 /* MLineChartView2.m in Sources */,
+				DCE9518B1B60E6AC00E3C059 /* MRaidersDescriptionTableViewCell.m in Sources */,
 				3A711B8F1B3800C100E94211 /* SWCellScrollView.m in Sources */,
+				DCE951911B60E72900E3C059 /* MMissionTableCell.m in Sources */,
 				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
+				DCE951A11B66B5E600E3C059 /* MMonitorData.m in Sources */,
 				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
 				38FD52F21B54BF7100AC03F4 /* RPRadarChart.m in Sources */,
 				3A8D5B881B4F7F4F0025374B /* MMonitorDetailViewController.m in Sources */,
@@ -1324,12 +1430,9 @@
 				D06C2D421B381850009D2082 /* FMDatabaseAdditions.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
-				3AA70C161B4513A300FC0DBF /* MMyPlanTableViewCell.m in Sources */,
 				DCB3FDF51B56C00C00ED5BFA /* MRaidersTableHeader.m in Sources */,
 				DC58779E1B5F44B400D5AC5D /* MCircleLayout.m in Sources */,
-				382998381B3AA1BF0045B3BD /* MRaidersDescriptionTableViewCell.m in Sources */,
 				DCF46ACA1B422C0000C771BB /* MCarouselItemView.m in Sources */,
-				382998351B3983060045B3BD /* MIndustryRaidersTableViewCell.m in Sources */,
 				3A711B921B3800C100E94211 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				38DCDD8E1B4E18B2008B57A2 /* RVCollectionViewLayout.m in Sources */,
 				DCF46B2D1B462D5A00C771BB /* MSkill.m in Sources */,
@@ -1345,9 +1448,10 @@
 				3A03F96D1B3A5B3E000F345B /* MEventListViewController.m in Sources */,
 				3AE997381B550CF5005D590C /* RotatedView.m in Sources */,
 				DCF46AB91B41279900C771BB /* iCarousel.m in Sources */,
+				DCE9517B1B60C27F00E3C059 /* MActFlowChart.m in Sources */,
 				38F3BF8C1B58CF94007BBC30 /* MGanttViewController.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
-				DCB3FDF21B56AB4F00ED5BFA /* MRaidersTableCell.m in Sources */,
+				DCE9518A1B60E6AC00E3C059 /* MMyPlanTableViewCell.m in Sources */,
 				38DCDD8D1B4E18B2008B57A2 /* RVCollectionViewCell.m in Sources */,
 				DCF46B241B43C2F400C771BB /* MCustTarget.m in Sources */,
 				DC58779B1B5E7F2B00D5AC5D /* MGanttTableViewCell.m in Sources */,
@@ -1356,12 +1460,14 @@
 				3A5E41FC1B65DDEB00799084 /* MLabelPieChartViewController.m in Sources */,
 				383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */,
 				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
+				DCE951891B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m in Sources */,
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
 				38FD52F81B54C2F600AC03F4 /* MRadarChartView.m in Sources */,
 				DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */,
 				DCB3FDEF1B55F67B00ED5BFA /* MFlowChartPoint.m in Sources */,
 				DC3DF9DE1B4ED13E0065DF5D /* MConcentricCircles.m in Sources */,
 				3A0542EF1B5F7B2600EC7878 /* MStatusLineChartView.m in Sources */,
+				DCE9518E1B60E6AC00E3C059 /* MSettingTableViewCell.m in Sources */,
 				3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */,
 				3A03AA231B3BFF0500923ABB /* MEventDetailViewController.m in Sources */,
 				DC0ADF611B316E340019236D /* AppDelegate.m in Sources */,
@@ -1392,14 +1498,18 @@
 				DCF46ACD1B4236CB00C771BB /* MTarget.m in Sources */,
 				DCB3FDFC1B5A395900ED5BFA /* MRadioButtonView.m in Sources */,
 				DC3DF9D51B4E23360065DF5D /* MTarChartView.m in Sources */,
-				383E2F871B4BF32800472513 /* MReportTableViewCell.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
 				3A03AA1F1B3BD5CA00923ABB /* UIDownPicker.m in Sources */,
 				3AE9972E1B54B41B005D590C /* MTaskRaidersViewController.m in Sources */,
+				DCE9518D1B60E6AC00E3C059 /* MReportTableViewCell.m in Sources */,
 				3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */,
+				DCE951781B60C1B700E3C059 /* MWorkItemFlowChart.m in Sources */,
 				DCB3FDE91B54ABA900ED5BFA /* MFlowChartView.m in Sources */,
+				DCE951A71B66C3F000E3C059 /* MMonitorMapView1.m in Sources */,
+				DCE9518C1B60E6AC00E3C059 /* MRaidersTableCell.m in Sources */,
 				3A03F9651B3A4F26000F345B /* MKeyActivitiesViewController.m in Sources */,
 				DC58777C1B5DEC8100D5AC5D /* MLineChartView.m in Sources */,
+				DCE951AD1B66E03C00E3C059 /* MMeterView.m in Sources */,
 				38E6F3FE1B411EAF00245DA1 /* MLoginViewController.m in Sources */,
 				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,
 				3A03F9661B3A4F26000F345B /* MMyPlanViewController.m in Sources */,

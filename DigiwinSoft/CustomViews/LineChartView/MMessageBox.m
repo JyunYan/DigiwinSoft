@@ -36,37 +36,37 @@
     y+=4;
     
     /* "一" */
-    CGContextMoveToPoint(context, x, y);
+    //CGContextMoveToPoint(context, x, y);
     CGContextAddLineToPoint(context, 1.5, y);
     
     x = 1.5;
     
     /* "|" */
-    CGContextMoveToPoint(context, x, y);
+    //CGContextMoveToPoint(context, x, y);
     CGContextAddLineToPoint(context, x, rect.size.height -1.5);
     
     y = rect.size.height - 1.5;
     
     /* "一" */
-    CGContextMoveToPoint(context, x, y);
+    //CGContextMoveToPoint(context, x, y);
     CGContextAddLineToPoint(context, rect.size.width-1.5, y);
     
     x = rect.size.width-1.5;
     
     /* "|" */
-    CGContextMoveToPoint(context, x, y);
+    //CGContextMoveToPoint(context, x, y);
     CGContextAddLineToPoint(context, x, 4);
     
     y = 4.;
     
     /* "一" */
-    CGContextMoveToPoint(context, x, y);
+    //CGContextMoveToPoint(context, x, y);
     CGContextAddLineToPoint(context, rect.size.width/2.+2., y);
     
     x = rect.size.width/2.+2;
     
     /* "/" */
-    CGContextMoveToPoint(context, x, y);
+    //CGContextMoveToPoint(context, x, y);
     CGContextAddLineToPoint(context, x-2., y-4.);
     
     //CGContextAddArc(context, rect.size.width/2., rect.size.height/2., rect.size.width/2. - 2., 0, M_PI * 2, 0);

@@ -13,7 +13,8 @@
 
 @property (nonatomic, strong) NSString* comp_id;
 @property (nonatomic, strong) NSString* wi_m_id;
-@property (nonatomic, strong) NSString* status;
+@property (nonatomic, strong) NSString* status;     // 0:未開始 1:進行中 2:已完成
+@property (nonatomic, strong) NSString* accepted;   // 0:未接受 1:已接受
 
 @property (nonatomic, strong) NSString* cre_dte;
 

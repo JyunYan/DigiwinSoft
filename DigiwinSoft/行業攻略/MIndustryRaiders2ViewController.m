@@ -20,8 +20,6 @@
 #import "MRaidersTableCell.h"
 #import "MRaidersTableHeader.h"
 
-#import "MFlowChartView2.h"
-
 #import "ASAnimationManager.h"
 @interface MIndustryRaiders2ViewController ()<MGuideTableCellDelegate>
 {
@@ -239,8 +237,10 @@
         //找到相同UUID的Guid，置換裡面的Target。
         if ([Guide.uuid isEqual:PassUUID]){
             [_aryList[i]setTarget:PassGuide.target];
-            }
+        }
     }
+    
+    [tbl reloadData];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"UpGuideTarget"

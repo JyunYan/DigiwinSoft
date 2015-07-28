@@ -1,17 +1,17 @@
 //
-//  MFlowChartView2.m
+//  MActFlowChart.m
 //  DigiwinSoft
 //
-//  Created by Jyun on 2015/7/21.
+//  Created by Jyun on 2015/7/23.
 //  Copyright (c) 2015年 Jyun. All rights reserved.
 //
 
-#import "MFlowChartView2.h"
+#import "MActFlowChart.h"
 
 #define NUMBER_FOR_COLUMN   13
 #define NUMBER_FOR_ROW      10
 
-@interface MFlowChartView2 ()
+@interface MActFlowChart ()
 
 @property (nonatomic,strong) NSMutableArray* unusedPoints;
 @property (nonatomic,strong) NSMutableArray* points;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation MFlowChartView2
+@implementation MActFlowChart
 
 - (void)setItems:(NSArray*)array
 {
@@ -74,23 +74,23 @@
     
     // if 只有一個item
     if(_unused.count == 1){
-        MCustWorkItem* item = [_unused firstObject];
-        [self setItem:item atIndex:13 arrowDirection:ARROW_DIRECTION_NONE];
-        [_used addObject:item];
+        MCustActivity* activity = [_unused firstObject];
+        [self setItem:activity atIndex:13 arrowDirection:ARROW_DIRECTION_NONE];
+        [_used addObject:activity];
         [_unused removeAllObjects];
         return;
     }
     
     // 先取得主線 items (最多6層)
-    MCustWorkItem* item = nil;
+    MCustActivity* activity = nil;
     NSInteger index = NUMBER_FOR_COLUMN;
     while (index < NUMBER_FOR_COLUMN*2) {
-        MCustWorkItem* next = [self getNextNodeByItem:item];
+        MCustActivity* next = [self getNextNodeByItem:activity];
         if(next){
             [self setItem:next atIndex:index arrowDirection:ARROW_DIRECTION_RIGHT]; // 把主線item放在位置13,15,17,19,21,23
             [_used addObject:next];
             [_unused removeObject:next];
-            item = next;
+            activity = next;
         }else{
             //把終點的arrow拿掉
             MFlowChartPoint2* point = [_points objectAtIndex:index - 2];
@@ -105,7 +105,7 @@
     // 根據主線的每個item,檢查是否有分支(這邊要反推回去)
     NSInteger count = _used.count;
     for(int i=0; i<count; i++){
-        MCustWorkItem* item = [_used objectAtIndex:i];
+        MCustActivity* item = [_used objectAtIndex:i];
         [self findSubPathWithReferItem:item];
     }
     
@@ -114,17 +114,17 @@
 }
 
 // 每個主線item分支上游(這邊要反推回去)
-- (void)findSubPathWithReferItem:(MCustWorkItem*)workitem
+- (void)findSubPathWithReferItem:(MCustActivity*)activity
 {
-    MCustWorkItem* item = workitem;
+    MCustActivity* act = activity;
     while (true) {
-        MCustWorkItem* prev = [self getPrevNodeByItem:item];
+        MCustActivity* prev = [self getPrevNodeByItem:act];
         if(prev){
-            NSInteger index = [self indexOfItem:item];
+            NSInteger index = [self indexOfItem:act];
             [self setItem:prev referIndex:index];
             [_used addObject:prev];
             [_unused removeObject:prev];
-            item = prev;
+            act = prev;
         }else{
             break;
         }
@@ -132,11 +132,11 @@
 }
 
 // item所在的index
-- (NSInteger)indexOfItem:(MCustWorkItem*)workitem
+- (NSInteger)indexOfItem:(MCustActivity*)activity
 {
-    NSString* uuid = workitem.uuid;
+    NSString* uuid = activity.uuid;
     for (MFlowChartPoint2* point in _points) {
-        if([point.workitem.uuid isEqualToString:uuid])
+        if([point.activity.uuid isEqualToString:uuid])
             return point.index;
     }
     return -1;
@@ -147,7 +147,7 @@
     for (NSInteger index = 0; index < _points.count; index++) {
         MFlowChartPoint2* point = [_points objectAtIndex:index];
         if(point.type == TYPE_FOR_ITEM){
-            NSString* title = point.workitem.name;
+            NSString* title = point.activity.name;
             
             //先查看上面
             MFlowChartPoint2* point2 = [_points objectAtIndex:index - NUMBER_FOR_COLUMN];
@@ -177,11 +177,11 @@
 }
 
 // 指定item到位置index
-- (void)setItem:(MCustWorkItem*)item atIndex:(NSInteger)index arrowDirection:(NSInteger)direction
+- (void)setItem:(MCustActivity*)activity atIndex:(NSInteger)index arrowDirection:(NSInteger)direction
 {
     // set item location
     MFlowChartPoint2* point = [_points objectAtIndex:index];
-    point.workitem = item;
+    point.activity = activity;
     point.type = TYPE_FOR_ITEM;
     
     // set arrow location
@@ -212,7 +212,7 @@
 }
 
 // 參照index指定item的合理位置
-- (void)setItem:(MCustWorkItem*)workitem referIndex:(NSInteger)index
+- (void)setItem:(MCustActivity*)activity referIndex:(NSInteger)index
 {
     //不可超出points範圍
     if(index >= _points.count || index < 0)
@@ -223,7 +223,7 @@
         NSInteger left = index - 2;
         MFlowChartPoint2* point = [_points objectAtIndex:left];
         if(point.type == TYPE_FOR_NONE){
-            [self setItem:workitem atIndex:left arrowDirection:ARROW_DIRECTION_RIGHT];
+            [self setItem:activity atIndex:left arrowDirection:ARROW_DIRECTION_RIGHT];
             return;
         }
     }
@@ -233,7 +233,7 @@
     if(down < (_points.count - NUMBER_FOR_COLUMN*2)){
         MFlowChartPoint2* point = [_points objectAtIndex:down];
         if(point.type == TYPE_FOR_NONE){
-            [self setItem:workitem atIndex:down arrowDirection:ARROW_DIRECTION_UP];
+            [self setItem:activity atIndex:down arrowDirection:ARROW_DIRECTION_UP];
             return;
         }
     }
@@ -243,7 +243,7 @@
         NSInteger right = index + 2;
         MFlowChartPoint2* point = [_points objectAtIndex:right];
         if(point.type == TYPE_FOR_NONE){
-            [self setItem:workitem atIndex:down arrowDirection:ARROW_DIRECTION_LEFT];
+            [self setItem:activity atIndex:down arrowDirection:ARROW_DIRECTION_LEFT];
             return;
         }
     }
@@ -253,35 +253,35 @@
     if(up >= 13){
         MFlowChartPoint2* point = [_points objectAtIndex:up];
         if(point.type == TYPE_FOR_NONE){
-            [self setItem:workitem atIndex:down arrowDirection:ARROW_DIRECTION_DOWN];
+            [self setItem:activity atIndex:down arrowDirection:ARROW_DIRECTION_DOWN];
             return;
         }
     }
 }
 
 //取得上一個item
-- (MCustWorkItem*)getPrevNodeByItem:(MCustWorkItem*)item
+- (MCustActivity*)getPrevNodeByItem:(MCustActivity*)activity
 {
-    NSString* prev = item.previos2;
+    NSString* prev = activity.previos2;
     if(!prev || [prev isEqualToString:@""])
         return nil;
     
-    for (MCustWorkItem* workitem in _unused) {
-        if([prev isEqualToString:workitem.uuid])
-            return workitem;
+    for (MCustActivity* act in _unused) {
+        if([prev isEqualToString:act.uuid])
+            return act;
     }
     return nil;
 }
 
 //取得下一個item
-- (MCustWorkItem*)getNextNodeByItem:(MCustWorkItem*)item
+- (MCustActivity*)getNextNodeByItem:(MCustActivity*)activity
 {
-    NSString* uuid = item.uuid;
-    for (MCustWorkItem* workitem in _unused) {
-        if([workitem.previos1 isEqualToString:@"none"]) // start
-            return workitem;
-        else if([uuid isEqualToString:workitem.previos1])
-            return workitem;
+    NSString* uuid = activity.uuid;
+    for (MCustActivity* act in _unused) {
+        if([act.previos1 isEqualToString:@"none"]) // start
+            return act;
+        else if([uuid isEqualToString:act.previos1])
+            return act;
     }
     return nil;
 }
@@ -402,7 +402,7 @@
         CGContextAddLineToPoint(context, point.coordinate.x - gapWide, point.coordinate.y - gapWide);
         CGContextStrokePath(context);
     }
-
+    
     CGContextClosePath(context);
 }
 

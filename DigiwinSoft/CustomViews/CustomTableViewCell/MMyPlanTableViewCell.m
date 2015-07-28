@@ -26,11 +26,11 @@
 
 - (void)setFrame:(CGRect)frame
 {
-    frame.origin.x += 20;
-    frame.size.width -= 2 * 20;
+    frame.origin.x += 20.;
+    frame.size.width -= 2 * 20.;
     [super setFrame:frame];
     
-    [self resetLayoutSubviewsWithOffsetX:20];
+    self.offsetX = 20.;
 }
 
 @end

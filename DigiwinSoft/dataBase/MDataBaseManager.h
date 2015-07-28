@@ -54,7 +54,7 @@
 - (NSArray*)loadTargetSampleArray;
 
 // get 議題Sample By 對策
-- (NSArray*)loadIssueArrayByGudie:(MGuide*)guide;
+- (NSArray*)loadIssueArrayByGudieID:(NSString*)guideid;
 
 // get 所有職能array
 - (NSArray*)loadAllSkills;
@@ -67,10 +67,14 @@
 - (NSArray*)loadMyMissionsWithIndex:(NSInteger)index;
 - (NSArray*)loadMyGuideMissionsWithRelese:(BOOL)brelease status:(NSString*)status;
 - (NSArray*)loadMyActivityMissionWithRelese:(BOOL)brelease status:(NSString*)status;
-- (NSArray*)loadMyWorkItemMissionWithRelese:(BOOL)brelease status:(NSString*)status;
+- (NSArray*)loadMyWorkItemMissionWithRelese:(BOOL)brelease status:(NSString*)status accepted:(NSString*)accepted;
 - (NSArray*)loadReports;
 
 - (BOOL)insertReport:(MReport*)report;
+
+#pragma mark - 監控地圖
+- (NSArray*)loadMonitorGuideData;
+- (NSArray*)loadMonitorIssueWithGudieID:(NSString*)guideid;
 
 #pragma mark - 我的規劃/我的攻略
 // get 我的規劃/我的攻略

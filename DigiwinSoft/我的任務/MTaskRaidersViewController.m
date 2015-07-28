@@ -13,7 +13,7 @@
 #import "MDesignateResponsibleViewController.h"
 #import "MGoalSettingViewController.h"
 
-#import "MFlowChartView2.h"
+#import "MWorkItemFlowChart.h"
 
 #import "MRaidersTableCell.h"
 
@@ -106,6 +106,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetActivity:) name:@"ResetActivity" object:nil];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    // save data
+    NSArray* array = _act.workItemArray;
+    [[MDataBaseManager sharedInstance] insertCustWorkItems:array];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -191,8 +200,8 @@
 
 -(void)actionNotify:(id)sender
 {
-    NSArray* array = _act.workItemArray;
-    [[MDataBaseManager sharedInstance] insertCustWorkItems:array];
+    //NSArray* array = _act.workItemArray;
+    //[[MDataBaseManager sharedInstance] insertCustWorkItems:array];
     
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:@"成功發送通知" delegate:nil cancelButtonTitle:@"確認" otherButtonTitles:nil];
     [alert show];
@@ -289,7 +298,7 @@
     CGFloat width = tableView.frame.size.width;
     CGFloat height = width * 0.6;
     
-    MFlowChartView2* chart = [[MFlowChartView2 alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    MWorkItemFlowChart* chart = [[MWorkItemFlowChart alloc] initWithFrame:CGRectMake(0, 0, width, height)];
     chart.backgroundColor = [UIColor whiteColor];
     [chart setItems:_act.workItemArray];
     
