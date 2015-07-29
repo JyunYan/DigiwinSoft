@@ -29,7 +29,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self sortValueArr:valueArr colorArr:colorArr];
+//        [self sortValueArr:valueArr colorArr:colorArr];
         self.rotatedView = [[RotatedView alloc]initWithFrame:self.bounds];
         self.rotatedView.mValueArray = valueArr;
         self.rotatedView.mColorArray = colorArr;

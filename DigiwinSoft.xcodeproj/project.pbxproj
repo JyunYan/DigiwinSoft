@@ -12,6 +12,10 @@
 		382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982C1B3982BE0045B3BD /* MRaidersDescriptionViewController.m */; };
 		382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */; };
 		383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F831B4BD9CD00472513 /* MReportViewController.m */; };
+
+		383E2F871B4BF32800472513 /* MReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F861B4BF32800472513 /* MReportTableViewCell.m */; };
+		38CCC4941B6767EA00CF9731 /* MEfficacyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CCC4931B6767EA00CF9731 /* MEfficacyViewController.m */; };
+
 		38DCDD8D1B4E18B2008B57A2 /* RVCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */; };
 		38DCDD8E1B4E18B2008B57A2 /* RVCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8C1B4E18B2008B57A2 /* RVCollectionViewLayout.m */; };
 		38DCDD911B4E199F008B57A2 /* MRouletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD901B4E199F008B57A2 /* MRouletteViewController.m */; };
@@ -244,6 +248,11 @@
 		3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRaidersDiagramViewController.m; sourceTree = "<group>"; };
 		383E2F821B4BD9CD00472513 /* MReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MReportViewController.h; sourceTree = "<group>"; };
 		383E2F831B4BD9CD00472513 /* MReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MReportViewController.m; sourceTree = "<group>"; };
+		383E2F851B4BF32800472513 /* MReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MReportTableViewCell.h; path = structure/MReportTableViewCell.h; sourceTree = "<group>"; };
+		383E2F861B4BF32800472513 /* MReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MReportTableViewCell.m; path = structure/MReportTableViewCell.m; sourceTree = "<group>"; };
+		38CCC4921B6767EA00CF9731 /* MEfficacyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEfficacyViewController.h; sourceTree = "<group>"; };
+		38CCC4931B6767EA00CF9731 /* MEfficacyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEfficacyViewController.m; sourceTree = "<group>"; };
+
 		38DCDD891B4E18B2008B57A2 /* RVCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewCell.h; sourceTree = "<group>"; };
 		38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVCollectionViewCell.m; sourceTree = "<group>"; };
 		38DCDD8B1B4E18B2008B57A2 /* RVCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewLayout.h; sourceTree = "<group>"; };
@@ -755,6 +764,8 @@
 				3A47255C1B5E3DEB00DB9FFE /* MInformationDetailViewController.m */,
 				3A0542EA1B5F58F400EC7878 /* MStatusLineChartViewController.h */,
 				3A0542EB1B5F58F400EC7878 /* MStatusLineChartViewController.m */,
+				38CCC4921B6767EA00CF9731 /* MEfficacyViewController.h */,
+				38CCC4931B6767EA00CF9731 /* MEfficacyViewController.m */,
 			);
 			path = "看現況";
 			sourceTree = "<group>";
@@ -1417,6 +1428,7 @@
 				3A47255A1B5DE5EF00DB9FFE /* MIndustryInformationViewController.m in Sources */,
 				38DCDD911B4E199F008B57A2 /* MRouletteViewController.m in Sources */,
 				DCCAB1AC1B4F841500AA1CD2 /* ASAnimationManager.m in Sources */,
+				38CCC4941B6767EA00CF9731 /* MEfficacyViewController.m in Sources */,
 				D06C2D421B381850009D2082 /* FMDatabaseAdditions.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,

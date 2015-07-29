@@ -26,23 +26,33 @@
     CGContextFillPath(context);
     
     // draw string
+    NSString* newContent = _content;
+    if (_content.length > 20) {
+        newContent = [_content substringToIndex:19];
+        newContent = [newContent stringByAppendingString:@"︙"];
+    }
+    
     NSMutableArray* array = [NSMutableArray new];
     NSInteger index = 0;
     for (int i = 0; i < 2; index++) {
         
-        if(_content.length - index > 10){
-            NSString* string = [_content substringWithRange:NSMakeRange(index, 10)];
+        if(newContent.length - index > 10){
+            NSString* string = [newContent substringWithRange:NSMakeRange(index, 10)];
             [array addObject:string];
         }else{
-            NSString* string = [_content substringWithRange:NSMakeRange(index, _content.length - index)];
+            NSString* string = [newContent substringWithRange:NSMakeRange(index, newContent.length - index)];
             [array addObject:string];
         }
         
         index += 10;
-        if(index >= _content.length)
+        index--;
+        if(index >= newContent.length)
             break;
     }
     
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    paragraphStyle.alignment = NSTextAlignmentCenter;
     
     CGFloat x = (self.bounds.size.width - _pointSize * array.count) / 2.;
     for (NSString* str in array) {
@@ -50,7 +60,8 @@
         NSAttributedString* attString = [[NSAttributedString alloc] initWithString:str
                                                                         attributes:@{NSFontAttributeName:font,
                                                                                      NSForegroundColorAttributeName:color,
-                                                                    NSVerticalGlyphFormAttributeName:[NSNumber numberWithInt:1]}];
+                                                                    NSVerticalGlyphFormAttributeName:[NSNumber numberWithInt:1],
+                                                                                     NSParagraphStyleAttributeName:paragraphStyle}];
         [attString drawInRect:CGRectMake(x, self.bounds.origin.y + 15., _pointSize, self.bounds.size.height)];
         x+= _pointSize;
     }
