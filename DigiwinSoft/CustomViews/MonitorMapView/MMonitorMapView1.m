@@ -11,8 +11,7 @@
 #import "MDirector.h"
 #import "MMonitorData.h"
 #import "MMonitorTableCell1.h"
-
-#import "MMeterView.h"
+#import "MMonitorMeterView1.h"
 
 @interface MMonitorMapView1 ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -56,7 +55,7 @@
     CGFloat width = self.frame.size.width;
     
     // 上方計量圖
-    UIView* topView = [self createTopView:CGRectMake(0, posY, width , 100)];
+    UIView* topView = [self createTopView:CGRectMake(0, posY, width , width*0.5)];
     [self addSubview:topView];
     
     posY += topView.frame.size.height + 10.;
@@ -73,20 +72,12 @@
 
 - (UIView*)createTopView:(CGRect) rect
 {
-    UIView* view = [[UIView alloc] initWithFrame:rect];
-    view.backgroundColor = [UIColor whiteColor];
-    
     MMonitorData* data = [_filterArray objectAtIndex:0];
     
-    
-    CGFloat width = rect.size.width - 20;
-    MMeterView* view2 = [[MMeterView alloc] initWithFrame:CGRectMake(10, 30, width, width*0.1)];
-    view2.backgroundColor = [UIColor whiteColor];
-    [view2 setIssueGroup:data.issueArray];
-    [view addSubview:view2];
-    
-    
-    
+    MMonitorMeterView1* view = [[MMonitorMeterView1 alloc] initWithFrame:rect];
+    view.backgroundColor = [UIColor whiteColor];
+    view.issueGroup = data.issueArray;
+
     return view;
 }
 

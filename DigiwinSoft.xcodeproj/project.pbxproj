@@ -164,6 +164,12 @@
 		DCE951A71B66C3F000E3C059 /* MMonitorMapView1.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951A61B66C3F000E3C059 /* MMonitorMapView1.m */; };
 		DCE951AA1B66C6E200E3C059 /* MMonitorTableCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951A91B66C6E200E3C059 /* MMonitorTableCell1.m */; };
 		DCE951AD1B66E03C00E3C059 /* MMeterView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951AC1B66E03C00E3C059 /* MMeterView.m */; };
+		DCE951B01B67171800E3C059 /* MMonitorMeterView1.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951AF1B67171800E3C059 /* MMonitorMeterView1.m */; };
+		DCE951B31B6884C900E3C059 /* MDashLine2.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951B21B6884C900E3C059 /* MDashLine2.m */; };
+		DCE951B51B688F4700E3C059 /* icon_search_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE951B41B688F4700E3C059 /* icon_search_blue.png */; };
+		DCE951B81B6890BE00E3C059 /* star_fill_red.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE951B61B6890BE00E3C059 /* star_fill_red.png */; };
+		DCE951B91B6890BE00E3C059 /* star_fill_white.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE951B71B6890BE00E3C059 /* star_fill_white.png */; };
+		DCE951BB1B68916000E3C059 /* icon_menu_5_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE951BA1B68916000E3C059 /* icon_menu_5_blue.png */; };
 		DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AA81B40E04A00C771BB /* MEvent.m */; };
 		DCF46AAC1B41103700C771BB /* MSituation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAB1B41103700C771BB /* MSituation.m */; };
 		DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAE1B4116F000C771BB /* MTreasure.m */; };
@@ -500,6 +506,14 @@
 		DCE951A91B66C6E200E3C059 /* MMonitorTableCell1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorTableCell1.m; path = CustomViews/CustomTableViewCell/MMonitorTableCell1.m; sourceTree = "<group>"; };
 		DCE951AB1B66E03C00E3C059 /* MMeterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMeterView.h; path = CustomViews/MonitorMapView/MMeterView.h; sourceTree = "<group>"; };
 		DCE951AC1B66E03C00E3C059 /* MMeterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMeterView.m; path = CustomViews/MonitorMapView/MMeterView.m; sourceTree = "<group>"; };
+		DCE951AE1B67171800E3C059 /* MMonitorMeterView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorMeterView1.h; path = CustomViews/MonitorMapView/MMonitorMeterView1.h; sourceTree = "<group>"; };
+		DCE951AF1B67171800E3C059 /* MMonitorMeterView1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorMeterView1.m; path = CustomViews/MonitorMapView/MMonitorMeterView1.m; sourceTree = "<group>"; };
+		DCE951B11B6884C900E3C059 /* MDashLine2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDashLine2.h; path = CustomViews/MonitorMapView/MDashLine2.h; sourceTree = "<group>"; };
+		DCE951B21B6884C900E3C059 /* MDashLine2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDashLine2.m; path = CustomViews/MonitorMapView/MDashLine2.m; sourceTree = "<group>"; };
+		DCE951B41B688F4700E3C059 /* icon_search_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_search_blue.png; sourceTree = "<group>"; };
+		DCE951B61B6890BE00E3C059 /* star_fill_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_fill_red.png; sourceTree = "<group>"; };
+		DCE951B71B6890BE00E3C059 /* star_fill_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_fill_white.png; sourceTree = "<group>"; };
+		DCE951BA1B68916000E3C059 /* icon_menu_5_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_5_blue.png; sourceTree = "<group>"; };
 		DCF46AA71B40E04A00C771BB /* MEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEvent.h; path = structure/MEvent.h; sourceTree = "<group>"; };
 		DCF46AA81B40E04A00C771BB /* MEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEvent.m; path = structure/MEvent.m; sourceTree = "<group>"; };
 		DCF46AAA1B41103700C771BB /* MSituation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSituation.h; path = structure/MSituation.h; sourceTree = "<group>"; };
@@ -816,6 +830,10 @@
 				DCF46AD81B42AAF300C771BB /* checkbox_empty.png */,
 				DCF46AD91B42AAF300C771BB /* checkbox_fill.png */,
 				DCF46ADA1B42AAF300C771BB /* icon_alarm.png */,
+				DCE951971B668FBB00E3C059 /* icon_arrow_green.png */,
+				3AF1DD001B608B07006ADBBD /* icon_arrow_left.png */,
+				DCE951981B668FBB00E3C059 /* icon_arrow_red.png */,
+				3AF1DD011B608B07006ADBBD /* icon_arrow_right.png */,
 				3A8399781B4E1D50008B0150 /* icon_arrow_up_right.png */,
 				DCF46ADB1B42AAF300C771BB /* icon_back.png */,
 				DCF46ADC1B42AAF300C771BB /* icon_blue_circle.png */,
@@ -835,6 +853,7 @@
 				3AFF624B1B438A46005B6238 /* icon_menu_2.png */,
 				3AFF624C1B438A46005B6238 /* icon_menu_3.png */,
 				3AFF624D1B438A46005B6238 /* icon_menu_4.png */,
+				DCE951BA1B68916000E3C059 /* icon_menu_5_blue.png */,
 				3AFF624E1B438A46005B6238 /* icon_menu_5.png */,
 				3AFF624F1B438A46005B6238 /* icon_menu_6.png */,
 				3AFF62501B438A46005B6238 /* icon_menu_7.png */,
@@ -848,6 +867,7 @@
 				DCF46AE61B42AAF300C771BB /* icon_raider.png */,
 				DCF46AE71B42AAF300C771BB /* icon_red_arrow.png */,
 				DCF46AE81B42AAF300C771BB /* icon_red_circle.png */,
+				DCE951B41B688F4700E3C059 /* icon_search_blue.png */,
 				DCF46AE91B42AAF300C771BB /* icon_search.png */,
 				DCF46AEA1B42AAF300C771BB /* icon_setting.png */,
 				3A7E31E71B4BD82800790026 /* icon_sms.png */,
@@ -860,6 +880,8 @@
 				DCF46AEC1B42AAF300C771BB /* rect_blue2.png */,
 				DCF46AED1B42AAF300C771BB /* rect_white.png */,
 				DCF46AEE1B42AAF300C771BB /* star_empty.png */,
+				DCE951B61B6890BE00E3C059 /* star_fill_red.png */,
+				DCE951B71B6890BE00E3C059 /* star_fill_white.png */,
 				DCF46AEF1B42AAF300C771BB /* star_fill.png */,
 				DCF46AF01B42AAF300C771BB /* tab_icon_1.png */,
 				DCF46AF11B42AAF300C771BB /* tab_icon_2.png */,
@@ -1142,6 +1164,10 @@
 				DCE951A61B66C3F000E3C059 /* MMonitorMapView1.m */,
 				DCE951AB1B66E03C00E3C059 /* MMeterView.h */,
 				DCE951AC1B66E03C00E3C059 /* MMeterView.m */,
+				DCE951AE1B67171800E3C059 /* MMonitorMeterView1.h */,
+				DCE951AF1B67171800E3C059 /* MMonitorMeterView1.m */,
+				DCE951B11B6884C900E3C059 /* MDashLine2.h */,
+				DCE951B21B6884C900E3C059 /* MDashLine2.m */,
 			);
 			name = MonitorMapView;
 			sourceTree = "<group>";
@@ -1289,6 +1315,7 @@
 				DCF46B0A1B42AAF300C771BB /* icon_raider.png in Resources */,
 				3AFF625F1B438A46005B6238 /* icon_menu_11.png in Resources */,
 				3AF1DD031B608B07006ADBBD /* icon_arrow_right.png in Resources */,
+				DCE951B51B688F4700E3C059 /* icon_search_blue.png in Resources */,
 				DCF46B0C1B42AAF300C771BB /* icon_red_circle.png in Resources */,
 				DCF46AFB1B42AAF300C771BB /* check_box_on.png in Resources */,
 				DC5877771B5DCCCF00D5AC5D /* Icon-Small@2x.png in Resources */,
@@ -1304,6 +1331,7 @@
 				3A03AA1B1B3BD5CA00923ABB /* downArrow.png in Resources */,
 				DCE9519A1B668FBB00E3C059 /* icon_arrow_red.png in Resources */,
 				DCF46B181B42AAF300C771BB /* tab_icon_5.png in Resources */,
+				DCE951B81B6890BE00E3C059 /* star_fill_red.png in Resources */,
 				DCF46B1E1B42B4C000C771BB /* icon_list_2.png in Resources */,
 				DCE951991B668FBB00E3C059 /* icon_arrow_green.png in Resources */,
 				DCF46B041B42AAF300C771BB /* icon_gray_dot.png in Resources */,
@@ -1311,6 +1339,7 @@
 				DCF46B071B42AAF300C771BB /* icon_manager.png in Resources */,
 				509160991B4510330065C176 /* icon_close.png in Resources */,
 				3A5EA3651B576C1400B5360F /* icon_up.png in Resources */,
+				DCE951B91B6890BE00E3C059 /* star_fill_white.png in Resources */,
 				DCF46B151B42AAF300C771BB /* tab_icon_2.png in Resources */,
 				DC0ADF6C1B316E340019236D /* LaunchScreen.xib in Resources */,
 				DC5877761B5DCCCF00D5AC5D /* Icon-Small-40@3x.png in Resources */,
@@ -1318,6 +1347,7 @@
 				DCF46B081B42AAF300C771BB /* icon_more.png in Resources */,
 				3AFF625A1B438A46005B6238 /* icon_menu_6.png in Resources */,
 				3AFF62591B438A46005B6238 /* icon_menu_5.png in Resources */,
+				DCE951BB1B68916000E3C059 /* icon_menu_5_blue.png in Resources */,
 				DCF46AFC1B42AAF300C771BB /* checkbox_empty.png in Resources */,
 				3AE08C541B5CCEBC00B46895 /* icon_star_half.png in Resources */,
 				DCF46B121B42AAF300C771BB /* star_empty.png in Resources */,
@@ -1440,6 +1470,7 @@
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
 				38FD52F81B54C2F600AC03F4 /* MRadarChartView.m in Sources */,
 				DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */,
+				DCE951B01B67171800E3C059 /* MMonitorMeterView1.m in Sources */,
 				DCB3FDEF1B55F67B00ED5BFA /* MFlowChartPoint.m in Sources */,
 				DC3DF9DE1B4ED13E0065DF5D /* MConcentricCircles.m in Sources */,
 				3A0542EF1B5F7B2600EC7878 /* MStatusLineChartView.m in Sources */,
@@ -1478,6 +1509,7 @@
 				DCE9518D1B60E6AC00E3C059 /* MReportTableViewCell.m in Sources */,
 				3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */,
 				DCE951781B60C1B700E3C059 /* MWorkItemFlowChart.m in Sources */,
+				DCE951B31B6884C900E3C059 /* MDashLine2.m in Sources */,
 				DCB3FDE91B54ABA900ED5BFA /* MFlowChartView.m in Sources */,
 				DCE951A71B66C3F000E3C059 /* MMonitorMapView1.m in Sources */,
 				DCE9518C1B60E6AC00E3C059 /* MRaidersTableCell.m in Sources */,

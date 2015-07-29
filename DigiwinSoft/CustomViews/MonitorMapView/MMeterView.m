@@ -10,9 +10,6 @@
 #import "MDirector.h"
 #import "MIssue.h"
 
-#define CORNRADIUS_INNER  7
-#define CORNRADIUS_OUTER  10
-
 @interface MMeterView ()
 
 @property (nonatomic, assign) NSInteger totalExpected;  //預期收益總額
@@ -26,7 +23,7 @@
 - (id)init
 {
     if(self = [super init]){
-        self.layer.borderWidth =1.6;
+        self.layer.borderWidth = 1.6;
         self.layer.borderColor = [UIColor blackColor].CGColor;
         self.layer.cornerRadius = CORNRADIUS_OUTER;
         
@@ -39,7 +36,7 @@
 {
     self = [super initWithFrame:frame];
     if(self){
-        self.layer.borderWidth =1.6;
+        self.layer.borderWidth = 1.6;
         self.layer.borderColor = [UIColor blackColor].CGColor;
         self.layer.cornerRadius = CORNRADIUS_OUTER;
         
@@ -53,6 +50,27 @@
     _issueGroup = issueGroup;
     
     [self calculateTotalGanin];
+    [self preparePoints];
+}
+
+- (void)preparePoints
+{
+    [_points removeAllObjects];
+    
+    CGRect rect = CGRectMake(self.frame.origin.x + 4, self.frame.origin.y + 4, self.frame.size.width - 8, self.frame.size.height - 8);
+    CGFloat posX = rect.origin.x;
+    for (int index=0; index < _issueGroup.count; index++) {
+        MIssue* issue = [_issueGroup objectAtIndex:index];
+        CGFloat width = [self calculateFillWidthWithRect:rect issue:issue];
+        
+        // save point
+        CGPoint point = CGPointMake(self.frame.origin.x + posX + width*0.5, rect.origin.y + rect.size.height);
+        [_points addObject:[NSValue valueWithCGPoint:point]];
+        
+        posX += width;
+    }
+    
+    _endPoint = CGPointMake(posX, self.center.y);
 }
 
 - (void)calculateTotalGanin
@@ -86,16 +104,18 @@
         return [[MDirector sharedInstance] getForestGreenColor];
 }
 
+- (CGPoint)getPointWithIndex:(NSInteger)index
+{
+    NSValue* value = [_points objectAtIndex:index];
+    return [value CGPointValue];
+}
+
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-
     CGRect rect2 = CGRectMake(rect.origin.x + 4, rect.origin.y + 4, rect.size.width - 8, rect.size.height - 8);
     [self fillRect:rect2 context:context];
-
-    //[self fillRect:rect2 context:context];
-    //CGContextDrawPath(context,kCGPathFill);
 }
 
 - (void)fillRect:(CGRect)rect context:(CGContextRef)context
@@ -122,37 +142,6 @@
         posX += width;
         _totalReal = total;
     }
-    
-    return;
-    
-    
-    float x_left = rect.origin.x;
-    float x_left_center = x_left + CORNRADIUS_INNER;
-    float x_right_center = x_left + rect.size.width - CORNRADIUS_INNER;
-    float x_right = x_left + rect.size.width;
-    float y_top = rect.origin.y;
-    float y_top_center = y_top + CORNRADIUS_INNER;
-    float y_bottom_center = y_top + rect.size.height - CORNRADIUS_INNER;
-    float y_bottom = y_top + rect.size.height;
-    
-    CGContextMoveToPoint(context, x_left, y_top_center);
-    /* 左上 */
-    CGContextAddArcToPoint(context, x_left, y_top, x_left_center, y_top, CORNRADIUS_INNER);
-    CGContextAddLineToPoint(context, x_right_center, y_top);
-    /* 右上 */
-    CGContextAddArcToPoint(context, x_right, y_top, x_right, y_top_center, CORNRADIUS_INNER);
-    CGContextAddLineToPoint(context, x_right, y_bottom_center);
-    /* 右下 */
-    CGContextAddArcToPoint(context, x_right, y_bottom, x_right_center, y_bottom, CORNRADIUS_INNER);
-    CGContextAddLineToPoint(context, x_left_center, y_bottom);
-    /* 左下 */
-    CGContextAddArcToPoint(context, x_left, y_bottom, x_left, y_bottom_center, CORNRADIUS_INNER);
-    CGContextAddLineToPoint(context, x_left, y_top_center);
-    
-    UIColor* color = [[MDirector sharedInstance] getForestGreenColor];
-    CGContextSetFillColorWithColor(context, color.CGColor);
-    
-    CGContextFillPath(context);
 }
 
 - (void)drawLeftArcWithContext:(CGContextRef)context rect:(CGRect)rect index:(NSInteger)index
@@ -183,12 +172,57 @@
 
 - (void)drawRightArcWithContext:(CGContextRef)context rect:(CGRect)rect index:(NSInteger)index
 {
+    UIColor* color = [self getColorWithIndex:index];
     
+    float left = rect.origin.x;
+    float right = left + rect.size.width;
+    float right_center = right - CORNRADIUS_INNER;
+    float top = rect.origin.y;
+    float top_center = top + CORNRADIUS_INNER;
+    float bottom = top + rect.size.height;
+    float bottom_center = bottom - CORNRADIUS_INNER;
+    
+    CGContextMoveToPoint(context, left, top);
+    CGContextAddLineToPoint(context, right_center, top);
+    CGContextAddArcToPoint(context, right, top, right, top_center, CORNRADIUS_INNER);   //右上
+    CGContextAddLineToPoint(context, right, bottom_center);
+    CGContextAddArcToPoint(context, right, bottom, right_center, bottom, CORNRADIUS_INNER); //右下
+    CGContextAddLineToPoint(context, left, bottom);
+    CGContextAddLineToPoint(context, left, top);
+    
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillPath(context);
 }
 
 - (void)drawBothArcWithContext:(CGContextRef)context rect:(CGRect)rect index:(NSInteger)index
 {
+    UIColor* color = [self getColorWithIndex:index];
     
+    float left = rect.origin.x;
+    float left_center = left + CORNRADIUS_INNER;
+    float right = left + rect.size.width;
+    float right_center = right - CORNRADIUS_INNER;
+    float top = rect.origin.y;
+    float top_center = top + CORNRADIUS_INNER;
+    float bottom = top + rect.size.height;
+    float bottom_center = bottom - CORNRADIUS_INNER;
+    
+    CGContextMoveToPoint(context, left, top_center);
+    /* 左上 */
+    CGContextAddArcToPoint(context, left, top, left_center, top, CORNRADIUS_INNER);
+    CGContextAddLineToPoint(context, right_center, top);
+    /* 右上 */
+    CGContextAddArcToPoint(context, right, top, right, top_center, CORNRADIUS_INNER);
+    CGContextAddLineToPoint(context, right, bottom_center);
+    /* 右下 */
+    CGContextAddArcToPoint(context, right, bottom, right_center, bottom, CORNRADIUS_INNER);
+    CGContextAddLineToPoint(context, left_center, bottom);
+    /* 左下 */
+    CGContextAddArcToPoint(context, left, bottom, left, bottom_center, CORNRADIUS_INNER);
+    CGContextAddLineToPoint(context, left, top_center);
+    
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillPath(context);
 }
 
 - (void)drawNoArcWithContext:(CGContextRef)context rect:(CGRect)rect index:(NSInteger)index

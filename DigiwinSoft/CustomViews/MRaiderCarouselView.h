@@ -10,8 +10,16 @@
 #import "MConfig.h"
 #import "MConfig.h"
 
+@protocol MRaiderCarouselViewDelegate <NSObject>
+
+- (void)reloadCarouselView;
+
+@end
+
 @interface MRaiderCarouselView : UIView
 
 @property (nonatomic, strong) NSArray* phenArray;
+
+- (void)reloadCarouselView;
 
 @end

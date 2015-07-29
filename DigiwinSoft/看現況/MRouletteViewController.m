@@ -45,7 +45,7 @@
     RVCollectionViewLayout* flowLayout = [[RVCollectionViewLayout alloc]init];
     //[flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     
-    _mCollection=[[UICollectionView alloc]initWithFrame:CGRectMake(1, 85,DEVICE_SCREEN_WIDTH-2,300) collectionViewLayout:flowLayout];
+    _mCollection=[[UICollectionView alloc]initWithFrame:CGRectMake(1, 85,DEVICE_SCREEN_WIDTH-2,150) collectionViewLayout:flowLayout];
     _mCollection.delegate=self;
     _mCollection.dataSource=self;
     _mCollection.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];

@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#define CORNRADIUS_INNER  7
+#define CORNRADIUS_OUTER  10
+
 @interface MMeterView : UIView
 
+@property (nonatomic, assign) CGPoint endPoint; // 最右邊的point
 @property (nonatomic, strong) NSArray* issueGroup;
+
+- (CGPoint)getPointWithIndex:(NSInteger)index;
 
 @end
