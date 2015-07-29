@@ -10,6 +10,7 @@
 #import "MConfig.h"
 #import "MRadarChartView.h"
 #import "MRouletteViewController.h"
+#import "SituationCollectionCell.h"
 @interface MEfficacyViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (nonatomic, assign) CGRect viewRect;
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) NSMutableArray *aryData;
 @property (nonatomic, strong) NSArray *aryAddData;
 @property (nonatomic, strong) UICollectionView *mCollection;
+@property (nonatomic, strong) UIPageControl *pageControl;
 @end
 
 @implementation MEfficacyViewController
@@ -34,11 +36,18 @@
     
     [self createScroll];
     [self createBtn];
+    [self createPageControl];
     [self createRadarChart];
     [self createCollection];
 
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    {
+           }
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -104,9 +113,18 @@
         _mCollection.delegate = self;
         _mCollection.dataSource = self;
         _mCollection.backgroundColor = [UIColor grayColor];
-        [_mCollection registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        
+        [_mCollection registerClass:[SituationCollectionCell class] forCellWithReuseIdentifier:@"Cell"];
     }
     [_mScroll addSubview:_mCollection];
+}
+-(void)createPageControl
+{
+    _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(0,220, DEVICE_SCREEN_WIDTH, 20)];
+    _pageControl.backgroundColor = [UIColor grayColor];
+    [_pageControl setNumberOfPages:5];
+    [_pageControl setCurrentPage:0];
+    [_mScroll addSubview:_pageControl];
 }
 #pragma mark - UIButton
 -(void)btnAddRadar:(id)sender
@@ -149,13 +167,64 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell * collectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    static NSString *CellIdentifier =@"Cell";
+    SituationCollectionCell * collectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    collectionViewCell.Label.text=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
     CGFloat comps[3];
     for (int i = 0; i < 3; i++)
+    {
         comps[i] = (CGFloat)arc4random_uniform(256)/255.f;
+    }
     collectionViewCell.backgroundColor = [UIColor colorWithRed:comps[0] green:comps[1] blue:comps[2] alpha:1.0];
     return collectionViewCell;
+}
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(10, 36, 10, 36);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+    
+    return 10;
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate){
+        NSLog(@"Drag");
+        [self scrollToCell];
+    }
+    
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"Decelerat");
+    [self scrollToCell];
+
+}
+-(void)scrollToCell
+{
+    
+        NSInteger i = 0;
+        for (UICollectionViewCell *cell in [_mCollection visibleCells]) {
+            NSIndexPath *indexPath = [_mCollection indexPathForCell:cell];
+            i=indexPath.row;
+            
+            float width=_mCollection.contentSize.width;
+            
+            NSLog(@"row:%ld",(long)width);
+            
+            CGFloat off=((width-72)/2)+5;
+            NSLog(@"row:%f",off);
+
+            [_mCollection scrollRectToVisible:CGRectMake(off+125, 0, 320, 460) animated:YES];
+
+//            [_mCollection scrollRectToVisible:CGRectMake((i*320)+36, 0, 320, 460) animated:YES];
+
+        }
+    
+    
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
