@@ -207,14 +207,11 @@
     {
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         imageView.tag = TAG_STARVIEW_PIE_CENTER + i;
+        imageView.image = [UIImage imageNamed:@"star_fill_red.png"];
         if (i < (NSInteger)starNum) {
-            imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
+            imageView.alpha = 1.;
         } else {
-//            if (i < starNum) {
-//                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
-//            } else {
-                imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
-//            }
+            imageView.alpha = 0.5f;
         }
         [view addSubview:imageView];
         
@@ -248,14 +245,11 @@
     {
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
         imageView.tag = i;
+        imageView.image = [UIImage imageNamed:@"star_fill_white.png"];
         if (i < (NSInteger)starNum) {
-            imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
+            imageView.alpha = 1.;
         } else {
-//            if (i < starNum) {
-//                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
-//            } else {
-                imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
-//            }
+            imageView.alpha = 0.5f;
         }
         [view addSubview:imageView];
         
@@ -285,13 +279,9 @@
     {
         UIImageView* imageView = (UIImageView*)[view viewWithTag:i];
         if (i < (NSInteger)starNum) {
-            imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
+            imageView.alpha = 1.;
         } else {
-//            if (i < starNum) {
-//                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
-//            } else {
-                imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
-//            }
+            imageView.alpha = 0.5f;
         }
     }
     
@@ -304,13 +294,9 @@
     {
         UIImageView* imageView = (UIImageView*)[_pieCenterStarView viewWithTag:TAG_STARVIEW_PIE_CENTER + i];
         if (i < (NSInteger)starNum) {
-            imageView.image = [UIImage imageNamed:@"icon_star_full.png"];
+            imageView.alpha = 1.;
         } else {
-//            if (i < starNum) {
-//                imageView.image = [UIImage imageNamed:@"icon_star_half.png"];
-//            } else {
-                imageView.image = [UIImage imageNamed:@"icon_star_empty.png"];
-//            }
+            imageView.alpha = 0.5f;
         }
     }
 }

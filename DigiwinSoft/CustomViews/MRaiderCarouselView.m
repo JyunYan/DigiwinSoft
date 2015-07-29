@@ -68,6 +68,11 @@
     }
 }
 
+- (void)reloadCarouselView
+{
+    [_carousel reloadData];
+}
+
 #pragma mark - iCarouselDataSource 相關
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
@@ -89,7 +94,7 @@
     ciview.content = phen.subject;
     //ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
     //ciview.content = @"小批量接單沒好配套，呆滯急遽增加";
-//    ciview.content = @"現代的個人出版到各類紀念冊甚至是攝影集的製作，都可以進行少量且高品質的印刷，其印製的效率與品質也逐年進步。";
+    //ciview.content = @"現代的個人出版到各類紀念冊甚至是攝影集的製作，都可以進行少量且高品質的印刷，其印製的效率與品質也逐年進步。";
     
     ciview.onFacus = (index == carousel.currentItemIndex);
     [ciview setNeedsDisplay];
