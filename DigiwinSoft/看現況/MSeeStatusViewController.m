@@ -36,6 +36,18 @@
     [self createEfficacyViewController];
     [self createPieChartViewController];
     [self createIndustryInformationViewController];
+    
+    if (_customSegmentedControl.selectedSegmentIndex == 0) {
+        [self addChildViewController:_MEfficacyViewController];
+        [self.view addSubview:_MEfficacyViewController.view];
+    } else if (_customSegmentedControl.selectedSegmentIndex == 1) {
+        [self addChildViewController:_pieChartViewController];
+        [self.view addSubview:_pieChartViewController.view];
+    } else if (_customSegmentedControl.selectedSegmentIndex == 2) {
+        [self addChildViewController:_industryInformationViewController];
+        [self.view addSubview:_industryInformationViewController.view];
+    }
+    [self.view bringSubviewToFront:_customSegmentedControl];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -67,7 +79,6 @@
     _customSegmentedControl.tintColor=[UIColor clearColor];
     _customSegmentedControl.selectedSegmentIndex = 2;
     [self.view addSubview:_customSegmentedControl];
-
 }
 
 -(void)createEfficacyViewController
@@ -101,11 +112,6 @@
     CGFloat height = screenHeight - posY - navBarHeight + statusBarHeight - 5;
     
     _pieChartViewController = [[MStatusPieChartViewController alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    
-    [self addChildViewController:_pieChartViewController];
-    [self.view addSubview:_pieChartViewController.view];
-    
-    [self.view bringSubviewToFront:_customSegmentedControl];
 }
 
 -(void)createIndustryInformationViewController
@@ -141,22 +147,21 @@
             [self addChildViewController:_MEfficacyViewController];
             [self.view addSubview:_MEfficacyViewController.view];
 
-            
             [self.view bringSubviewToFront:_customSegmentedControl];
 
             break;
         }
         case 1:
         {
-            [_pieChartViewController removeFromParentViewController];
-            [_pieChartViewController.view removeFromSuperview];
-            
-            [self addChildViewController:_industryInformationViewController];
-            [self.view addSubview:_industryInformationViewController.view];
-        
             [_MEfficacyViewController removeFromParentViewController];
             [_MEfficacyViewController.view removeFromSuperview];
             
+            [_industryInformationViewController removeFromParentViewController];
+            [_industryInformationViewController.view removeFromSuperview];
+            
+            [self addChildViewController:_pieChartViewController];
+            [self.view addSubview:_pieChartViewController.view];
+
             [self.view bringSubviewToFront:_customSegmentedControl];
 
             break;
@@ -164,16 +169,15 @@
         
         case 2:
         {
-            
-            [_industryInformationViewController removeFromParentViewController];
-            [_industryInformationViewController.view removeFromSuperview];
-            
-            [self addChildViewController:_pieChartViewController];
-            [self.view addSubview:_pieChartViewController.view];
-            
             [_MEfficacyViewController removeFromParentViewController];
             [_MEfficacyViewController.view removeFromSuperview];
             
+            [_pieChartViewController removeFromParentViewController];
+            [_pieChartViewController.view removeFromSuperview];
+            
+            [self addChildViewController:_industryInformationViewController];
+            [self.view addSubview:_industryInformationViewController.view];
+
             [self.view bringSubviewToFront:_customSegmentedControl];
 
             break;
