@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MMonitorData.h"
+#import "MConfig.h"
 
 @interface MMonitorDetailViewController : UIViewController
+
+- (id)initWithMonitorData:(MMonitorData*)data;
 
 @end

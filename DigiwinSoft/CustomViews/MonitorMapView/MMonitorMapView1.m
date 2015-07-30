@@ -19,7 +19,6 @@
 @property (nonatomic, strong) MCustomSegmentedControl* segmentedControl;
 
 @property (nonatomic, strong) NSMutableArray* filterArray;
-@property (nonatomic, strong) NSMutableArray* issueGroup;
 
 @end
 
@@ -61,7 +60,7 @@
     posY += topView.frame.size.height + 10.;
     
     // 進行中&已完成
-    _segmentedControl = [self createSegmentedView:CGRectMake(0, posY, width, 35.)];
+    _segmentedControl = [self createSegmentedView:CGRectMake(0, posY, width, 40.)];
     [self addSubview:_segmentedControl];
     
     posY += _segmentedControl.frame.size.height;
@@ -72,11 +71,9 @@
 
 - (UIView*)createTopView:(CGRect) rect
 {
-    MMonitorData* data = [_filterArray objectAtIndex:0];
-    
     MMonitorMeterView1* view = [[MMonitorMeterView1 alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor whiteColor];
-    view.issueGroup = data.issueArray;
+    view.issueGroup = _issueGroup;
 
     return view;
 }
@@ -142,7 +139,7 @@
     CGFloat posX = width*0.05;
     
     UIView* header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 30.)];
-    header.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
+    header.backgroundColor = [[MDirector sharedInstance] getCustomLightestGrayColor];
     
     // 對策
     UILabel* cloumn1 = [self createLabelWithFrame:CGRectMake(posX, 0, width*0.45, 30.) text:@"對策"];
@@ -172,7 +169,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    return HeightForMonitorTableCell1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -191,6 +188,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(tableView:didSelectedWithMonitorData:)]){
+        MMonitorData* data = [_filterArray objectAtIndex:indexPath.row];
+        [_delegate tableView:tableView didSelectedWithMonitorData:data];
+    }
 }
 
 #pragma mark - methods
@@ -214,16 +217,6 @@
             [_filterArray addObject:data];
         if(index == 1 && completion == 100) //已完成
             [_filterArray addObject:data];
-    }
-}
-
-- (void)filterIssueGroup
-{
-    [_issueGroup removeAllObjects];
-    
-    for(MMonitorData* data in _dataArray) {
-        
-        
     }
 }
 

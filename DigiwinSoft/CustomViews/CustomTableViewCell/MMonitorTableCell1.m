@@ -8,6 +8,8 @@
 
 #import "MMonitorTableCell1.h"
 #import "MDirector.h"
+#import "MCustActivity.h"
+#import "MCustWorkItem.h"
 
 
 @interface MMonitorTableCell1 ()
@@ -107,10 +109,16 @@
 
 - (void)prepare
 {
-    _title1.text = _data.guide.name;
+    CGSize size = [self calculateSizeWithText:_data.guide.custTaregt.name];
+    _title2.frame = CGRectMake(_title2.frame.origin.x, _title2.frame.origin.y, size.width, 20);
     _title2.text = _data.guide.custTaregt.name;
-    _title3.text = _data.guide.manager.name;
+    
+    _title4.textColor = ([self isDelay]) ? [UIColor redColor] : [[MDirector sharedInstance] getForestGreenColor];
     _title4.text = [NSString stringWithFormat:@"%d%%", (int)_data.completion];
+    
+    _title1.text = _data.guide.name;
+    _title3.text = _data.guide.manager.name;
+    
     
     NSString* trend = _data.guide.custTaregt.trend;
     if([trend isEqualToString:@"1"])
@@ -118,8 +126,6 @@
     else
         _imageView1.image = [UIImage imageNamed:@"icon_arrow_green"];
     
-    CGSize size = [self calculateSizeWithText:_title2.text];
-    _title2.frame = CGRectMake(_title2.frame.origin.x, _title2.frame.origin.y, size.width, 20);
     _imageView1.frame = CGRectMake(_title2.frame.origin.x + _title2.frame.size.width,
                                    _imageView1.frame.origin.y,
                                    _imageView1.frame.size.width,
@@ -137,5 +143,26 @@
                                      context:nil].size;
     return size;
 }
+
+//是否delay
+- (BOOL)isDelay
+{
+    for (MCustActivity* act in _data.guide.activityArray) {
+        for (MCustWorkItem* item in act.workItemArray) {
+            
+            NSDateFormatter* fm = [NSDateFormatter new];
+            fm.dateFormat = @"yyyy-MM-dd";
+            NSDate* date = [fm dateFromString:item.custTarget.completeDate];
+            
+            NSTimeInterval between = [date timeIntervalSinceNow];
+            
+            if(between < 0){
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
 
 @end

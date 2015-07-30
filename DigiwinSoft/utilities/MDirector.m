@@ -69,6 +69,11 @@ static MDirector* _director = nil;
     return [UIColor colorWithRed:190.0f/255.0f green:190.0f/255.0f blue:190.0f/255.0f alpha:1.0f];
 }
 
+- (UIColor *)getCustomLightestGrayColor
+{
+    return [UIColor colorWithRed:238.0f/255.0f green:238.0f/255.0f blue:238.0f/255.0f alpha:1.0f];
+}
+
 - (UIColor *)getCustomBlueColor
 {
     return [UIColor colorWithRed:68.0f/255.0f green:166.0f/255.0f blue:193.0f/255.0f alpha:1.0f];

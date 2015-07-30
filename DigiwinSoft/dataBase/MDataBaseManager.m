@@ -9,6 +9,7 @@
 #import "MDataBaseManager.h"
 #import "MDirector.h"
 #import "MMonitorData.h"
+#import "MIssType.h"
 
 @implementation MDataBaseManager
 
@@ -1136,9 +1137,36 @@ static MDataBaseManager* _director = nil;
         issue.gainR = [rs stringForColumn:@"R_GAIN"];
         issue.gainP = [rs stringForColumn:@"P_GAIN"];
         
+        NSArray* types = [self loadIssueTypeArrayWithIssUUid:issue.uuid];
+        issue.issTypeArray = types;
+        
         [array addObject:issue];
     }
     
+    return array;
+}
+
+- (NSArray*)loadIssueTypeArrayWithIssUUid:(NSString*)uuid
+{
+    NSString* sql = @"select * from R_ISS_TYPE as rit inner join M_ISS_TYPE as mit on mit.ID = rit.TYPE_ID where rit.ISS_ID = ?";
+    //select *
+    //from R_ISS_TYPE as rit
+    //inner join M_ISS_TYPE as mit on mit.ID = rit.TYPE_ID
+    //where rit.ISS_ID = 'iss-001'
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, uuid];
+    while ([rs next]) {
+        
+        MIssType* isstype = [MIssType new];
+        isstype.uuid = [rs stringForColumn:@"ID"];
+        isstype.name = [rs stringForColumn:@"NAME"];
+        isstype.gainR = [rs stringForColumn:@"R_GAIN"];
+        isstype.gainP = [rs stringForColumn:@"P_GAIN"];
+        
+        [array addObject:isstype];
+    }
     return array;
 }
 

@@ -75,6 +75,7 @@
 #pragma mark - 監控地圖
 - (NSArray*)loadMonitorGuideData;
 - (NSArray*)loadMonitorIssueWithGudieID:(NSString*)guideid;
+- (NSArray*)loadIssueTypeArrayWithIssUUid:(NSString*)uuid;
 
 #pragma mark - 我的規劃/我的攻略
 // get 我的規劃/我的攻略

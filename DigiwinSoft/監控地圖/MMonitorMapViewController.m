@@ -15,6 +15,8 @@
 #import "MCustomSegmentedControl.h"
 
 #import "MMonitorMapView1.h"
+#import "MMonitormapView2.h"
+#import "MMonitorData.h"
 
 
 #define TAG_LIST_TABEL_CELLVIEW 200
@@ -27,21 +29,13 @@
 #define TAG_LIST_TABEL_IMAGEVIEW_ARROW 205
 
 
-@interface MMonitorMapViewController ()<UITableViewDelegate, UITableViewDataSource, UIPageViewControllerDataSource, MMonitorPageContentViewDelegate>
-
-@property (nonatomic, strong) UIView* listView;
-
-@property (nonatomic, strong) UITableView* listTableView;
-
-@property (nonatomic, strong) NSMutableArray* pageContentViewArray;
-@property (nonatomic, strong) UIPageViewController *pageViewController;
-@property (nonatomic ,strong) UIPageControl* pageControl;
-
-@property (nonatomic, assign) int pageIndex;
-
-@property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
+@interface MMonitorMapViewController ()<MMonitorMapView1Detegate, MMonitorMapView2Detegate>
 
 @property (nonatomic, strong) NSArray* dataArray;
+@property (nonatomic, strong) NSMutableArray* issueGroup;
+@property (nonatomic, strong) MMonitorMapView1* monMapView1;
+@property (nonatomic, strong) MMonitorMapView2* monMapView2;
+@property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
 
 @end
 
@@ -50,9 +44,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _pageContentViewArray = [[NSMutableArray alloc] init];
-        
-        _pageIndex = 0;
+        _issueGroup = [NSMutableArray new];
     }
     return self;
 }
@@ -63,6 +55,7 @@
     
     _dataArray = [[MDataBaseManager sharedInstance] loadMonitorGuideData];
     
+    [self prepareIssueGroup];
     [self addMainMenu];
 }
 
@@ -94,9 +87,33 @@
     [segment addTarget:self action:@selector(actionSegmented:) forControlEvents:UIControlEventValueChanged];
     self.navigationItem.titleView = segment;
     
-    MMonitorMapView1* view1 = [[MMonitorMapView1 alloc] initWithFrame:CGRectMake(0, 64., DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 49-64)];
-    [view1 setDataArray:_dataArray];
-    [self.view addSubview:view1];
+    [self bringMonitorMapView1ToFront];
+}
+
+- (void)bringMonitorMapView1ToFront
+{
+    if(!_monMapView1){
+        _monMapView1 = [[MMonitorMapView1 alloc] initWithFrame:CGRectMake(0, 64., DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 49-64)];
+        _monMapView1.delegate = self;
+        [_monMapView1 setDataArray:_dataArray];
+        [_monMapView1 setIssueGroup:_issueGroup];
+        [self.view addSubview:_monMapView1];
+    }else{
+        [self.view bringSubviewToFront:_monMapView1];
+    }
+}
+
+- (void)bringMonitorMapView2ToFront
+{
+    if(!_monMapView2){
+        _monMapView2 = [[MMonitorMapView2 alloc] initWithFrame:CGRectMake(0, 64., DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 49-64)];
+        _monMapView2.delegate = self;
+        [_monMapView2 setDataArray:_dataArray];
+        [_monMapView2 setIssueGroup:_issueGroup];
+        [self.view addSubview:_monMapView2];
+    }else{
+        [self.view bringSubviewToFront:_monMapView2];
+    }
 }
 
 #pragma mark - UIButton
@@ -109,27 +126,46 @@
 
 #pragma mark - UISegmentedControl
 
-- (void)actionSegmented:(id)sender{
-    switch ([sender selectedSegmentIndex]) {
-        case 0:
-            [self.view bringSubviewToFront:_listView];
-            break;
-        case 1:
-            [self.view bringSubviewToFront:_pageControl];
-            [self.view bringSubviewToFront:_pageViewController.view];
-            break;
-        default:
-            NSLog(@"Error");
-            break;
+- (void)actionSegmented:(id)sender
+{
+    MCustomSegmentedControl* segment = (MCustomSegmentedControl*)sender;
+    NSInteger index = segment.selectedSegmentIndex;
+    if(index == 0)
+        [self bringMonitorMapView1ToFront];
+    else if(index == 1)
+        [self bringMonitorMapView2ToFront];
+}
+
+#pragma mark - MMonitorMapView1Detegate, MMonitorMapView2Detegate
+
+- (void)tableView:(UITableView *)tableView didSelectedWithMonitorData:(MMonitorData *)data
+{
+    MMonitorDetailViewController* vc = [[MMonitorDetailViewController alloc] initWithMonitorData:data];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - other methods
+
+- (void)prepareIssueGroup
+{
+    [_issueGroup removeAllObjects];
+    
+    for (MMonitorData* data in _dataArray) {
+        for (MIssue* issue in data.issueArray) {
+            BOOL b = [self existInArray:issue];
+            if(!b)
+                [_issueGroup addObject:issue];
+        }
     }
 }
 
-#pragma mark - MMonitorPageContentView delegate
-
-- (void)goDetailViewController
+- (BOOL)existInArray:(MIssue*)issue
 {
-    MMonitorDetailViewController* vc = [[MMonitorDetailViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    for (MIssue* iss in _issueGroup) {
+        if([iss.uuid isEqualToString:issue.uuid])
+            return YES;
+    }
+    return NO;
 }
 
 @end
