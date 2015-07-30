@@ -45,6 +45,9 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectedPhen:) name:kDidSelectedPhen object:nil];
+    
+    
+    [_rcView reloadCarouselView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

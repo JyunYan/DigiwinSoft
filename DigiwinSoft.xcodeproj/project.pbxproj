@@ -23,6 +23,7 @@
 		38F3BF8C1B58CF94007BBC30 /* MGanttViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F3BF8B1B58CF94007BBC30 /* MGanttViewController.m */; };
 		38FD52F21B54BF7100AC03F4 /* RPRadarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FD52F11B54BF7100AC03F4 /* RPRadarChart.m */; };
 		38FD52F81B54C2F600AC03F4 /* MRadarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FD52F71B54C2F600AC03F4 /* MRadarChartView.m */; };
+		38FDC57E1B68D1EE00FEA8FA /* SituationCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FDC57D1B68D1EE00FEA8FA /* SituationCollectionCell.m */; };
 		3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03AA111B3B9B1900923ABB /* MEventSelectViewController.m */; };
 		3A03AA1B1B3BD5CA00923ABB /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A03AA141B3BD5CA00923ABB /* downArrow.png */; };
 		3A03AA1C1B3BD5CA00923ABB /* downArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A03AA151B3BD5CA00923ABB /* downArrow@2x.png */; };
@@ -270,6 +271,8 @@
 		38FD52F11B54BF7100AC03F4 /* RPRadarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPRadarChart.m; sourceTree = "<group>"; };
 		38FD52F61B54C2F600AC03F4 /* MRadarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRadarChartView.h; path = CustomViews/MRadarChartView.h; sourceTree = "<group>"; };
 		38FD52F71B54C2F600AC03F4 /* MRadarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRadarChartView.m; path = CustomViews/MRadarChartView.m; sourceTree = "<group>"; };
+		38FDC57C1B68D1EE00FEA8FA /* SituationCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SituationCollectionCell.h; path = CustomViews/CustomTableViewCell/SituationCollectionCell.h; sourceTree = "<group>"; };
+		38FDC57D1B68D1EE00FEA8FA /* SituationCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SituationCollectionCell.m; path = CustomViews/CustomTableViewCell/SituationCollectionCell.m; sourceTree = "<group>"; };
 		3A03AA101B3B9B1900923ABB /* MEventSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEventSelectViewController.h; sourceTree = "<group>"; };
 		3A03AA111B3B9B1900923ABB /* MEventSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEventSelectViewController.m; sourceTree = "<group>"; };
 		3A03AA141B3BD5CA00923ABB /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downArrow.png; sourceTree = "<group>"; };
@@ -830,6 +833,10 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				DCE951971B668FBB00E3C059 /* icon_arrow_green.png */,
+				DCE951981B668FBB00E3C059 /* icon_arrow_red.png */,
+				3AF1DD001B608B07006ADBBD /* icon_arrow_left.png */,
+				3AF1DD011B608B07006ADBBD /* icon_arrow_right.png */,
 				DCF46AD11B42AAF300C771BB /* bg_industry_raider.jpg */,
 				DCF46AD21B42AAF300C771BB /* bg_status.png */,
 				DCF46AD31B42AAF300C771BB /* button_search.png */,
@@ -1146,6 +1153,8 @@
 		DCE9517C1B60E5FF00E3C059 /* CustomTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				38FDC57C1B68D1EE00FEA8FA /* SituationCollectionCell.h */,
+				38FDC57D1B68D1EE00FEA8FA /* SituationCollectionCell.m */,
 				DCE9517D1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.h */,
 				DCE9517E1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m */,
 				DCE9518F1B60E72900E3C059 /* MMissionTableCell.h */,
@@ -1439,6 +1448,7 @@
 				D06C2D411B381850009D2082 /* FMDatabase.m in Sources */,
 				DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */,
 				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
+				38FDC57E1B68D1EE00FEA8FA /* SituationCollectionCell.m in Sources */,
 				DC58777F1B5DECA600D5AC5D /* MDashedLine.m in Sources */,
 				DCF46B211B43A34F00C771BB /* MCustGuide.m in Sources */,
 				3A0542F21B5F9D8E00EC7878 /* MLineChartView2.m in Sources */,
