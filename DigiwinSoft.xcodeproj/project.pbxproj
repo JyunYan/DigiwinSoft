@@ -12,10 +12,7 @@
 		382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982C1B3982BE0045B3BD /* MRaidersDescriptionViewController.m */; };
 		382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */; };
 		383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F831B4BD9CD00472513 /* MReportViewController.m */; };
-
-		383E2F871B4BF32800472513 /* MReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 383E2F861B4BF32800472513 /* MReportTableViewCell.m */; };
 		38CCC4941B6767EA00CF9731 /* MEfficacyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CCC4931B6767EA00CF9731 /* MEfficacyViewController.m */; };
-
 		38DCDD8D1B4E18B2008B57A2 /* RVCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */; };
 		38DCDD8E1B4E18B2008B57A2 /* RVCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD8C1B4E18B2008B57A2 /* RVCollectionViewLayout.m */; };
 		38DCDD911B4E199F008B57A2 /* MRouletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DCDD901B4E199F008B57A2 /* MRouletteViewController.m */; };
@@ -172,6 +169,12 @@
 		DCE951B81B6890BE00E3C059 /* star_fill_red.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE951B61B6890BE00E3C059 /* star_fill_red.png */; };
 		DCE951B91B6890BE00E3C059 /* star_fill_white.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE951B71B6890BE00E3C059 /* star_fill_white.png */; };
 		DCE951BB1B68916000E3C059 /* icon_menu_5_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = DCE951BA1B68916000E3C059 /* icon_menu_5_blue.png */; };
+		DCE951BE1B68CF0600E3C059 /* MMonitorMapView2.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951BD1B68CF0600E3C059 /* MMonitorMapView2.m */; };
+		DCE951C11B69473600E3C059 /* MMonitorMeterView2.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951C01B69473600E3C059 /* MMonitorMeterView2.m */; };
+		DCE951C41B6947EF00E3C059 /* MMeterView2.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951C31B6947EF00E3C059 /* MMeterView2.m */; };
+		DCE951C71B69493500E3C059 /* MIssType.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951C61B69493500E3C059 /* MIssType.m */; };
+		DCE951CA1B69C9F000E3C059 /* MMonitorTableCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951C91B69C9F000E3C059 /* MMonitorTableCell2.m */; };
+		DCE951CD1B69DE2300E3C059 /* MMonitorMeterView3.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951CC1B69DE2300E3C059 /* MMonitorMeterView3.m */; };
 		DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AA81B40E04A00C771BB /* MEvent.m */; };
 		DCF46AAC1B41103700C771BB /* MSituation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAB1B41103700C771BB /* MSituation.m */; };
 		DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAE1B4116F000C771BB /* MTreasure.m */; };
@@ -248,11 +251,8 @@
 		3829982E1B3982BE0045B3BD /* MRaidersDiagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRaidersDiagramViewController.m; sourceTree = "<group>"; };
 		383E2F821B4BD9CD00472513 /* MReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MReportViewController.h; sourceTree = "<group>"; };
 		383E2F831B4BD9CD00472513 /* MReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MReportViewController.m; sourceTree = "<group>"; };
-		383E2F851B4BF32800472513 /* MReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MReportTableViewCell.h; path = structure/MReportTableViewCell.h; sourceTree = "<group>"; };
-		383E2F861B4BF32800472513 /* MReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MReportTableViewCell.m; path = structure/MReportTableViewCell.m; sourceTree = "<group>"; };
 		38CCC4921B6767EA00CF9731 /* MEfficacyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEfficacyViewController.h; sourceTree = "<group>"; };
 		38CCC4931B6767EA00CF9731 /* MEfficacyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEfficacyViewController.m; sourceTree = "<group>"; };
-
 		38DCDD891B4E18B2008B57A2 /* RVCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewCell.h; sourceTree = "<group>"; };
 		38DCDD8A1B4E18B2008B57A2 /* RVCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RVCollectionViewCell.m; sourceTree = "<group>"; };
 		38DCDD8B1B4E18B2008B57A2 /* RVCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RVCollectionViewLayout.h; sourceTree = "<group>"; };
@@ -517,6 +517,18 @@
 		DCE951B61B6890BE00E3C059 /* star_fill_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_fill_red.png; sourceTree = "<group>"; };
 		DCE951B71B6890BE00E3C059 /* star_fill_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_fill_white.png; sourceTree = "<group>"; };
 		DCE951BA1B68916000E3C059 /* icon_menu_5_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu_5_blue.png; sourceTree = "<group>"; };
+		DCE951BC1B68CF0600E3C059 /* MMonitorMapView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorMapView2.h; path = CustomViews/MonitorMapView/MMonitorMapView2.h; sourceTree = "<group>"; };
+		DCE951BD1B68CF0600E3C059 /* MMonitorMapView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorMapView2.m; path = CustomViews/MonitorMapView/MMonitorMapView2.m; sourceTree = "<group>"; };
+		DCE951BF1B69473600E3C059 /* MMonitorMeterView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorMeterView2.h; path = CustomViews/MonitorMapView/MMonitorMeterView2.h; sourceTree = "<group>"; };
+		DCE951C01B69473600E3C059 /* MMonitorMeterView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorMeterView2.m; path = CustomViews/MonitorMapView/MMonitorMeterView2.m; sourceTree = "<group>"; };
+		DCE951C21B6947EF00E3C059 /* MMeterView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMeterView2.h; path = CustomViews/MonitorMapView/MMeterView2.h; sourceTree = "<group>"; };
+		DCE951C31B6947EF00E3C059 /* MMeterView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMeterView2.m; path = CustomViews/MonitorMapView/MMeterView2.m; sourceTree = "<group>"; };
+		DCE951C51B69493500E3C059 /* MIssType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MIssType.h; path = structure/MIssType.h; sourceTree = "<group>"; };
+		DCE951C61B69493500E3C059 /* MIssType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIssType.m; path = structure/MIssType.m; sourceTree = "<group>"; };
+		DCE951C81B69C9F000E3C059 /* MMonitorTableCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorTableCell2.h; path = CustomViews/CustomTableViewCell/MMonitorTableCell2.h; sourceTree = "<group>"; };
+		DCE951C91B69C9F000E3C059 /* MMonitorTableCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorTableCell2.m; path = CustomViews/CustomTableViewCell/MMonitorTableCell2.m; sourceTree = "<group>"; };
+		DCE951CB1B69DE2300E3C059 /* MMonitorMeterView3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorMeterView3.h; path = CustomViews/MonitorMapView/MMonitorMeterView3.h; sourceTree = "<group>"; };
+		DCE951CC1B69DE2300E3C059 /* MMonitorMeterView3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorMeterView3.m; path = CustomViews/MonitorMapView/MMonitorMeterView3.m; sourceTree = "<group>"; };
 		DCF46AA71B40E04A00C771BB /* MEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEvent.h; path = structure/MEvent.h; sourceTree = "<group>"; };
 		DCF46AA81B40E04A00C771BB /* MEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEvent.m; path = structure/MEvent.m; sourceTree = "<group>"; };
 		DCF46AAA1B41103700C771BB /* MSituation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSituation.h; path = structure/MSituation.h; sourceTree = "<group>"; };
@@ -1035,46 +1047,48 @@
 		DC1014481B3287D000EF7A6F /* structure */ = {
 			isa = PBXGroup;
 			children = (
-				DC1014491B32985600EF7A6F /* MUser.h */,
-				DC10144A1B32985600EF7A6F /* MUser.m */,
-				DC10144C1B32B66200EF7A6F /* MGuide.h */,
-				DC10144D1B32B66200EF7A6F /* MGuide.m */,
 				DC10144F1B32B67F00EF7A6F /* MActivity.h */,
 				DC1014501B32B67F00EF7A6F /* MActivity.m */,
-				DC1014521B32B69F00EF7A6F /* MWorkItem.h */,
-				DC1014531B32B69F00EF7A6F /* MWorkItem.m */,
-				DCF46AA71B40E04A00C771BB /* MEvent.h */,
-				DCF46AA81B40E04A00C771BB /* MEvent.m */,
-				DCF46AAA1B41103700C771BB /* MSituation.h */,
-				DCF46AAB1B41103700C771BB /* MSituation.m */,
-				DCF46AAD1B4116F000C771BB /* MTreasure.h */,
-				DCF46AAE1B4116F000C771BB /* MTreasure.m */,
-				DCF46ABF1B418E6B00C771BB /* MPhenomenon.h */,
-				DCF46AC01B418E6B00C771BB /* MPhenomenon.m */,
-				DCF46ACB1B4236CB00C771BB /* MTarget.h */,
-				DCF46ACC1B4236CB00C771BB /* MTarget.m */,
-				DCF46ACE1B428F1400C771BB /* MIssue.h */,
-				DCF46ACF1B428F1400C771BB /* MIssue.m */,
+				DC3DF9D61B4E46C00065DF5D /* MCoordinate.h */,
+				DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */,
+				DCF46B251B454A0800C771BB /* MCustActivity.h */,
+				DCF46B261B454A0800C771BB /* MCustActivity.m */,
 				DCF46B1F1B43A34F00C771BB /* MCustGuide.h */,
 				DCF46B201B43A34F00C771BB /* MCustGuide.m */,
 				DCF46B221B43C2F400C771BB /* MCustTarget.h */,
 				DCF46B231B43C2F400C771BB /* MCustTarget.m */,
-				DCF46B251B454A0800C771BB /* MCustActivity.h */,
-				DCF46B261B454A0800C771BB /* MCustActivity.m */,
 				DCF46B281B454FA800C771BB /* MCustWorkItem.h */,
 				DCF46B291B454FA800C771BB /* MCustWorkItem.m */,
-				DCF46B2B1B462D5A00C771BB /* MSkill.h */,
-				DCF46B2C1B462D5A00C771BB /* MSkill.m */,
-				DC3DF9D61B4E46C00065DF5D /* MCoordinate.h */,
-				DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */,
+				DCF46AA71B40E04A00C771BB /* MEvent.h */,
+				DCF46AA81B40E04A00C771BB /* MEvent.m */,
 				DCB3FDED1B55F67B00ED5BFA /* MFlowChartPoint.h */,
 				DCB3FDEE1B55F67B00ED5BFA /* MFlowChartPoint.m */,
 				DC5877861B5DFE3700D5AC5D /* MFlowChartPoint2.h */,
 				DC5877871B5DFE3700D5AC5D /* MFlowChartPoint2.m */,
-				3A5374021B535EEB002C2836 /* MReport.h */,
-				3A5374031B535EEB002C2836 /* MReport.m */,
+				DC10144C1B32B66200EF7A6F /* MGuide.h */,
+				DC10144D1B32B66200EF7A6F /* MGuide.m */,
+				DCE951C51B69493500E3C059 /* MIssType.h */,
+				DCE951C61B69493500E3C059 /* MIssType.m */,
+				DCF46ACE1B428F1400C771BB /* MIssue.h */,
+				DCF46ACF1B428F1400C771BB /* MIssue.m */,
 				DCE9519F1B66B5E600E3C059 /* MMonitorData.h */,
 				DCE951A01B66B5E600E3C059 /* MMonitorData.m */,
+				DCF46ABF1B418E6B00C771BB /* MPhenomenon.h */,
+				DCF46AC01B418E6B00C771BB /* MPhenomenon.m */,
+				3A5374021B535EEB002C2836 /* MReport.h */,
+				3A5374031B535EEB002C2836 /* MReport.m */,
+				DCF46AAA1B41103700C771BB /* MSituation.h */,
+				DCF46AAB1B41103700C771BB /* MSituation.m */,
+				DCF46B2B1B462D5A00C771BB /* MSkill.h */,
+				DCF46B2C1B462D5A00C771BB /* MSkill.m */,
+				DCF46ACB1B4236CB00C771BB /* MTarget.h */,
+				DCF46ACC1B4236CB00C771BB /* MTarget.m */,
+				DCF46AAD1B4116F000C771BB /* MTreasure.h */,
+				DCF46AAE1B4116F000C771BB /* MTreasure.m */,
+				DC1014491B32985600EF7A6F /* MUser.h */,
+				DC10144A1B32985600EF7A6F /* MUser.m */,
+				DC1014521B32B69F00EF7A6F /* MWorkItem.h */,
+				DC1014531B32B69F00EF7A6F /* MWorkItem.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -1134,22 +1148,24 @@
 			children = (
 				DCE9517D1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.h */,
 				DCE9517E1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m */,
+				DCE9518F1B60E72900E3C059 /* MMissionTableCell.h */,
+				DCE951901B60E72900E3C059 /* MMissionTableCell.m */,
+				DCE951A81B66C6E200E3C059 /* MMonitorTableCell1.h */,
+				DCE951A91B66C6E200E3C059 /* MMonitorTableCell1.m */,
+				DCE951C81B69C9F000E3C059 /* MMonitorTableCell2.h */,
+				DCE951C91B69C9F000E3C059 /* MMonitorTableCell2.m */,
 				DCE9517F1B60E6AC00E3C059 /* MMyPlanTableViewCell.h */,
 				DCE951801B60E6AC00E3C059 /* MMyPlanTableViewCell.m */,
 				DCE951811B60E6AC00E3C059 /* MRaidersDescriptionTableViewCell.h */,
 				DCE951821B60E6AC00E3C059 /* MRaidersDescriptionTableViewCell.m */,
 				DCE951831B60E6AC00E3C059 /* MRaidersTableCell.h */,
 				DCE951841B60E6AC00E3C059 /* MRaidersTableCell.m */,
+				DCE951921B612FA500E3C059 /* MReportEditTableCell.h */,
+				DCE951931B612FA500E3C059 /* MReportEditTableCell.m */,
 				DCE951851B60E6AC00E3C059 /* MReportTableViewCell.h */,
 				DCE951861B60E6AC00E3C059 /* MReportTableViewCell.m */,
 				DCE951871B60E6AC00E3C059 /* MSettingTableViewCell.h */,
 				DCE951881B60E6AC00E3C059 /* MSettingTableViewCell.m */,
-				DCE9518F1B60E72900E3C059 /* MMissionTableCell.h */,
-				DCE951901B60E72900E3C059 /* MMissionTableCell.m */,
-				DCE951921B612FA500E3C059 /* MReportEditTableCell.h */,
-				DCE951931B612FA500E3C059 /* MReportEditTableCell.m */,
-				DCE951A81B66C6E200E3C059 /* MMonitorTableCell1.h */,
-				DCE951A91B66C6E200E3C059 /* MMonitorTableCell1.m */,
 			);
 			name = CustomTableViewCell;
 			sourceTree = "<group>";
@@ -1159,10 +1175,18 @@
 			children = (
 				DCE951A51B66C3F000E3C059 /* MMonitorMapView1.h */,
 				DCE951A61B66C3F000E3C059 /* MMonitorMapView1.m */,
-				DCE951AB1B66E03C00E3C059 /* MMeterView.h */,
-				DCE951AC1B66E03C00E3C059 /* MMeterView.m */,
+				DCE951BC1B68CF0600E3C059 /* MMonitorMapView2.h */,
+				DCE951BD1B68CF0600E3C059 /* MMonitorMapView2.m */,
 				DCE951AE1B67171800E3C059 /* MMonitorMeterView1.h */,
 				DCE951AF1B67171800E3C059 /* MMonitorMeterView1.m */,
+				DCE951BF1B69473600E3C059 /* MMonitorMeterView2.h */,
+				DCE951C01B69473600E3C059 /* MMonitorMeterView2.m */,
+				DCE951CB1B69DE2300E3C059 /* MMonitorMeterView3.h */,
+				DCE951CC1B69DE2300E3C059 /* MMonitorMeterView3.m */,
+				DCE951AB1B66E03C00E3C059 /* MMeterView.h */,
+				DCE951AC1B66E03C00E3C059 /* MMeterView.m */,
+				DCE951C21B6947EF00E3C059 /* MMeterView2.h */,
+				DCE951C31B6947EF00E3C059 /* MMeterView2.m */,
 				DCE951B11B6884C900E3C059 /* MDashLine2.h */,
 				DCE951B21B6884C900E3C059 /* MDashLine2.m */,
 			);
@@ -1404,6 +1428,7 @@
 				DCE951AA1B66C6E200E3C059 /* MMonitorTableCell1.m in Sources */,
 				D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */,
 				3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */,
+				DCE951CA1B69C9F000E3C059 /* MMonitorTableCell2.m in Sources */,
 				3A81B9481B4CDAB600EAF996 /* MGoalSettingViewController.m in Sources */,
 				DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */,
 				DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */,
@@ -1454,9 +1479,11 @@
 				38F3BF8C1B58CF94007BBC30 /* MGanttViewController.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
 				DCE9518A1B60E6AC00E3C059 /* MMyPlanTableViewCell.m in Sources */,
+				DCE951C11B69473600E3C059 /* MMonitorMeterView2.m in Sources */,
 				38DCDD8D1B4E18B2008B57A2 /* RVCollectionViewCell.m in Sources */,
 				DCF46B241B43C2F400C771BB /* MCustTarget.m in Sources */,
 				DC58779B1B5E7F2B00D5AC5D /* MGanttTableViewCell.m in Sources */,
+				DCE951CD1B69DE2300E3C059 /* MMonitorMeterView3.m in Sources */,
 				DC3DF9D21B4E17C90065DF5D /* MTarMeterView.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				3A5E41FC1B65DDEB00799084 /* MLabelPieChartViewController.m in Sources */,
@@ -1466,6 +1493,7 @@
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
 				38FD52F81B54C2F600AC03F4 /* MRadarChartView.m in Sources */,
 				DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */,
+				DCE951C71B69493500E3C059 /* MIssType.m in Sources */,
 				DCE951B01B67171800E3C059 /* MMonitorMeterView1.m in Sources */,
 				DCB3FDEF1B55F67B00ED5BFA /* MFlowChartPoint.m in Sources */,
 				DC3DF9DE1B4ED13E0065DF5D /* MConcentricCircles.m in Sources */,
@@ -1487,6 +1515,7 @@
 				DC0ADF5E1B316E340019236D /* main.m in Sources */,
 				DCF46AB51B41265800C771BB /* MRaiderCarouselView.m in Sources */,
 				3A711B931B3800C100E94211 /* SWUtilityButtonView.m in Sources */,
+				DCE951BE1B68CF0600E3C059 /* MMonitorMapView2.m in Sources */,
 				3A5374071B538E88002C2836 /* MCustomSegmentedControl.m in Sources */,
 				DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */,
 				D06C2D451B381850009D2082 /* FMResultSet.m in Sources */,
@@ -1521,6 +1550,7 @@
 				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
 				DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */,
 				3A0542F51B5FA00C00EC7878 /* MTarChartView2.m in Sources */,
+				DCE951C41B6947EF00E3C059 /* MMeterView2.m in Sources */,
 				DCB3FDF91B5A375900ED5BFA /* MRadioGroupView.m in Sources */,
 				3A0542EC1B5F58F400EC7878 /* MStatusLineChartViewController.m in Sources */,
 				3AB4CE1A1B32848B00143374 /* MMyTaskViewController.m in Sources */,

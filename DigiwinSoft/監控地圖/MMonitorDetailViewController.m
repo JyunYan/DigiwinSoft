@@ -25,15 +25,17 @@
 @interface MMonitorDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView* tableView;
+@property (nonatomic, strong) MMonitorData* data;
 
 @end
 
 @implementation MMonitorDetailViewController
 
-- (id)init {
+- (id)initWithMonitorData:(MMonitorData*)data
+{
     self = [super init];
     if (self) {
-        
+        _data = data;
     }
     return self;
 }
@@ -42,38 +44,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
+    self.title = _data.guide.name;
     
-    self.title = @"對策";
-    
+    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
     
     [self addMainMenu];
-    
-    
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    
-    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    CGFloat screenWidth = screenFrame.size.width;
-    CGFloat screenHeight = screenFrame.size.height;
-    
-    
-    CGFloat posX = 0;
-    CGFloat posY = statusBarHeight + navBarHeight;
-    CGFloat width = screenWidth;
-    CGFloat height = 130;
-    
-    UIView* topView = [self createTopView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:topView];
-    
-    
-    posX = 0;
-    posY = topView.frame.origin.y + topView.frame.size.height;
-    width = screenWidth;
-    height = screenHeight - posY - navBarHeight + statusBarHeight - 5;
-    
-    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:listView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,133 +62,126 @@
 
 -(void) addMainMenu
 {
-    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
-    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
+    CGFloat posY = 64.;
+    
+    UIView* topView = [self createTopView:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, 100.)];
+    [self.view addSubview:topView];
+    
+    posY += topView.frame.size.height + 10.;
+    
+    _tableView = [self createListView:CGRectMake(10, posY, DEVICE_SCREEN_WIDTH - 20, DEVICE_SCREEN_HEIGHT - posY - 49.)];
+    [self.view addSubview:_tableView];
+}
+
+- (UILabel*)createLabelWithFrame:(CGRect)frame textColor:(UIColor*)color text:(NSString*)text
+{
+    UILabel* label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont systemFontOfSize:14.];
+    label.textColor = color;
+    label.text = text;
+    
+    return label;
 }
 
 - (UIView*)createTopView:(CGRect) rect
 {
-    CGFloat textSize = 14.0f;
-    
-    
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor whiteColor];
     
-    CGFloat viewWidth = rect.size.width;
+    CGFloat posX = 20;
+    CGFloat posY = 0.;
+    CGFloat width = rect.size.width;
     
-    CGFloat posX = 30;
-    CGFloat posY = 10;
-    CGFloat width = viewWidth - posX * 2;
-    CGFloat height = 30;
     // 指標
-    UILabel* targetLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    targetLabel.text = @"指標";
-    targetLabel.font = [UIFont boldSystemFontOfSize:textSize];
+    UILabel* targetLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width - posX*2, 40.)
+                                            textColor:[UIColor blackColor]
+                                                 text:_data.guide.custTaregt.name];
     [view addSubview:targetLabel];
     
+    posY += targetLabel.frame.size.height;
     
-    posX = 30;
-    posY = targetLabel.frame.origin.y + targetLabel.frame.size.height + 10;
-    height = 1;
-    
-    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    lineView.backgroundColor = [UIColor lightGrayColor];
+    // line
+    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(10, posY - 1., width - 20., 1.)];
+    lineView.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     [view addSubview:lineView];
     
-    
-    posY = lineView.frame.origin.y + lineView.frame.size.height + 10;
-    width = (viewWidth - posX) / 2;
-    height = 30;
+    posY += 6.;
     
     // 目標
-    NSString* valueTStr = @"目標：";
-    UILabel* valueTLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 40, height)];
-    valueTLabel.text = valueTStr;
-    valueTLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    valueTLabel.font = [UIFont systemFontOfSize:textSize];
+    NSString* text = [NSString stringWithFormat:@"目標：%@ %@", _data.guide.custTaregt.valueT, _data.guide.custTaregt.unit];
+    UILabel* valueTLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width*0.4, 24)
+                                            textColor:[[MDirector sharedInstance] getCustomGrayColor]
+                                                 text:text];
     [view addSubview:valueTLabel];
     
     
-    posX = valueTLabel.frame.origin.x + valueTLabel.frame.size.width;
+    posX += valueTLabel.frame.size.width;
     
-    // 完成度
-    UILabel* completionDegreeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 60, height)];
-    completionDegreeTitleLabel.text = @"完成度：";
-    completionDegreeTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    completionDegreeTitleLabel.font = [UIFont systemFontOfSize:textSize];
+    // 完成度title
+    UILabel* completionDegreeTitleLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width*0.18, 24.)
+                                                           textColor:[[MDirector sharedInstance] getCustomGrayColor]
+                                                                text:@"完成度："];
+    completionDegreeTitleLabel.textAlignment = NSTextAlignmentRight;
     [view addSubview:completionDegreeTitleLabel];
     
-    posX = completionDegreeTitleLabel.frame.origin.x + completionDegreeTitleLabel.frame.size.width;
+    posX += completionDegreeTitleLabel.frame.size.width;
     
-    NSString* completionDegreeStr = @"33%";
-    NSString* subCompletionDegreeStr = [completionDegreeStr substringToIndex:completionDegreeStr.length - 1];
-    NSInteger completionDegreeInt = [subCompletionDegreeStr integerValue];
-
-    UILabel* completionDegreeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 40, height)];
-    completionDegreeLabel.text = completionDegreeStr;
-    if (completionDegreeInt < 50)
-        completionDegreeLabel.textColor = [UIColor redColor];
-    else
-        completionDegreeLabel.textColor = [[MDirector sharedInstance] getForestGreenColor];
-    completionDegreeLabel.font = [UIFont systemFontOfSize:textSize];
+    // 完成度value
+    text = [NSString stringWithFormat:@"%d%%", (int)_data.completion];
+    UILabel* completionDegreeLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width*0.18, 24.)
+                                                       textColor:[UIColor redColor]
+                                                            text:text];
     [view addSubview:completionDegreeLabel];
 
+    posX = valueTLabel.frame.origin.x;
+    posY += valueTLabel.frame.size.height;
     
-    posX = 30;
-    posY = valueTLabel.frame.origin.y + valueTLabel.frame.size.height;
     // 實際
-    NSString* valueRStr = @"實際：";
-    UILabel* valueRLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 40, height)];
-    valueRLabel.text = valueRStr;
-    valueRLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    valueRLabel.font = [UIFont systemFontOfSize:textSize];
+    text = [NSString stringWithFormat:@"實際：%@ %@", _data.guide.custTaregt.valueR, _data.guide.custTaregt.unit];
+    UILabel* valueRLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width*0.4, 24.)
+                                            textColor:[[MDirector sharedInstance] getCustomGrayColor]
+                                                 text:text];
     [view addSubview:valueRLabel];
     
+    posX += valueRLabel.frame.size.width;
     
-    posX = valueRLabel.frame.origin.x + valueRLabel.frame.size.width;
-    // 負責人
-    NSString* personInChargeStr = @"負責人：";
-    UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 40, height)];
-    personInChargeLabel.text = personInChargeStr;
-    personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
+    // 負責人title
+    UILabel* personInChargeLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width*0.18, 24)
+                                                    textColor:[[MDirector sharedInstance] getCustomGrayColor]
+                                                         text:@"負責人："];
+    personInChargeLabel.textAlignment = NSTextAlignmentRight;
     [view addSubview:personInChargeLabel];
     
+    posX += personInChargeLabel.frame.size.width;
     
-    posX = personInChargeLabel.frame.origin.x + personInChargeLabel.frame.size.width;
+    // 負責人name
+    UILabel* managerLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width*0.18, 24)
+                                             textColor:[[MDirector sharedInstance] getCustomGrayColor]
+                                                  text:_data.guide.manager.name];
+    [view addSubview:managerLabel];
     
-    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 30, 30)];
+    posX += managerLabel.frame.size.width + 4.;
+    posY = valueTLabel.frame.origin.y + 6.;
+    
+    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 32., 32.)];
     imageView.backgroundColor = [UIColor clearColor];
-//    imageView.image = [self loadLocationImage:nil];;
     imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
     imageView.layer.cornerRadius = imageView.frame.size.width / 2.;
     imageView.layer.masksToBounds = YES;
     [view addSubview:imageView];
     
-    
     return view;
 }
 
-- (UIView*)createListView:(CGRect) rect
+- (UITableView*)createListView:(CGRect)rect
 {
-    UIView* view = [[UIView alloc] initWithFrame:rect];
-    view.backgroundColor = [UIColor clearColor];
+    UITableView* table = [[UITableView alloc] initWithFrame:rect];
+    table.backgroundColor = [UIColor whiteColor];
+    table.delegate = self;
+    table.dataSource = self;
     
-    CGFloat viewWidth = rect.size.width;
-    CGFloat viewHeight = rect.size.height;
-    
-    CGFloat posX = 20;
-    CGFloat posY = 20;
-    CGFloat width = viewWidth - posX * 2;
-    CGFloat height = viewHeight - posY;
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [view addSubview:_tableView];
-    
-    return view;
+    return table;
 }
 
 #pragma mark - UIButton

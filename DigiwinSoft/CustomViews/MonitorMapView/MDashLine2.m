@@ -38,7 +38,7 @@
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGFloat dashPhase[]={10, 5};
+    CGFloat dashPhase[]={6, 3};
     CGPoint start = [self getStartPoint];
     CGPoint end = [self getEndPoint];
     

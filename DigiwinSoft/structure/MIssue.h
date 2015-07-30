@@ -21,4 +21,6 @@
 
 @property (nonatomic, strong) MTarget* target;  //指標;
 
+@property (nonatomic, strong) NSArray* issTypeArray;
+
 @end

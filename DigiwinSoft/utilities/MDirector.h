@@ -29,6 +29,7 @@
 - (UIColor*)getCustomOrangeColor;
 - (UIColor *)getCustomGrayColor;
 - (UIColor *)getCustomLightGrayColor;
+- (UIColor *)getCustomLightestGrayColor;
 - (UIColor *)getCustomBlueColor;
 - (UIColor *)getCustomRedColor;
 - (UIColor *)getForestGreenColor;
