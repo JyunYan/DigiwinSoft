@@ -10,11 +10,12 @@
 #import "MConfig.h"
 #import "MRadarChartView.h"
 #import "MRouletteViewController.h"
-#import "SituationCollectionCell.h"
-@interface MEfficacyViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
+#import "MBarChartView.h"
+@interface MEfficacyViewController ()<UIScrollViewDelegate>
 
 @property (nonatomic, assign) CGRect viewRect;
 @property (nonatomic, strong) UIScrollView *mScroll;
+@property (nonatomic, strong) UIScrollView *mScrollPage;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
 @property (nonatomic, strong) NSMutableArray *aryData;
 @property (nonatomic, strong) NSArray *aryAddData;
@@ -33,24 +34,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [self prepareData];
     [self createScroll];
-    [self createBtn];
-    [self createPageControl];
     [self createRadarChart];
-    [self createCollection];
+    [self createPageControl];
 
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    {
-           }
+
     
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)prepareData
+{
+    NSArray *data0=[[NSArray alloc]initWithObjects:@"短期償還能力(60)",@"data0",@"60",@"value",nil];
+    NSArray *data1=[[NSArray alloc]initWithObjects:@"資產運用效率(75)",@"data1",@"75",@"value",nil];
+    NSArray *data2=[[NSArray alloc]initWithObjects:@"發展潛力(90)",@"data2",@"90",@"value",nil];
+    NSArray *data3=[[NSArray alloc]initWithObjects:@"賺錢能力(65)",@"data2",@"65",@"value",nil];
+    NSArray *data4=[[NSArray alloc]initWithObjects:@"營運效率(50)",@"data2",@"50",@"value",nil];
+    
+    _aryData=[[NSMutableArray alloc]initWithObjects:data0,data1,data2,data3,data4,nil];
 }
 #pragma mark - create view
 -(void)createScroll
@@ -59,172 +67,38 @@
     _mScroll.backgroundColor=[UIColor whiteColor];
     _mScroll.contentSize=CGSizeMake(DEVICE_SCREEN_WIDTH, 560.);
     [self.view addSubview:_mScroll];
-}
--(void)createBtn
-{
-    UIButton *btn= [[UIButton alloc] initWithFrame:CGRectMake(0, 100, 60, 30)];
-    [btn addTarget:self action:@selector(toPage8:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setTitle:@"Page8" forState:UIControlStateNormal];
-    btn.backgroundColor=[UIColor brownColor];
-    [_mScroll addSubview:btn];
     
+    _mScrollPage=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 240, DEVICE_SCREEN_WIDTH, 300)];
+    _mScrollPage.backgroundColor=[UIColor yellowColor];
+    _mScrollPage.contentSize=CGSizeMake(DEVICE_SCREEN_WIDTH*5, 300);
+    _mScrollPage.pagingEnabled=YES;
+    _mScrollPage.delegate=self;
+    [_mScroll addSubview:_mScrollPage];
     
-    UIButton *btnAdd=[[UIButton alloc]initWithFrame:CGRectMake(0, 20, 50, 30)];
-    btnAdd.backgroundColor=[UIColor brownColor];
-    [btnAdd addTarget:self
-               action:@selector(btnAddRadar:)
-     forControlEvents:UIControlEventTouchUpInside
-     ];
-    btnAdd.tag=101;
-    [btnAdd setTitle:@"Add1" forState:UIControlStateNormal];
-    [_mScroll addSubview:btnAdd];
-    
-    
-    UIButton *btnAdd1=[[UIButton alloc]initWithFrame:CGRectMake(0, 60, 50, 30)];
-    btnAdd1.backgroundColor=[UIColor brownColor];
-    [btnAdd1 addTarget:self
-                action:@selector(btnAddRadar:)
-      forControlEvents:UIControlEventTouchUpInside
-     ];
-    btnAdd1.tag=102;
-    [btnAdd1 setTitle:@"Add2" forState:UIControlStateNormal];
-    [_mScroll addSubview:btnAdd1];
+
+    for (int i=0; i<[_aryData count]; i++) {
+        MBarChartView *BarChart=[[MBarChartView alloc]initWithFrame:CGRectMake((i*DEVICE_SCREEN_WIDTH), 0, DEVICE_SCREEN_WIDTH, 300)];
+        BarChart.aryBarData=_aryData[i];
+        BarChart.backgroundColor = [UIColor whiteColor];
+
+        [_mScrollPage addSubview:BarChart];
+    }
     
     
 }
 -(void)createRadarChart
 {
     _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
-    NSArray *data0=[[NSArray alloc]initWithObjects:@"最適化存貨周轉(21)",@"data0",@"21",@"value",nil];
-    NSArray *data1=[[NSArray alloc]initWithObjects:@"提昇供應鏈品質(75)",@"data1",@"75",@"value",nil];
-    NSArray *data2=[[NSArray alloc]initWithObjects:@"提升生產效率(70)",@"data2",@"70",@"value",nil];
-    _aryData=[[NSMutableArray alloc]initWithObjects:data0,data1,data2,nil];
     _RadarChart.aryRadarChartData=_aryData;
     [_mScroll addSubview:_RadarChart];
-}
--(void)createCollection
-{
-    if (!_mCollection) {
-        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.itemSize = CGSizeMake(250, 280);
-        flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        
-        _mCollection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 240, DEVICE_SCREEN_WIDTH, 300) collectionViewLayout:flowLayout];
-        _mCollection.delegate = self;
-        _mCollection.dataSource = self;
-        _mCollection.backgroundColor = [UIColor grayColor];
-        
-        [_mCollection registerClass:[SituationCollectionCell class] forCellWithReuseIdentifier:@"Cell"];
-    }
-    [_mScroll addSubview:_mCollection];
 }
 -(void)createPageControl
 {
     _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(0,220, DEVICE_SCREEN_WIDTH, 20)];
     _pageControl.backgroundColor = [UIColor grayColor];
-    [_pageControl setNumberOfPages:5];
+    [_pageControl setNumberOfPages:[_aryData count]];
     [_pageControl setCurrentPage:0];
     [_mScroll addSubview:_pageControl];
-}
-#pragma mark - UIButton
--(void)btnAddRadar:(id)sender
-{
-    if ([sender tag]==101) {
-        NSArray *data4=[[NSArray alloc]initWithObjects:@"增加資料一號(90)",@"data4",@"90",@"value",nil];
-        NSArray *data5=[[NSArray alloc]initWithObjects:@"增加資料二號(100)",@"data5",@"100",@"value",nil];
-        NSArray *data6=[[NSArray alloc]initWithObjects:@"增加資料三號(20)",@"data5",@"20",@"value",nil];
-        _aryAddData=[[NSMutableArray alloc]initWithObjects:data4,data5,data6, nil];
-    }else
-    {
-        NSArray *data7=[[NSArray alloc]initWithObjects:@"增加資料四號(0)",@"data4",@"0",@"value",nil];
-        NSArray *data8=[[NSArray alloc]initWithObjects:@"增加資料五號(70)",@"data5",@"70",@"value",nil];
-        _aryAddData=[[NSMutableArray alloc]initWithObjects:data7,data8, nil];
-    }
-    
-    for (NSArray *MyAddData in _aryAddData) {
-        if ([_aryData containsObject:MyAddData])  //是否存在陣列裡
-        {
-            [_aryData removeObject:MyAddData];
-        } else
-            [_aryData addObject:MyAddData];
-    }
-    
-    [_RadarChart removeFromSuperview];
-    _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
-    _RadarChart.aryRadarChartData=_aryData;
-    [_mScroll addSubview:_RadarChart];
-}
--(void)toPage8:(id)sender
-{
-    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
-    [self.navigationController pushViewController:MRouletteVC animated:YES];
-}
-#pragma mark - UICollectionView
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return 5;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier =@"Cell";
-    SituationCollectionCell * collectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    collectionViewCell.Label.text=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
-    CGFloat comps[3];
-    for (int i = 0; i < 3; i++)
-    {
-        comps[i] = (CGFloat)arc4random_uniform(256)/255.f;
-    }
-    collectionViewCell.backgroundColor = [UIColor colorWithRed:comps[0] green:comps[1] blue:comps[2] alpha:1.0];
-    return collectionViewCell;
-}
--(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(10, 36, 10, 36);
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    
-    return 10;
-}
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (!decelerate){
-        NSLog(@"Drag");
-        [self scrollToCell];
-    }
-    
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    NSLog(@"Decelerat");
-    [self scrollToCell];
-
-}
--(void)scrollToCell
-{
-    
-        NSInteger i = 0;
-        for (UICollectionViewCell *cell in [_mCollection visibleCells]) {
-            NSIndexPath *indexPath = [_mCollection indexPathForCell:cell];
-            i=indexPath.row;
-            
-            float width=_mCollection.contentSize.width;
-            
-            NSLog(@"row:%ld",(long)width);
-            
-            CGFloat off=((width-72)/2)+5;
-            NSLog(@"row:%f",off);
-
-            [_mCollection scrollRectToVisible:CGRectMake(off+125, 0, 320, 460) animated:YES];
-
-//            [_mCollection scrollRectToVisible:CGRectMake((i*320)+36, 0, 320, 460) animated:YES];
-
-        }
-    
-    
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -233,6 +107,22 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)sender {
+    CGFloat width = _mScrollPage.frame.size.width;
+    NSLog(@"%f",_mScrollPage.contentOffset.x);
+    NSInteger currentPage = ((_mScrollPage.contentOffset.x - width / 2) / width) + 1;
+    [self.pageControl setCurrentPage:currentPage];
+}
+- (IBAction)changeCurrentPage:(UIPageControl *)sender {
+    NSInteger page = self.pageControl.currentPage;
+    CGFloat width, height;
+    width = _mScrollPage.frame.size.width;
+    height = _mScrollPage.frame.size.height;
+    CGRect frame = CGRectMake(width*page, 0, width, height);
+    
+    [_mScrollPage scrollRectToVisible:frame animated:YES];
 }
 /*
 #pragma mark - Navigation
