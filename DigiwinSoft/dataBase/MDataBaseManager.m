@@ -153,6 +153,29 @@ static MDataBaseManager* _director = nil;
 
 #pragma mark - 事件相關
 
+- (NSArray*)loadEventsWithCustActivity:(MCustActivity*)activity
+{
+    NSString* sql = @"select * from U_EVENT where ACT_ID = ?";
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, activity.uuid];
+    while([rs next]){
+        
+        MEvent* event = [MEvent new];
+        event.uuid = [rs stringForColumn:@"ID"];
+        event.evtId = [rs stringForColumn:@"EVT_ID"];
+        event.actId = [rs stringForColumn:@"ACT_ID"];
+        event.name = [rs stringForColumn:@"NAME"];
+        event.status = [rs stringForColumn:@"STATUS"];
+        event.start = [rs stringForColumn:@"START_DATE"];
+        
+        [array addObject:event];
+    }
+    
+    return array;
+}
+
 // p16
 - (NSArray*)loadEventsWithUser:(MUser*)user
 {

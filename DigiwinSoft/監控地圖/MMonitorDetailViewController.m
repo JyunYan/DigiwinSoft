@@ -10,6 +10,8 @@
 #import "MDirector.h"
 #import "AppDelegate.h"
 #import "MDataBaseManager.h"
+#import "MMonitorDetailTableCell.h"
+#import "MEventListViewController.h"
 
 
 #define TAG_LABEL_TASK 100
@@ -47,7 +49,7 @@
     self.view.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     self.title = _data.guide.name;
     
-    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     self.navigationController.navigationBar.topItem.backBarButtonItem = back;
     
     [self addMainMenu];
@@ -129,8 +131,9 @@
     
     // 完成度value
     text = [NSString stringWithFormat:@"%d%%", (int)_data.completion];
+    UIColor* color = ([self isDelay]) ? [UIColor redColor] : [[MDirector sharedInstance] getForestGreenColor];
     UILabel* completionDegreeLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width*0.18, 24.)
-                                                       textColor:[UIColor redColor]
+                                                       textColor:color
                                                             text:text];
     [view addSubview:completionDegreeLabel];
 
@@ -186,11 +189,6 @@
 
 #pragma mark - UIButton
 
--(void)back:(id)sender
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 -(void)goEventList:(id)sender
 {
     UIButton* button = (UIButton*)sender;
@@ -201,144 +199,53 @@
     [delegate toggleEventList];
 }
 
+#pragma mark - other methods
+
+//是否delay
+- (BOOL)isDelay
+{
+    for (MCustActivity* act in _data.guide.activityArray) {
+        for (MCustWorkItem* item in act.workItemArray) {
+            
+            NSDateFormatter* fm = [NSDateFormatter new];
+            fm.dateFormat = @"yyyy-MM-dd";
+            NSDate* date = [fm dateFromString:item.custTarget.completeDate];
+            
+            NSTimeInterval between = [date timeIntervalSinceNow];
+            
+            if(between < 0){
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return 5;
+    NSArray* array = _data.guide.activityArray;
+    return array.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return HeightForMonitorDetailTableCell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger row = indexPath.row;
+    MCustActivity* activity = [_data.guide.activityArray objectAtIndex:indexPath.row];
     
-    
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.backgroundColor = [UIColor clearColor];
-        
-        
-        CGFloat textSize = 14.0f;
-        
-        CGFloat tableWidth = tableView.frame.size.width;
-        
-        CGFloat posX = 15;
-        CGFloat posY = 10;
-        CGFloat width = tableWidth - posX * 2;
-        CGFloat height = 30;
-        
-        // 任務
-        UILabel* taskLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        taskLabel.tag = TAG_LABEL_TASK;
-        taskLabel.font = [UIFont boldSystemFontOfSize:textSize];
-        [cell addSubview:taskLabel];
-        
-        
-        posY = taskLabel.frame.origin.y + taskLabel.frame.size.height;
-        width = tableWidth / 2 - posX;
-        // 狀態
-        UILabel* statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 20, height)];
-        statusLabel.tag = TAG_LABEL_STATUS;
-        statusLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-        statusLabel.font = [UIFont systemFontOfSize:textSize];
-        [cell addSubview:statusLabel];
-        
-        
-        posX = statusLabel.frame.origin.x + statusLabel.frame.size.width;
-        // 如期率
-        UILabel* scheduledRateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 60, height)];
-        scheduledRateTitleLabel.text = @"如期率：";
-        scheduledRateTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-        scheduledRateTitleLabel.font = [UIFont systemFontOfSize:textSize];
-        [cell addSubview:scheduledRateTitleLabel];
-        
-        posX = scheduledRateTitleLabel.frame.origin.x + scheduledRateTitleLabel.frame.size.width;
-
-        UILabel* scheduledRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 80, height)];
-        scheduledRateLabel.tag = TAG_LABEL_SCHEDULED_RATE;
-        scheduledRateLabel.textColor = [UIColor redColor];
-        scheduledRateLabel.font = [UIFont systemFontOfSize:textSize];
-        [cell addSubview:scheduledRateLabel];
-        
-        
-        posX = scheduledRateLabel.frame.origin.x + scheduledRateLabel.frame.size.width;
-        //
-        UIButton* alarmButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, 30, 30)];
-        alarmButton.tag = TAG_BUTTON_ALARM + row;
-        alarmButton.center = CGPointMake(alarmButton.center.x, 40);
-        [alarmButton setImage:[UIImage imageNamed:@"icon_alarm.png"] forState:UIControlStateNormal];
-        [alarmButton addTarget:self action:@selector(goEventList:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:alarmButton];
-        
-        posX = alarmButton.frame.origin.x + alarmButton.frame.size.width / 2;
-        posY = alarmButton.frame.origin.y + 1;
-
-        UIImageView* numImageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 15, 15)];
-        numImageView.tag = TAG_IMAGEVIEW_NUM;
-        numImageView.image = [UIImage imageNamed:@"icon_red_circle.png"];
-        numImageView.backgroundColor = [UIColor clearColor];
-        [cell addSubview:numImageView];
-        
-        UILabel* numLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
-        numLabel.tag = TAG_LABEL_NUM;
-        numLabel.textColor = [UIColor whiteColor];
-        numLabel.textAlignment = NSTextAlignmentCenter;
-        numLabel.font = [UIFont boldSystemFontOfSize:10.];
-        [numImageView addSubview:numLabel];
-    }
-    
-    
-    UILabel* taskLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_TASK];
-    UILabel* statusLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_STATUS];
-    UILabel* scheduledRateLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_SCHEDULED_RATE];
-    
-    UIButton* alarmButton = (UIButton*)[cell viewWithTag:TAG_BUTTON_ALARM + row];
-    
-    UIImageView* numImageView = (UIImageView*)[cell viewWithTag:TAG_IMAGEVIEW_NUM];
-    UILabel* numLabel = (UILabel*)[numImageView viewWithTag:TAG_LABEL_NUM];
-
-    
-    taskLabel.text = @"任務";
-    statusLabel.text = @"狀態";
-    
-    NSString* scheduledRateStr = @"0%";
-    scheduledRateLabel.text = scheduledRateStr;
-    
-    MUser* user = [MDirector sharedInstance].currentUser;
-    NSArray* array = [[MDataBaseManager sharedInstance] loadEventsWithUser:user];
-    NSInteger count = array.count;
-    numLabel.text = [NSString stringWithFormat:@"%d", count];
-
-    
-    NSString* subScheduledRateStr = [scheduledRateStr substringToIndex:scheduledRateStr.length - 1];
-    NSInteger scheduledRateInt = [subScheduledRateStr integerValue];
-    if (scheduledRateInt < 50)
-        scheduledRateLabel.textColor = [UIColor redColor];
-    else
-        scheduledRateLabel.textColor = [[MDirector sharedInstance] getForestGreenColor];
-
-    if (scheduledRateInt == 0) {
-        alarmButton.hidden = NO;
-        numImageView.hidden = NO;
-    } else {
-        alarmButton.hidden = YES;
-        numImageView.hidden = YES;
-    }
-
+    MMonitorDetailTableCell* cell = [MMonitorDetailTableCell cellWithTableView:tableView];
+    [cell setActivity:activity];
+    [cell prepare];
     
     return cell;
 }
@@ -348,6 +255,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSArray* array = _data.guide.activityArray;
+    MCustActivity* activity = [array objectAtIndex:indexPath.row];
+    
+    MEventListViewController* vc = [[MEventListViewController alloc] initWithCustActivity:activity];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:YES];
+    }
+    
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 @end

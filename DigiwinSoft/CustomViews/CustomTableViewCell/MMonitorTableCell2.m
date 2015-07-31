@@ -153,12 +153,12 @@
             if(between < 0)
                 _delay = YES;
             
-            if(_delay)
-                _dateBetween = MIN(_dateBetween, between) / 86400;
-            else
-                _dateBetween = MAX(_dateBetween, between) / 86400;
+            _dateBetween = (_delay) ? MIN(_dateBetween, between) : MAX(_dateBetween, between);
+            _dateBetween /= 86400;
         }
     }
 }
+
+
 
 @end

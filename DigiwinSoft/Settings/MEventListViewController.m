@@ -50,15 +50,30 @@
 
 @implementation MEventListViewController
 
-- (id)init {
+- (id)init
+{
     self = [super init];
     if (self) {
-        _showCellBarIndex = -1;
-        _user = [MDirector sharedInstance].currentUser;
         
+        _showCellBarIndex = -1;
         _eventArray = [NSMutableArray new];
+        
+        _user = [MDirector sharedInstance].currentUser;
         _totalEventArray = [[MDataBaseManager sharedInstance] loadEventsWithUser:_user];
-        [self resetEventDataWithStatus:@"0"];
+    }
+    return self;
+}
+
+- (id)initWithCustActivity:(MCustActivity*)activity
+{
+    self = [super init];
+    if (self) {
+        
+        _showCellBarIndex = -1;
+        _eventArray = [NSMutableArray new];
+        
+        _user = activity.manager;
+        _totalEventArray = [[MDataBaseManager sharedInstance] loadEventsWithCustActivity:activity];
     }
     return self;
 }
@@ -67,9 +82,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
     self.title = @"事件清單";
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    if(_from == FROM_SETTINGS)
+        
+    [self resetEventDataWithStatus:@"0"];
+    
 
     [self addMainMenu];
     
@@ -198,8 +217,10 @@
 
 -(void)back:(id)sender
 {
-    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleTabBar];
+    //AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
+    //[delegate toggleTabBar];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)showCellBar:(UIButton *)button

@@ -176,6 +176,7 @@
 		DCE951C71B69493500E3C059 /* MIssType.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951C61B69493500E3C059 /* MIssType.m */; };
 		DCE951CA1B69C9F000E3C059 /* MMonitorTableCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951C91B69C9F000E3C059 /* MMonitorTableCell2.m */; };
 		DCE951CD1B69DE2300E3C059 /* MMonitorMeterView3.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951CC1B69DE2300E3C059 /* MMonitorMeterView3.m */; };
+		DCE951D01B6A134600E3C059 /* MMonitorDetailTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951CF1B6A134600E3C059 /* MMonitorDetailTableCell.m */; };
 		DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AA81B40E04A00C771BB /* MEvent.m */; };
 		DCF46AAC1B41103700C771BB /* MSituation.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAB1B41103700C771BB /* MSituation.m */; };
 		DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46AAE1B4116F000C771BB /* MTreasure.m */; };
@@ -532,6 +533,8 @@
 		DCE951C91B69C9F000E3C059 /* MMonitorTableCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorTableCell2.m; path = CustomViews/CustomTableViewCell/MMonitorTableCell2.m; sourceTree = "<group>"; };
 		DCE951CB1B69DE2300E3C059 /* MMonitorMeterView3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorMeterView3.h; path = CustomViews/MonitorMapView/MMonitorMeterView3.h; sourceTree = "<group>"; };
 		DCE951CC1B69DE2300E3C059 /* MMonitorMeterView3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorMeterView3.m; path = CustomViews/MonitorMapView/MMonitorMeterView3.m; sourceTree = "<group>"; };
+		DCE951CE1B6A134600E3C059 /* MMonitorDetailTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMonitorDetailTableCell.h; path = CustomViews/CustomTableViewCell/MMonitorDetailTableCell.h; sourceTree = "<group>"; };
+		DCE951CF1B6A134600E3C059 /* MMonitorDetailTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMonitorDetailTableCell.m; path = CustomViews/CustomTableViewCell/MMonitorDetailTableCell.m; sourceTree = "<group>"; };
 		DCF46AA71B40E04A00C771BB /* MEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEvent.h; path = structure/MEvent.h; sourceTree = "<group>"; };
 		DCF46AA81B40E04A00C771BB /* MEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEvent.m; path = structure/MEvent.m; sourceTree = "<group>"; };
 		DCF46AAA1B41103700C771BB /* MSituation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSituation.h; path = structure/MSituation.h; sourceTree = "<group>"; };
@@ -833,10 +836,6 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				DCE951971B668FBB00E3C059 /* icon_arrow_green.png */,
-				DCE951981B668FBB00E3C059 /* icon_arrow_red.png */,
-				3AF1DD001B608B07006ADBBD /* icon_arrow_left.png */,
-				3AF1DD011B608B07006ADBBD /* icon_arrow_right.png */,
 				DCF46AD11B42AAF300C771BB /* bg_industry_raider.jpg */,
 				DCF46AD21B42AAF300C771BB /* bg_status.png */,
 				DCF46AD31B42AAF300C771BB /* button_search.png */,
@@ -1163,6 +1162,8 @@
 				DCE951A91B66C6E200E3C059 /* MMonitorTableCell1.m */,
 				DCE951C81B69C9F000E3C059 /* MMonitorTableCell2.h */,
 				DCE951C91B69C9F000E3C059 /* MMonitorTableCell2.m */,
+				DCE951CE1B6A134600E3C059 /* MMonitorDetailTableCell.h */,
+				DCE951CF1B6A134600E3C059 /* MMonitorDetailTableCell.m */,
 				DCE9517F1B60E6AC00E3C059 /* MMyPlanTableViewCell.h */,
 				DCE951801B60E6AC00E3C059 /* MMyPlanTableViewCell.m */,
 				DCE951811B60E6AC00E3C059 /* MRaidersDescriptionTableViewCell.h */,
@@ -1557,6 +1558,7 @@
 				DC5877881B5DFE3700D5AC5D /* MFlowChartPoint2.m in Sources */,
 				DC3DF9D81B4E46C00065DF5D /* MCoordinate.m in Sources */,
 				3829982F1B3982BE0045B3BD /* MIndustryRaiders2ViewController.m in Sources */,
+				DCE951D01B6A134600E3C059 /* MMonitorDetailTableCell.m in Sources */,
 				3AB4CE291B32895C00143374 /* MMDrawerBarButtonItem.m in Sources */,
 				DCF46AAF1B4116F000C771BB /* MTreasure.m in Sources */,
 				3A0542F51B5FA00C00EC7878 /* MTarChartView2.m in Sources */,

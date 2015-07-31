@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "MDataBaseManager.h"
 
+#define FROM_SETTINGS 0
+#define FROM_MONITOR  1
+
 @interface MEventListViewController : UIViewController
+
+@property (nonatomic, assign) NSInteger from;
+
+- (id)initWithCustActivity:(MCustActivity*)activity;
 
 @end

@@ -37,6 +37,8 @@
 
 #pragma mark - 事件 相關
 - (NSArray*)loadEventsWithUser:(MUser*)user;
+- (NSArray*)loadEventsWithCustActivity:(MCustActivity*)activity;
+
 - (NSArray*)loadSituationsWithEvent:(MEvent*)event;
 - (NSArray*)loadTreasureWithActivity:(MCustActivity*)act;
 

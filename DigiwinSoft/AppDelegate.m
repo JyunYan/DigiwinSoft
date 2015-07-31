@@ -237,12 +237,14 @@
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        [[UINavigationBar appearance] setTranslucent:NO];
+        [[UINavigationBar appearance] setTranslucent:YES];
     }
 
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
-    drawer.centerViewController = nav;
-    [drawer closeDrawerAnimated:YES completion:nil];
+    UIViewController* vc2 = drawer.centerViewController;
+    [vc2 presentViewController:nav animated:YES completion:nil];
+    //drawer.centerViewController = nav;
+    //[drawer closeDrawerAnimated:YES completion:nil];
 }
 
 @end
