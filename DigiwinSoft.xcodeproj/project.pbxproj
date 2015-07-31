@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		380F35321B69F4D500E9138B /* MRadarChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380F35311B69F4D500E9138B /* MRadarChartViewController.m */; };
+		380F35351B6A0E9500E9138B /* MBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 380F35341B6A0E9500E9138B /* MBarChartView.m */; };
 		3829982F1B3982BE0045B3BD /* MIndustryRaiders2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382998281B3982BE0045B3BD /* MIndustryRaiders2ViewController.m */; };
 		382998301B3982BE0045B3BD /* MInventoryTurnoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982A1B3982BE0045B3BD /* MInventoryTurnoverViewController.m */; };
 		382998311B3982BE0045B3BD /* MRaidersDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829982C1B3982BE0045B3BD /* MRaidersDescriptionViewController.m */; };
@@ -23,7 +25,6 @@
 		38F3BF8C1B58CF94007BBC30 /* MGanttViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F3BF8B1B58CF94007BBC30 /* MGanttViewController.m */; };
 		38FD52F21B54BF7100AC03F4 /* RPRadarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FD52F11B54BF7100AC03F4 /* RPRadarChart.m */; };
 		38FD52F81B54C2F600AC03F4 /* MRadarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FD52F71B54C2F600AC03F4 /* MRadarChartView.m */; };
-		38FDC57E1B68D1EE00FEA8FA /* SituationCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FDC57D1B68D1EE00FEA8FA /* SituationCollectionCell.m */; };
 		3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03AA111B3B9B1900923ABB /* MEventSelectViewController.m */; };
 		3A03AA1B1B3BD5CA00923ABB /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A03AA141B3BD5CA00923ABB /* downArrow.png */; };
 		3A03AA1C1B3BD5CA00923ABB /* downArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A03AA151B3BD5CA00923ABB /* downArrow@2x.png */; };
@@ -243,6 +244,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		380F35301B69F4D500E9138B /* MRadarChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRadarChartViewController.h; sourceTree = "<group>"; };
+		380F35311B69F4D500E9138B /* MRadarChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRadarChartViewController.m; sourceTree = "<group>"; };
+		380F35331B6A0E9500E9138B /* MBarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBarChartView.h; path = CustomViews/MBarChartView.h; sourceTree = "<group>"; };
+		380F35341B6A0E9500E9138B /* MBarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBarChartView.m; path = CustomViews/MBarChartView.m; sourceTree = "<group>"; };
 		382998271B3982BE0045B3BD /* MIndustryRaiders2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryRaiders2ViewController.h; sourceTree = "<group>"; };
 		382998281B3982BE0045B3BD /* MIndustryRaiders2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIndustryRaiders2ViewController.m; sourceTree = "<group>"; };
 		382998291B3982BE0045B3BD /* MInventoryTurnoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MInventoryTurnoverViewController.h; sourceTree = "<group>"; };
@@ -272,8 +277,6 @@
 		38FD52F11B54BF7100AC03F4 /* RPRadarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPRadarChart.m; sourceTree = "<group>"; };
 		38FD52F61B54C2F600AC03F4 /* MRadarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRadarChartView.h; path = CustomViews/MRadarChartView.h; sourceTree = "<group>"; };
 		38FD52F71B54C2F600AC03F4 /* MRadarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRadarChartView.m; path = CustomViews/MRadarChartView.m; sourceTree = "<group>"; };
-		38FDC57C1B68D1EE00FEA8FA /* SituationCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SituationCollectionCell.h; path = CustomViews/CustomTableViewCell/SituationCollectionCell.h; sourceTree = "<group>"; };
-		38FDC57D1B68D1EE00FEA8FA /* SituationCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SituationCollectionCell.m; path = CustomViews/CustomTableViewCell/SituationCollectionCell.m; sourceTree = "<group>"; };
 		3A03AA101B3B9B1900923ABB /* MEventSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEventSelectViewController.h; sourceTree = "<group>"; };
 		3A03AA111B3B9B1900923ABB /* MEventSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEventSelectViewController.m; sourceTree = "<group>"; };
 		3A03AA141B3BD5CA00923ABB /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downArrow.png; sourceTree = "<group>"; };
@@ -784,6 +787,8 @@
 				3A0542EB1B5F58F400EC7878 /* MStatusLineChartViewController.m */,
 				38CCC4921B6767EA00CF9731 /* MEfficacyViewController.h */,
 				38CCC4931B6767EA00CF9731 /* MEfficacyViewController.m */,
+				380F35301B69F4D500E9138B /* MRadarChartViewController.h */,
+				380F35311B69F4D500E9138B /* MRadarChartViewController.m */,
 			);
 			path = "看現況";
 			sourceTree = "<group>";
@@ -1152,8 +1157,6 @@
 		DCE9517C1B60E5FF00E3C059 /* CustomTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				38FDC57C1B68D1EE00FEA8FA /* SituationCollectionCell.h */,
-				38FDC57D1B68D1EE00FEA8FA /* SituationCollectionCell.m */,
 				DCE9517D1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.h */,
 				DCE9517E1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m */,
 				DCE9518F1B60E72900E3C059 /* MMissionTableCell.h */,
@@ -1240,6 +1243,8 @@
 				DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */,
 				3A0542ED1B5F7B2600EC7878 /* MStatusLineChartView.h */,
 				3A0542EE1B5F7B2600EC7878 /* MStatusLineChartView.m */,
+				380F35331B6A0E9500E9138B /* MBarChartView.h */,
+				380F35341B6A0E9500E9138B /* MBarChartView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1449,7 +1454,6 @@
 				D06C2D411B381850009D2082 /* FMDatabase.m in Sources */,
 				DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */,
 				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
-				38FDC57E1B68D1EE00FEA8FA /* SituationCollectionCell.m in Sources */,
 				DC58777F1B5DECA600D5AC5D /* MDashedLine.m in Sources */,
 				DCF46B211B43A34F00C771BB /* MCustGuide.m in Sources */,
 				3A0542F21B5F9D8E00EC7878 /* MLineChartView2.m in Sources */,
@@ -1499,6 +1503,7 @@
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				3A5E41FC1B65DDEB00799084 /* MLabelPieChartViewController.m in Sources */,
 				383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */,
+				380F35351B6A0E9500E9138B /* MBarChartView.m in Sources */,
 				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
 				DCE951891B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m in Sources */,
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
@@ -1551,6 +1556,7 @@
 				DCE9518C1B60E6AC00E3C059 /* MRaidersTableCell.m in Sources */,
 				3A03F9651B3A4F26000F345B /* MKeyActivitiesViewController.m in Sources */,
 				DC58777C1B5DEC8100D5AC5D /* MLineChartView.m in Sources */,
+				380F35321B69F4D500E9138B /* MRadarChartViewController.m in Sources */,
 				DCE951AD1B66E03C00E3C059 /* MMeterView.m in Sources */,
 				38E6F3FE1B411EAF00245DA1 /* MLoginViewController.m in Sources */,
 				3AB4CE2F1B32997000143374 /* MTabBarViewController.m in Sources */,

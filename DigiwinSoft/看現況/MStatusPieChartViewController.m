@@ -13,6 +13,7 @@
 #import "MStatusLineChartViewController.h"
 #import "MDataBaseManager.h"
 #import "MLabelPieChartViewController.h"
+#import "MRadarChartViewController.h"
 
 
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
@@ -194,7 +195,9 @@
 
 - (void)actionMaturityModel:(id)sender
 {
-    
+    MRadarChartViewController * MRadarChartVC=[[MRadarChartViewController alloc]init];
+    [self.navigationController pushViewController:MRadarChartVC animated:YES];
+
 }
 
 #pragma mark - MLabelPieChartViewController delegate
