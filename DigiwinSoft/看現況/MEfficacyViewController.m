@@ -11,6 +11,8 @@
 #import "MRadarChartView.h"
 #import "MRouletteViewController.h"
 #import "MBarChartView.h"
+
+#define CELL_DISTANCE 10
 @interface MEfficacyViewController ()<UIScrollViewDelegate>
 
 @property (nonatomic, assign) CGRect viewRect;
@@ -43,8 +45,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -65,19 +66,26 @@
 {
     _mScroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 64+40, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT-64-49-40)];
     _mScroll.backgroundColor=[UIColor whiteColor];
-    _mScroll.contentSize=CGSizeMake(DEVICE_SCREEN_WIDTH, 560.);
+    _mScroll.contentSize=CGSizeMake(DEVICE_SCREEN_WIDTH, 480.);
     [self.view addSubview:_mScroll];
     
-    _mScrollPage=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 240, DEVICE_SCREEN_WIDTH, 300)];
+    _mScrollPage=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 240, DEVICE_SCREEN_WIDTH, 220)];
     _mScrollPage.backgroundColor=[UIColor yellowColor];
-    _mScrollPage.contentSize=CGSizeMake(DEVICE_SCREEN_WIDTH*5, 300);
+    CGFloat celltotalW=(DEVICE_SCREEN_WIDTH-40)*[_aryData count];
+    CGFloat cellDisTotalW=([_aryData count]+1)*CELL_DISTANCE;
+    CGFloat totalContentSizeW=celltotalW+cellDisTotalW;
+    
+    NSLog(@"celltotalW:%f,cellDisTotalW:%f,total:%f",celltotalW,cellDisTotalW,totalContentSizeW);
+    
+    _mScrollPage.contentSize=CGSizeMake(totalContentSizeW, 0);
     _mScrollPage.pagingEnabled=YES;
     _mScrollPage.delegate=self;
     [_mScroll addSubview:_mScrollPage];
     
 
+    //_mScrollPage內容
     for (int i=0; i<[_aryData count]; i++) {
-        MBarChartView *BarChart=[[MBarChartView alloc]initWithFrame:CGRectMake((i*DEVICE_SCREEN_WIDTH), 0, DEVICE_SCREEN_WIDTH, 300)];
+        MBarChartView *BarChart=[[MBarChartView alloc]initWithFrame:CGRectMake((i*DEVICE_SCREEN_WIDTH)+CELL_DISTANCE, 0, DEVICE_SCREEN_WIDTH-20, 300)];
         BarChart.aryBarData=_aryData[i];
         BarChart.backgroundColor = [UIColor whiteColor];
 
@@ -110,19 +118,19 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
-    CGFloat width = _mScrollPage.frame.size.width;
-    NSLog(@"%f",_mScrollPage.contentOffset.x);
-    NSInteger currentPage = ((_mScrollPage.contentOffset.x - width / 2) / width) + 1;
-    [self.pageControl setCurrentPage:currentPage];
+//    CGFloat width = _mScrollPage.frame.size.width;
+//    NSLog(@"%f",_mScrollPage.contentOffset.x);
+//    NSInteger currentPage = ((_mScrollPage.contentOffset.x - width / 2) / width) + 1;
+//    [self.pageControl setCurrentPage:currentPage];
 }
 - (IBAction)changeCurrentPage:(UIPageControl *)sender {
-    NSInteger page = self.pageControl.currentPage;
-    CGFloat width, height;
-    width = _mScrollPage.frame.size.width;
-    height = _mScrollPage.frame.size.height;
-    CGRect frame = CGRectMake(width*page, 0, width, height);
+//    NSInteger page = self.pageControl.currentPage;
+//    CGFloat width, height;
+//    width = _mScrollPage.frame.size.width;
+//    height = _mScrollPage.frame.size.height;
+//    CGRect frame = CGRectMake(width*page, 0, width, height);
     
-    [_mScrollPage scrollRectToVisible:frame animated:YES];
+//    [_mScrollPage scrollRectToVisible:frame animated:YES];
 }
 /*
 #pragma mark - Navigation
