@@ -244,8 +244,8 @@
         
         numImageView.hidden = NO;
 
-        NSArray* array = [[MDataBaseManager sharedInstance] loadEventsWithUser:_user];
-        numLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)array.count];
+        NSInteger count = [[MDataBaseManager sharedInstance] loadEventsCountWithUser:_user];
+        numLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)count];
     } else if (row == 3) {
         cell.imageView.image = [UIImage imageNamed:@"icon_menu_4.png"];
         cell.textLabel.text = @"我的商業社群";

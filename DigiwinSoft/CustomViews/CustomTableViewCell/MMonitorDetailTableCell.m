@@ -8,6 +8,7 @@
 
 #import "MMonitorDetailTableCell.h"
 #import "MDirector.h"
+#import "MDataBaseManager.h"
 #import "MCustWorkItem.h"
 
 @interface MMonitorDetailTableCell ()
@@ -108,6 +109,7 @@
     UIButton* button = [[UIButton alloc] initWithFrame:frame];
     [button setImage:[UIImage imageNamed:@"icon_alarm.png"] forState:UIControlStateNormal];
     [button setImageEdgeInsets:UIEdgeInsetsMake(16, _width*0.1 - 14, 16, _width*0.1 - 14)];
+    [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     UIView* eventCountView = [self createCountCircleWithFrame:CGRectMake(button.frame.size.width / 2. + 2, 14, 15, 15)];
     [button addSubview:eventCountView];
@@ -128,7 +130,6 @@
                                    pointSize:8.];
     _countLabel.font = [UIFont boldSystemFontOfSize:9.];
     _countLabel.textAlignment = NSTextAlignmentCenter;
-    _countLabel.text = @"8";
     [imageView addSubview:_countLabel];
     
     return imageView;
@@ -143,6 +144,11 @@
     
     _onSchLabel.text = [NSString stringWithFormat:@"%.0f%%", _onSchRate];
     _onSchLabel.textColor = (_delay) ? [UIColor redColor] : [[MDirector sharedInstance] getForestGreenColor];
+    
+    NSInteger count = [[MDataBaseManager sharedInstance] loadEventsCountWithCustActivity:_activity];
+    _button.hidden = (count == 0);
+    
+    _countLabel.text = [NSString stringWithFormat:@"%d", (int)count];
     
 }
 
@@ -197,6 +203,14 @@
     
     // 計算如期率
     _onSchRate = 100. * count / _activity.workItemArray.count;
+}
+
+#pragma mark - Button Actions
+
+- (void)buttonClicked:(UIButton*)sender
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(tableVuewCell:didClickedBellButton:)])
+        [_delegate tableVuewCell:self didClickedBellButton:sender];
 }
 
 

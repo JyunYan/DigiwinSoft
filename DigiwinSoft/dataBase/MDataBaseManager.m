@@ -176,6 +176,17 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
+- (NSInteger)loadEventsCountWithCustActivity:(MCustActivity*)activity
+{
+    NSString* sql = @"select count(*) as count from U_EVENT where STATUS = '0' and ACT_ID = ?";
+    FMResultSet* rs = [self.db executeQuery:sql, activity.uuid];
+    if([rs next]){
+        NSInteger count = [rs intForColumn:@"count"];
+        return count;
+    }
+    return 0;
+}
+
 // p16
 - (NSArray*)loadEventsWithUser:(MUser*)user
 {
@@ -200,6 +211,18 @@ static MDataBaseManager* _director = nil;
         [array addObject:event];
     }
     return array;
+}
+
+- (NSInteger)loadEventsCountWithUser:(MUser*)user
+{
+    NSString* sql = @"select count(*) as count from U_ACTIVITY as a inner join U_EVENT as e on a.ID = e.ACT_ID where e.STATUS = '0' and a.EMP_ID = ?";
+    
+    FMResultSet* rs = [self.db executeQuery:sql, user.uuid];
+    if([rs next]){
+        NSInteger count = [rs intForColumn:@"count"];
+        return count;
+    }
+    return 0;
 }
 
 // p18
@@ -1191,6 +1214,27 @@ static MDataBaseManager* _director = nil;
         [array addObject:isstype];
     }
     return array;
+}
+
+#pragma mark - 看現況
+
+- (void)loadCompanyEfficacyArray
+{
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select * from M_EFFICACY_ITEM as eff inner join R_COMP_EFF as rce on rce.EFF_ID = eff.ID inner join R_COMP_EFF_TAR as rcet on rce.COMP_ID = rcet.COMP_ID and rce.EFF_ID = rcet.EFF_ID inner join M_TARGET as tar on rcet.TAR_ID = tar.ID where rce.COMP_ID = ?";
+    //select *
+    //from M_EFFICACY_ITEM as eff
+    //inner join R_COMP_EFF as rce on rce.EFF_ID = eff.ID
+    //inner join R_COMP_EFF_TAR as rcet on rce.COMP_ID = rcet.COMP_ID and rce.EFF_ID = rcet.EFF_ID
+    //inner join M_TARGET as tar on rcet.TAR_ID = tar.ID
+    //where rce.COMP_ID = 'cmp-001'
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, compid];
+    while ([rs next]) {
+        
+    }
 }
 
 #pragma mark - 通用

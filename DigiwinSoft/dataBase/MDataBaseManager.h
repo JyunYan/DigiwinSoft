@@ -39,6 +39,9 @@
 - (NSArray*)loadEventsWithUser:(MUser*)user;
 - (NSArray*)loadEventsWithCustActivity:(MCustActivity*)activity;
 
+- (NSInteger)loadEventsCountWithUser:(MUser*)user;
+- (NSInteger)loadEventsCountWithCustActivity:(MCustActivity*)activity;
+
 - (NSArray*)loadSituationsWithEvent:(MEvent*)event;
 - (NSArray*)loadTreasureWithActivity:(MCustActivity*)act;
 

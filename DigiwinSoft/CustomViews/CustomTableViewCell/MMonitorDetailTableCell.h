@@ -11,9 +11,17 @@
 
 #define HeightForMonitorDetailTableCell 60
 
+@class MMonitorDetailTableCell;
+
+@protocol MMonitorDetailTableCellDelegate <NSObject>
+@optional
+- (void)tableVuewCell:(MMonitorDetailTableCell*)cell didClickedBellButton:(UIButton*)button;
+@end
+
 @interface MMonitorDetailTableCell : UITableViewCell
 
 @property (nonatomic, strong) MCustActivity* activity;
+@property (nonatomic, strong) id<MMonitorDetailTableCellDelegate> delegate;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier width:(CGFloat)width;

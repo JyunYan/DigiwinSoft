@@ -24,7 +24,7 @@
 #define TAG_BUTTON_ALARM 2000
 
 
-@interface MMonitorDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface MMonitorDetailViewController ()<UITableViewDelegate, UITableViewDataSource, MMonitorDetailTableCellDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) MMonitorData* data;
@@ -244,6 +244,7 @@
     MCustActivity* activity = [_data.guide.activityArray objectAtIndex:indexPath.row];
     
     MMonitorDetailTableCell* cell = [MMonitorDetailTableCell cellWithTableView:tableView];
+    cell.delegate = self;
     [cell setActivity:activity];
     [cell prepare];
     
@@ -255,8 +256,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+}
+
+#pragma mark - MMonitorDetailTableCellDelegate
+
+-(void)tableVuewCell:(MMonitorDetailTableCell *)cell didClickedBellButton:(UIButton *)button
+{
     NSArray* array = _data.guide.activityArray;
+    
+    NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
     MCustActivity* activity = [array objectAtIndex:indexPath.row];
     
     MEventListViewController* vc = [[MEventListViewController alloc] initWithCustActivity:activity];
