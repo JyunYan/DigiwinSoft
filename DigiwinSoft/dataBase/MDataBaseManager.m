@@ -1218,15 +1218,13 @@ static MDataBaseManager* _director = nil;
 
 #pragma mark - 看現況
 
-- (void)loadCompanyEfficacyArray
+- (NSArray*)loadCompanyEfficacyArray
 {
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* sql = @"select * from M_EFFICACY_ITEM as eff inner join R_COMP_EFF as rce on rce.EFF_ID = eff.ID inner join R_COMP_EFF_TAR as rcet on rce.COMP_ID = rcet.COMP_ID and rce.EFF_ID = rcet.EFF_ID inner join M_TARGET as tar on rcet.TAR_ID = tar.ID where rce.COMP_ID = ?";
+    NSString* sql = @"select * from M_EFFICACY_ITEM as eff inner join R_COMP_EFF as rce on rce.EFF_ID = eff.ID where rce.COMP_ID = ?";
     //select *
     //from M_EFFICACY_ITEM as eff
     //inner join R_COMP_EFF as rce on rce.EFF_ID = eff.ID
-    //inner join R_COMP_EFF_TAR as rcet on rce.COMP_ID = rcet.COMP_ID and rce.EFF_ID = rcet.EFF_ID
-    //inner join M_TARGET as tar on rcet.TAR_ID = tar.ID
     //where rce.COMP_ID = 'cmp-001'
     
     NSMutableArray* array = [NSMutableArray new];
@@ -1234,7 +1232,44 @@ static MDataBaseManager* _director = nil;
     FMResultSet* rs = [self.db executeQuery:sql, compid];
     while ([rs next]) {
         
+        MEfficacy* eff = [MEfficacy new];
+        eff.uuid = [rs stringForColumn:@"ID"];
+        eff.name = [rs stringForColumn:@"NAME"];
+        eff.pr = [rs stringForColumn:@"EFF_PR"];
+        
+        NSArray* tarArray = [self loadCompEffTargetArrayWithEffID:eff.uuid];
+        eff.effTargetArray = tarArray;
+        
+        [array addObject:eff];
     }
+    
+    return array;
+}
+
+- (NSArray*)loadCompEffTargetArrayWithEffID:(NSString*)uuid
+{
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select * from R_COMP_EFF_TAR as rcet inner join M_TARGET as tar on rcet.TAR_ID = tar.ID where rcet.COMP_ID = ? and rcet.EFF_ID = ?";
+    //select *
+    //from R_COMP_EFF_TAR as rcet
+    //inner join M_TARGET as tar on rcet.TAR_ID = tar.ID
+    //where rcet.COMP_ID = 'cmp-001' and rcet.EFF_ID = 'eff-001'
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, compid];
+    while ([rs next]) {
+        
+        MEfficacyTarget* target = [MEfficacyTarget new];
+        target.uuid = [rs stringForColumn:@"ID"];
+        target.name = [rs stringForColumn:@"NAME"];
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
+        target.pr = [rs stringForColumn:@"TAR_PR"];
+        
+        [array addObject:target];
+    }
+    return array;
 }
 
 #pragma mark - 通用

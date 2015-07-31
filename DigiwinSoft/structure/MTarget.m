@@ -30,3 +30,16 @@
 }
 
 @end
+
+@implementation MEfficacyTarget
+
+- (id)init
+{
+    if(self = [super init]){
+        
+        _pr = @"0";
+    }
+    return self;
+}
+
+@end

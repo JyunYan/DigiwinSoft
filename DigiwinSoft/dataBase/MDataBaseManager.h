@@ -20,6 +20,7 @@
 #import "MTreasure.h"
 #import "MSkill.h"
 #import "MReport.h"
+#import "MEfficacy.h"
 
 #import "MCustGuide.h"
 #import "MCustActivity.h"
@@ -81,6 +82,10 @@
 - (NSArray*)loadMonitorGuideData;
 - (NSArray*)loadMonitorIssueWithGudieID:(NSString*)guideid;
 - (NSArray*)loadIssueTypeArrayWithIssUUid:(NSString*)uuid;
+
+#pragma mark - 看現況
+- (NSArray*)loadCompanyEfficacyArray;
+- (NSArray*)loadCompEffTargetArrayWithEffID:(NSString*)uuid;
 
 #pragma mark - 我的規劃/我的攻略
 // get 我的規劃/我的攻略

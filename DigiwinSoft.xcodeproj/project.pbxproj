@@ -139,6 +139,7 @@
 		DC58779A1B5E7F2A00D5AC5D /* MGanttDashView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877971B5E7F2A00D5AC5D /* MGanttDashView.m */; };
 		DC58779B1B5E7F2B00D5AC5D /* MGanttTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877991B5E7F2A00D5AC5D /* MGanttTableViewCell.m */; };
 		DC58779E1B5F44B400D5AC5D /* MCircleLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */; };
+		DC58BC031B6B4E5500002AA2 /* MEfficacy.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58BC021B6B4E5500002AA2 /* MEfficacy.m */; };
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
 		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
@@ -468,6 +469,8 @@
 		DC5877991B5E7F2A00D5AC5D /* MGanttTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGanttTableViewCell.m; path = CustomViews/GanttChart/MGanttTableViewCell.m; sourceTree = "<group>"; };
 		DC58779C1B5F44B400D5AC5D /* MCircleLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCircleLayout.h; path = CustomViews/MCircleLayout.h; sourceTree = "<group>"; };
 		DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCircleLayout.m; path = CustomViews/MCircleLayout.m; sourceTree = "<group>"; };
+		DC58BC011B6B4E5500002AA2 /* MEfficacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEfficacy.h; path = structure/MEfficacy.h; sourceTree = "<group>"; };
+		DC58BC021B6B4E5500002AA2 /* MEfficacy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEfficacy.m; path = structure/MEfficacy.m; sourceTree = "<group>"; };
 		DC6A52B11B3D2E6E001A373F /* MDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDirector.h; sourceTree = "<group>"; };
 		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
 		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
@@ -1100,6 +1103,8 @@
 				DC10144A1B32985600EF7A6F /* MUser.m */,
 				DC1014521B32B69F00EF7A6F /* MWorkItem.h */,
 				DC1014531B32B69F00EF7A6F /* MWorkItem.m */,
+				DC58BC011B6B4E5500002AA2 /* MEfficacy.h */,
+				DC58BC021B6B4E5500002AA2 /* MEfficacy.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -1452,6 +1457,7 @@
 				D06C2D431B381850009D2082 /* FMDatabasePool.m in Sources */,
 				3AD851841B5CFBFA00486E1D /* MStatusPieChartViewController.m in Sources */,
 				D06C2D411B381850009D2082 /* FMDatabase.m in Sources */,
+				DC58BC031B6B4E5500002AA2 /* MEfficacy.m in Sources */,
 				DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */,
 				3AB4CE2B1B32895C00143374 /* MMDrawerVisualState.m in Sources */,
 				DC58777F1B5DECA600D5AC5D /* MDashedLine.m in Sources */,

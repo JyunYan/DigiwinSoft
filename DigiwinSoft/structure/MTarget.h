@@ -32,3 +32,9 @@
 @property (nonatomic, strong) NSString* datetime;   //history記錄點
 
 @end
+
+@interface MEfficacyTarget : MTarget
+
+@property (nonatomic, strong) NSString* pr;
+
+@end
