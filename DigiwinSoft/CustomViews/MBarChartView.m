@@ -37,6 +37,8 @@
     NSMutableArray *aryData=[[NSMutableArray alloc]initWithObjects:data0,data1,data2,data3,data4,nil];
     
     for (int i=0; i<[aryData count]; i++) {
+        
+        //barTitle
         UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(20, (i*25)+70,85, 15)];
         lab.text=aryData[i][0];
         lab.font=[UIFont systemFontOfSize:12];
@@ -44,12 +46,15 @@
         lab.backgroundColor=[UIColor whiteColor];
         [self addSubview:lab];
         
-        CGFloat value=[aryData[i][1]floatValue];
         
+        //bar
+        CGFloat value=[aryData[i][1]floatValue];
         CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextFillRect(context,CGRectMake(110, (i*25)+72, value*2, 10));//填充框
-        CGContextSetFillColorWithColor(context, [UIColor grayColor].CGColor);//填充顏色
+        CGContextSetFillColorWithColor(context, [UIColor lightGrayColor].CGColor);//填充顏色
+        CGContextFillRect(context,CGRectMake(110, (i*25)+73, value*1.8, 10));//填充框
         CGContextDrawPath(context, kCGPathFillStroke);//繪畫路徑
+        
+        //barValue
 
     }
     
