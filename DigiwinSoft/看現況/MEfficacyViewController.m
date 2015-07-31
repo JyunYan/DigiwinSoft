@@ -11,7 +11,8 @@
 #import "MRadarChartView.h"
 #import "MRouletteViewController.h"
 #import "MBarChartView.h"
-
+#import "MDataBaseManager.h"
+#import "MEfficacy.h"
 #define CELL_DISTANCE 10
 @interface MEfficacyViewController ()<UIScrollViewDelegate>
 
@@ -19,8 +20,7 @@
 @property (nonatomic, strong) UIScrollView *mScroll;
 @property (nonatomic, strong) UIScrollView *mScrollPage;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
-@property (nonatomic, strong) NSMutableArray *aryData;
-@property (nonatomic, strong) NSArray *aryAddData;
+@property (nonatomic, strong) NSArray *aryData;
 @property (nonatomic, strong) UICollectionView *mCollection;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @end
@@ -53,13 +53,7 @@
 }
 -(void)prepareData
 {
-    NSArray *data0=[[NSArray alloc]initWithObjects:@"短期償還能力(60)",@"data0",@"60",@"value",nil];
-    NSArray *data1=[[NSArray alloc]initWithObjects:@"資產運用效率(75)",@"data1",@"75",@"value",nil];
-    NSArray *data2=[[NSArray alloc]initWithObjects:@"發展潛力(90)",@"data2",@"90",@"value",nil];
-    NSArray *data3=[[NSArray alloc]initWithObjects:@"賺錢能力(65)",@"data2",@"65",@"value",nil];
-    NSArray *data4=[[NSArray alloc]initWithObjects:@"營運效率(50)",@"data2",@"50",@"value",nil];
-    
-    _aryData=[[NSMutableArray alloc]initWithObjects:data0,data1,data2,data3,data4,nil];
+    _aryData = [[MDataBaseManager sharedInstance]loadCompanyEfficacyArray];
 }
 #pragma mark - create view
 -(void)createScroll
@@ -70,28 +64,29 @@
     [self.view addSubview:_mScroll];
     
     _mScrollPage=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 240, DEVICE_SCREEN_WIDTH, 220)];
-    _mScrollPage.backgroundColor=[UIColor yellowColor];
-    CGFloat celltotalW=(DEVICE_SCREEN_WIDTH-40)*[_aryData count];
-    CGFloat cellDisTotalW=([_aryData count]+1)*CELL_DISTANCE;
-    CGFloat totalContentSizeW=celltotalW+cellDisTotalW;
-    
-    NSLog(@"celltotalW:%f,cellDisTotalW:%f,total:%f",celltotalW,cellDisTotalW,totalContentSizeW);
-    
-    _mScrollPage.contentSize=CGSizeMake(totalContentSizeW, 0);
-    _mScrollPage.pagingEnabled=YES;
+    _mScrollPage.backgroundColor=[UIColor lightGrayColor];
+    _mScrollPage.pagingEnabled=NO;
     _mScrollPage.delegate=self;
     [_mScroll addSubview:_mScrollPage];
     
 
+    CGFloat posX = CELL_DISTANCE*2;
+    
     //_mScrollPage內容
+    CGFloat pageWidth = DEVICE_SCREEN_WIDTH - 40;
     for (int i=0; i<[_aryData count]; i++) {
-        MBarChartView *BarChart=[[MBarChartView alloc]initWithFrame:CGRectMake((i*DEVICE_SCREEN_WIDTH)+CELL_DISTANCE, 0, DEVICE_SCREEN_WIDTH-20, 300)];
+        MBarChartView *BarChart=[[MBarChartView alloc]initWithFrame:CGRectMake(posX, 0, pageWidth, 210)];
         BarChart.aryBarData=_aryData[i];
         BarChart.backgroundColor = [UIColor whiteColor];
-
         [_mScrollPage addSubview:BarChart];
+        
+        posX += CELL_DISTANCE + pageWidth;
+        
     }
     
+    posX += CELL_DISTANCE*2;
+    
+    _mScrollPage.contentSize=CGSizeMake(posX, 0);
     
 }
 -(void)createRadarChart
@@ -103,7 +98,7 @@
 -(void)createPageControl
 {
     _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(0,220, DEVICE_SCREEN_WIDTH, 20)];
-    _pageControl.backgroundColor = [UIColor grayColor];
+    _pageControl.backgroundColor = [UIColor lightGrayColor];
     [_pageControl setNumberOfPages:[_aryData count]];
     [_pageControl setCurrentPage:0];
     [_mScroll addSubview:_pageControl];
@@ -116,21 +111,20 @@
     }
     return self;
 }
-
-- (void)scrollViewDidScroll:(UIScrollView *)sender {
-//    CGFloat width = _mScrollPage.frame.size.width;
-//    NSLog(@"%f",_mScrollPage.contentOffset.x);
-//    NSInteger currentPage = ((_mScrollPage.contentOffset.x - width / 2) / width) + 1;
-//    [self.pageControl setCurrentPage:currentPage];
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    NSInteger page = self.pageControl.currentPage;
+    CGFloat width;
+    width =_mScrollPage.contentSize.width/[_aryData count]-10;
+    [_mScrollPage setContentOffset:CGPointMake(page*width, 0) animated:YES];
 }
-- (IBAction)changeCurrentPage:(UIPageControl *)sender {
-//    NSInteger page = self.pageControl.currentPage;
-//    CGFloat width, height;
-//    width = _mScrollPage.frame.size.width;
-//    height = _mScrollPage.frame.size.height;
-//    CGRect frame = CGRectMake(width*page, 0, width, height);
+- (void)scrollViewDidScroll:(UIScrollView *)sender {
     
-//    [_mScrollPage scrollRectToVisible:frame animated:YES];
+    //pageControl
+    CGFloat width = DEVICE_SCREEN_WIDTH - 40;
+    NSInteger currentPage = ((_mScrollPage.contentOffset.x - width / 2) / width) + 1;
+    [self.pageControl setCurrentPage:currentPage];
+
 }
 /*
 #pragma mark - Navigation

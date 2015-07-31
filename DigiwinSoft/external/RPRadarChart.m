@@ -43,6 +43,7 @@
 #import <QuartzCore/CALayer.h>
 #import "RPRadarChart.h"
 #import <QuartzCore/QuartzCore.h>
+#import "MEfficacy.h"
 @interface RPRadarChart ()
 
 -(void) drawChartInContext:(CGContextRef) cx forIndex:(NSInteger)index;
@@ -456,7 +457,14 @@ static double colorDistance(RGB e1, RGB e2)
         [btnTitle.layer setCornerRadius:8.0]; //设置矩圆角半径
         [[btnTitle layer] setBorderWidth:2.0f];
         [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
-        [btnTitle setTitle:ary[i][0] forState:UIControlStateNormal];
+        
+        MEfficacy *mEff=ary[i];
+        
+        NSString *str=[NSString stringWithFormat:@"%@(%@)",mEff.name,mEff.pr];
+        
+        
+        
+        [btnTitle setTitle:str forState:UIControlStateNormal];
         [btnTitle addTarget:self action:@selector(btnTitilClick:) forControlEvents:UIControlEventTouchUpInside];
         btnTitle.center=CGPointMake((RADAR_CHART_WIDTH/2)+x,(RADAR_CHART_HEIGHT/2)+y);//加上雷達圖的中心位置
 

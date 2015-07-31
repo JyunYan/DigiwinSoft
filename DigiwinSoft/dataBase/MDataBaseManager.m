@@ -1257,7 +1257,7 @@ static MDataBaseManager* _director = nil;
     
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, compid];
+    FMResultSet* rs = [self.db executeQuery:sql, compid, uuid];
     while ([rs next]) {
         
         MEfficacyTarget* target = [MEfficacyTarget new];

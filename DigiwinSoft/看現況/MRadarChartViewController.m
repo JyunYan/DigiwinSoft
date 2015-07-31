@@ -84,7 +84,7 @@
     NSArray *data1=[[NSArray alloc]initWithObjects:@"提昇供應鏈品質(75)",@"data1",@"75",@"value",nil];
     NSArray *data2=[[NSArray alloc]initWithObjects:@"提升生產效率(70)",@"data2",@"70",@"value",nil];
     _aryData=[[NSMutableArray alloc]initWithObjects:data0,data1,data2,nil];
-    _RadarChart.aryRadarChartData=_aryData;
+//    _RadarChart.aryRadarChartData=_aryData;//資料還未帶
     [_mScroll addSubview:_RadarChart];
 }
 
