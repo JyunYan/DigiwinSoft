@@ -23,6 +23,8 @@
 @property (nonatomic, strong) NSArray *aryData;
 @property (nonatomic, strong) UICollectionView *mCollection;
 @property (nonatomic, strong) UIPageControl *pageControl;
+@property (nonatomic, strong) UIButton *btnSol;
+
 @end
 
 @implementation MEfficacyViewController
@@ -40,6 +42,9 @@
     [self createScroll];
     [self createRadarChart];
     [self createPageControl];
+    [self createButton];
+    [self createLabel];
+
 
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -58,12 +63,15 @@
 #pragma mark - create view
 -(void)createScroll
 {
+    //直scroll
     _mScroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 64+40, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT-64-49-40)];
     _mScroll.backgroundColor=[UIColor whiteColor];
-    _mScroll.contentSize=CGSizeMake(DEVICE_SCREEN_WIDTH, 480.);
+    _mScroll.contentSize=CGSizeMake(DEVICE_SCREEN_WIDTH, 520.);
     [self.view addSubview:_mScroll];
     
-    _mScrollPage=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 240, DEVICE_SCREEN_WIDTH, 220)];
+    
+    //橫scroll
+    _mScrollPage=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 305, DEVICE_SCREEN_WIDTH, 220)];
     _mScrollPage.backgroundColor=[UIColor lightGrayColor];
     _mScrollPage.pagingEnabled=NO;
     _mScrollPage.delegate=self;
@@ -97,11 +105,43 @@
 }
 -(void)createPageControl
 {
-    _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(0,220, DEVICE_SCREEN_WIDTH, 20)];
+    _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(0,270, DEVICE_SCREEN_WIDTH, 35)];
     _pageControl.backgroundColor = [UIColor lightGrayColor];
     [_pageControl setNumberOfPages:[_aryData count]];
     [_pageControl setCurrentPage:0];
     [_mScroll addSubview:_pageControl];
+}
+-(void)createButton
+{
+    CGFloat viewX = _viewRect.origin.x;
+    CGFloat viewY = _viewRect.origin.y;
+    CGFloat viewWidth = _viewRect.size.width;
+    CGFloat posX = viewX;
+    CGFloat posY = viewY;
+    
+    posX = viewWidth - 50;
+    posY = viewY + 5;
+  
+    _btnSol=[[UIButton alloc]initWithFrame:CGRectMake(posX, 15, 25, 25)];
+    UIImage *btnImage = [UIImage imageNamed:@"icon_info.png"];
+    [_btnSol setImage:btnImage forState:UIControlStateNormal];
+    [_btnSol addTarget:self action:@selector(actionInfo) forControlEvents:UIControlEventTouchUpInside];
+
+    [_mScroll addSubview:_btnSol];
+}
+-(void)createLabel
+{
+    UILabel *labUnit=[[UILabel alloc]initWithFrame:CGRectMake(0, 230, DEVICE_SCREEN_WIDTH, 20)];
+    labUnit.textAlignment=NSTextAlignmentCenter;
+    labUnit.backgroundColor=[UIColor clearColor];
+    labUnit.text=@"單位:PR值";
+    labUnit.textColor=[UIColor lightGrayColor];
+    labUnit.font=[UIFont systemFontOfSize:12];
+    [_mScroll addSubview:labUnit];
+}
+-(void)actionInfo
+{
+    NSLog(@"actionInfo");
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
