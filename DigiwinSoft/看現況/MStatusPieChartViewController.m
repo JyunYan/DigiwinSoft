@@ -256,8 +256,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
-//    [self.navigationController pushViewController:MRouletteVC animated:YES];
+    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
+    [self.navigationController pushViewController:MRouletteVC animated:YES];
+    return;
     
     
     NSArray *aryList=[[MDataBaseManager sharedInstance] loadPhenArray];
@@ -276,6 +277,7 @@
     newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(array.count-1, 1)]];
     newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(1, array.count-1)]];
     MStatusLineChartViewController* vc = [[MStatusLineChartViewController alloc] initWithHistoryArray:newArray];
+    
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }

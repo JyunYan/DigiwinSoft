@@ -10,6 +10,7 @@
 #import "MDirector.h"
 #import "MMonitorData.h"
 #import "MIssType.h"
+#import "MManageItem.h"
 
 @implementation MDataBaseManager
 
@@ -1257,7 +1258,7 @@ static MDataBaseManager* _director = nil;
     
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, compid];
+    FMResultSet* rs = [self.db executeQuery:sql, compid, uuid];
     while ([rs next]) {
         
         MEfficacyTarget* target = [MEfficacyTarget new];
@@ -1271,6 +1272,40 @@ static MDataBaseManager* _director = nil;
     }
     return array;
 }
+
+- (NSArray*)loadCompManageItemArray
+{
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select * from M_MANAGE_ITEM as mmi inner join R_COMP_MANAGE as rci on rci.MA_ID = mmi.ID where rci.COMP_ID = ?";
+    //select *
+    //from M_MANAGE_ITEM as mmi
+    //inner join R_COMP_MANAGE as rci on rci.MA_ID = mmi.ID
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, compid];
+    while ([rs next]) {
+        MManageItem* manageItem = [MManageItem new];
+        manageItem.uuid = [rs stringForColumn:@"ID"];
+        manageItem.name = [rs stringForColumn:@"NAME"];
+        manageItem.s_name = [rs stringForColumn:@"S_NAME"];
+        manageItem.type = [rs stringForColumn:@"TYPE"];
+        manageItem.review = [rs stringForColumn:@"REVIEW"];
+        
+        [array addObject:manageItem];
+    }
+    return array;
+}
+
+- (void)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid
+{
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"";
+    //select *
+    //from R_COMP_MA_ISSUE as rcmi
+    //inner M_ISSUE as mi on mi.ID = rcmi.ISSUE_ID
+}
+
 
 #pragma mark - 通用
 

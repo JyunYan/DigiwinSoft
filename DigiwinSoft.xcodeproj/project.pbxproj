@@ -140,6 +140,7 @@
 		DC58779B1B5E7F2B00D5AC5D /* MGanttTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5877991B5E7F2A00D5AC5D /* MGanttTableViewCell.m */; };
 		DC58779E1B5F44B400D5AC5D /* MCircleLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */; };
 		DC58BC031B6B4E5500002AA2 /* MEfficacy.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58BC021B6B4E5500002AA2 /* MEfficacy.m */; };
+		DC58BC101B6F10F300002AA2 /* MManageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58BC0F1B6F10F300002AA2 /* MManageItem.m */; };
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
 		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
@@ -471,6 +472,8 @@
 		DC58779D1B5F44B400D5AC5D /* MCircleLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCircleLayout.m; path = CustomViews/MCircleLayout.m; sourceTree = "<group>"; };
 		DC58BC011B6B4E5500002AA2 /* MEfficacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEfficacy.h; path = structure/MEfficacy.h; sourceTree = "<group>"; };
 		DC58BC021B6B4E5500002AA2 /* MEfficacy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEfficacy.m; path = structure/MEfficacy.m; sourceTree = "<group>"; };
+		DC58BC0E1B6F10F300002AA2 /* MManageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MManageItem.h; path = structure/MManageItem.h; sourceTree = "<group>"; };
+		DC58BC0F1B6F10F300002AA2 /* MManageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MManageItem.m; path = structure/MManageItem.m; sourceTree = "<group>"; };
 		DC6A52B11B3D2E6E001A373F /* MDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDirector.h; sourceTree = "<group>"; };
 		DC6A52B21B3D2E6E001A373F /* MDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDirector.m; sourceTree = "<group>"; };
 		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
@@ -1105,6 +1108,8 @@
 				DC1014531B32B69F00EF7A6F /* MWorkItem.m */,
 				DC58BC011B6B4E5500002AA2 /* MEfficacy.h */,
 				DC58BC021B6B4E5500002AA2 /* MEfficacy.m */,
+				DC58BC0E1B6F10F300002AA2 /* MManageItem.h */,
+				DC58BC0F1B6F10F300002AA2 /* MManageItem.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -1469,6 +1474,7 @@
 				3A711B901B3800C100E94211 /* SWLongPressGestureRecognizer.m in Sources */,
 				DCE951A11B66B5E600E3C059 /* MMonitorData.m in Sources */,
 				3AB4CE171B32841100143374 /* MLookingForSolutionsViewController.m in Sources */,
+				DC58BC101B6F10F300002AA2 /* MManageItem.m in Sources */,
 				38FD52F21B54BF7100AC03F4 /* RPRadarChart.m in Sources */,
 				3A8D5B881B4F7F4F0025374B /* MMonitorDetailViewController.m in Sources */,
 				3A47255A1B5DE5EF00DB9FFE /* MIndustryInformationViewController.m in Sources */,

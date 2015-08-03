@@ -10,30 +10,51 @@
 #import "RVCollectionViewCell.h"
 #import "RVCollectionViewLayout.h"
 #import "MConfig.h"
-@interface MRouletteViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
+#import "iCarousel.h"
+
+@interface MRouletteViewController ()<iCarouselDataSource, iCarouselDelegate>
 @property (nonatomic, strong) UICollectionView * mCollection;
 @property (nonatomic, strong) NSMutableArray * imagesArray;
 @property (nonatomic, strong) NSMutableArray * imageNamesArray;
 @property (nonatomic, strong) RVCollectionViewLayout * collectionViewLayout;
+
+
+@property (nonatomic, strong) iCarousel* carousel;
+@property (nonatomic, strong) NSArray* issueArray;
+@property (nonatomic, assign) CGFloat scale;
 @end
 
 @implementation MRouletteViewController
+
+- (id)init
+{
+    self = [super init];
+    if(self){
+        
+        _scale = DEVICE_SCREEN_WIDTH/320.;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title=@"Roulette";
     
-    UIImageView *backgroundImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 64.-49.)];
+    UIImageView *backgroundImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64, DEVICE_SCREEN_WIDTH, 520*_scale)];
     backgroundImageView.image=[UIImage imageNamed:@"bg_status.png"];
     [self.view addSubview:backgroundImageView];
     
+    _issueArray = [NSArray arrayWithObjects:@"議題一", @"議題二", @"議題三", @"議題一", @"議題二", @"議題三", @"議題一", @"議題二", @"議題三", @"議題一", @"議題二", @"議題三", @"議題一", @"議題二", @"議題三", @"議題一", @"議題二", @"議題三", nil];
+    
+    [self createRoulett];
+
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self createRoulett];
-
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -41,78 +62,76 @@
 }
 - (void)createRoulett
 {
-    
-    RVCollectionViewLayout* flowLayout = [[RVCollectionViewLayout alloc]init];
-    //[flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    
-    _mCollection=[[UICollectionView alloc]initWithFrame:CGRectMake(1, 85,DEVICE_SCREEN_WIDTH-2,150) collectionViewLayout:flowLayout];
-    _mCollection.delegate=self;
-    _mCollection.dataSource=self;
-    _mCollection.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
-    
-    [_mCollection registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"ItemIdentifier"];
-    _mCollection.indicatorStyle = UIScrollViewIndicatorStyleWhite;
-    _mCollection.showsHorizontalScrollIndicator = NO;
-    _mCollection.showsVerticalScrollIndicator = NO;
-    _mCollection.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
-    [self.view addSubview:_mCollection];
+    _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 64, 600*_scale, 120*_scale)];
+    _carousel.center = CGPointMake(DEVICE_SCREEN_WIDTH/2., _carousel.center.y);
+    _carousel.dataSource = self;
+    _carousel.delegate = self;
+    _carousel.type = iCarouselTypeWheel;
+    _carousel.bounceDistance = 10.;
+    _carousel.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_carousel];
 }
-#pragma mark - UICollectionViewDataSource
+#pragma mark - iCarouselDataSource 相關
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView {
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 5;
-}
-
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    UICollectionViewCell *cell = (RVCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"ItemIdentifier" forIndexPath:indexPath];
-    //cell.imageView = self.imagesArray[indexPath.item];
-    //cell.imageName = self.imageNamesArray[indexPath.item];
-    cell.backgroundColor = [UIColor redColor];
-    return cell;
+    return _issueArray.count*100;
 }
 
-#pragma mark - UICollectionViewDelegate
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    // implement your cell selected logic here
-    UIImageView * selectedImageView = self.imagesArray[indexPath.item];
-    NSLog(@"selected image: %@", selectedImageView);
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSLog(@"scrollViewDidEndDecelerating...");
-    [self printCurrentCard];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (!decelerate){
-        NSLog(@"scrollViewDidEndDragging...");
-        [self printCurrentCard];
+- (UIView*)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
+{
+    if(!view){
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 85*_scale, 50*_scale)];
+        view.backgroundColor = [UIColor clearColor];
+        
+        UILabel* label = [[UILabel alloc] initWithFrame:view.frame];
+        label.tag = 101;
+        label.backgroundColor = [UIColor clearColor];
+        label.font = [UIFont boldSystemFontOfSize:14.];
+        label.textColor = [UIColor whiteColor];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.numberOfLines = 2;
+        [view addSubview:label];
     }
+    
+    NSInteger count = _issueArray.count;
+
+    UILabel* label = (UILabel*)[view viewWithTag:101];
+    label.text = [_issueArray objectAtIndex:index%count];
+    label.alpha = (index == carousel.currentItemIndex) ? 1. : 0.5;
+    
+    return view;
 }
 
-- (void)printCurrentCard{
-    NSArray * visibleCards = _mCollection.visibleCells;
-    [visibleCards enumerateObjectsUsingBlock:^(RVCollectionViewCell * visibleCell, NSUInteger idx, BOOL *stop) {
-//        NSLog(@"visible cell: %@", visibleCell.imageName);
-    }];
-}
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - iCarouselDelegate 相關
+
+- (CGFloat)carouselItemWidth:(iCarousel *)carousel
 {
-    return CGSizeMake((DEVICE_SCREEN_WIDTH - 20)/3., 80.);
+    return 110*_scale;
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
 {
-    return 10.;
+   
 }
+
+- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel
+{
+    NSInteger index = carousel.currentItemIndex;
+    
+    NSInteger leftIndex = index - 1;
+    if(leftIndex < 0)
+        leftIndex = 10 - 1;
+    NSInteger rightIndex = index + 1;
+    if(rightIndex == 10)
+        rightIndex = 0;
+    
+    [carousel reloadItemAtIndex:index animated:NO];
+    [carousel reloadItemAtIndex:leftIndex animated:NO];
+    [carousel reloadItemAtIndex:rightIndex animated:NO];
+}
+
 
 
 /*
