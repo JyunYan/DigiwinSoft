@@ -113,9 +113,9 @@
     
     //TextField btnLeft
     UIButton *btnSearch = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnSearch.frame = CGRectMake(0, 0, 20, 20);
-    btnSearch.backgroundColor=[UIColor redColor];
-    [btnSearch setImage:[UIImage imageNamed:@"button_search.png"] forState:UIControlStateNormal];
+    btnSearch.frame = CGRectMake(0, 0, 25, 25);
+    btnSearch.backgroundColor=[UIColor clearColor];
+    [btnSearch setImage:[UIImage imageNamed:@"icon_search_blue.png"] forState:UIControlStateNormal];
     [btnSearch addTarget:self action:@selector(Search:) forControlEvents:UIControlEventTouchUpInside];
     _textField.leftView = btnSearch;
     _textField.leftViewMode = UITextFieldViewModeAlways;

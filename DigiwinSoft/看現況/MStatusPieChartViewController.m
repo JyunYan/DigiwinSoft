@@ -197,7 +197,6 @@
 {
     MRadarChartViewController * MRadarChartVC=[[MRadarChartViewController alloc]init];
     [self.navigationController pushViewController:MRadarChartVC animated:YES];
-
 }
 
 #pragma mark - MLabelPieChartViewController delegate
