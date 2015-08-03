@@ -16,11 +16,13 @@
 @property (nonatomic, strong) NSString* desc;   //描述
 @property (nonatomic, strong) NSString* reads;  //參閱數
 
-@property (nonatomic, strong) NSString* gainR;  //實際收益(監控地圖)
-@property (nonatomic, strong) NSString* gainP;  //預計收益(監控地圖)
-
 @property (nonatomic, strong) MTarget* target;  //指標;
 
-@property (nonatomic, strong) NSArray* issTypeArray;
+@property (nonatomic, strong) NSString* gainR;  //實際收益(監控地圖)
+@property (nonatomic, strong) NSString* gainP;  //預計收益(監控地圖)
+@property (nonatomic, strong) NSArray* issTypeArray;//類別array(監控地圖)
+
+@property (nonatomic, strong) NSString* pr; //PR值(找現況)
+
 
 @end

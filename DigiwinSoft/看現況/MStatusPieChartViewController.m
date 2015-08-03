@@ -27,8 +27,10 @@
 @interface MStatusPieChartViewController ()<UITableViewDelegate, UITableViewDataSource, MLabelPieChartViewControllerDelegate>
 
 @property (nonatomic, assign) CGRect viewRect;
+@property (nonatomic, strong) UITableView* tableView;
 
-@property (nonatomic,strong) UITableView* tableView;
+@property (nonatomic, strong) NSArray* dataArray;
+@property (nonatomic, strong) NSArray* issueArray;
 
 @end
 
@@ -47,6 +49,12 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    
+    _dataArray = [[MDataBaseManager sharedInstance] loadCompManageItemArray];
+    
+    _issueArray = [NSArray new];
+    
     
     [self createChartView];
 }
@@ -74,15 +82,7 @@
     CGRect pieFrame = CGRectMake(posX, posY, width, height);
 
     
-    NSMutableArray* valueTitleArray = [[NSMutableArray alloc] initWithObjects:
-                            @[@"財務", [NSNumber numberWithFloat:3.]],
-                            @[@"生產", [NSNumber numberWithFloat:3.]],
-                            @[@"銷售", [NSNumber numberWithFloat:4.5]],
-                            @[@"人資", [NSNumber numberWithFloat:3.]],
-                            @[@"研發", [NSNumber numberWithFloat:4.]],
-                            nil];
-    
-    MLabelPieChartViewController* labelPieChartViewController = [[MLabelPieChartViewController alloc] initWithFrame:CGRectMake(posX, posY, width, height) ValueTitleArray:valueTitleArray];
+    MLabelPieChartViewController* labelPieChartViewController = [[MLabelPieChartViewController alloc] initWithFrame:CGRectMake(posX, posY, width, height) DataArray:_dataArray];
     labelPieChartViewController.delegate = self;
     [self addChildViewController:labelPieChartViewController];
     [self.view addSubview:labelPieChartViewController.view];
@@ -94,7 +94,7 @@
     UIImageView* imageViewInfo = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 25, 25)];
     imageViewInfo.image = [UIImage imageNamed:@"icon_info.png"];
     [self.view addSubview:imageViewInfo];
-    
+
     
     posX = viewWidth - 80;
     posY = pieFrame.origin.y + pieFrame.size.height - 15;
@@ -201,8 +201,9 @@
 
 #pragma mark - MLabelPieChartViewController delegate
 
-- (void)reloadTableView
+- (void)reloadTableView:(NSInteger) index
 {
+    _issueArray = [_dataArray objectAtIndex:index];
     [_tableView reloadData];
 }
 
@@ -217,7 +218,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 3;
+    return _issueArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -237,13 +238,8 @@
    
     NSInteger row = indexPath.row;
     
-    if (row == 0) {
-        cell.textLabel.text = @"最適化存貨週轉（21）";
-    } else if (row == 1) {
-        cell.textLabel.text = @"提升生產效率（70）";
-    } else {
-        cell.textLabel.text = @"提升供應鏈品質（75）";
-    }
+    MIssue* issue = [_issueArray objectAtIndex:row];
+    cell.textLabel.text = issue.name;
     cell.textLabel.font = [UIFont systemFontOfSize:15.];
 
     return cell;
@@ -255,8 +251,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
-//    [self.navigationController pushViewController:MRouletteVC animated:YES];
+    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
+    [self.navigationController pushViewController:MRouletteVC animated:YES];
+    return;
     
     
     NSArray *aryList=[[MDataBaseManager sharedInstance] loadPhenArray];
@@ -275,6 +272,7 @@
     newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(array.count-1, 1)]];
     newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(1, array.count-1)]];
     MStatusLineChartViewController* vc = [[MStatusLineChartViewController alloc] initWithHistoryArray:newArray];
+    
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
