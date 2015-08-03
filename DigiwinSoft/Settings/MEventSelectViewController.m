@@ -59,7 +59,7 @@
     [self addMainMenu];
     
     
-    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     
     CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
     CGFloat screenWidth = screenFrame.size.width;
@@ -84,7 +84,7 @@
   
   
     height = 41;
-    posY = screenHeight - height - navBarHeight;
+    posY = screenHeight + statusBarHeight - height;
 
     UIView* bottomView = [self createBottomView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:bottomView];
@@ -93,7 +93,7 @@
     posX = 0;
     posY = lineView.frame.origin.y + lineView.frame.size.height;
     width = screenWidth;
-    height = screenHeight - posY - navBarHeight - bottomView.frame.size.height;
+    height = screenHeight + statusBarHeight - posY - bottomView.frame.size.height;
     
     UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:listView];

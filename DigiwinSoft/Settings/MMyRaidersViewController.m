@@ -31,7 +31,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _guideArray = [[MDataBaseManager sharedInstance] loadMyRaidersArray];
+        _guideArray = [NSMutableArray new];
     }
     return self;
 }
@@ -46,8 +46,11 @@
     [self addMainMenu];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    _guideArray = [[MDataBaseManager sharedInstance] loadMyRaidersArray];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

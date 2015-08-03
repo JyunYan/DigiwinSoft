@@ -34,7 +34,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
+        _guideArray = [NSMutableArray new];
     }
     return self;
 }
@@ -60,6 +60,13 @@
 
     UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:listView];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
+    [_tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
