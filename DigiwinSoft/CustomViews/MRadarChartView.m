@@ -9,9 +9,13 @@
 #import "MRadarChartView.h"
 #import "RPRadarChart.h"
 #import "MConfig.h"
+#import "MEfficacy.h"
+
 @interface MRadarChartView ()<RPRadarChartDataSource, RPRadarChartDelegate>
 
 @property (nonatomic, strong) RPRadarChart* RadarChart;
+@property (nonatomic, strong) MEfficacy* Data;
+
 @end
 
 @implementation MRadarChartView
@@ -31,7 +35,7 @@
 
 -(void)data
 {
-
+    
 }
 -(void)addRadarChart
 {
@@ -90,7 +94,8 @@
 // get title for each spoke
 - (NSString*)radarChart:(RPRadarChart*)chart titleForSpoke:(NSInteger)atIndex
 {
-    return [NSString stringWithFormat:@"%@", _aryRadarChartData[atIndex][0]];
+    MEfficacy *mEff=_aryRadarChartData[atIndex];
+    return [NSString stringWithFormat:@"%@", mEff.name];
 }
 
 -(NSArray *)radarChart:(RPRadarChart*)chart aryData:(NSArray *)ary;
@@ -100,9 +105,8 @@
 // get data value for a specefic data item for a spoke
 - (float)radarChart:(RPRadarChart*)chart valueForData:(NSInteger)dataIndex forSpoke:(NSInteger)spokeIndex
 {
-    NSString *value=_aryRadarChartData[spokeIndex][2];
-    
-    
+    MEfficacy *mEff=_aryRadarChartData[spokeIndex];
+    NSString *value=mEff.pr;
     return [value floatValue];
 }
 // get color legend for a specefic data

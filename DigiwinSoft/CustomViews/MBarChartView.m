@@ -7,7 +7,8 @@
 //
 
 #import "MBarChartView.h"
-
+#import "MEfficacy.h"
+#import "MTarget.h"
 @implementation MBarChartView
 
 - (id)initWithFrame:(CGRect)frame
@@ -22,53 +23,57 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 50)];
-    lab.text=[NSString stringWithFormat:@"%@",_aryBarData[0]];
-    lab.backgroundColor=[UIColor whiteColor];
-    lab.textAlignment=NSTextAlignmentCenter;
-    [self addSubview:lab];
     
-    NSArray *data0=[[NSArray alloc]initWithObjects:@"現金流動比率",@"60",nil];
-    NSArray *data1=[[NSArray alloc]initWithObjects:@"速動比率",@"70",nil];
-    NSArray *data2=[[NSArray alloc]initWithObjects:@"資金積壓天數",@"40",nil];
-    NSArray *data3=[[NSArray alloc]initWithObjects:@"存貨週轉天數",@"50",nil];
-    NSArray *data4=[[NSArray alloc]initWithObjects:@"淨利率",@"55",nil];
+    MEfficacy *data=_aryBarData;
     
-    NSMutableArray *aryData=[[NSMutableArray alloc]initWithObjects:data0,data1,data2,data3,data4,nil];
-    
-    for (int i=0; i<[aryData count]; i++) {
-        
-        //barTitle
-        UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(20, (i*25)+70,85, 15)];
-        lab.text=aryData[i][0];
-        lab.font=[UIFont systemFontOfSize:12];
-        lab.textAlignment=NSTextAlignmentRight;
+        //title
+        UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40)];
+        lab.text=[NSString stringWithFormat:@"%@(%@)",data.name,data.pr];
         lab.backgroundColor=[UIColor whiteColor];
+        lab.textColor=[UIColor colorWithRed:22.0/255.0 green:172.0/255.0 blue:197.0/255.0 alpha:1.0];
+        lab.textAlignment=NSTextAlignmentCenter;
         [self addSubview:lab];
-        
+       
+        //橫線
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextSetStrokeColorWithColor(ctx, [UIColor lightGrayColor].CGColor);
+        CGContextMoveToPoint(ctx, 0, 41);
+        CGContextAddLineToPoint(ctx, self.frame.size.width, 41);
+        CGContextStrokePath(ctx);
+
+    
+        for (int i=0; i<[data.effTargetArray count]; i++) {
+
+        //barTitle
+        UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(5, (i*25)+65,70, 15)];
+        labTitle.text=[data.effTargetArray[i]name];
+        labTitle.font=[UIFont systemFontOfSize:12];
+        labTitle.textAlignment=NSTextAlignmentRight;
+        labTitle.backgroundColor=[UIColor whiteColor];
+        [self addSubview:labTitle];
         
         //bar
-        CGFloat value=[aryData[i][1]floatValue];
+        CGFloat value=[[_aryBarData.effTargetArray[i]pr] floatValue];
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSetFillColorWithColor(context, [UIColor lightGrayColor].CGColor);//填充顏色
-        CGContextFillRect(context,CGRectMake(110, (i*25)+73, value*1.8, 10));//填充框
+        CGContextFillRect(context,CGRectMake(80, (i*25)+68, value*1.6, 10));//填充框
         CGContextDrawPath(context, kCGPathFillStroke);//繪畫路徑
         
         //barValue
+            UILabel *labValue=[[UILabel alloc]initWithFrame:CGRectMake(80+(value*1.6)+2, (i*25)+68,25, 10)];
+            labValue.text=[data.effTargetArray[i]pr];
+            labValue.font=[UIFont systemFontOfSize:12];
+            labValue.textAlignment=NSTextAlignmentLeft;
+            labValue.backgroundColor=[UIColor whiteColor];
+            [self addSubview:labValue];
+
 
     }
     
     //直線
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextMoveToPoint(ctx, 110, 70);
-    CGContextAddLineToPoint(ctx, 110, 188);
+    CGContextMoveToPoint(ctx, 80, 65);
+    CGContextAddLineToPoint(ctx, 80, 182);
     CGContextStrokePath(ctx);
-    
-    //橫bar
-    
-    
-    
-    
 }
 
 /*

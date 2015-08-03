@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MEfficacy.h"
 @interface MBarChartView : UIView
-@property (nonatomic, strong) NSArray* aryBarData;
+@property (nonatomic, strong) MEfficacy* aryBarData;
 
 @end
