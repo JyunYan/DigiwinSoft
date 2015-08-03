@@ -14,6 +14,7 @@
 #import "MDataBaseManager.h"
 #import "MLabelPieChartViewController.h"
 #import "MRadarChartViewController.h"
+#import "MManageItem.h"
 
 
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
@@ -27,8 +28,9 @@
 @interface MStatusPieChartViewController ()<UITableViewDelegate, UITableViewDataSource, MLabelPieChartViewControllerDelegate>
 
 @property (nonatomic, assign) CGRect viewRect;
-
 @property (nonatomic,strong) UITableView* tableView;
+
+@property (nonatomic, strong) NSArray* dataArray;
 
 @end
 
@@ -47,6 +49,8 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    _dataArray = [[MDataBaseManager sharedInstance] loadCompManageItemArray];
     
     [self createChartView];
 }

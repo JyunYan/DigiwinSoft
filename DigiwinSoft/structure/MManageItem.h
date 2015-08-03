@@ -16,4 +16,6 @@
 @property (nonatomic, strong) NSString* type;
 @property (nonatomic, strong) NSString* review;
 
+@property (nonatomic, strong) NSArray* issueArray;
+
 @end

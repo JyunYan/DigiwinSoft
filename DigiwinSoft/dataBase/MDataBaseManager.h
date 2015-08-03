@@ -87,6 +87,11 @@
 - (NSArray*)loadCompanyEfficacyArray;
 - (NSArray*)loadCompEffTargetArrayWithEffID:(NSString*)uuid;
 
+- (NSArray*)loadCompManageItemArray;
+- (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid;
+
+- (MTarget*)loadTargetInfoWithID:(NSString*)uuid;
+
 #pragma mark - 我的規劃/我的攻略
 // get 我的規劃/我的攻略
 - (NSArray*)loadMyPlanArray;

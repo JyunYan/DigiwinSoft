@@ -1292,22 +1292,67 @@ static MDataBaseManager* _director = nil;
         manageItem.type = [rs stringForColumn:@"TYPE"];
         manageItem.review = [rs stringForColumn:@"REVIEW"];
         
+        NSArray* issArray = [self loadCompMaItemIssueArrayWithMaItemID:manageItem.uuid];
+        manageItem.issueArray = issArray;
+        
         [array addObject:manageItem];
     }
     return array;
 }
 
-- (void)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid
+- (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid
 {
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* sql = @"";
+    NSString* sql = @"select * from R_COMP_MA_ISSUE as rcmi inner join M_ISSUE as mi on mi.ID = rcmi.ISSUE_ID where rcmi.COMP_ID = ? and rcmi.MA_ID = ? order by rcmi.DATE desc";
     //select *
     //from R_COMP_MA_ISSUE as rcmi
-    //inner M_ISSUE as mi on mi.ID = rcmi.ISSUE_ID
+    //inner join M_ISSUE as mi on mi.ID = rcmi.ISSUE_ID
+    //where rcmi.COMP_ID = 'cmp-001' and rcmi.MA_ID = 'mana-002'
+    //order by rcmi.DATE desc
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, compid];
+    while ([rs next]) {
+        
+        MIssue* issue = [MIssue new];
+        issue.uuid = [rs stringForColumn:@"ID"];
+        issue.name = [rs stringForColumn:@"NAMe"];
+        issue.desc = [rs stringForColumn:@"DESCRIPTION"];
+        issue.reads = [rs stringForColumn:@"READS"];
+        issue.pr = [rs stringForColumn:@"ISSUE_PR"];
+        
+        NSString* tarid = [rs stringForColumn:@"TAR_ID"];
+        MTarget* target = [self loadTargetInfoWithID:tarid];
+        issue.target = target;
+    }
+    return array;
 }
 
-
 #pragma mark - 通用
+
+- (MTarget*)loadTargetInfoWithID:(NSString*)uuid
+{
+    NSString* sql = @"select * from M_TARGET as mt inner join R_IND_TAR as rit on rit.TAR_ID = mt.ID inner join R_COMP_TAR as rct on rct.TAR_ID = rit.TAR_ID where rit.TAR_ID = ? order by rct.DATETIME desc limit 1";
+    
+    MTarget* target = [MTarget new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, uuid];
+    if ([rs next]) {
+        target.uuid = uuid;
+        target.name = [rs stringForColumn:@"NAME"];
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
+        target.top = [rs stringForColumn:@"TOP"];
+        target.avg = [rs stringForColumn:@"AVG"];
+        target.bottom = [rs stringForColumn:@"BOTTOM"];
+        target.upMin = [rs stringForColumn:@"UP_MIN"];
+        target.upMax = [rs stringForColumn:@"UP_MAX"];
+        target.valueR = [rs stringForColumn:@"VALUE_R"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+    }
+    return target;
+}
 
 - (MPhenomenon*)loadPhenWithID:(NSString*)phenid
 {
