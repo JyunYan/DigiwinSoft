@@ -97,6 +97,7 @@
     carousel.type = iCarouselTypeWheel;
     carousel.bounceDistance = 10.;
     carousel.backgroundColor = [UIColor clearColor];
+    carousel.currentItemIndex = _defaultIndex;
     
     return carousel;
 }
@@ -246,7 +247,6 @@
     _meterView.target = issue.target;
     [_meterView setNeedsDisplay];
 }
-
 
 
 /*

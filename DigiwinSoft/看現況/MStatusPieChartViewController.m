@@ -33,14 +33,18 @@
 @property (nonatomic, strong) NSArray* dataArray;
 @property (nonatomic, strong) NSArray* issueArray;
 
+@property (nonatomic, assign) NSInteger pieIndex;
+
 @end
 
 @implementation MStatusPieChartViewController
 
-- (id)initWithFrame:(CGRect) rect {
+- (id)initWithFrame:(CGRect)rect
+{
     self = [super init];
     if (self) {
         _viewRect = rect;
+        _pieIndex = 0;
     }
     return self;
 }
@@ -53,8 +57,8 @@
     
     
     _dataArray = [[MDataBaseManager sharedInstance] loadCompManageItemArray];
-    
     _issueArray = [NSArray new];
+    
     
     
     [self createChartView];
@@ -204,6 +208,8 @@
 
 - (void)reloadTableView:(NSInteger) index
 {
+    _pieIndex = index;
+    
     MManageItem* manageItem = [_dataArray objectAtIndex:index];
     _issueArray = manageItem.issueArray;;
     [_tableView reloadData];
@@ -253,7 +259,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    MManageItem* item = [_dataArray objectAtIndex:indexPath.row];
+    MManageItem* item = [_dataArray objectAtIndex:_pieIndex];
     MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]initWithManageItem:item];
     MRouletteVC.defaultIndex = indexPath.row;
     [self.navigationController pushViewController:MRouletteVC animated:YES];
@@ -268,7 +274,7 @@
     if (aryGuide.count == 0)
         return;
     MGuide* guide = [aryGuide objectAtIndex:0];
-    NSArray* array = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:guide.target];
+    NSArray* array = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:guide.target limit:12];
     NSArray* newArray = [NSArray new];
     newArray = [newArray arrayByAddingObjectsFromArray:array];
     newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(1, array.count-1)]];

@@ -247,7 +247,7 @@
 
 -(void)btnShowImg:(id)sender
 {
-    NSArray* array = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:_guide.target];
+    NSArray* array = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:_guide.target limit:12];
     
     MTarInfoChartView* view = [[MTarInfoChartView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height - 44)];
     [view setHistoryArray:array];

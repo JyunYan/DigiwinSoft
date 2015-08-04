@@ -610,11 +610,11 @@ static MDataBaseManager* _director = nil;
 }
 
 // p29
-- (NSArray*)loadHistoryTargetArrayWithTarget:(MTarget*)target
+- (NSArray*)loadHistoryTargetArrayWithTarget:(MTarget*)target limit:(NSInteger)limit
 {
     NSString* indid = [MDirector sharedInstance].currentUser.industryId;
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* sql = @"select * from R_IND_TAR as rit inner join M_TARGET as tar on tar.ID = rit.TAR_ID inner join R_COMP_TAR as rct on tar.ID = rct.TAR_ID where rit.IND_ID = ? and tar.ID = ? and rct.COMP_ID = ? order by rct.DATETIME desc limit 12";
+    NSString* sql = @"select * from R_IND_TAR as rit inner join M_TARGET as tar on tar.ID = rit.TAR_ID inner join R_COMP_TAR as rct on tar.ID = rct.TAR_ID where rit.IND_ID = ? and tar.ID = ? and rct.COMP_ID = ? order by rct.DATETIME desc";
     // select *
     // from R_IND_TAR as rit
     // inner join M_TARGET as tar on tar.ID = rit.TAR_ID
@@ -622,9 +622,12 @@ static MDataBaseManager* _director = nil;
     // where rit.IND_ID = 'ind-001' and tar.ID = 'tar-001' and rct.COMP_ID = 'cmp-001'
     // order by rct.DATETIME desc
     
+    if(limit > 0)
+        sql = [NSString stringWithFormat:@"%@ limit %d", sql, (int)limit];
+    
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, indid, target.uuid, compid];
+    FMResultSet* rs = [self.db executeQuery:sql, indid, target.uuid, compid, limit];
     while([rs next]){
         MTarget* target = [MTarget new];
         target.uuid = [rs stringForColumn:@"ID"];
@@ -644,6 +647,14 @@ static MDataBaseManager* _director = nil;
         
         [array insertObject:target atIndex:0];
     }
+    
+    // 補到跟limit一樣數量
+    NSInteger count = limit - array.count;
+    for (int i = 0; i<count; i++) {
+        MTarget* target = [MTarget new];
+        [array insertObject:target atIndex:0];
+    }
+    
     return array;
 }
 
