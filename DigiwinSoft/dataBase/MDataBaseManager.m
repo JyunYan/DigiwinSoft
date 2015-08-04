@@ -1336,7 +1336,7 @@ static MDataBaseManager* _director = nil;
         
         NSArray* issArray = [self loadCompMaItemIssueArrayWithMaItemID:manageItem.uuid];
         manageItem.issueArray = issArray;
-        
+ 
         [array addObject:manageItem];
     }
     return array;

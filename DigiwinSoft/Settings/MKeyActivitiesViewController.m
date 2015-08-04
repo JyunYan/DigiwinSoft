@@ -61,6 +61,9 @@
     
     UIView* listView = [self createListView:CGRectMake(0., posY, DEVICE_SCREEN_WIDTH, height)];
     [self.view addSubview:listView];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadGuide:) name:@"ReloadGuide" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -472,6 +475,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - NSNotification methods
+
+- (void)reloadGuide:(NSNotification*) notification
+{
+    NSMutableArray* activityArray = [notification object];
+    _activityArray = activityArray;
+    _guide.activityArray = _activityArray;
+    
+    [_tableView reloadData];
 }
 
 #pragma mark - other methods

@@ -8,6 +8,7 @@
 
 #import "MLabelPieChartViewController.h"
 #import "PieChartView.h"
+#import "MManageItem.h"
 
 
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
@@ -37,15 +38,38 @@
 
 @property (nonatomic,strong) UIView *pieCenterStarView;
 
+@property (nonatomic, assign) NSInteger centerStarNum;
+
 @end
 
 @implementation MLabelPieChartViewController
 
-- (id)initWithFrame:(CGRect) rect ValueTitleArray:(NSMutableArray*) valueTitleArray {
+- (id)initWithFrame:(CGRect) rect DataArray:(NSArray*) dataArray {
     self = [super init];
     if (self) {
         _viewRect = rect;
+        
+        
+        NSNumberFormatter* numberFormatter = [NSNumberFormatter new];
+        numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+
+        NSMutableArray* valueTitleArray = [NSMutableArray new];
+        for (MManageItem* manageItem in dataArray) {
+            if ([manageItem.name isEqualToString:@"綜合表現"]) {
+                _centerStarNum = [manageItem.review integerValue];
+                continue;
+            }
+            
+            NSMutableArray* array = [NSMutableArray new];
+            [array addObject:manageItem.name];
+            
+            NSNumber* number = [numberFormatter numberFromString:manageItem.review];
+            [array addObject:number];
+            
+            [valueTitleArray addObject:array];
+        }
         self.valueTitleArray = valueTitleArray;
+
         
         self.valueArray = [NSMutableArray new];
         self.valueAngleArray = [NSMutableArray new];
@@ -136,7 +160,7 @@
     [view addSubview:self.pieContainer];
     
     CGFloat centerImageSize = 13. * height / 178.5;
-    self.pieCenterStarView = [self createCenterStarsView:CGRectMake(0, self.pieFrame.size.height/2, self.pieFrame.size.width/5, 15) ImageSize:CGSizeMake(centerImageSize, centerImageSize) StarNum:3.5];
+    self.pieCenterStarView = [self createCenterStarsView:CGRectMake(0, self.pieFrame.size.height/2, self.pieFrame.size.width/5, 15) ImageSize:CGSizeMake(centerImageSize, centerImageSize) StarNum:_centerStarNum];
     self.pieCenterStarView.center = CGPointMake(self.pieFrame.size.width/2, self.pieFrame.size.height/2 + 10);
     self.pieCenterStarView.backgroundColor = [UIColor clearColor];
     self.pieCenterStarView.userInteractionEnabled = NO;
@@ -336,7 +360,7 @@
     }
     
     
-    [self.delegate reloadTableView];
+    [self.delegate reloadTableView:index];
 }
 
 - (void)onCenterClick:(PieChartView *)pieChartView
@@ -350,7 +374,7 @@
     
 //    [self.pieChartView setAmountText:@"75"];
     [self.pieChartView setTitleText:@"綜合表現"];
-    [self resetCenterStarViewWithStarNum:3.5];
+    [self resetCenterStarViewWithStarNum:_centerStarNum];
     
     
     NSInteger count = self.valueAngleArray.count;
@@ -361,9 +385,6 @@
         UIView* pieStarView = [self.view viewWithTag:TAG_PIE_STARVIEW + 10 * i];
         [pieStarView setHidden:YES];
     }
-    
-    
-    [self.delegate reloadTableView];
 }
 
 - (CGPoint)getApproximateMidPointForArcWithStartAngle:(CGFloat)startAngle andDegrees:(CGFloat)endAngle {

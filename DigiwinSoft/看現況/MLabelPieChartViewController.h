@@ -10,7 +10,7 @@
 
 @protocol MLabelPieChartViewControllerDelegate <NSObject>
 
-- (void)reloadTableView;
+- (void)reloadTableView:(NSInteger) index;
 
 @end
 
@@ -18,6 +18,6 @@
 
 @property (nonatomic, strong) id<MLabelPieChartViewControllerDelegate> delegate;
 
-- (id)initWithFrame:(CGRect) rect ValueTitleArray:(NSMutableArray*) valueTitleArray;
+- (id)initWithFrame:(CGRect) rect DataArray:(NSArray*) dataArray;
 
 @end

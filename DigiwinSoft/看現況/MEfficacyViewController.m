@@ -155,7 +155,7 @@
 {
     NSInteger page = self.pageControl.currentPage;
     CGFloat width;
-    width =_mScrollPage.contentSize.width/[_aryData count]-10;
+    width =(_mScrollPage.contentSize.width-40)/[_aryData count];
     [_mScrollPage setContentOffset:CGPointMake(page*width, 0) animated:YES];
 }
 - (void)scrollViewDidScroll:(UIScrollView *)sender {

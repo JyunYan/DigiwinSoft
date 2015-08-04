@@ -83,6 +83,9 @@
     // save data
     NSArray* array = _guide.activityArray;
     [[MDataBaseManager sharedInstance] insertCustActivitys:array];
+    
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadGuide" object:array];
 }
 
 - (void)didReceiveMemoryWarning {

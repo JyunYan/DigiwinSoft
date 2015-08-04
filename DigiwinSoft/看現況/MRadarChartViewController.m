@@ -10,11 +10,13 @@
 #import "MConfig.h"
 #import "MRadarChartView.h"
 #import "MRouletteViewController.h"
+#import "MDataBaseManager.h"
+#import "MEfficacy.h"
 @interface MRadarChartViewController ()
 @property (nonatomic, strong) UIScrollView *mScroll;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
-@property (nonatomic, strong) NSMutableArray *aryData;
-@property (nonatomic, strong) NSArray *aryAddData;
+@property (nonatomic, strong) NSMutableArray *aryData;//放入雷達圖顯示的資料
+@property (nonatomic, strong) NSArray *aryAddData;//測試加入雷達圖的資料
 
 @end
 
@@ -24,10 +26,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor whiteColor];
+    [self prepareData];
     [self createScroll];
     [self createRadarChart];
     [self createBtn];
-
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -38,6 +40,18 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)prepareData
+{
+    //放入雷達圖顯示的資料
+    NSArray *ary=[[MDataBaseManager sharedInstance]loadCompanyEfficacyArray];
+    _aryData =[[NSMutableArray alloc]initWithArray:ary];
+    
+    //測試加入雷達圖的資料
+    NSArray *ary1=[[NSArray alloc]initWithObjects:ary[0],ary[1],ary[2], nil];
+    NSArray *ary2=[[NSArray alloc]initWithObjects:ary[3],ary[4],ary[0],ary[1], nil];
+    _aryAddData=[[NSMutableArray alloc]initWithObjects:ary1,ary2, nil];
+
 }
 -(void)createScroll
 {
@@ -55,63 +69,87 @@
     btn.backgroundColor=[UIColor brownColor];
     [_mScroll addSubview:btn];
     
+    //按鍵數量不固定
+    NSInteger btnCount= [_aryAddData count];
+    CGFloat btnWidth=40;
+    CGFloat btnHeight=40;
     
-    UIButton *btnAdd=[[UIButton alloc]initWithFrame:CGRectMake(0, 20, 50, 30)];
-    btnAdd.backgroundColor=[UIColor brownColor];
-    [btnAdd addTarget:self
-               action:@selector(btnAddRadar:)
-     forControlEvents:UIControlEventTouchUpInside
-     ];
-    btnAdd.tag=101;
-    [btnAdd setTitle:@"Add1" forState:UIControlStateNormal];
-    [_mScroll addSubview:btnAdd];
+    UIView *btnView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, ((btnCount*40)+(btnCount-1)*10), 40)];
+    btnView.backgroundColor=[UIColor whiteColor];
+    btnView.center=_mScroll.center;
+    [_mScroll addSubview:btnView];
+
+    for (NSInteger i=0; i<btnCount; i++) {
+            UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(i*50, 0, btnWidth, btnHeight)];
+            btn.backgroundColor=[UIColor lightGrayColor];
+            [btn addTarget:self action:@selector(btnAddRadar:) forControlEvents:UIControlEventTouchUpInside];
+            btn.tag=101+i;
+            [btn setTitle:@"產" forState:UIControlStateNormal];
+            btn.layer.cornerRadius=btnWidth/2;
+            UIImageView *img=[[UIImageView alloc]initWithFrame:CGRectMake(24, 24, 16, 16)];
+            img.image=[UIImage imageNamed:@"checkbox_fill.png"];
+            img.layer.cornerRadius=8;
+            img.layer.masksToBounds = YES;
+            [btn addSubview:img];
+            [btnView addSubview:btn];
+    }
     
-    
-    UIButton *btnAdd1=[[UIButton alloc]initWithFrame:CGRectMake(0, 60, 50, 30)];
-    btnAdd1.backgroundColor=[UIColor brownColor];
-    [btnAdd1 addTarget:self
-                action:@selector(btnAddRadar:)
-      forControlEvents:UIControlEventTouchUpInside
-     ];
-    btnAdd1.tag=102;
-    [btnAdd1 setTitle:@"Add2" forState:UIControlStateNormal];
-    [_mScroll addSubview:btnAdd1];
 }
 -(void)createRadarChart
 {
     _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
-    NSArray *data0=[[NSArray alloc]initWithObjects:@"最適化存貨周轉(21)",@"data0",@"21",@"value",nil];
-    NSArray *data1=[[NSArray alloc]initWithObjects:@"提昇供應鏈品質(75)",@"data1",@"75",@"value",nil];
-    NSArray *data2=[[NSArray alloc]initWithObjects:@"提升生產效率(70)",@"data2",@"70",@"value",nil];
-    _aryData=[[NSMutableArray alloc]initWithObjects:data0,data1,data2,nil];
-//    _RadarChart.aryRadarChartData=_aryData;//資料還未帶
+    _RadarChart.aryRadarChartData=_aryData;
     [_mScroll addSubview:_RadarChart];
 }
 
 #pragma mark - UIButton
 -(void)btnAddRadar:(id)sender
 {
-    if ([sender tag]==101) {
-        NSArray *data4=[[NSArray alloc]initWithObjects:@"增加資料一號(90)",@"data4",@"90",@"value",nil];
-        NSArray *data5=[[NSArray alloc]initWithObjects:@"增加資料二號(100)",@"data5",@"100",@"value",nil];
-        NSArray *data6=[[NSArray alloc]initWithObjects:@"增加資料三號(20)",@"data5",@"20",@"value",nil];
-        _aryAddData=[[NSMutableArray alloc]initWithObjects:data4,data5,data6, nil];
-    }else
-    {
-        NSArray *data7=[[NSArray alloc]initWithObjects:@"增加資料四號(0)",@"data4",@"0",@"value",nil];
-        NSArray *data8=[[NSArray alloc]initWithObjects:@"增加資料五號(70)",@"data5",@"70",@"value",nil];
-        _aryAddData=[[NSMutableArray alloc]initWithObjects:data7,data8, nil];
-    }
-    
-    for (NSArray *MyAddData in _aryAddData) {
-        if ([_aryData containsObject:MyAddData])  //是否存在陣列裡
+    if ([sender isSelected]) {
+        //取消選擇
+        [sender setImage:nil forState:UIControlStateNormal];
+        [sender setSelected:NO];
+        
+        UIButton *button = (UIButton *)sender;
+
+        NSLog(@"%@",button);
+        
+        
+//        for (NSArray *MyAddData in _aryAddData[[sender tag]-101])
+//        {
+//            NSLog(@"%d",[sender tag]-101);
+//            [_aryData removeObject:MyAddData];
+//            break;
+        
+//        for (MEfficacy *test1 in _aryData) {
+//            for (MEfficacy *test2 in _aryAddData[[sender tag]-101]) {
+//                if ([test1 isEqual:test2]) {
+//                    [_aryData removeObject:test1];
+//                }
+//            }
+//        }
+        [_aryData removeObjectsInArray:_aryAddData[[sender tag]-101]];
+        
+        
+        
+//        }
+        
+    } else {
+        //選擇
+        if (([_aryData count]+([_aryAddData[[sender tag]-101]count]))>8)
         {
-            [_aryData removeObject:MyAddData];
-        } else
-            [_aryData addObject:MyAddData];
+            UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"雷達圖最多只能顯示八筆資料" delegate:self cancelButtonTitle:@"確認" otherButtonTitles:nil, nil];
+            [theAlert show];
+            return;
+        }
+
+        [sender setImage:[UIImage imageNamed:@"icon_red_circle.png"] forState:UIControlStateNormal];
+        [sender setSelected:YES];
+        [_aryData addObjectsFromArray:_aryAddData[[sender tag]-101]];//把選擇的新增資料加進去
     }
     
-    [_RadarChart removeFromSuperview];
+    NSLog(@"%d",[sender tag]);
+     [_RadarChart removeFromSuperview];
     _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
     _RadarChart.aryRadarChartData=_aryData;
     [_mScroll addSubview:_RadarChart];
@@ -121,7 +159,6 @@
     MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
     [self.navigationController pushViewController:MRouletteVC animated:YES];
 }
-
 /*
 #pragma mark - Navigation
 
