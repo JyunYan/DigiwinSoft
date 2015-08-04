@@ -392,6 +392,48 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
+- (NSArray*)loadGuideSampleArrayWithIssue:(MIssue*)issue
+{
+    NSString* sql = @"select g.*, t.NAME, t.UNIT, t.TREND from R_GUIDE_ISSUE as rgi inner join M_GUIDE as g on g.ID = rgi.GUIDE_ID inner join M_TARGET as t on t.ID = g.TAR_ID where rgi.ISSUE_ID = ?";
+    // select g.*, t.NAME, t.UNIT, t.TREND
+    // from R_GUIDE_ISSUE as rgi
+    // inner join M_GUIDE as g on g.ID = rgi.GUIDE_ID
+    // inner join M_TARGET as t on t.ID = g.TAR_ID
+    // where rgi.ISSUE_ID = 'iss-001'
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, issue.uuid];
+    while([rs next]){
+        
+        MGuide* guide = [MGuide new];
+        
+        guide.uuid = [rs stringForColumn:@"ID"];
+        guide.name = [rs stringForColumnIndex:2];   // 對策name
+        guide.desc = [rs stringForColumn:@"DESCRIPTION"];
+        guide.review = [rs stringForColumn:@"REVIEW"];
+        guide.url = [rs stringForColumn:@"URL"];
+        
+        // 指標
+        MTarget* target = guide.target;
+        target.uuid = [rs stringForColumn:@"TAR_ID"];
+        target.name = [rs stringForColumnIndex:6];  // 指標name
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
+        
+        [self loadTargetDetailWithTarget:target];
+        
+        // 推薦職能
+        guide.suggestSkill = [self loadSuggestSkillWithID:guide.uuid type:0];
+        
+        // 關鍵活動
+        [guide.activityArray addObjectsFromArray:[self loadActivitySampleArrayWithGuide:guide]];
+        
+        [array addObject:guide];
+    }
+    return array;
+}
+
 - (NSArray*)loadActivitySampleArrayWithGuide:(MGuide*)guide
 {
     NSString* sql = @"select ma.*, mt.NAME, mt.UNIT, mt.TREND from R_GUIDE_ACT as rga inner join M_ACTIVITY as ma on rga.ACT_ID = ma.ID inner join M_TARGET as mt on ma.TAR_ID = mt.ID where rga.GUIDE_ID = ?";
@@ -1312,7 +1354,7 @@ static MDataBaseManager* _director = nil;
     
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, compid];
+    FMResultSet* rs = [self.db executeQuery:sql, compid, uuid];
     while ([rs next]) {
         
         MIssue* issue = [MIssue new];
@@ -1325,6 +1367,8 @@ static MDataBaseManager* _director = nil;
         NSString* tarid = [rs stringForColumn:@"TAR_ID"];
         MTarget* target = [self loadTargetInfoWithID:tarid];
         issue.target = target;
+        
+        [array addObject:issue];
     }
     return array;
 }

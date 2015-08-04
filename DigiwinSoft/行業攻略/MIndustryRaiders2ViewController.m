@@ -31,14 +31,35 @@
 @property (nonatomic, assign) NSInteger operateIndex;
 @property (nonatomic, strong) NSMutableArray *aryList;
 @property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
+
+
+@property (nonatomic, strong) UIView* descView; //說明view
+@property (nonatomic, strong) UIView* guideView; //對策view
+@property (nonatomic, strong) UITableView *tbl;
+@property (nonatomic, assign) NSInteger from;
+
 @end
 
 @implementation MIndustryRaiders2ViewController
 
-- (id)init
+- (id)initWithPhenomenon:(MPhenomenon*)phen
 {
     if(self = [super init]){
         _operateIndex = 0;
+        
+        _phen = phen;
+        _from = GUIDE_FROM_PHEN;
+    }
+    return self;
+}
+
+- (id)initWithIssue:(MIssue*)issue
+{
+    if(self = [super init]){
+        _operateIndex = 0;
+        
+        _issue = issue;
+        _from = GUIDE_FROM_ISSUE;
     }
     return self;
 }
@@ -64,16 +85,6 @@
     [super viewWillAppear:YES];
     self.automaticallyAdjustsScrollViewInsets = NO;
  
-    /*
-    //rightBarButtonItem
-    UIButton* settingbutton = [[UIButton alloc] initWithFrame:CGRectMake(320-37, 10, 25, 25)];
-    [settingbutton setBackgroundImage:[UIImage imageNamed:@"icon_more.png"] forState:UIControlStateNormal];
-    [settingbutton addTarget:self action:@selector(clickedBtnSetting:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
-    self.navigationItem.rightBarButtonItem = bar_item;
-     */
-
-    
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
     self.navigationItem.leftBarButtonItem = back;
     
@@ -83,121 +94,184 @@
     [super viewDidLayoutSubviews];
     
     // Force your tableview margins (this may be a bad idea)
-    if ([tbl respondsToSelector:@selector(setSeparatorInset:)]) {
-        [tbl setSeparatorInset:UIEdgeInsetsZero];
+    if ([_tbl respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_tbl setSeparatorInset:UIEdgeInsetsZero];
     }
     
-    if ([tbl respondsToSelector:@selector(setLayoutMargins:)]) {
-        [tbl setLayoutMargins:UIEdgeInsetsZero];
+    if ([_tbl respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_tbl setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+
+- (void)setPhen:(MPhenomenon *)phen
+{
+    _phen = phen;
+    _from = GUIDE_FROM_PHEN;
+}
+
+- (void)setIssue:(MIssue *)issue
+{
+    _issue = issue;
+    _from = GUIDE_FROM_ISSUE;
+}
+
 #pragma mark - create view
 - (void)loadData
 {
-    NSArray *aryGuide=[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen];
-    _aryList=[NSMutableArray arrayWithArray:aryGuide];
+    NSArray *aryGuide = nil;
+    if(_from == GUIDE_FROM_PHEN)
+        aryGuide = [[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen];
+    else if(_from == GUIDE_FROM_ISSUE)
+        aryGuide = [[MDataBaseManager sharedInstance] loadGuideSampleArrayWithIssue:_issue];
+    
+    _aryList = [NSMutableArray arrayWithArray:aryGuide];
 }
 -(void) addMainMenu
 {
-    //Label
-    UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(0, 64,DEVICE_SCREEN_WIDTH, 40)];
+    CGFloat posY = 64.;
+    
+    //標題
+    UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(DEVICE_SCREEN_WIDTH*0.025, posY,DEVICE_SCREEN_WIDTH*0.95, 40)];
     labTitle.text=self.phen.subject;
     labTitle.backgroundColor=[UIColor whiteColor];
     labTitle.textAlignment=NSTextAlignmentCenter;
     [labTitle setFont:[UIFont systemFontOfSize:16]];
     [self.view addSubview:labTitle];
     
-    //imgGray
-    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64+40,DEVICE_SCREEN_WIDTH, 10)];
-    imgGray.backgroundColor=[UIColor colorWithRed:193.0/255.0 green:193.0/255.0 blue:193.0/255.0 alpha:1.0];
-    [self.view addSubview:imgGray];
+    posY += labTitle.frame.size.height;
+    
+    //灰色間隔
+    UIView* grayView =[[UIView alloc]initWithFrame:CGRectMake(0, posY,DEVICE_SCREEN_WIDTH, 10)];
+    grayView.backgroundColor=[[MDirector sharedInstance] getCustomLightGrayColor];
+    [self.view addSubview:grayView];
+    
+    posY += grayView.frame.size.height;
     
     //Segmented
-    NSArray *itemArray = [NSArray arrayWithObjects:@"說明",@"建議對策",nil];
-    _customSegmentedControl = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(DEVICE_SCREEN_WIDTH, 40) BarIndex:1 TextSize:13.];
-    _customSegmentedControl.frame = CGRectMake(0, 20+44+40+10,DEVICE_SCREEN_WIDTH, 40);
-    [_customSegmentedControl addTarget:self
-                         action:@selector(actionSegmented:)
-               forControlEvents:UIControlEventValueChanged];
-    _customSegmentedControl.tintColor=[UIColor clearColor];
-    _customSegmentedControl.selectedSegmentIndex = 1;
-    [self.view addSubview:_customSegmentedControl];
+    NSString* item1 = (_from == GUIDE_FROM_PHEN) ? @"說明" : @"議題說明";
+    NSArray *itemArray = [NSArray arrayWithObjects:item1,@"建議對策",nil];
+    MCustomSegmentedControl* segment = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(DEVICE_SCREEN_WIDTH, 40) BarIndex:1 TextSize:14.];
+    segment.frame = CGRectMake(0, posY,DEVICE_SCREEN_WIDTH, 40);
+    [segment addTarget:self action:@selector(actionSegmented:) forControlEvents:UIControlEventValueChanged];
+    segment.tintColor=[UIColor clearColor];
+    segment.selectedSegmentIndex = 1;
+    [self.view addSubview:segment];
     
-    //TableView
-    tbl=[[UITableView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT-(20+44+40+10+40+35+49))];
-    tbl.backgroundColor=[UIColor whiteColor];
-    tbl.bounces=NO;
-    tbl.delegate=self;
-    tbl.dataSource = self;
-    [self.view addSubview:tbl];
+    posY += segment.frame.size.height;
     
+    _descView = [self createDescViewWithFrame:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - posY - 49.)];
+    [self.view addSubview:_descView];
 
-    
-    //btnAdd
-    btn=[[UIButton alloc]initWithFrame:CGRectMake(0,tbl.frame.origin.y+tbl.frame.size.height,DEVICE_SCREEN_WIDTH, 35)];
-    btn.backgroundColor=[UIColor colorWithRed:245.0/255.0 green:113.0/255.0 blue:116.0/255.0 alpha:1];
-    [btn setTitle:@"+加入我的規劃清單" forState:UIControlStateNormal];
-    btn.titleLabel.textColor=[UIColor whiteColor];
-    [btn addTarget:self action:@selector(actionAddMyList:) forControlEvents:UIControlEventTouchUpInside]; //設定按鈕動作
-    [self.view addSubview:btn];
-    
-    //textView
-    textView=[[UITextView alloc]initWithFrame:CGRectMake(0,20+44+40+10+40,DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT-320)];
-    textView.backgroundColor=[UIColor whiteColor];
-    textView.text=self.phen.desc;
-    textView.font=[UIFont systemFontOfSize:12];
-    textView.editable=NO;
-    
-    
-    //imgGray
-    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(10,textView.frame.origin.y+textView.frame.size.height+1,DEVICE_SCREEN_WIDTH-20, 1)];
-    imgGray.backgroundColor=[UIColor colorWithRed:193.0/255.0 green:193.0/255.0 blue:193.0/255.0 alpha:1.0];
-    
-    //Label
-    labTarget=[[UILabel alloc]initWithFrame:CGRectMake(20,textView.frame.origin.y+textView.frame.size.height+30,75,20)];
-    labTarget.text=@"指標項目";
-    labTarget.backgroundColor=[UIColor whiteColor];
-    labTarget.textAlignment=NSTextAlignmentCenter;
-    [labTarget setFont:[UIFont systemFontOfSize:12]];
-    
-
-    //TextField
-    txtField=[[UITextField alloc]initWithFrame:CGRectMake(labTarget.frame.origin.x+labTarget.frame.size.width+3,textView.frame.origin.y+textView.frame.size.height+27,200,26)];
-    txtField.backgroundColor=[UIColor whiteColor];
-    txtField.borderStyle=UITextBorderStyleLine;
-    txtField.text=self.phen.target.name;
-    txtField.enabled=NO;
-    txtField.font=[UIFont systemFontOfSize:12];
-    txtField.delegate = self;
+    _guideView = [self createGuideViewWithFrame:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - posY - 49.)];
+    [self.view addSubview:_guideView];
     
 }
+
+- (UIView*)createGuideViewWithFrame:(CGRect)frame
+{
+    UIView* view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:view];
+    
+    //建議對策
+    _tbl =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - 40.)];
+    _tbl.backgroundColor=[UIColor whiteColor];
+    _tbl.bounces=NO;
+    _tbl.delegate=self;
+    _tbl.dataSource = self;
+    [view addSubview:_tbl];
+    
+    CGFloat posY = _tbl.frame.origin.y + _tbl.frame.size.height;
+    
+    UIButton* button = [[UIButton alloc]initWithFrame:CGRectMake(0, posY, view.frame.size.width, 40.)];
+    button.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
+    [button setTitle:@"+加入我的規劃清單" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(actionAddMyList:) forControlEvents:UIControlEventTouchUpInside]; //設定按鈕動作
+    [view addSubview:button];
+    
+    return view;
+}
+
+- (UIView*)createDescViewWithFrame:(CGRect)frame
+{
+    UIView* view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:view];
+    
+    CGFloat posX = DEVICE_SCREEN_WIDTH*0.025;
+    CGFloat posY = 0.;
+    
+    //說明內容
+    NSString* text = (_from == GUIDE_FROM_PHEN) ? _phen.desc : _issue.desc;
+    UITextView* textView=[[UITextView alloc]initWithFrame:CGRectMake(posX,posY,DEVICE_SCREEN_WIDTH*0.95, view.frame.size.height*0.6)];
+    textView.backgroundColor=[UIColor whiteColor];
+    textView.text=text;
+    textView.font=[UIFont systemFontOfSize:14.];
+    textView.editable=NO;
+    [view addSubview:textView];
+    
+    posY += textView.frame.size.height;
+    
+    //灰色分隔線
+    UIView* line =[[UIImageView alloc]initWithFrame:CGRectMake(10, posY, DEVICE_SCREEN_WIDTH - 20, 1)];
+    line.backgroundColor=[[MDirector sharedInstance] getCustomLightGrayColor];
+    [view addSubview:line];
+    
+    posY += line.frame.size.height + 20;
+    
+    //Label
+    UILabel* title=[[UILabel alloc]initWithFrame:CGRectMake(posX,posY,75,30)];
+    title.backgroundColor=[UIColor whiteColor];
+    title.font = [UIFont systemFontOfSize:14];
+    title.textAlignment=NSTextAlignmentCenter;
+    title.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    title.text=@"指標項目";
+    [view addSubview:title];
+    
+    posX += title.frame.size.width + 3;
+    
+    //TextField
+    NSString* text2 = (_from == GUIDE_FROM_PHEN) ? _phen.target.name : _issue.target.name;
+    UITextField* textField=[[UITextField alloc]initWithFrame:CGRectMake(posX,posY,200,30)];
+    textField.delegate = self;
+    textField.backgroundColor=[UIColor whiteColor];
+    textField.borderStyle=UITextBorderStyleLine;
+    textField.text=text2;
+    textField.enabled=NO;
+    textField.font=[UIFont systemFontOfSize:14.];
+    [view addSubview:textField];
+    
+    UIView* left = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
+    textField.leftView = left;
+    textField.leftViewMode = UITextFieldViewModeAlways;
+
+    
+    return view;
+}
+
+#pragma mark - UITextFieldDelegate
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
 }
-- (void)actionSegmented:(id)sender{
-    NSInteger index = [sender selectedSegmentIndex];
-    [_customSegmentedControl moveImgblueBar:index];
+
+- (void)actionSegmented:(id)sender
+{
+    MCustomSegmentedControl* segment = (MCustomSegmentedControl*)sender;
+    NSInteger index = [segment selectedSegmentIndex];
+    [segment moveImgblueBar:index];
 
     switch (index) {
         case 0:
         {
-            [tbl removeFromSuperview];
-            [btn removeFromSuperview];
-            [self.view addSubview:imgGray];
-            [self.view addSubview:textView];
-            [self.view addSubview:labTarget];
-            [self.view addSubview:txtField];
+            [self.view bringSubviewToFront:_descView];
             break;
         }
         case 1:
         {
-            [self.view addSubview:tbl];
-            [self.view addSubview:btn];
-            [imgGray removeFromSuperview];
-            [textView removeFromSuperview];
-            [txtField removeFromSuperview];
-            [labTarget removeFromSuperview];
+            [self.view bringSubviewToFront:_guideView];
             break;
         }
         default:
@@ -219,7 +293,7 @@
             if ([_aryList[i]isCheck]==NO) {
                 [_aryList[i] setIsCheck:YES];
                 NSIndexPath *indexPath=[NSIndexPath indexPathForRow:i inSection:0];
-                [tbl reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+                [_tbl reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
                 NSLog(@"從對策說明勾選:%@",Guide.name);
             }else
             {
@@ -240,12 +314,24 @@
         }
     }
     
-    [tbl reloadData];
+    [_tbl reloadData];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"UpGuideTarget"
                                                   object:nil];
 }
+
+- (void)didAssignManager:(NSNotification*)note
+{
+    id object = note.object;
+    MGuide* guide = (MGuide*)object;
+    [_aryList replaceObjectAtIndex:_operateIndex withObject:guide];
+    
+    [_tbl reloadData];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidAssignManager object:nil];
+}
+
 #pragma mark - UIButton
 
 -(void)clickedBtnSetting:(id)sender
@@ -264,24 +350,9 @@
         }
     }
     
-    if(b){
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:@"成功加入我的規劃" delegate:nil cancelButtonTitle:@"確定" otherButtonTitles:nil];
-        [alert show];
-    }else{
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:@"請勾選對策" delegate:nil cancelButtonTitle:@"確定" otherButtonTitles:nil];
-        [alert show];
-    }
-}
-
-- (void)didAssignManager:(NSNotification*)note
-{
-    id object = note.object;
-    MGuide* guide = (MGuide*)object;
-    [_aryList replaceObjectAtIndex:_operateIndex withObject:guide];
-    
-    [tbl reloadData];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidAssignManager object:nil];
+    NSString* message = (b) ? @"成功加入我的規劃" : @"請勾選對策";
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:message delegate:nil cancelButtonTitle:@"確定" otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)goToBackPage:(id) sender
@@ -296,7 +367,7 @@
     //
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didAssignManager:) name:kDidAssignManager object:nil];
     
-    NSIndexPath* indexPath = [tbl indexPathForCell:cell];
+    NSIndexPath* indexPath = [_tbl indexPathForCell:cell];
     _operateIndex = indexPath.row;
     MGuide* guide = [_aryList objectAtIndex:_operateIndex];
     
@@ -314,7 +385,7 @@
                                                  name:@"UpGuideTarget"
                                                object:nil];
     
-    NSIndexPath* indexPath = [tbl indexPathForCell:cell];
+    NSIndexPath* indexPath = [_tbl indexPathForCell:cell];
     MGuide* guide = [_aryList objectAtIndex:indexPath.row];
     
     MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
@@ -330,13 +401,12 @@
                                                  name:@"UpGuideTarget"
                                                object:nil];
     
-    NSIndexPath* indexPath = [tbl indexPathForCell:cell];
+    NSIndexPath* indexPath = [_tbl indexPathForCell:cell];
     MGuide* guide = [_aryList objectAtIndex:indexPath.row];
-    
-    [MDirector sharedInstance].selectedPhen=_phen;
     
     MRaidersDescriptionViewController *MRaidersDescVC = [[MRaidersDescriptionViewController alloc] init];
     MRaidersDescVC.guide=guide;
+    MRaidersDescVC.from = _from;
     UINavigationController* MRaidersDescNav = [[UINavigationController alloc] initWithRootViewController:MRaidersDescVC];
     MRaidersDescNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     [self.navigationController presentViewController:MRaidersDescNav animated:YES completion:nil];
@@ -365,14 +435,6 @@
 
     return cell;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
-    guide.isCheck = !guide.isCheck;
-    
-    MGuideTableCell* cell = (MGuideTableCell*)[tableView cellForRowAtIndexPath:indexPath];
-    [cell prepareWithGuide:guide];
-}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -398,6 +460,15 @@
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
+    guide.isCheck = !guide.isCheck;
+    
+    MGuideTableCell* cell = (MGuideTableCell*)[tableView cellForRowAtIndexPath:indexPath];
+    [cell prepareWithGuide:guide];
 }
 
 /*

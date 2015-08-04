@@ -12,27 +12,31 @@
 #import "MConfig.h"
 
 #import "iCarousel.h"
+#import "MIssue.h"
+#import "MTarMeterView.h"
+#import "MDirector.h"
+#import "MIndustryRaiders2ViewController.h"
 
 @interface MRouletteViewController ()<iCarouselDataSource, iCarouselDelegate>
-@property (nonatomic, strong) UICollectionView * mCollection;
-@property (nonatomic, strong) NSMutableArray * imagesArray;
-@property (nonatomic, strong) NSMutableArray * imageNamesArray;
-@property (nonatomic, strong) RVCollectionViewLayout * collectionViewLayout;
-
 
 @property (nonatomic, strong) iCarousel* carousel;
-@property (nonatomic, strong) NSArray* issueArray;
+@property (nonatomic, strong) MTarMeterView* meterView;
+@property (nonatomic, strong) UILabel* titleLabel;
+
 @property (nonatomic, assign) CGFloat scale;
+@property (nonatomic, strong) MManageItem* manaItem;
 @end
 
 @implementation MRouletteViewController
 
-- (id)init
+- (id)initWithManageItem:(MManageItem*)manaItem
 {
     self = [super init];
     if(self){
         
         _scale = DEVICE_SCREEN_WIDTH/320.;
+        _manaItem = manaItem;
+        
     }
     return self;
 }
@@ -40,42 +44,138 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title=@"Roulette";
-    
-    UIImageView *backgroundImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64, DEVICE_SCREEN_WIDTH, 520*_scale)];
-    backgroundImageView.image=[UIImage imageNamed:@"bg_status.png"];
-    [self.view addSubview:backgroundImageView];
-    
-    _issueArray = [NSArray arrayWithObjects:@"議題一", @"議題二", @"議題三", @"議題一", @"議題二", @"議題三", @"議題一", @"議題二", @"議題三", @"議題一", @"議題二", @"議題三", @"議題一", @"議題二", @"議題三", @"議題一", @"議題二", @"議題三", nil];
-    
-    [self createRoulett];
+    self.title = _manaItem.name;
 
+    [self initViews];
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)createRoulett
+
+- (void)initViews
 {
-    _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 64, 600*_scale, 120*_scale)];
-    _carousel.center = CGPointMake(DEVICE_SCREEN_WIDTH/2., _carousel.center.y);
-    _carousel.dataSource = self;
-    _carousel.delegate = self;
-    _carousel.type = iCarouselTypeWheel;
-    _carousel.bounceDistance = 10.;
-    _carousel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_carousel];
+    UIScrollView* scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 64. - 49.)];
+    scroll.backgroundColor = [UIColor clearColor];
+    scroll.bounces = NO;
+    [self.view addSubview:scroll];
+    
+    UIImageView *backgroundImageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH, 520*_scale)];
+    backgroundImageView.image=[UIImage imageNamed:@"bg_status.png"];
+    [scroll addSubview:backgroundImageView];
+    
+    _meterView = [self createTarMeterView];
+    [scroll addSubview:_meterView];
+    
+    UIView* view = [self createMeterTitleView];
+    [scroll addSubview:view];
+    
+    _carousel = [self createRoulett];
+    [scroll addSubview:_carousel];
+    
+    UIButton* button = [self createGudieButton];
+    [scroll addSubview:button];
+    
+    scroll.contentSize = CGSizeMake(DEVICE_SCREEN_WIDTH, button.frame.origin.y + button.frame.size.height + 20);
 }
+
+- (iCarousel*)createRoulett
+{
+    //上方轉輪
+    iCarousel* carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, 0, 600*_scale, 120*_scale)];
+    carousel.center = CGPointMake(DEVICE_SCREEN_WIDTH/2., carousel.frame.size.height/2.);
+    carousel.dataSource = self;
+    carousel.delegate = self;
+    carousel.type = iCarouselTypeWheel;
+    carousel.bounceDistance = 10.;
+    carousel.backgroundColor = [UIColor clearColor];
+    
+    return carousel;
+}
+
+- (MTarMeterView*)createTarMeterView
+{
+    CGSize size = [[MDirector sharedInstance] getScaledSize:CGSizeMake(1080, 830)];
+    
+    //計量表
+    MTarMeterView* meter = [[MTarMeterView alloc] initWithFrame:CGRectMake(0, 156*_scale, DEVICE_SCREEN_WIDTH, size.height)];
+    meter.hideName = YES;
+    meter.backgroundColor = [UIColor clearColor];
+    
+    return meter;
+}
+
+- (UIView*)createMeterTitleView
+{
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 184*_scale, DEVICE_SCREEN_WIDTH, 40)];
+    view.backgroundColor = [UIColor clearColor];
+    
+    //指標name
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(DEVICE_SCREEN_WIDTH*0.12, 0, DEVICE_SCREEN_WIDTH*0.5, 40)];
+    _titleLabel.backgroundColor = [UIColor clearColor];
+    _titleLabel.font = [UIFont boldSystemFontOfSize:14.];
+    _titleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    [view addSubview:_titleLabel];
+    
+    //往下一頁button
+    UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(DEVICE_SCREEN_WIDTH*0.88 - 32., 4, 32, 32)];
+    button.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
+    [view addSubview:button];
+    
+    return view;
+}
+
+- (UIButton*)createGudieButton
+{
+    CGFloat posY = _meterView.frame.origin.y + _meterView.frame.size.height;
+    
+    UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(DEVICE_SCREEN_WIDTH*0.375, posY, DEVICE_SCREEN_WIDTH*0.25, 32)];
+    button.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:14.];
+    [button setTitle:@"找對策" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(goToGuideList:) forControlEvents:UIControlEventTouchUpInside];
+
+    if(_manaItem.issueArray.count == 0){
+        button.userInteractionEnabled = NO;
+        button.alpha = 0.5;
+    }
+    
+    return button;
+}
+
+- (void)goToGuideList:(id)sender
+{
+    NSArray* array = _manaItem.issueArray;
+    NSInteger index = _carousel.currentItemIndex % array.count;
+    MIssue* issue = [array objectAtIndex:index];
+    
+    [MDirector sharedInstance].selectedIssue = issue;
+    
+    MIndustryRaiders2ViewController* vc = [[MIndustryRaiders2ViewController alloc] initWithIssue:issue];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - iCarouselDataSource 相關
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    return _issueArray.count*100;
+    // 數量要夠大, 滑動效果才好看
+    NSInteger count = _manaItem.issueArray.count;
+    if(count == 0)
+        return 0;
+    else if(count < 100)
+        return count * (100/count + 1);
+    else
+        return count;
 }
 
 - (UIView*)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
@@ -94,10 +194,13 @@
         [view addSubview:label];
     }
     
-    NSInteger count = _issueArray.count;
-
     UILabel* label = (UILabel*)[view viewWithTag:101];
-    label.text = [_issueArray objectAtIndex:index%count];
+    
+    NSArray* array = _manaItem.issueArray;
+    NSInteger count = array.count;
+    MIssue* issue = [array objectAtIndex:index%count];
+    
+    label.text = issue.name;
     label.alpha = (index == carousel.currentItemIndex) ? 1. : 0.5;
     
     return view;
@@ -109,11 +212,6 @@
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel
 {
     return 110*_scale;
-}
-
-- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
-{
-   
 }
 
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel
@@ -130,6 +228,23 @@
     [carousel reloadItemAtIndex:index animated:NO];
     [carousel reloadItemAtIndex:leftIndex animated:NO];
     [carousel reloadItemAtIndex:rightIndex animated:NO];
+}
+
+- (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel
+{
+    // do drawing
+    NSArray* array = _manaItem.issueArray;
+    NSInteger count = array.count;
+    if(count == 0)
+        return;
+    
+    NSInteger index = carousel.currentItemIndex;
+    MIssue* issue = [array objectAtIndex:index%count];
+    
+    _titleLabel.text = issue.target.name;
+    
+    _meterView.target = issue.target;
+    [_meterView setNeedsDisplay];
 }
 
 

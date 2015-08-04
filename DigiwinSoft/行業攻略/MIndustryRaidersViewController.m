@@ -194,9 +194,7 @@
     MPhenomenon* phen = aryList[index];
     [MDirector sharedInstance].selectedPhen = phen;
     
-    MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] init];
-    [MIndustryRaiders2VC setPhen:phen];
-    [MIndustryRaiders2VC setFrom:GUIDE_FROM_PHEN];
+    MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] initWithPhenomenon:phen];
     [self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
 }
 

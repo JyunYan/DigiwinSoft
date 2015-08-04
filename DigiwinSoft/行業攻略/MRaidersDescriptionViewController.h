@@ -17,4 +17,6 @@
     NSArray *aryList;
 }
 @property (nonatomic, strong) MGuide *guide;
+@property (nonatomic, assign) NSInteger from;
+
 @end

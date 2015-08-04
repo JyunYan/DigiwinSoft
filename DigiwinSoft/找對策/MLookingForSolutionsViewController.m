@@ -246,10 +246,8 @@
     switch (tableView.tag) {
         case TAG_TABLE:
         {
-            MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] init];
-//            [MIndustryRaiders2VC setPhen:phen];
-            [MIndustryRaiders2VC setFrom:GUIDE_FROM_ISSUE];
-            [self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
+            //MIndustryRaiders2ViewController *MIndustryRaiders2VC = [[MIndustryRaiders2ViewController alloc] init];
+            //[self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
             break;
         }
         case TAG_TABLE_RESULT:

@@ -224,6 +224,7 @@
 {
     MRaidersDiagramViewController *MRaidersDiagramVC=[[MRaidersDiagramViewController alloc]init];
     MRaidersDiagramVC.guide=_guide;
+    MRaidersDiagramVC.from = _from;
     [self.navigationController pushViewController:MRaidersDiagramVC animated:YES];
 }
 

@@ -57,6 +57,8 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    [self clean];
+    
     UILabel* label = nil;
     
     // 計量表下方字樣左邊小圖
@@ -65,17 +67,19 @@
     [self createRectAtView:self frame:CGRectMake(579, 702, 37,37) color:self.grayColor];
     [self createRectAtView:self frame:CGRectMake(772, 702, 37,37) color:self.yellowColor];
     
-    label = [self createTextAtView:self frame:CGRectMake(230,155,620,55) text:self.target.name color:self.darkGrayColor fontSize:18];
-    label.textAlignment = NSTextAlignmentCenter;
+    if(!_hideName){
+        label = [self createTextAtView:self frame:CGRectMake(230,155,620,55) text:self.target.name color:self.darkGrayColor fontSize:14];
+        label.textAlignment = NSTextAlignmentCenter;
+    }
     
     // 計量表上方數據字樣
-    label = [self createTextAtView:self frame:CGRectMake(259,290,64,58) text:self.target.valueR color:self.redColor fontSize:10];
+    label = [self createTextAtView:self frame:CGRectMake(240,290,104,58) text:self.target.valueR color:self.redColor fontSize:12];
     label.textAlignment = NSTextAlignmentCenter;
-    label = [self createTextAtView:self frame:CGRectMake(421,290,64,58) text:self.target.bottom color:self.redColor fontSize:10];
+    label = [self createTextAtView:self frame:CGRectMake(408,290,104,58) text:self.target.bottom color:self.redColor fontSize:12];
     label.textAlignment = NSTextAlignmentCenter;
-    label = [self createTextAtView:self frame:CGRectMake(595,290,64,58) text:self.target.avg color:self.redColor fontSize:10];
+    label = [self createTextAtView:self frame:CGRectMake(576,290,104,58) text:self.target.avg color:self.redColor fontSize:12];
     label.textAlignment = NSTextAlignmentCenter;
-    label = [self createTextAtView:self frame:CGRectMake(759,290,64,58) text:self.target.top color:self.redColor fontSize:10];
+    label = [self createTextAtView:self frame:CGRectMake(743,290,104,58) text:self.target.top color:self.redColor fontSize:12];
     label.textAlignment = NSTextAlignmentCenter;
     
     // 計量表下方字樣
@@ -179,6 +183,13 @@
     label.font = [UIFont systemFontOfSize:fontSize];
     [view addSubview:label];
     return label;
+}
+
+- (void)clean
+{
+    for (UIView* view in self.subviews) {
+        [view removeFromSuperview];
+    }
 }
 
 @end

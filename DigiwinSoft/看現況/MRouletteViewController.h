@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MManageItem.h"
 
 @interface MRouletteViewController : UIViewController
+
+@property (nonatomic, assign) NSInteger defaultIndex;
+
+- (id)initWithManageItem:(MManageItem*)manaItem;
 
 @end

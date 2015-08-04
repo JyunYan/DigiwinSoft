@@ -16,4 +16,5 @@
 }
 
 @property (nonatomic, weak) MGuide *guide;
+@property (nonatomic, assign) NSInteger from;
 @end

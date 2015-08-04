@@ -56,34 +56,46 @@
 -(void)addMainMenu
 {
     //screenSize
-    CGSize screenSize = [[UIScreen mainScreen]bounds].size;
-    CGFloat screenWidth = screenSize.width;
-    CGFloat screenHeight = screenSize.height;
+    //CGSize screenSize = [[UIScreen mainScreen]bounds].size;
+    //CGFloat screenWidth = screenSize.width;
+    //CGFloat screenHeight = screenSize.height;
+    
+    NSString *reaosn, *name, *valueT, *unit;
+    if(_from == GUIDE_FROM_PHEN){
+        MPhenomenon* phen = [MDirector sharedInstance].selectedPhen;
+        reaosn = phen.subject;
+        name = phen.target.name;
+        valueT = phen.target.valueT;
+        unit = phen.target.unit;
+    }else if(_from == GUIDE_FROM_ISSUE){
+        MIssue* issue = [MDirector sharedInstance].selectedIssue;
+        reaosn = issue.name;
+        name = issue.target.name;
+        valueT = issue.target.valueT;
+        unit = issue.target.unit;
+    }
 
     //Label
-    UILabel *labReason=[[UILabel alloc]initWithFrame:CGRectMake(20,80, screenWidth-40, 15)];
-    labReason.text=[NSString stringWithFormat:@"緣起 : %@",[MDirector sharedInstance].selectedPhen.subject];
+    UILabel *labReason=[[UILabel alloc]initWithFrame:CGRectMake(20,80, DEVICE_SCREEN_WIDTH-40, 15)];
+    labReason.text=[NSString stringWithFormat:@"緣起 : %@",reaosn];
     labReason.backgroundColor=[UIColor clearColor];
     [labReason setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labReason];
     
     //imgGray
-    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(15,110,screenWidth-30, 1)];
+    UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(15,110,DEVICE_SCREEN_WIDTH-30, 1)];
     imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
     [self.view addSubview:imgGray];
     
     //Label
     UILabel *labTarget=[[UILabel alloc]initWithFrame:CGRectMake(20,125, 200, 15)];
-    labTarget.text=[NSString stringWithFormat:@"指標 : %@",[MDirector sharedInstance].selectedPhen.target.name];;
+    labTarget.text=[NSString stringWithFormat:@"指標 : %@",name];;
     labTarget.backgroundColor=[UIColor clearColor];
     [labTarget setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labTarget];
     
     //Label
     UILabel *labValue=[[UILabel alloc]initWithFrame:CGRectMake(labTarget.frame.origin.x+labTarget.frame.size.width+5,125,100, 15)];
-    
-    NSString *valueT=[MDirector sharedInstance].selectedPhen.target.valueT;
-    NSString *unit=[MDirector sharedInstance].selectedPhen.target.unit;
     labValue.text=[NSString stringWithFormat:@"目標值 : %@%@",valueT,unit];
     labValue.backgroundColor=[UIColor clearColor];
     [labValue setFont:[UIFont systemFontOfSize:14]];
@@ -91,7 +103,7 @@
 
     
     //imgGray
-    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,160,screenWidth,screenHeight-160)];
+    imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,160,DEVICE_SCREEN_WIDTH,DEVICE_SCREEN_HEIGHT-160)];
     imgGray.backgroundColor=[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1];
     [self.view addSubview:imgGray];
     
@@ -106,7 +118,7 @@
     [self.view addSubview:txtName];
     
     //Label
-    UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(70,imgGray.frame.origin.y+20, screenWidth-100, 26)];
+    UILabel *labTitle=[[UILabel alloc]initWithFrame:CGRectMake(70,imgGray.frame.origin.y+20, DEVICE_SCREEN_WIDTH-100, 26)];
     labTitle.text=_guide.name;
     labTitle.backgroundColor=[UIColor clearColor];
     [labTitle setFont:[UIFont systemFontOfSize:14]];
@@ -127,7 +139,7 @@
     [self.view addSubview:labValue2];
     
     //tblActivity
-    tblActivity=[[UITableView alloc]initWithFrame:CGRectMake(20,imgGray.frame.origin.y+90,(screenWidth/2)-20, screenHeight-(imgGray.frame.origin.y+90))];
+    tblActivity=[[UITableView alloc]initWithFrame:CGRectMake(20,imgGray.frame.origin.y+90,(DEVICE_SCREEN_WIDTH/2)-20, DEVICE_SCREEN_HEIGHT-(imgGray.frame.origin.y+90))];
     tblActivity.delegate=self;
     tblActivity.dataSource = self;
     tblActivity.separatorStyle=UITableViewCellSeparatorStyleNone;
@@ -142,7 +154,7 @@
     [tblActivity selectRowAtIndexPath:indexPath animated:NO  scrollPosition:UITableViewScrollPositionBottom];
     
     //tblWorkItem
-    tblWorkItem=[[UITableView alloc]initWithFrame:CGRectMake(20+tblActivity.frame.size.width - 1,imgGray.frame.origin.y+90,(screenWidth/2)-20, screenHeight-(imgGray.frame.origin.y+90))];
+    tblWorkItem=[[UITableView alloc]initWithFrame:CGRectMake(20+tblActivity.frame.size.width - 1,imgGray.frame.origin.y+90,(DEVICE_SCREEN_WIDTH/2)-20, DEVICE_SCREEN_HEIGHT-(imgGray.frame.origin.y+90))];
     tblWorkItem.delegate=self;
     tblWorkItem.dataSource = self;
     tblWorkItem.separatorStyle=UITableViewCellSeparatorStyleNone;

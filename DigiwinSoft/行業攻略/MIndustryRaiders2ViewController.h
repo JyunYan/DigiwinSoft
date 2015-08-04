@@ -8,18 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "MPhenomenon.h"
+#import "MIssue.h"
 #import "MConfig.h"
 
 @interface MIndustryRaiders2ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
-    UITableView *tbl;
-    UITextView *textView;
-    UIButton *btn;
-    UILabel *labTarget;
-    UITextField *txtField;
-    UIImageView *imgGray;
+    //UITextView *textView;
+    //UIButton *btn;
+    //UILabel *labTarget;
+    //UITextField *txtField;
+    //UIImageView *imgGray;
 }
 
 @property (nonatomic, strong) MPhenomenon *phen;
-@property (nonatomic, assign) NSInteger from;
+@property (nonatomic, strong) MIssue* issue;
+
+- (id)initWithPhenomenon:(MPhenomenon*)phen;
+- (id)initWithIssue:(MIssue*)issue;
 @end

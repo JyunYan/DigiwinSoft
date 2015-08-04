@@ -55,6 +55,8 @@
 
 // get 對策Sample
 - (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen;
+- (NSArray*)loadGuideSampleArrayWithIssue:(MIssue*)issue;
+
 - (NSArray*)loadActivitySampleArrayWithGuide:(MGuide*)guide;
 - (NSArray*)loadWorkItemSampleArrayWithActivity:(MActivity*)act;
 - (NSArray*)loadTargetSampleArray;

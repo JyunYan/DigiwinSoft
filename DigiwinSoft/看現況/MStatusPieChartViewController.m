@@ -260,7 +260,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
+    MManageItem* item = [_dataArray objectAtIndex:indexPath.row];
+    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]initWithManageItem:item];
+    MRouletteVC.defaultIndex = indexPath.row;
     [self.navigationController pushViewController:MRouletteVC animated:YES];
     return;
     

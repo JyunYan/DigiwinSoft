@@ -12,5 +12,6 @@
 @interface MTarMeterView : UIView
 
 @property (nonatomic) MTarget* target;
+@property (nonatomic, assign) BOOL hideName;
 
 @end
