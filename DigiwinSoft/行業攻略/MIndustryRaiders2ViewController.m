@@ -357,6 +357,9 @@
 
 - (void)goToBackPage:(id) sender
 {
+    // 要求返回的頁面隱藏tabbar
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"HidesBottomBar" object:nil];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

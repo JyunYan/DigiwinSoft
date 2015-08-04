@@ -10,7 +10,6 @@
 #import "PieChartView.h"
 #import "MDirector.h"
 #import "MRouletteViewController.h"
-#import "MStatusLineChartViewController.h"
 #import "MDataBaseManager.h"
 #import "MLabelPieChartViewController.h"
 #import "MRadarChartViewController.h"
@@ -247,7 +246,7 @@
     NSInteger row = indexPath.row;
     
     MIssue* issue = [_issueArray objectAtIndex:row];
-    cell.textLabel.text = issue.name;
+    cell.textLabel.text = [NSString stringWithFormat:@"%@（%@）", issue.name, issue.pr];
     cell.textLabel.font = [UIFont systemFontOfSize:15.];
 
     return cell;
@@ -263,28 +262,6 @@
     MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]initWithManageItem:item];
     MRouletteVC.defaultIndex = indexPath.row;
     [self.navigationController pushViewController:MRouletteVC animated:YES];
-    return;
-    
-    
-    NSArray *aryList=[[MDataBaseManager sharedInstance] loadPhenArray];
-    if (aryList.count == 0)
-        return;
-    MPhenomenon* phen = aryList[0];
-    NSArray *aryGuide=[[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:phen];
-    if (aryGuide.count == 0)
-        return;
-    MGuide* guide = [aryGuide objectAtIndex:0];
-    NSArray* array = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:guide.target limit:12];
-    NSArray* newArray = [NSArray new];
-    newArray = [newArray arrayByAddingObjectsFromArray:array];
-    newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(1, array.count-1)]];
-    newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(0, 1)]];
-    newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(array.count-1, 1)]];
-    newArray = [newArray arrayByAddingObjectsFromArray:[array subarrayWithRange:NSMakeRange(1, array.count-1)]];
-    MStatusLineChartViewController* vc = [[MStatusLineChartViewController alloc] initWithHistoryArray:newArray];
-    
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

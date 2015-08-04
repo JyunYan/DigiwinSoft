@@ -16,6 +16,8 @@
 #import "MTarMeterView.h"
 #import "MDirector.h"
 #import "MIndustryRaiders2ViewController.h"
+#import "MDataBaseManager.h"
+#import "MStatusLineChartViewController.h"
 
 @interface MRouletteViewController ()<iCarouselDataSource, iCarouselDelegate>
 
@@ -129,8 +131,9 @@
     //往下一頁button
     UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(DEVICE_SCREEN_WIDTH*0.88 - 32., 4, 32, 32)];
     button.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
+    [button addTarget:self action:@selector(nextPage:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
-    
+
     return view;
 }
 
@@ -162,6 +165,20 @@
     [MDirector sharedInstance].selectedIssue = issue;
     
     MIndustryRaiders2ViewController* vc = [[MIndustryRaiders2ViewController alloc] initWithIssue:issue];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)nextPage:(id)sender
+{
+    NSArray* array = _manaItem.issueArray;
+    NSInteger index = _carousel.currentItemIndex % array.count;
+    MIssue* issue = [array objectAtIndex:index];
+    
+    [MDirector sharedInstance].selectedIssue = issue;
+
+    NSArray* historyArray = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:issue.target limit:36];
+    MStatusLineChartViewController* vc = [[MStatusLineChartViewController alloc] initWithHistoryArray:historyArray];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

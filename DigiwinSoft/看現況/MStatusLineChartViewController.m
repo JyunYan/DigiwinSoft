@@ -9,11 +9,14 @@
 #import "MStatusLineChartViewController.h"
 #import "MStatusLineChartView.h"
 #import "MDirector.h"
+#import "MIndustryRaiders2ViewController.h"
 
 
 @interface MStatusLineChartViewController ()
 
 @property (nonatomic, strong) NSArray* historyArray;
+
+@property (nonatomic, strong) MIssue* issue;
 
 @end
 
@@ -23,6 +26,8 @@
     self = [super init];
     if (self) {
         _historyArray = historyArray;
+        
+        _issue = [MDirector sharedInstance].selectedIssue;  
     }
     return self;
 }
@@ -30,8 +35,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    self.title = @"存貨週轉天數";
+
+    MTarget* target = _issue.target;
+    self.title = target.name;
     
     
     [self addMainMenu];
@@ -62,9 +68,12 @@
     //找對策 btn
     UIButton *btnLookingForSolutions=[[UIButton alloc]initWithFrame:CGRectMake(posX, posY, width, height)];
     [btnLookingForSolutions setTitle:@"找對策" forState:UIControlStateNormal];
-    [btnLookingForSolutions addTarget:self action:@selector(actionLookingForSolutions:) forControlEvents:UIControlEventTouchUpInside];
+    [btnLookingForSolutions addTarget:self action:@selector(goToGuideList:) forControlEvents:UIControlEventTouchUpInside];
     btnLookingForSolutions.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
     [self.view addSubview:btnLookingForSolutions];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hidesBottomBar:) name:@"HidesBottomBar" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,9 +96,19 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)actionLookingForSolutions:(id)sender
+- (void)goToGuideList:(id)sender
 {
+    self.hidesBottomBarWhenPushed = NO;
     
+    MIndustryRaiders2ViewController* vc = [[MIndustryRaiders2ViewController alloc] initWithIssue:_issue];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - NSNotification
+
+- (void)hidesBottomBar: (NSNotification *)notification
+{
+    self.hidesBottomBarWhenPushed = YES;
 }
 
 @end
