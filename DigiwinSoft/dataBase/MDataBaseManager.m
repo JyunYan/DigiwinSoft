@@ -1294,7 +1294,7 @@ static MDataBaseManager* _director = nil;
         
         NSArray* issArray = [self loadCompMaItemIssueArrayWithMaItemID:manageItem.uuid];
         manageItem.issueArray = issArray;
-        
+ 
         [array addObject:manageItem];
     }
     return array;
@@ -1312,7 +1312,7 @@ static MDataBaseManager* _director = nil;
     
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, compid];
+    FMResultSet* rs = [self.db executeQuery:sql, compid, uuid];
     while ([rs next]) {
         
         MIssue* issue = [MIssue new];

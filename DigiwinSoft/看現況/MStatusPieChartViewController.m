@@ -14,6 +14,7 @@
 #import "MDataBaseManager.h"
 #import "MLabelPieChartViewController.h"
 #import "MRadarChartViewController.h"
+#import "MManageItem.h"
 
 
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
@@ -203,7 +204,8 @@
 
 - (void)reloadTableView:(NSInteger) index
 {
-    _issueArray = [_dataArray objectAtIndex:index];
+    MManageItem* manageItem = [_dataArray objectAtIndex:index];
+    _issueArray = manageItem.issueArray;;
     [_tableView reloadData];
 }
 
