@@ -53,16 +53,16 @@
     CGFloat posX = 0;
     CGFloat posY = 0;
     CGFloat width = screenWidth;
-    CGFloat height = screenHeight + navBarHeight - 79;
+    CGFloat height = screenHeight + navBarHeight - 74;
     
     MStatusLineChartView* lineChartView = [[MStatusLineChartView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     [lineChartView setHistoryArray:_historyArray];
     [lineChartView setBackgroundColor:[UIColor whiteColor]];
-    lineChartView.contentSize = [[MDirector sharedInstance] getScaledSize:CGSizeMake(1080,1700)];
+    lineChartView.contentSize = [[MDirector sharedInstance] getScaledSize:CGSizeMake(1080,1620)];
     [self.view addSubview:lineChartView];
     
     
-    posY = lineChartView.frame.origin.y + lineChartView.frame.size.height + 5;
+    posY = lineChartView.frame.origin.y + lineChartView.frame.size.height + 2;
     height = 50;
     
     //找對策 btn

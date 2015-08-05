@@ -34,7 +34,7 @@
     [self recreateTarChartView];
     
     //折線圖2
-    CGRect frame2 = [[MDirector sharedInstance] getScaledRect:CGRectMake(0, 830, 1080, 780)];
+    CGRect frame2 = [[MDirector sharedInstance] getScaledRect:CGRectMake(0, 845, 1080, 780)];
     MTarChartView2* chart2 = [[MTarChartView2 alloc] initWithFrame:frame2];
     chart2.delegate = self;
     chart2.historys = _historyArray;
@@ -59,10 +59,12 @@
 {
     NSInteger subCount = _historyArray.count / 3;
     NSInteger startIndex = subCount * _rangeIndex;
+    /*
     if (_rangeIndex < 2) {
         // 銜接到下一區間的起點
         subCount++;
     }
+     */
 
     return NSMakeRange(startIndex, subCount);
 }
