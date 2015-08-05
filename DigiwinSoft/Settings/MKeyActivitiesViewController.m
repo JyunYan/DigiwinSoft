@@ -9,8 +9,8 @@
 #import "MKeyActivitiesViewController.h"
 #import "AppDelegate.h"
 #import "ASFileManager.h"
-#import "MActivity.h"
-#import "MWorkItem.h"
+#import "MCustActivity.h"
+#import "MCustWorkItem.h"
 #import "MDirector.h"
 
 #import "MTasksDeployedViewController.h"
@@ -231,7 +231,7 @@
     
     
     // info
-    MActivity* activity = [_activityArray objectAtIndex:section];
+    MCustActivity* activity = [_activityArray objectAtIndex:section];
     NSString* keyActivitiesStr = @"關鍵活動：";
     if (activity.name)
         keyActivitiesStr = [NSString stringWithFormat:@"關鍵活動：%@", activity.name];
@@ -239,8 +239,11 @@
     MUser* user = activity.manager;
     NSString* personInChargeStr = user.name;
 
-    MTarget* target = activity.target;
-    NSString* deadlineStr = target.completeDate;
+    MCustTarget* target = activity.custTarget;
+    NSString* startDateStr = target.startDate;
+    NSString* completeDateStr = target.completeDate;
+    if (startDateStr == nil || [startDateStr isEqualToString:@""])
+        completeDateStr = @"";
 
     height = 70;
     
@@ -287,26 +290,26 @@
     posX = personInChargeLabel.frame.origin.x + personInChargeLabel.frame.size.width;
     width = 55;
     // 截止日
-    UILabel* deadlineTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    deadlineTitleLabel.text = @"截止日：";
-    deadlineTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    deadlineTitleLabel.font = [UIFont systemFontOfSize:textSize];
-    [infoView addSubview:deadlineTitleLabel];
+    UILabel* completeDateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    completeDateTitleLabel.text = @"截止日：";
+    completeDateTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    completeDateTitleLabel.font = [UIFont systemFontOfSize:textSize];
+    [infoView addSubview:completeDateTitleLabel];
     
     
-    posX = deadlineTitleLabel.frame.origin.x + deadlineTitleLabel.frame.size.width;
+    posX = completeDateTitleLabel.frame.origin.x + completeDateTitleLabel.frame.size.width;
     width = tableWidth / 2 - 65;
     
-    UILabel* deadlineLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    if (deadlineStr == nil || [deadlineStr isEqualToString:@""]) {
-        deadlineLabel.text = @"尚未設定";
-        deadlineLabel.textColor = [UIColor redColor];
+    UILabel* completeDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    if (completeDateStr == nil || [completeDateStr isEqualToString:@""]) {
+        completeDateLabel.text = @"尚未設定";
+        completeDateLabel.textColor = [UIColor redColor];
     } else {
-        deadlineLabel.text = deadlineStr;
-        deadlineLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+        completeDateLabel.text = completeDateStr;
+        completeDateLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     }
-    deadlineLabel.font = [UIFont systemFontOfSize:textSize];
-    [infoView addSubview:deadlineLabel];
+    completeDateLabel.font = [UIFont systemFontOfSize:textSize];
+    [infoView addSubview:completeDateLabel];
 
     
     posX = 0;
@@ -440,12 +443,12 @@
     
     MActivity* activity = [_activityArray objectAtIndex:section];
     NSMutableArray* workItemArray = activity.workItemArray;
-    MWorkItem* workItem = [workItemArray objectAtIndex:row];
+    MCustWorkItem* workItem = [workItemArray objectAtIndex:row];
     
     
     UILabel* workItemLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_WORK_ITEM];
     UILabel* appointResponsibleLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_APPOINT_RESPONSIBLE];
-    UILabel* deadlineLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_DEADLINE];
+    UILabel* completeDateLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_DEADLINE];
     
     workItemLabel.text = workItem.name;
     
@@ -458,13 +461,17 @@
         appointResponsibleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     }
 
-    MTarget* target = workItem.target;
-    if (target.completeDate == nil || [target.completeDate isEqualToString:@""]) {
-        deadlineLabel.text = @"尚未設定";
-        deadlineLabel.textColor = [UIColor redColor];
+    MTarget* target = workItem.custTarget;
+    NSString* startDateStr = target.startDate;
+    NSString* completeDateStr = target.completeDate;
+    if (startDateStr == nil || [startDateStr isEqualToString:@""])
+        completeDateStr = @"";
+    if (completeDateStr == nil || [completeDateStr isEqualToString:@""]) {
+        completeDateLabel.text = @"尚未設定";
+        completeDateLabel.textColor = [UIColor redColor];
     } else {
-        deadlineLabel.text = target.completeDate;
-        deadlineLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+        completeDateLabel.text = completeDateStr;
+        completeDateLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     }
 
     return cell;

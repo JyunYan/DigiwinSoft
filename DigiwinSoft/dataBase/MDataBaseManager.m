@@ -627,17 +627,25 @@ static MDataBaseManager* _director = nil;
     
     NSMutableArray* array = [NSMutableArray new];
     
+    NSString* unit = @"";
+    NSString* datetime = @"";
+
     FMResultSet* rs = [self.db executeQuery:sql, indid, target.uuid, compid, limit];
     while([rs next]){
         MTarget* target = [MTarget new];
         target.uuid = [rs stringForColumn:@"ID"];
         target.name = [rs stringForColumn:@"NAME"];
+        
         target.unit = [rs stringForColumn:@"UNIT"];
+        unit = target.unit;
+        
         target.trend = [rs stringForColumn:@"TREND"];
         
         target.valueR = [rs stringForColumn:@"VALUE_R"];
         target.valueT = [rs stringForColumn:@"VALUE_T"];
+        
         target.datetime = [rs stringForColumn:@"DATETIME"];
+        datetime = target.datetime;
         
         target.top = [rs stringForColumn:@"TOP"];
         target.avg = [rs stringForColumn:@"AVG"];
@@ -650,8 +658,27 @@ static MDataBaseManager* _director = nil;
     
     // 補到跟limit一樣數量
     NSInteger count = limit - array.count;
+    
+    NSString* yearStr = [datetime substringToIndex:4];
+    NSString* monthStr = [datetime substringWithRange:NSMakeRange(5, 2)];
+    NSInteger year = [yearStr integerValue];
+    NSInteger month = [monthStr integerValue];
+    
     for (int i = 0; i<count; i++) {
         MTarget* target = [MTarget new];
+        target.unit = unit;
+        
+        if (month == 1) {
+            month = 12;
+            year--;
+        } else {
+            month--;
+        }
+        NSString* newMonthStr = [NSString stringWithFormat:@"%d", month];
+        if (newMonthStr.length == 1)
+            newMonthStr = [@"0" stringByAppendingString:newMonthStr];
+        target.datetime = [NSString stringWithFormat:@"%d-%@-01", year, newMonthStr];
+        
         [array insertObject:target atIndex:0];
     }
     
