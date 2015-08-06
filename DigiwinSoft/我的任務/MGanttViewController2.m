@@ -262,10 +262,8 @@
     NSString *completeDate=[[_guide.activityArray[indexPath.row] custTarget] completeDate];
     NSString *earlyDate=[self getEarlyDate];
     NSString *title=[[_guide.activityArray[indexPath.row] custTarget]name];
-    if (startDate.length!=0&&completeDate.length!=0&&earlyDate.length!=0)//起始日，完成日，最早日期，皆需有值
-    {
-        [cell createtimeBar: startDate: completeDate: earlyDate: title];
-    }
+    [cell createtimeBar: startDate: completeDate: earlyDate: title];
+    
         return cell;
 }
 

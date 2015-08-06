@@ -102,6 +102,15 @@
     _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
     _RadarChart.aryRadarChartData=_aryData;
     [_mScroll addSubview:_RadarChart];
+    
+    UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-50, 70, 100, 100)];
+    lab.backgroundColor=[UIColor clearColor];
+    lab.textColor=[UIColor colorWithRed:245.0/255.0 green:113.0/255.0 blue:116.0/255.0 alpha:1];
+    lab.text=@"81";
+    lab.font=[UIFont systemFontOfSize:60];
+    lab.textAlignment = NSTextAlignmentCenter;
+    [_mScroll addSubview:lab];
+    
 }
 -(void)createPageControl
 {

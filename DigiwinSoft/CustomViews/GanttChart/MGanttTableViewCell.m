@@ -80,8 +80,11 @@
     //draw bar
     UIImageView* imgBar=[[UIImageView alloc]initWithFrame:CGRectMake(80+disLenth+earlyDaydis,(TABLE_CELL_HEIGHT-10)/2, barLenth, 14)];
     imgBar.backgroundColor=[UIColor colorWithRed:112.0/255.0 green:200.0/255.0 blue:223.0/255.0 alpha:1];
+
+    if (startDate.length!=0&&completeDate.length!=0)
+    {
     [self.contentView addSubview:imgBar];
-    
+    }
     //draw lab
     UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(imgBar.frame.origin.x+imgBar.frame.size.width+10,(TABLE_CELL_HEIGHT-10)/2,120, 14)];
     lab.text=title;
