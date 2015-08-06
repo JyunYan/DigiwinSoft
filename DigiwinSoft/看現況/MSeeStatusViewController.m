@@ -71,13 +71,14 @@
     self.navigationItem.leftBarButtonItem = bar_item;
     
     NSArray *itemArray = [NSArray arrayWithObjects:@"經營效能",@"管理表現",@"行業情報",nil];
-    _customSegmentedControl = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(DEVICE_SCREEN_WIDTH, 40) BarIndex:2 TextSize:13.];
+    _customSegmentedControl = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(DEVICE_SCREEN_WIDTH, 40) BarIndex:2 TextSize:14.];
     _customSegmentedControl.frame = CGRectMake(0,44+20,DEVICE_SCREEN_WIDTH, 40);
     [_customSegmentedControl addTarget:self
                                 action:@selector(actionSegmented:)
                       forControlEvents:UIControlEventValueChanged];
     _customSegmentedControl.tintColor=[UIColor clearColor];
-    _customSegmentedControl.selectedSegmentIndex = 2;
+    _customSegmentedControl.selectedSegmentIndex = 0;
+    [_customSegmentedControl moveImgblueBar:0];
     [self.view addSubview:_customSegmentedControl];
 }
 

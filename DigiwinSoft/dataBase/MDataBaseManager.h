@@ -85,12 +85,21 @@
 - (NSArray*)loadMonitorIssueWithGudieID:(NSString*)guideid;
 - (NSArray*)loadIssueTypeArrayWithIssUUid:(NSString*)uuid;
 
-#pragma mark - 看現況
+#pragma mark - 找對策
+- (NSArray*)loadQuestionArrayWithKeyword:(NSString*)keyword;
+- (NSArray*)loadIssueArrayWithQuestionID:(NSString*)uuid;
+
+#pragma mark - 看現況(經營效能)
 - (NSArray*)loadCompanyEfficacyArray;
 - (NSArray*)loadCompEffTargetArrayWithEffID:(NSString*)uuid;
 
+#pragma mark - 看現況(管理表現)
 - (NSArray*)loadCompManageItemArray;
 - (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid;
+
+#pragma mark - 看現況(行業情報)
+- (NSArray*)loadIndustryInfoKindArray;
+- (NSArray*)loadIndustryInfoArrayWithKindID:(NSString*)kindid;
 
 - (MTarget*)loadTargetInfoWithID:(NSString*)uuid;
 

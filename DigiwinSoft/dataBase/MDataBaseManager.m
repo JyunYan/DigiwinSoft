@@ -11,6 +11,9 @@
 #import "MMonitorData.h"
 #import "MIssType.h"
 #import "MManageItem.h"
+#import "MQuestion.h"
+#import "MIndustryInfo.h";
+#import "MIndustryInfoKind.h"
 
 @implementation MDataBaseManager
 
@@ -1270,7 +1273,64 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
-#pragma mark - 看現況
+#pragma mark - 找對策
+
+- (NSArray*)loadQuestionArrayWithKeyword:(NSString*)keyword
+{
+    NSString* sql = @"select * from M_QUESTION as q";
+    
+    // 模糊搜尋
+    if(keyword && ![keyword isEqualToString:@""]){
+        for (int index = 0; index < keyword.length; index++) {
+            NSString* keychar = [keyword substringWithRange:NSMakeRange(index, 1)];
+            if(index == 0)
+                sql = [sql stringByAppendingFormat:@" where q.SUBJECT like '%%%@%%'", keychar];
+            else
+                sql = [sql stringByAppendingFormat:@" or q.SUBJECT like '%%%@%%'", keychar];
+        }
+    }
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql];
+    while ([rs next]) {
+        MQuestion* qu = [MQuestion new];
+        qu.uuid = [rs stringForColumn:@"ID"];
+        qu.subject = [rs stringForColumn:@"SUBJECT"];
+        qu.reads = [rs stringForColumn:@"READS"];
+        
+        NSArray* issArray = [self loadIssueArrayWithQuestionID:qu.uuid];
+        qu.issueArray = issArray;
+        
+        [array addObject:qu];
+    }
+    return array;
+}
+
+- (NSArray*)loadIssueArrayWithQuestionID:(NSString*)uuid
+{
+    NSString* sql = @"select * from R_QU_ISS as rqi inner join M_ISSUE as mi on mi.ID = rqi.ISS_ID where rqi.QU_ID = ?";
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, uuid];
+    while ([rs next]) {
+        MIssue* issue = [MIssue new];
+        issue.uuid = [rs stringForColumn:@"ID"];
+        issue.name = [rs stringForColumn:@"NAMe"];
+        issue.desc = [rs stringForColumn:@"DESCRIPTION"];
+        issue.reads = [rs stringForColumn:@"READS"];
+        
+        NSString* tarid = [rs stringForColumn:@"TAR_ID"];
+        MTarget* target = [self loadTargetInfoWithID:tarid];
+        issue.target = target;
+        
+        [array addObject:issue];
+    }
+    return array;
+}
+
+#pragma mark - 看現況(經營效能)
 
 - (NSArray*)loadCompanyEfficacyArray
 {
@@ -1326,6 +1386,8 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
+#pragma mark - 看現況(管理表現)
+
 - (NSArray*)loadCompManageItemArray
 {
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
@@ -1380,6 +1442,52 @@ static MDataBaseManager* _director = nil;
         issue.target = target;
         
         [array addObject:issue];
+    }
+    return array;
+}
+
+#pragma mark - 看現況(行業情報)
+
+- (NSArray*)loadIndustryInfoKindArray
+{
+    NSString* sql = @"select * from M_INFO_KIND";
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql];
+    while ([rs next]) {
+        
+        MIndustryInfoKind* kind = [MIndustryInfoKind new];
+        kind.uuid = [rs stringForColumn:@"ID"];
+        kind.name = [rs stringForColumn:@"NAME"];
+        
+        [array addObject:kind];
+    }
+    return array;
+}
+
+- (NSArray*)loadIndustryInfoArrayWithKindID:(NSString*)kindid
+{
+    NSString* indid = [MDirector sharedInstance].currentUser.industryId;
+    NSString* sql = @"select info.*, kind.NAME from R_IND_INFO as rii inner join M_INFORMATION as info on info.ID = rii.INFO_ID inner join M_INFO_KIND as kind on kind.ID = info.KIND_ID where kind.ID = ? and rii.IND_ID = ?";
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, kindid, indid];
+    while ([rs next]) {
+        
+        MIndustryInfo* info = [MIndustryInfo new];
+        info.uuid = [rs stringForColumn:@"ID"];
+        info.subject = [rs stringForColumn:@"SUBJECT"];
+        info.desc = [rs stringForColumn:@"DESCRIPTION"];
+        info.url = [rs stringForColumn:@"URL"];
+        
+        MIndustryInfoKind* kind = [MIndustryInfoKind new];
+        kind.uuid = [rs stringForColumn:@"KIND_ID"];
+        kind.name = [rs stringForColumn:@"NAME"];
+        info.kind = kind;
+        
+        [array addObject:info];
     }
     return array;
 }

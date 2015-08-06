@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MIndustryInfo.h"
 
 @interface MInformationDetailViewController : UIViewController
+
+- (id)initWithIndustryInfo:(MIndustryInfo*)info;
 
 @end

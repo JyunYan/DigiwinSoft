@@ -150,6 +150,9 @@
 		DCB3FDF91B5A375900ED5BFA /* MRadioGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDF81B5A375900ED5BFA /* MRadioGroupView.m */; };
 		DCB3FDFC1B5A395900ED5BFA /* MRadioButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDFB1B5A395900ED5BFA /* MRadioButtonView.m */; };
 		DCCAB1AC1B4F841500AA1CD2 /* ASAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCAB1AB1B4F841500AA1CD2 /* ASAnimationManager.m */; };
+		DCCB44E11B71A7B700F41752 /* MQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCB44E01B71A7B700F41752 /* MQuestion.m */; };
+		DCCB44E41B72722B00F41752 /* MIndustryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCB44E31B72722B00F41752 /* MIndustryInfo.m */; };
+		DCCB44E71B72724400F41752 /* MIndustryInfoKind.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCB44E61B72724400F41752 /* MIndustryInfoKind.m */; };
 		DCE951781B60C1B700E3C059 /* MWorkItemFlowChart.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951771B60C1B700E3C059 /* MWorkItemFlowChart.m */; };
 		DCE9517B1B60C27F00E3C059 /* MActFlowChart.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE9517A1B60C27F00E3C059 /* MActFlowChart.m */; };
 		DCE951891B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE9517E1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m */; };
@@ -491,6 +494,12 @@
 		DCB3FDFB1B5A395900ED5BFA /* MRadioButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRadioButtonView.m; path = CustomViews/RadioGroupView/MRadioButtonView.m; sourceTree = "<group>"; };
 		DCCAB1AA1B4F841500AA1CD2 /* ASAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASAnimationManager.h; sourceTree = "<group>"; };
 		DCCAB1AB1B4F841500AA1CD2 /* ASAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASAnimationManager.m; sourceTree = "<group>"; };
+		DCCB44DF1B71A7B700F41752 /* MQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MQuestion.h; path = structure/MQuestion.h; sourceTree = "<group>"; };
+		DCCB44E01B71A7B700F41752 /* MQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MQuestion.m; path = structure/MQuestion.m; sourceTree = "<group>"; };
+		DCCB44E21B72722B00F41752 /* MIndustryInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MIndustryInfo.h; path = structure/MIndustryInfo.h; sourceTree = "<group>"; };
+		DCCB44E31B72722B00F41752 /* MIndustryInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustryInfo.m; path = structure/MIndustryInfo.m; sourceTree = "<group>"; };
+		DCCB44E51B72724400F41752 /* MIndustryInfoKind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MIndustryInfoKind.h; path = structure/MIndustryInfoKind.h; sourceTree = "<group>"; };
+		DCCB44E61B72724400F41752 /* MIndustryInfoKind.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustryInfoKind.m; path = structure/MIndustryInfoKind.m; sourceTree = "<group>"; };
 		DCE951761B60C1B700E3C059 /* MWorkItemFlowChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWorkItemFlowChart.h; path = CustomViews/FlowChartView/MWorkItemFlowChart.h; sourceTree = "<group>"; };
 		DCE951771B60C1B700E3C059 /* MWorkItemFlowChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWorkItemFlowChart.m; path = CustomViews/FlowChartView/MWorkItemFlowChart.m; sourceTree = "<group>"; };
 		DCE951791B60C27F00E3C059 /* MActFlowChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MActFlowChart.h; path = CustomViews/FlowChartView/MActFlowChart.h; sourceTree = "<group>"; };
@@ -1076,6 +1085,8 @@
 				DCF46B231B43C2F400C771BB /* MCustTarget.m */,
 				DCF46B281B454FA800C771BB /* MCustWorkItem.h */,
 				DCF46B291B454FA800C771BB /* MCustWorkItem.m */,
+				DC58BC011B6B4E5500002AA2 /* MEfficacy.h */,
+				DC58BC021B6B4E5500002AA2 /* MEfficacy.m */,
 				DCF46AA71B40E04A00C771BB /* MEvent.h */,
 				DCF46AA81B40E04A00C771BB /* MEvent.m */,
 				DCB3FDED1B55F67B00ED5BFA /* MFlowChartPoint.h */,
@@ -1084,14 +1095,22 @@
 				DC5877871B5DFE3700D5AC5D /* MFlowChartPoint2.m */,
 				DC10144C1B32B66200EF7A6F /* MGuide.h */,
 				DC10144D1B32B66200EF7A6F /* MGuide.m */,
+				DCCB44E21B72722B00F41752 /* MIndustryInfo.h */,
+				DCCB44E31B72722B00F41752 /* MIndustryInfo.m */,
+				DCCB44E51B72724400F41752 /* MIndustryInfoKind.h */,
+				DCCB44E61B72724400F41752 /* MIndustryInfoKind.m */,
 				DCE951C51B69493500E3C059 /* MIssType.h */,
 				DCE951C61B69493500E3C059 /* MIssType.m */,
 				DCF46ACE1B428F1400C771BB /* MIssue.h */,
 				DCF46ACF1B428F1400C771BB /* MIssue.m */,
+				DC58BC0E1B6F10F300002AA2 /* MManageItem.h */,
+				DC58BC0F1B6F10F300002AA2 /* MManageItem.m */,
 				DCE9519F1B66B5E600E3C059 /* MMonitorData.h */,
 				DCE951A01B66B5E600E3C059 /* MMonitorData.m */,
 				DCF46ABF1B418E6B00C771BB /* MPhenomenon.h */,
 				DCF46AC01B418E6B00C771BB /* MPhenomenon.m */,
+				DCCB44DF1B71A7B700F41752 /* MQuestion.h */,
+				DCCB44E01B71A7B700F41752 /* MQuestion.m */,
 				3A5374021B535EEB002C2836 /* MReport.h */,
 				3A5374031B535EEB002C2836 /* MReport.m */,
 				DCF46AAA1B41103700C771BB /* MSituation.h */,
@@ -1106,10 +1125,6 @@
 				DC10144A1B32985600EF7A6F /* MUser.m */,
 				DC1014521B32B69F00EF7A6F /* MWorkItem.h */,
 				DC1014531B32B69F00EF7A6F /* MWorkItem.m */,
-				DC58BC011B6B4E5500002AA2 /* MEfficacy.h */,
-				DC58BC021B6B4E5500002AA2 /* MEfficacy.m */,
-				DC58BC0E1B6F10F300002AA2 /* MManageItem.h */,
-				DC58BC0F1B6F10F300002AA2 /* MManageItem.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -1460,6 +1475,7 @@
 				DCE951941B612FA500E3C059 /* MReportEditTableCell.m in Sources */,
 				DCF46AA91B40E04A00C771BB /* MEvent.m in Sources */,
 				D06C2D431B381850009D2082 /* FMDatabasePool.m in Sources */,
+				DCCB44E71B72724400F41752 /* MIndustryInfoKind.m in Sources */,
 				3AD851841B5CFBFA00486E1D /* MStatusPieChartViewController.m in Sources */,
 				D06C2D411B381850009D2082 /* FMDatabase.m in Sources */,
 				DC58BC031B6B4E5500002AA2 /* MEfficacy.m in Sources */,
@@ -1514,6 +1530,7 @@
 				DC3DF9D21B4E17C90065DF5D /* MTarMeterView.m in Sources */,
 				3A711B8E1B3800C100E94211 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				3A5E41FC1B65DDEB00799084 /* MLabelPieChartViewController.m in Sources */,
+				DCCB44E41B72722B00F41752 /* MIndustryInfo.m in Sources */,
 				383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */,
 				380F35351B6A0E9500E9138B /* MBarChartView.m in Sources */,
 				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
@@ -1556,6 +1573,7 @@
 				DCF46ACD1B4236CB00C771BB /* MTarget.m in Sources */,
 				DCB3FDFC1B5A395900ED5BFA /* MRadioButtonView.m in Sources */,
 				DC3DF9D51B4E23360065DF5D /* MTarChartView.m in Sources */,
+				DCCB44E11B71A7B700F41752 /* MQuestion.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
 				3A03AA1F1B3BD5CA00923ABB /* UIDownPicker.m in Sources */,
 				3AE9972E1B54B41B005D590C /* MTaskRaidersViewController.m in Sources */,
