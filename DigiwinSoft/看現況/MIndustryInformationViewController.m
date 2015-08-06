@@ -9,6 +9,13 @@
 #import "MIndustryInformationViewController.h"
 #import "MInformationDetailViewController.h"
 
+#import "MDataBaseManager.h"
+#import "MDirector.h"
+#import "MConfig.h"
+
+#import "MIndustryInfo.h"
+#import "MIndustryInfoKind.h"
+
 
 #define TAG_BUTTON_SWITCH 100
 
@@ -21,8 +28,11 @@
 @interface MIndustryInformationViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, assign) CGRect viewRect;
-
 @property (nonatomic, strong) UITableView* tableView;
+
+@property (nonatomic, strong) NSArray* kindArray;
+@property (nonatomic, strong) NSArray* infoArray;
+@property (nonatomic, strong) NSMutableArray* buttons;
 
 @end
 
@@ -32,6 +42,7 @@
     self = [super init];
     if (self) {
         _viewRect = rect;
+        _buttons = [NSMutableArray new];
     }
     return self;
 }
@@ -42,27 +53,27 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [self prepareData];
     
-    CGFloat viewX = _viewRect.origin.x;
-    CGFloat viewY = _viewRect.origin.y;
-    CGFloat viewWidth = _viewRect.size.width;
-    CGFloat viewHeight = _viewRect.size.height;
-    
-    CGFloat posX = viewX;
-    CGFloat posY = viewY;
-    CGFloat width = viewWidth;
-    CGFloat height = 60;
+    CGFloat posX = _viewRect.origin.x;
+    CGFloat posY = _viewRect.origin.y;
+    CGFloat width = _viewRect.size.width;
+    CGFloat height = _viewRect.size.height;
 
-    
-    UIView* buttonView = [self createSwitchButtonView:CGRectMake(posX, posY, width, height)];
+    UIScrollView* buttonView = [self createSwitchButtonView:CGRectMake(posX, posY, width, width*0.18)];
     [self.view addSubview:buttonView];
     
-    
-    posY = buttonView.frame.origin.y + buttonView.frame.size.height + 10;
-    height = viewHeight - 70;
+    posY += buttonView.frame.size.height + 10;
+    height = height - buttonView.frame.size.height - 10;
     
     UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:listView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,72 +81,66 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareData
+{
+    _kindArray = [[MDataBaseManager sharedInstance] loadIndustryInfoKindArray];
+    
+    if(_kindArray.count > 0){
+        MIndustryInfoKind* kind = [_kindArray firstObject];
+        _infoArray = [[MDataBaseManager sharedInstance] loadIndustryInfoArrayWithKindID:kind.uuid];
+    }
+}
+
 #pragma mark - create view
 
--(UIView*) createSwitchButtonView:(CGRect) rect
+- (UIScrollView*)createSwitchButtonView:(CGRect)rect
 {
-    UIView* view = [[UIView alloc] initWithFrame:rect];
+    UIScrollView* scroll = [[UIScrollView alloc] initWithFrame:rect];
+    scroll.backgroundColor = [UIColor whiteColor];
     
+    CGFloat width = scroll.frame.size.width / 4.;
+    CGFloat height = scroll.frame.size.height;
+    CGFloat bWidth = MIN(width, height) * 0.75;
     
-    CGFloat viewWidth = rect.size.width;
-    CGFloat viewHeight = rect.size.height;
+    UIColor* color = [[MDirector sharedInstance] getCustomBlueColor];
     
-    CGFloat textSize = 13.;
-
-    
-    CGFloat width = 50;
-    CGFloat height = 50;
-    CGFloat posX = (viewWidth - (width+10)*4)/2;
-    CGFloat posY = (viewHeight - height) / 2;
-
-    UIColor* buttonColor = [UIColor colorWithRed:108/225. green:185/225. blue:210/225. alpha:1.];
-    
-    for (int i = 0; i < 4; i++) {
-        UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        button.tag = TAG_BUTTON_SWITCH + i;
-        [button setTitleColor:buttonColor forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    for (int i = 0; i < _kindArray.count; i++) {
+        
+        MIndustryInfoKind* kind = [_kindArray objectAtIndex:i];
+        
+        UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, bWidth, bWidth)];
+        button.backgroundColor = [UIColor clearColor];
+        button.center = CGPointMake(i*width + width/2., height/2.);
+        button.tag = i;
         
         button.titleLabel.numberOfLines = 0;
         button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        button.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
+        button.titleLabel.font = [UIFont boldSystemFontOfSize:12.];
         
         button.layer.borderWidth = 1.5;
-        button.layer.borderColor = buttonColor.CGColor;
+        button.layer.borderColor = color.CGColor;
         button.layer.cornerRadius = button.frame.size.width / 2;
         button.clipsToBounds = YES;
         
-        if (i == 0) {
-            button.transform = CGAffineTransformScale(button.transform, 6./5., 6./5.);
-
-            [button setSelected:YES];
-            [button setBackgroundColor:buttonColor];
-            
-            [button setTitle:@"趨勢\n新聞" forState:UIControlStateNormal];
-        } else if (i == 1) {
-            [button setSelected:NO];
-            [button setBackgroundColor:[UIColor clearColor]];
-
-            [button setTitle:@"法規" forState:UIControlStateNormal];
-        } else if (i == 2) {
-            [button setSelected:NO];
-            [button setBackgroundColor:[UIColor clearColor]];
-            
-            [button setTitle:@"專題\n報導" forState:UIControlStateNormal];
-        } else if (i == 3) {
-            [button setSelected:NO];
-            [button setBackgroundColor:[UIColor clearColor]];
-            
-            [button setTitle:@"展覽\n會議" forState:UIControlStateNormal];
-        }
+        [button setTitle:kind.name forState:UIControlStateNormal];
+        [button setTitleColor:color forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(actionSwitch:) forControlEvents:UIControlEventTouchUpInside];
-        [view addSubview:button];
         
-        posX = posX + width + (viewWidth/4 - width)/2;
+        if(i == 0){
+            button.transform = CGAffineTransformScale(button.transform, 1.2, 1.2);
+            [button setSelected:YES];
+            [button setBackgroundColor:color];
+        }
+        
+        [_buttons addObject:button];
+        [scroll addSubview:button];
+        
     }
     
+    scroll.contentSize = CGSizeMake(width * _kindArray.count, height);
     
-    return view;
+    return scroll;
 }
 
 - (UIView*)createListView:(CGRect) rect
@@ -146,8 +151,8 @@
     CGFloat viewWidth = rect.size.width;
     CGFloat viewHeight = rect.size.height;
     
-    CGFloat posX = 20;
-    CGFloat posY = 20;
+    CGFloat posX = 10;
+    CGFloat posY = 10;
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = viewHeight - posY;
     
@@ -162,59 +167,33 @@
 
 #pragma mark - UIButton
 
--(void)actionSwitch:(UIButton*)button
+-(void)actionSwitch:(UIButton*)btn
 {
-    NSInteger clickTag = button.tag;
+    //UIColor* buttonColor = [UIColor colorWithRed:108/225. green:185/225. blue:210/225. alpha:1.];
+    UIColor* buttonColor = [[MDirector sharedInstance] getCustomBlueColor];
     
-    UIColor* buttonColor = [UIColor colorWithRed:108/225. green:185/225. blue:210/225. alpha:1.];
-    
-    for (int i = 0; i < 4; i++) {
-        NSInteger tag = TAG_BUTTON_SWITCH + i;
-        UIButton* button = (UIButton*)[self.view viewWithTag:tag];
-        if (clickTag == tag) {
-            [UIView animateWithDuration:0.1f
-                             animations:^{
-                                 if (! button.selected) {
-                                     button.transform = CGAffineTransformMakeScale(1.2, 1.2);
-                                 }
-                             }
-             ];
+    for (UIButton* button in _buttons) {
+        if (btn.tag == button.tag) {
+            [UIView animateWithDuration:0.1f animations:^{
+                 if (!button.selected)
+                     button.transform = CGAffineTransformMakeScale(1.2, 1.2);
+            }];
             
             [button setSelected:YES];
             [button setBackgroundColor:buttonColor];
         } else {
-            [UIView animateWithDuration:0.1f
-                             animations:^{
-                                 if (button.selected) {
-                                     button.transform = CGAffineTransformMakeScale(1., 1.);
-                                 }
-                             }
-             ];
+            [UIView animateWithDuration:0.1f animations:^{
+                 if (button.selected)
+                     button.transform = CGAffineTransformMakeScale(1., 1.);
+            }];
             
             [button setSelected:NO];
             [button setBackgroundColor:[UIColor clearColor]];
        }
     }
-    
-    
-    NSInteger index = clickTag - TAG_BUTTON_SWITCH;
-    switch (index) {
-        case 0:
-            break;
-            
-        case 1:
-            break;
-            
-        case 2:
-            break;
-            
-        case 3:
-            break;
-            
-        default:
-            break;
-    }
-    
+
+    MIndustryInfoKind* kind = [_kindArray objectAtIndex:btn.tag];
+    _infoArray = [[MDataBaseManager sharedInstance] loadIndustryInfoArrayWithKindID:kind.uuid];
     
     [_tableView reloadData];
 }
@@ -224,48 +203,13 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 50;
-}
-
--(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    CGFloat tableWidth = _tableView.frame.size.width;
-    
-    CGFloat textSize = 15.0f;
-    
-    CGFloat posX = 0;
-    CGFloat posY = 0;
-    CGFloat width = tableWidth - posX * 2;
-    CGFloat height = 50;
-    
-    UIView* header = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    header.backgroundColor = [UIColor whiteColor];
-    
-    
-    posX = 20;
-    posY = 20;
-    width = tableWidth - posX * 2;
-    height = 30;
-
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    label.font = [UIFont boldSystemFontOfSize:textSize];
-    label.textColor = [UIColor lightGrayColor];
-    label.text = @"價格趨勢";
-    [header addSubview:label];
-    
-    
-    return header;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 3;
+    return _infoArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -282,82 +226,41 @@
         cell.backgroundColor = [UIColor clearColor];
         
         
-        CGFloat tableWidth = tableView.frame.size.width;
+        CGFloat width = tableView.frame.size.width;
+        CGFloat posX = width * 0.05;
+        CGFloat posY = 10.;
         
-        CGFloat textSize = 13.0f;
-        
-        CGFloat posX = 10;
-        CGFloat posY = 20;
-        CGFloat width = 10;
-        CGFloat height = 10;
-        
-        UIImageView* blueIcon = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        blueIcon.tag = TAG_IMAGEVIEW_BLUE_ICON;
-        blueIcon.image = [UIImage imageNamed:@"icon_blue_circle.png"];
-        [cell addSubview:blueIcon];
-        
-        
-        posX = blueIcon.frame.origin.x + blueIcon.frame.size.width + 5;
-        posY = 10;
-        width = tableWidth - posX - 30;
-        height = 30;
-        
-        UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+        UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width*0.8, 30.)];
         titleLabel.tag = TAG_LABEL_TITLE;
-        titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
+        titleLabel.font = [UIFont boldSystemFontOfSize:14.];
         titleLabel.textColor = [UIColor blackColor];
         [cell addSubview:titleLabel];
         
-        
-        posX = titleLabel.frame.origin.x + titleLabel.frame.size.width + 5;
-        posY = 20;
-        width = 15;
-        height = 10;
-        
-        UILabel* dotLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-        dotLabel.font = [UIFont boldSystemFontOfSize:textSize];
+        UILabel* dotLabel = [[UILabel alloc] initWithFrame:CGRectMake(width*0.95-15., posY+10, 15., 10.)];
+        dotLabel.font = [UIFont boldSystemFontOfSize:13.];
         dotLabel.textColor = [UIColor whiteColor];
         dotLabel.text = @"⋯";
         dotLabel.backgroundColor = [UIColor lightGrayColor];
         [cell addSubview:dotLabel];
         
+        posY = titleLabel.frame.origin.y + titleLabel.frame.size.height;
         
-        posX = blueIcon.frame.origin.x + blueIcon.frame.size.width + 5;
-        posY = blueIcon.frame.origin.y + blueIcon.frame.size.height + 5;
-        width = tableWidth - posX;
-        height = 45;
-        
-        UILabel* descLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+        UILabel* descLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width*0.9, 45.)];
         descLabel.tag = TAG_LABEL_DESC;
-        descLabel.font = [UIFont systemFontOfSize:textSize];
+        descLabel.font = [UIFont systemFontOfSize:12.];
         descLabel.textColor = [UIColor grayColor];
-        descLabel.numberOfLines = 0;
-        descLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        descLabel.numberOfLines = 2;
+        //descLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [cell addSubview:descLabel];
     }
-    
-    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
-    
-
-    UIImageView* blueIcon = (UIImageView*)[cell viewWithTag:TAG_IMAGEVIEW_BLUE_ICON];
     
     UILabel* titleLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_TITLE];
     UILabel* descLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_DESC];
 
+    MIndustryInfo* info = [_infoArray objectAtIndex:indexPath.row];
     
-    blueIcon.hidden = NO;
-    
-    titleLabel.text = @"大陸工信部將發放FDD-LTE正式執照";
-    descLabel.text = @"據傳大陸工信部將在最近幾天內發放正式的FDD-LTE執照給中國電信、中國聯通。先前已獲頒TD-LTE執照的中國移動也正積極向工信部申請FDD-LTE執照";
-    
-    CGSize size = [descLabel sizeThatFits:CGSizeMake(descLabel.frame.size.width, MAXFLOAT)];
-    if (size.height > descLabel.frame.size.height) {
-        NSString* newDescStr = [descLabel.text substringToIndex:37];
-        newDescStr = [newDescStr stringByAppendingString:@"⋯"];
-        descLabel.text = newDescStr;
-    }
-
+    titleLabel.text = info.subject;
+    descLabel.text = info.desc;
     
     return cell;
 }
@@ -368,8 +271,10 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    MInformationDetailViewController* vc = [[MInformationDetailViewController alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
+    MIndustryInfo* info = [_infoArray objectAtIndex:indexPath.row];
+    
+    MInformationDetailViewController* vc = [[MInformationDetailViewController alloc] initWithIndustryInfo:info];
+    //vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
