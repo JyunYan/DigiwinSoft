@@ -47,13 +47,19 @@
 }
 -(void)prepareData
 {
+    /**
+     放入雷達圖顯示的資料ary，與測試加入雷達圖的資料aryAdd，來源相同，但要分開取得。
+     否則在移除雷達上出現的兩筆以上的同資料的時候，會因記憶體位置相同，把所有資料都移除。
+    **/
+    
+    
     //放入雷達圖顯示的資料
     NSArray *ary=[[MDataBaseManager sharedInstance]loadCompanyEfficacyArray];
-//    _aryData =[[NSMutableArray alloc]initWithArray:ary];
     _aryData=[[NSMutableArray alloc]initWithObjects:ary[0],ary[1],ary[2], nil];
     //測試加入雷達圖的資料
-    NSArray *ary1=[[NSArray alloc]initWithObjects:ary[3],ary[4], nil];
-    NSArray *ary2=[[NSArray alloc]initWithObjects:ary[0],ary[1],ary[3],ary[4], nil];
+    NSArray *aryAdd=[[MDataBaseManager sharedInstance]loadCompanyEfficacyArray];
+    NSArray *ary1=[[NSArray alloc]initWithObjects:aryAdd[3],aryAdd[4], nil];
+    NSArray *ary2=[[NSArray alloc]initWithObjects:aryAdd[0],aryAdd[1],aryAdd[3],aryAdd[4], nil];
     _aryAddData=[[NSArray alloc]initWithObjects:ary1,ary2, nil];
 
 }
@@ -127,11 +133,7 @@
         }
         [sender setBackgroundImage:[self checked] forState:UIControlStateNormal];
         [sender setSelected:YES];
-        
-//        NSArray *test=[[_aryData arrayByAddingObjectsFromArray:_aryAddData[[sender tag]-101]]copy];
-//        NSLog(@"%@",test);
-        
-        [_aryData addObjectsFromArray:_aryAddData[[sender tag]-101]];
+         [_aryData addObjectsFromArray:_aryAddData[[sender tag]-101]];
     }
     
     [_RadarChart removeFromSuperview];
