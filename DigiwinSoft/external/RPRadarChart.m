@@ -44,6 +44,9 @@
 #import "RPRadarChart.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MEfficacy.h"
+#define clickTo    @"clickTo"
+#define kClickScroll    @"clickScroll"
+
 @interface RPRadarChart ()
 
 -(void) drawChartInContext:(CGContextRef) cx forIndex:(NSInteger)index;
@@ -458,12 +461,22 @@ static double colorDistance(RGB e1, RGB e2)
         [[btnTitle layer] setBorderWidth:2.0f];
         [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
         
+        
+        if (_from==0&&i==0) {
+        
+            [btnTitle setBackgroundColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0]];
+            [btnTitle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+        }
+        
+        
+        
         MEfficacy *mEff=ary[i];
         
         NSString *str=[NSString stringWithFormat:@"%@(%@)",mEff.name,mEff.pr];
         
         
-        
+        btnTitle.tag=i;
         [btnTitle setTitle:str forState:UIControlStateNormal];
         [btnTitle addTarget:self action:@selector(btnTitilClick:) forControlEvents:UIControlEventTouchUpInside];
         btnTitle.center=CGPointMake((RADAR_CHART_WIDTH/2)+x,(RADAR_CHART_HEIGHT/2)+y);//加上雷達圖的中心位置
@@ -489,8 +502,36 @@ static double colorDistance(RGB e1, RGB e2)
 }
 - (void)btnTitilClick:(id)sender
 {
-    if(delegate && [delegate respondsToSelector:@selector(btnTitilClick:)])
-        [delegate btnTitilClick:self];
+    //1為p9使用，按下lab時push to p8。0為p7使用，按下lab時滾動下方scroll。
+    if (_from) {
+        NSLog(@"from=1");
+        [[NSNotificationCenter defaultCenter] postNotificationName:clickTo object:nil];
+    }
+    else
+    {
+        NSLog(@"from=0");
+        
+
+        for (UIView *view in self.subviews)
+        {
+            if ([view isMemberOfClass:[UIButton class]])//revert all btn style
+            {
+                UIButton *btn=(UIButton *)view;
+                [btn setBackgroundColor:[UIColor whiteColor]];
+                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [[btn layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+            }
+        }
+    
+        //set Clicked btn style
+        [sender setBackgroundColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0]];
+        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [[sender layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+
+        //post clickScroll
+        NSNumber* numberTag = [NSNumber numberWithInteger:[sender tag]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kClickScroll object:numberTag];
+    }
 }
 
 #pragma mark - Setters

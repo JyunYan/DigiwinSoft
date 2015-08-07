@@ -13,8 +13,13 @@
 #import "MBarChartView.h"
 #import "MDataBaseManager.h"
 #import "MEfficacy.h"
+#import "RPRadarChart.h"
 #define CELL_DISTANCE 10
-@interface MEfficacyViewController ()<UIScrollViewDelegate>
+
+#define kClickScroll    @"clickScroll"
+#define clickTo    @"clickTo"
+
+@interface MEfficacyViewController ()<UIScrollViewDelegate,UIPageViewControllerDelegate>
 
 @property (nonatomic, assign) CGRect viewRect;
 @property (nonatomic, strong) UIScrollView *mScroll;
@@ -51,10 +56,17 @@
 {
     [super viewWillAppear:animated];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clickScroll:) name:kClickScroll object:nil];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kClickScroll object:nil];
 }
 -(void)prepareData
 {
@@ -77,7 +89,6 @@
     _mScrollPage.delegate=self;
     [_mScroll addSubview:_mScrollPage];
     
-
     CGFloat posX = CELL_DISTANCE*2;
     
     //_mScrollPage內容
@@ -101,6 +112,7 @@
 {
     _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
     _RadarChart.aryRadarChartData=_aryData;
+    _RadarChart.from=0;//0為p7使用，按下lab時滾動下方scroll。1為p9使用，按下lab時push to p8。
     [_mScroll addSubview:_RadarChart];
     
     UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-50, 70, 100, 100)];
@@ -118,6 +130,8 @@
     _pageControl.backgroundColor = [UIColor lightGrayColor];
     [_pageControl setNumberOfPages:[_aryData count]];
     [_pageControl setCurrentPage:0];
+//    [_pageControl addTarget:self action:@selector(changepage:) forControlEvents:UIControlEventEditingChanged];
+    //The UIControlEventValueChanged is only called when the UIPageControl view object was tabbed.
     [_mScroll addSubview:_pageControl];
 }
 -(void)createButton
@@ -166,6 +180,33 @@
     CGFloat width;
     width =(_mScrollPage.contentSize.width-40)/[_aryData count];
     [_mScrollPage setContentOffset:CGPointMake(page*width, 0) animated:YES];
+    
+    
+    //get all btn and set style
+    NSInteger currentPage = ((_mScrollPage.contentOffset.x - width / 2) / width)+1;
+    for (UIView *Radarview in [_RadarChart subviews])
+    {
+        for (UIView *view in Radarview.subviews){
+        if ([view isMemberOfClass:[UIButton class]])//revert all btn style
+        {
+            UIButton *btn=(UIButton *)view;
+            if (btn.tag==currentPage) {
+                //set Clicked btn style
+                [btn setBackgroundColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0]];
+                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [[btn layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+            }
+            else
+            {
+                //revert btn style
+                [btn setBackgroundColor:[UIColor whiteColor]];
+                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [[btn layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+            }
+          
+        }
+        }
+    }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
     
@@ -173,7 +214,13 @@
     CGFloat width = DEVICE_SCREEN_WIDTH - 40;
     NSInteger currentPage = ((_mScrollPage.contentOffset.x - width / 2) / width) + 1;
     [self.pageControl setCurrentPage:currentPage];
-
+}
+- (void)clickScroll:(NSNotification*) notification
+{
+    NSNumber *PassObject=[notification object];
+    CGFloat width;
+    width =(_mScrollPage.contentSize.width-40)/[_aryData count];
+    [_mScrollPage setContentOffset:CGPointMake([PassObject floatValue]*width, 0) animated:YES];
 }
 /*
 #pragma mark - Navigation
