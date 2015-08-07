@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MTimeLineView : UIView
+@interface MTimeLineView : UIScrollView
+
+@property (nonatomic, strong) NSArray* dataArray;
 
 @end

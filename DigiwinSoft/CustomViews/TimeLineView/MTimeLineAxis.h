@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class MTimeLineAxis;
+
+@protocol MTimeLineAxisDelegate <NSObject>
+- (void)timeLineAxisDidDrawed:(MTimeLineAxis*)timeLineAxis;
+@end
+
 @interface MTimeLineAxis : UIView
+
+@property (nonatomic, strong) id<MTimeLineAxisDelegate> delegate;
 
 @end

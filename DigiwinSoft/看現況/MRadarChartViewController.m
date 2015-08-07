@@ -12,6 +12,9 @@
 #import "MRouletteViewController.h"
 #import "MDataBaseManager.h"
 #import "MEfficacy.h"
+
+#import "MTimeLineView.h"
+
 @interface MRadarChartViewController ()
 @property (nonatomic, strong) UIScrollView *mScroll;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
@@ -29,6 +32,8 @@
     [self createScroll];
     [self createRadarChart];
     [self createBtn];
+    
+    [self createTimeLineView];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -52,6 +57,13 @@
     _aryAddData=[[NSArray alloc]initWithObjects:ary1,ary2, nil];
 
 }
+
+- (void)createTimeLineView
+{
+    MTimeLineView* view = [[MTimeLineView alloc] initWithFrame:CGRectMake(0, DEVICE_SCREEN_HEIGHT - 49. - 100, DEVICE_SCREEN_WIDTH, 100)];
+    [self.view addSubview:view];
+}
+
 -(void)createScroll
 {
     _mScroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT-64-49)];

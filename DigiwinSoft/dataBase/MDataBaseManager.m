@@ -1415,7 +1415,7 @@ static MDataBaseManager* _director = nil;
 
 #pragma mark - 看現況(管理表現)
 
-- (NSArray*)loadCompManageItemArray
+- (NSArray*)loadCompManageItemArrayWithDate:(NSString*)date
 {
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
     NSString* sql = @"select * from M_MANAGE_ITEM as mmi inner join R_COMP_MANAGE as rci on rci.MA_ID = mmi.ID where rci.COMP_ID = ?";
@@ -1434,7 +1434,7 @@ static MDataBaseManager* _director = nil;
         manageItem.type = [rs stringForColumn:@"TYPE"];
         manageItem.review = [rs stringForColumn:@"REVIEW"];
         
-        NSArray* issArray = [self loadCompMaItemIssueArrayWithMaItemID:manageItem.uuid];
+        NSArray* issArray = [self loadCompMaItemIssueArrayWithMaItemID:manageItem.uuid date:date];
         manageItem.issueArray = issArray;
  
         [array addObject:manageItem];
@@ -1442,7 +1442,7 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
-- (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid
+- (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid date:(NSString*)date
 {
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
     NSString* sql = @"select * from R_COMP_MA_ISSUE as rcmi inner join M_ISSUE as mi on mi.ID = rcmi.ISSUE_ID where rcmi.COMP_ID = ? and rcmi.MA_ID = ? order by rcmi.DATE desc";
@@ -1469,6 +1469,21 @@ static MDataBaseManager* _director = nil;
         issue.target = target;
         
         [array addObject:issue];
+    }
+    return array;
+}
+
+- (NSArray*)loadCompManageDateArray
+{
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select DATE from R_COMP_MA_ISSUE where COMP_ID = ? group by DATE order by DATE desc limit 24";
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, compid];
+    while ([rs next]) {
+        NSString* dateString = [rs stringForColumn:@"DATE"];
+        [array insertObject:dateString atIndex:0];
     }
     return array;
 }

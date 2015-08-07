@@ -95,7 +95,7 @@
 
 #pragma mark - 看現況(管理表現)
 - (NSArray*)loadCompManageItemArray;
-- (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid;
+- (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid date:(NSString*)date;
 
 #pragma mark - 看現況(行業情報)
 - (NSArray*)loadIndustryInfoKindArray;
