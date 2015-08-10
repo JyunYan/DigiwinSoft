@@ -128,7 +128,7 @@
     NSString *earlyDate=[self getEarlyDate];
     
        if ([earlyDate isEqualToString:@""]) {
-        return view;//避免使用者所有startDate都沒設置，接下去跑會閃退
+        return view;//避免使用者所有startDate都沒設置
     }
     
     //timeline上的日期label(從最早的日期往後算兩年)

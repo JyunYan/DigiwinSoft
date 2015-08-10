@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MConfig.h"
 
 @interface MReportTableViewCell : UITableViewCell
 
-@property (nonatomic, weak) UILabel *labTitle;
-@property (nonatomic, weak) UILabel *lab;
+@property (nonatomic, weak) UILabel *labReportDate;
 @property (nonatomic, weak) UILabel *labState;
 @property (nonatomic, weak) UILabel *labReason;
 @property (nonatomic, weak) UILabel *labValueT;

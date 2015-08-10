@@ -76,7 +76,7 @@
 - (UIView*)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     if(!view){
-        view = [[MCarouselItemView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH / 5., 260)];
+        view = [[MCarouselItemView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH / 5., 280)];
         view.backgroundColor = [UIColor clearColor];
         view.alpha = .3;
     }
@@ -85,9 +85,9 @@
     
     MCarouselItemView* ciview = (MCarouselItemView*)view;
     ciview.content = phen.subject;
-    //ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
-    //ciview.content = @"小批量接單沒好配套，呆滯急遽增加";
-    //ciview.content = @"現代的個人出版到各類紀念冊甚至是攝影集的製作，都可以進行少量且高品質的印刷，其印製的效率與品質也逐年進步。";
+//    ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
+//    ciview.content = @"小批量接單沒好配套，呆滯急遽增加";
+//    ciview.content = @"現代的個人出版到各類紀念冊甚至是攝影集的製作，都可以進行少量且高品質的印刷，其印製的效率與品質也逐年進步。";
     
     ciview.onFacus = (index == carousel.currentItemIndex);
     [ciview setNeedsDisplay];
