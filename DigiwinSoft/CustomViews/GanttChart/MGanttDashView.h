@@ -11,5 +11,7 @@
 @interface MGanttDashView : UIView
 
 @property (nonatomic, assign) NSInteger interval;
+@property (nonatomic, assign) UIColor *ChangColor;
+@property (nonatomic, assign) NSMutableArray *aryChangColorX;
 
 @end

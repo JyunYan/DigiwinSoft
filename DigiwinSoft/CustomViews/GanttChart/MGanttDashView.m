@@ -7,11 +7,13 @@
 //
 
 #import "MGanttDashView.h"
-
+#import "MConfig.h"
+#import "MDirector.h"
 @implementation MGanttDashView
 
 - (void)drawRect:(CGRect)rect
 {
+    
     CGContextRef cont = UIGraphicsGetCurrentContext();
     CGContextSetStrokeColorWithColor(cont, [UIColor grayColor].CGColor);
     CGContextSetLineWidth(cont, 1);
@@ -21,13 +23,41 @@
     
     CGFloat x = 0.;
     
+    //chang backgroundColor for the new year
+    BOOL bChang = NO;
+    while (x <= rect.size.width) {
+        CGRect topRect = CGRectMake(x, 0, _interval, rect.size.height);
+        for (NSNumber *changX in _aryChangColorX) {
+            if ([changX floatValue]==x) {
+                bChang=!bChang;
+            }
+        }
+        
+        if (bChang) {
+            _ChangColor=[[MDirector sharedInstance]getCustomRedColor];
+        }
+        else
+        {
+            _ChangColor=[[MDirector sharedInstance]getCustomBlueColor];
+        }
+        
+        
+        [_ChangColor setFill];
+        UIRectFill( topRect );
+        x += _interval;
+    }
+    
+    //dotted line
+    x = 0.;
     while (x <= rect.size.width) {
         CGContextMoveToPoint(cont, x, 0.);    //开始画线
         CGContextAddLineToPoint(cont, x, rect.size.height);
         x += _interval;
-    }
+        }
     
     CGContextStrokePath(cont);
+    
+  
 }
 
 @end

@@ -22,7 +22,7 @@
 
 @property (nonatomic, strong) UITableView* table;
 @property (nonatomic, strong) UIScrollView* scrollView;
-
+@property (nonatomic, strong) NSMutableArray* changColorX;
 @end
 
 @implementation MGanttViewController2
@@ -92,15 +92,21 @@
     scrollView.backgroundColor = [UIColor whiteColor];
     scrollView.contentSize = CGSizeMake(MONTH_INTERVAL*27, frame.size.height);
     
-    // 虛線底圖
-    MGanttDashView* view = [[MGanttDashView alloc] initWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height)];
-    view.interval = MONTH_INTERVAL;
-    view.backgroundColor = [UIColor whiteColor];
-    [scrollView addSubview:view];
-    
+    /*需要取得跨年份的X軸，MGanttDashView才知道從哪開始變色*/
     // month view
     UIView* monthHeader = [self createMonthTitleViewWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, 44.)];
     [scrollView addSubview:monthHeader];
+    
+    // 虛線底圖
+    MGanttDashView* view = [[MGanttDashView alloc] initWithFrame:CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height)];
+    view.interval = MONTH_INTERVAL;
+    view.aryChangColorX=_changColorX;
+    view.backgroundColor = [UIColor clearColor];
+    [scrollView addSubview:view];
+    [scrollView bringSubviewToFront: monthHeader]; //把A放最上面
+    
+
+    
     
     // table
     _table = [self createTableViewWithFrame:CGRectMake(0., 44., scrollView.contentSize.width, scrollView.contentSize.height)];
@@ -138,12 +144,16 @@
     NSInteger iMonth = [month integerValue];
     NSInteger iyear = [year integerValue];
     
+    BOOL changYear=NO;
+    _changColorX=[[NSMutableArray alloc]init];
+    
     for (NSInteger i=0; i<24; i++) {
         NSString *strDate;
         if (iMonth==13) {
             iMonth=1;
             iyear++;
             strDate=[NSString stringWithFormat:@"%ld/%02ld/01",(long)iyear,(long)iMonth];
+            changYear=YES;
         }
         else
         {
@@ -153,6 +163,16 @@
      
         UILabel* label = [self createLabelWithFrame:CGRectMake((MONTH_INTERVAL*i)+(MONTH_INTERVAL/2), 0, MONTH_INTERVAL, frame.size.height) text:strDate];
         [view addSubview:label];
+        
+        if(changYear)//save the new year offset.X for chang backgroundColor
+        {
+            NSLog(@"%@顯示在%d",strDate,(MONTH_INTERVAL*(i+1)));
+            NSNumber * numX = [NSNumber numberWithFloat:(MONTH_INTERVAL*(i+1))];
+            [_changColorX addObject:numX];
+            changYear=NO;
+        }
+        
+        
     }
       return view;
 }
@@ -266,5 +286,4 @@
     
         return cell;
 }
-
 @end
