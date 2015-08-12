@@ -49,11 +49,35 @@
     [drawer setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
 
     self.window.rootViewController = drawer;
+    
+    //Splash
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenW = screenRect.size.width;
+    CGFloat screenH = screenRect.size.height;
+    UIImageView *splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0, screenW, screenH)];
+    splashView.image = [UIImage imageNamed:@"launch_img06.png"];
+    
+    
     [self.window makeKeyAndVisible];
     
+    [[UIApplication sharedApplication]beginIgnoringInteractionEvents];
+    splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0, screenW, screenH)];
+    splashView.image = [UIImage imageNamed:@"launch_img06.png"];
+    [self.window addSubview:splashView];
+    [self.window bringSubviewToFront:splashView];
     
+    
+    [UIView animateWithDuration:1. delay:1. options:0 animations:^{
+        [splashView setAlpha:0.0];
+    } completion:^(BOOL finished) {
+        [splashView removeFromSuperview];
+        [[UIApplication sharedApplication]endIgnoringInteractionEvents];
+    }];
+
     [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"bg.jpg"]
+                                           forBarMetrics:UIBarMetricsDefault];
     
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
