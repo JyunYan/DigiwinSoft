@@ -49,6 +49,8 @@
 
 @interface RPRadarChart ()
 
+@property (nonatomic, strong) NSMutableArray* spokeButtons;
+
 -(void) drawChartInContext:(CGContextRef) cx forIndex:(NSInteger)index;
 
 @end
@@ -68,7 +70,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        maxSize = (frame.size.width>frame.size.height)  ? frame.size.width/2 - 25 : frame.size.height/2 - 25;
+        maxSize = MIN(frame.size.width, frame.size.height) / 2. * 0.6;
         backLineWidth = 1.0f;
         frontLineWidth = 2.0f;
         dotRadius = 3;
@@ -81,6 +83,10 @@
         dotColor = [UIColor redColor];
         fillColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.2];
         [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)]];
+        
+        _spokeButtons = [NSMutableArray new];
+        
+        _currentSpokeIndex = -1;
     }
     return self;
 }
@@ -215,7 +221,7 @@ static double colorDistance(RGB e1, RGB e2)
                 char *window = [self getScanWindowAtPoint:point];
                 color = [colors objectAtIndex:pathIndex];
                 if (YES == [self color:(UIColor*)color inScanWindow:(unsigned char*)window]) {
-                    NSLog(@"Path %d touched", pathIndex);
+                    NSLog(@"Path %d touched", (int)pathIndex);
                     touched = true;
                     break;
                 }
@@ -304,7 +310,7 @@ static double colorDistance(RGB e1, RGB e2)
     
     //畫灰色實心圓
     CGContextMoveToPoint(cx,0, 0);
-    CGContextSetRGBFillColor(cx, 184.0f / 255.0f, 184.0f / 255.0f, 184.0f / 255.0f, 1.0f);
+    CGContextSetRGBFillColor(cx, 212.0f / 255.0f, 219.0f / 255.0f, 227.0f / 255.0f, 1.0f);
     CGContextAddArc(cx, 0,0, spcr*5,  0,  2*M_PI, 0);
     CGContextFillPath(cx);
 
@@ -364,9 +370,14 @@ static double colorDistance(RGB e1, RGB e2)
         if (showValues) {
             NSString *str = [NSString stringWithFormat:@"%1.0f", orgValue];
             x += 5;
-            y -= 7;     
+            y -= 7;
+            
+            NSMutableDictionary* dict = [NSMutableDictionary new];
+            [dict setObject:[UIFont fontWithName:@"Helvetica-Bold" size:12] forKey:NSFontAttributeName];
+            
             CGContextSetFillColorWithColor(cx, [UIColor blackColor].CGColor);
-            [str drawAtPoint:CGPointMake(x, y) withFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
+            //[str drawAtPoint:CGPointMake(x, y) withFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
+            [str drawAtPoint:CGPointMake(x, y) withAttributes:dict];
         }
         mi++;
     }    
@@ -393,6 +404,7 @@ static double colorDistance(RGB e1, RGB e2)
                     float cur = j*spcr;
                     if (j<6) {
                         CGContextStrokeEllipseInRect(cx, CGRectMake(-cur, -cur, cur*2, cur*2));
+                        
 
                     }
                     else//畫最外圍的圓，貼標籤對齊用
@@ -406,26 +418,6 @@ static double colorDistance(RGB e1, RGB e2)
     }
     CGContextSetFillColorWithColor(cx, [UIColor greenColor].CGColor);
     CGContextFillPath(cx);
-    
-    //Base lines畫輻射線
-//    CGContextSetStrokeColorWithColor(cx, [UIColor whiteColor].CGColor);
-//    for (int i = 0; i < numberOfSpokes; i++) {
-//        float a = (mvr * i) - M_PI_2;
-//        float x = maxSize * cos(a);
-//        float y = maxSize * sin(a);
-//        CGContextMoveToPoint(cx, 0, 0);
-//        CGContextAddLineToPoint(cx, x , y);
-//        
-//        CGContextStrokePath(cx);
-//        //輻射線最後的標題
-//        NSString *tx = [dataSource radarChart:self titleForSpoke:i];
-//        CGSize s =[tx sizeWithFont:[UIFont fontWithName:@"Helvetica-Bold" size:11]];
-//        x -= s.width/2;
-//        x += 5;
-//        y += (y>0) ? 10 : -20;
-//        CGContextSetFillColorWithColor(cx, [UIColor whiteColor].CGColor);
-//        [tx drawAtPoint:CGPointMake(x, y) withFont: [UIFont fontWithName:@"Helvetica-Bold" size:11]];
-//    }
     
     //畫輻射線
     for (int i = 0; i < numberOfSpokes; i++) {
@@ -442,97 +434,105 @@ static double colorDistance(RGB e1, RGB e2)
     //製作外圍按鍵
     for (int i = 0; i < numberOfSpokes; i++) {
         float a = (mvr * i) - M_PI_2;
-        float x = (maxSize+38) * cos(a); //正弦，更改後面加上的常數，可調整標籤靠近圓的距離
-        float y = (maxSize+22) * sin(a); //餘弦，更改後面加上的常數，可調整標籤靠近圓的距離
+        float x = (maxSize*1.6) * cos(a); //正弦，更改後面加上的常數，可調整標籤靠近圓的距離
+        float y = (maxSize*1.3) * sin(a); //餘弦，更改後面加上的常數，可調整標籤靠近圓的距離
         
-
 //        y += (y>0) ? 20 : -20;//可微調，判斷外圍標籤上下展開，(y>0)?分上半與下半
-        CGRect rect=CGRectMake(0,0, 60, 35);
-
-        UIButton *btnTitle=[[UIButton alloc]initWithFrame:rect];
-        btnTitle.titleLabel.numberOfLines=2;
-        btnTitle.titleLabel.textAlignment = NSTextAlignmentCenter;
-        btnTitle.titleLabel.font=[UIFont fontWithName:@"Helvetica-Bold" size:11];
-        btnTitle.backgroundColor=[UIColor whiteColor];
-        [btnTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [btnTitle.layer setCornerRadius:8.0]; //设置矩圆角半径
-        [[btnTitle layer] setBorderWidth:2.0f];
-        [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
-        
-        
-        if (_from==0&&i==0) {
-        
-            [btnTitle setBackgroundColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0]];
-            [btnTitle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
-        }
-        
-        
-        
-//        MEfficacy *mEff=ary[i];
-//        
-//        NSString *str=[NSString stringWithFormat:@"%@(%@)",mEff.name,mEff.pr];
-//        
-//        
-//        btnTitle.tag=i;
-//        [btnTitle setTitle:str forState:UIControlStateNormal];
-//        [btnTitle addTarget:self action:@selector(btnTitilClick:) forControlEvents:UIControlEventTouchUpInside];
-//        btnTitle.center=CGPointMake((RADAR_CHART_WIDTH/2)+x,(RADAR_CHART_HEIGHT/2)+y);//加上雷達圖的中心位置
-//
-//        [self addSubview:btnTitle];
+        CGPoint center = CGPointMake(x + self.frame.size.width/2., y + self.frame.size.height/2.);
+        NSString* title = [dataSource radarChart:self titleForSpoke:i];
+        UIButton* button = [self createSpokeButtonWithCenter:center size:CGSizeMake(maxSize*0.8, maxSize*0.5) title:title tag:i];
+        [self addSubview:button];
+        [_spokeButtons addObject:button];
 
     }
+    
+    [self setSpokeButtonSelected];
     
     //Index Texts
     if (showGuideNumbers) {
         for(float i = spcr; i <= maxSize; i+=spcr)
-        {        
+        {
+            NSDictionary* dict = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Helvetica" size:11] forKey:NSFontAttributeName];
+            
             NSString *str = [NSString stringWithFormat:@"%1.0f",( i * maxValue) / maxSize];
             CGSize s = [str sizeWithFont:[UIFont fontWithName:@"Helvetica" size:12]];
             float x = i * cos(M_PI_2) + 5 + s.width;
             float y = i * sin(M_PI_2) + 5;
             CGContextSetFillColorWithColor(cx, [UIColor darkGrayColor].CGColor);
-            [str drawAtPoint:CGPointMake(- x, - y) withFont: [UIFont fontWithName:@"Helvetica" size:11]];
+            [str drawAtPoint:CGPointMake(- x, - y) withAttributes:dict];
         }
     }
     CGContextMoveToPoint(cx, 0, 0);
     
 }
+
+- (UIButton*)createSpokeButtonWithCenter:(CGPoint)center size:(CGSize)size title:(NSString*)title tag:(NSInteger)tag
+{
+    UIButton *button=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    button.center = center;
+    button.tag = tag;
+    button.backgroundColor=[UIColor whiteColor];
+    button.titleLabel.numberOfLines=2;
+    button.titleLabel.textAlignment = NSTextAlignmentCenter;
+    button.titleLabel.font=[UIFont fontWithName:@"Helvetica-Bold" size:12];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitle:title forState:UIControlStateNormal];
+    
+    [[button layer] setCornerRadius:8.0]; //设置矩圆角半径
+    [[button layer] setBorderWidth:2.0f];
+    [[button layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+    
+    [button addTarget:self action:@selector(btnTitilClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return button;
+}
+
+- (void)clean
+{
+    
+}
+
+#pragma mark - spoke button methods
+
 - (void)btnTitilClick:(id)sender
 {
     //1為p9使用，按下lab時push to p8。0為p7使用，按下lab時滾動下方scroll。
-    if (_from) {
-        NSLog(@"from=1");
-        [[NSNotificationCenter defaultCenter] postNotificationName:clickTo object:nil];
-    }
-    else
-    {
-        NSLog(@"from=0");
-        
-
-        for (UIView *view in self.subviews)
-        {
-            if ([view isMemberOfClass:[UIButton class]])//revert all btn style
-            {
-                UIButton *btn=(UIButton *)view;
-                [btn setBackgroundColor:[UIColor whiteColor]];
-                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [[btn layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
-            }
-        }
     
-        //set Clicked btn style
-        [sender setBackgroundColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0]];
-        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [[sender layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+    UIButton* button = (UIButton*)sender;
+    
+    if(delegate && [delegate respondsToSelector:@selector(radarChart:didSelectedSpokeWithIndx:)]){
+       
+        _currentSpokeIndex = button.tag;
+        [self setSpokeButtonSelected];
+        [delegate radarChart:self didSelectedSpokeWithIndx:button.tag];
+    }
+}
 
-        //post clickScroll
-        NSNumber* numberTag = [NSNumber numberWithInteger:[sender tag]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kClickScroll object:numberTag];
+- (void)setSpokeButtonSelected
+{
+    for (int i=0; i<_spokeButtons.count; i++) {
+        UIButton* button = [_spokeButtons objectAtIndex:i];
+        if(i == _currentSpokeIndex){
+            //selected
+            [button setBackgroundColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0]];
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [[button layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+        }else{
+            //unselected
+            button.backgroundColor=[UIColor whiteColor];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [[button layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+        }
     }
 }
 
 #pragma mark - Setters
+
+- (void)setCurrentSpokeIndex:(NSInteger)currentSpokeIndex
+{
+    _currentSpokeIndex = currentSpokeIndex;
+    [self setSpokeButtonSelected];
+}
 
 -(void) setLineColor:(UIColor *)v
 { 

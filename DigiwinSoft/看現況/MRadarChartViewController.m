@@ -117,7 +117,7 @@
 {
     _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
     _RadarChart.aryRadarChartData=_aryData;
-    _RadarChart.from=1;//1為p9使用，按下lab時push to p8。0為p7使用，按下lab時滾動下方scroll。
+    //_RadarChart.from=1;//1為p9使用，按下lab時push to p8。0為p7使用，按下lab時滾動下方scroll。
     [_mScroll addSubview:_RadarChart];
 }
 
@@ -153,7 +153,6 @@
     [_RadarChart removeFromSuperview];
     _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
     _RadarChart.aryRadarChartData=_aryData;//把選擇的新增或移除資料加進去
-    _RadarChart.from=1;
     [_mScroll addSubview:_RadarChart];
 }
 
