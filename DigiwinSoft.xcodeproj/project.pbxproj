@@ -121,6 +121,8 @@
 		DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */ = {isa = PBXBuildFile; fileRef = DC10144D1B32B66200EF7A6F /* MGuide.m */; };
 		DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014501B32B67F00EF7A6F /* MActivity.m */; };
 		DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014531B32B69F00EF7A6F /* MWorkItem.m */; };
+		DC2E10A61B7852800014246E /* icon_red_arrow_left.png in Resources */ = {isa = PBXBuildFile; fileRef = DC2E10A41B7852800014246E /* icon_red_arrow_left.png */; };
+		DC2E10A71B7852800014246E /* icon_red_arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = DC2E10A51B7852800014246E /* icon_red_arrow_right.png */; };
 		DC3DF9D21B4E17C90065DF5D /* MTarMeterView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D11B4E17C90065DF5D /* MTarMeterView.m */; };
 		DC3DF9D51B4E23360065DF5D /* MTarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D41B4E23360065DF5D /* MTarChartView.m */; };
 		DC3DF9D81B4E46C00065DF5D /* MCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */; };
@@ -445,6 +447,8 @@
 		DC1014501B32B67F00EF7A6F /* MActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MActivity.m; path = structure/MActivity.m; sourceTree = "<group>"; };
 		DC1014521B32B69F00EF7A6F /* MWorkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWorkItem.h; path = structure/MWorkItem.h; sourceTree = "<group>"; };
 		DC1014531B32B69F00EF7A6F /* MWorkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWorkItem.m; path = structure/MWorkItem.m; sourceTree = "<group>"; };
+		DC2E10A41B7852800014246E /* icon_red_arrow_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_red_arrow_left.png; sourceTree = "<group>"; };
+		DC2E10A51B7852800014246E /* icon_red_arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_red_arrow_right.png; sourceTree = "<group>"; };
 		DC3DF9D01B4E17C90065DF5D /* MTarMeterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarMeterView.h; path = CustomViews/MTarMeterView.h; sourceTree = "<group>"; };
 		DC3DF9D11B4E17C90065DF5D /* MTarMeterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarMeterView.m; path = CustomViews/MTarMeterView.m; sourceTree = "<group>"; };
 		DC3DF9D31B4E23360065DF5D /* MTarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarChartView.h; path = CustomViews/MTarChartView.h; sourceTree = "<group>"; };
@@ -908,6 +912,8 @@
 				DCF46AE41B42AAF300C771BB /* icon_more.png */,
 				DCF46AE51B42AAF300C771BB /* icon_phone.png */,
 				DCF46AE61B42AAF300C771BB /* icon_raider.png */,
+				DC2E10A41B7852800014246E /* icon_red_arrow_left.png */,
+				DC2E10A51B7852800014246E /* icon_red_arrow_right.png */,
 				DCF46AE71B42AAF300C771BB /* icon_red_arrow.png */,
 				DCF46AE81B42AAF300C771BB /* icon_red_circle.png */,
 				DCE951B41B688F4700E3C059 /* icon_search_blue.png */,
@@ -1395,6 +1401,7 @@
 				3AFF625F1B438A46005B6238 /* icon_menu_11.png in Resources */,
 				3AF1DD031B608B07006ADBBD /* icon_arrow_right.png in Resources */,
 				DCE951B51B688F4700E3C059 /* icon_search_blue.png in Resources */,
+				DC2E10A61B7852800014246E /* icon_red_arrow_left.png in Resources */,
 				DCF46B0C1B42AAF300C771BB /* icon_red_circle.png in Resources */,
 				DCF46AFB1B42AAF300C771BB /* check_box_on.png in Resources */,
 				DC5877771B5DCCCF00D5AC5D /* Icon-Small@2x.png in Resources */,
@@ -1426,6 +1433,7 @@
 				DCF46B081B42AAF300C771BB /* icon_more.png in Resources */,
 				3AFF625A1B438A46005B6238 /* icon_menu_6.png in Resources */,
 				3AFF62591B438A46005B6238 /* icon_menu_5.png in Resources */,
+				DC2E10A71B7852800014246E /* icon_red_arrow_right.png in Resources */,
 				DCE951BB1B68916000E3C059 /* icon_menu_5_blue.png in Resources */,
 				DCF46AFC1B42AAF300C771BB /* checkbox_empty.png in Resources */,
 				3AE08C541B5CCEBC00B46895 /* icon_star_half.png in Resources */,

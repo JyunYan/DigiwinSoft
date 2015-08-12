@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class MTimeLineView;
+
+@protocol MTimeLineViewDelegate <NSObject>
+- (void) timeLineView:(MTimeLineView*)view didChangedIndex:(NSInteger)index;
+@end
+
 @interface MTimeLineView : UIScrollView
 
-@property (nonatomic, strong) NSArray* dataArray;
+@property (nonatomic, strong) id<MTimeLineViewDelegate> delegateTL;
+
+- (void)setDataArray:(NSArray *)dataArray;
 
 @end

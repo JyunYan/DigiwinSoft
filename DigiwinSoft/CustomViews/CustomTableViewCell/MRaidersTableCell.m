@@ -32,7 +32,7 @@
     return label;
 }
 
-- (UIImage*)imageWithTarget:(MTarget*)taregt
+- (UIImage*)imageWithCustTarget2:(MCustTarget*)taregt
 {
     
     NSString* end = taregt.completeDate;
@@ -166,7 +166,7 @@
         [_delegate btnRaidersClicked:self];
 }
 
-- (void)prepareWithGuide:(MGuide*)guide
+- (void)prepareWithGuide:(MCustGuide*)guide
 {
     self.checkBox.image = (guide.isCheck) ? [UIImage imageNamed:@"checkbox_fill.png"] : [UIImage imageNamed:@"checkbox_empty.png"];
     self.labName.text = guide.name;
@@ -181,7 +181,7 @@
     }
     
     // 目標設定button
-    UIImage* image = [self imageWithTarget:guide.target];
+    UIImage* image = [self imageWithCustTarget2:guide.custTaregt];
     [self.btnTargetSet setImage:image forState:UIControlStateNormal];
     
     // star

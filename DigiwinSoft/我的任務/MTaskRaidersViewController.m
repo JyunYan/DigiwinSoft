@@ -62,6 +62,7 @@
         _act = activity;
         _tabBarExisted = YES;
         
+        _bNeedSaved = YES;
     }
     return self;
 }
@@ -111,8 +112,10 @@
     [super viewWillDisappear:animated];
     
     // save data
-    NSArray* array = _act.workItemArray;
-    [[MDataBaseManager sharedInstance] insertCustWorkItems:array];
+    if(_bNeedSaved){
+        NSArray* array = _act.workItemArray;
+        [[MDataBaseManager sharedInstance] insertCustWorkItems:array];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -171,7 +174,7 @@
     
     UIButton* addActButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     addActButton.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
-    [addActButton setTitle:@"新增關鍵活動" forState:UIControlStateNormal];
+    [addActButton setTitle:@"新增工作項目" forState:UIControlStateNormal];
     addActButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [addActButton addTarget:self action:@selector(addActivity:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addActButton];
@@ -195,7 +198,6 @@
 
 -(void)addActivity:(id)sender
 {
-    
 }
 
 -(void)actionNotify:(id)sender

@@ -176,7 +176,7 @@
     
     [MDirector sharedInstance].selectedIssue = issue;
 
-    NSArray* historyArray = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:issue.target limit:36];
+    NSArray* historyArray = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTargetID:issue.target.uuid limit:36];
     MStatusLineChartViewController* vc = [[MStatusLineChartViewController alloc] initWithHistoryArray:historyArray];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];

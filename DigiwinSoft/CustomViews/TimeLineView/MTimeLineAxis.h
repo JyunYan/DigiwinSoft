@@ -7,15 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@class MTimeLineAxis;
+@interface MTLAxisPoint : NSObject
 
-@protocol MTimeLineAxisDelegate <NSObject>
-- (void)timeLineAxisDidDrawed:(MTimeLineAxis*)timeLineAxis;
+@property CGFloat centerX;
+@property CGFloat centerY;
+@property CGFloat radius;
+@property NSInteger index;
+
 @end
+
+
+
 
 @interface MTimeLineAxis : UIView
 
-@property (nonatomic, strong) id<MTimeLineAxisDelegate> delegate;
+@property (nonatomic, strong) NSArray* dateArray;
+@property (nonatomic, assign) NSInteger endIndex;
+@property (nonatomic, assign) CGFloat   interval; //每個圓的間隔
+
+- (void)preparePoints;
+- (NSArray*)points;
 
 @end
+

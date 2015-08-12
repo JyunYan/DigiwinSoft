@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
-#import "MGuide.h"
+#import "MCustGuide.h"
 @interface MRaidersDescriptionViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *tbl;
@@ -16,7 +16,7 @@
     UIButton *btn;
     NSArray *aryList;
 }
-@property (nonatomic, strong) MGuide *guide;
+@property (nonatomic, strong) MCustGuide *guide;
 @property (nonatomic, assign) NSInteger from;
 
 @end

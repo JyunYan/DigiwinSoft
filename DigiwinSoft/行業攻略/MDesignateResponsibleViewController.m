@@ -32,7 +32,7 @@
 @property (nonatomic, strong) UIToolbar *toolBar;
 @property (nonatomic, strong) UITextField* text_field;
 
-@property (nonatomic, strong) MGuide* guide;            //對策
+@property (nonatomic, strong) MCustGuide* guide;            //對策
 @property (nonatomic, strong) MCustActivity* activity;  //關鍵活動
 @property (nonatomic, strong) MCustWorkItem* workitem;  //工作項目
 
@@ -42,7 +42,7 @@
 
 @implementation MDesignateResponsibleViewController
 
-- (id)initWithGuide:(MGuide*)guide
+- (id)initWithGuide:(MCustGuide*)guide
 {
     //
     self = [super init];

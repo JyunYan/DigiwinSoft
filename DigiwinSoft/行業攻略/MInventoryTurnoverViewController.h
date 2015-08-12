@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MGuide.h"
+#import "MCustGuide.h"
 @interface MInventoryTurnoverViewController : UIViewController
-@property (nonatomic, strong) MGuide *guide;
+@property (nonatomic, strong) MCustGuide *guide;
 @end

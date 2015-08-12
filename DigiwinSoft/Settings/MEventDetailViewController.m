@@ -7,8 +7,9 @@
 //
 
 #import "MEventDetailViewController.h"
-#import "AppDelegate.h"
 #import "MRecommendTreasuresViewController.h"
+#import "MTaskRaidersViewController.h"
+#import "AppDelegate.h"
 #import "MDirector.h"
 
 
@@ -19,6 +20,8 @@
 
 
 @interface MEventDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView* tableView;
 
 @property (nonatomic, strong) NSMutableArray* treasureArray;
 
@@ -38,6 +41,7 @@
             [_treasureArray addObjectsFromArray:array];
         }
         
+        _actArray = [NSMutableArray new];
         _actArray = actArray;
         _situationArray = situationArray;
     }
@@ -75,6 +79,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+//- (void)prepareActivityData
+//{
+//    [_actArray removeAllObjects];
+//    
+//    
+//    NSArray* samples = [
+//}
+
 #pragma mark - create view
 
 -(void) addMainMenu
@@ -96,12 +108,12 @@
     CGFloat width = viewWidth - posX * 2;
     CGFloat height = viewHeight - posY * 2;
     
-    UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height) style:UITableViewStyleGrouped];
-    tableView.backgroundColor = [UIColor clearColor];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [view addSubview:tableView];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height) style:UITableViewStyleGrouped];
+    _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [view addSubview:_tableView];
     
     return view;
 }
@@ -111,6 +123,20 @@
 -(void)back:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)actionToGoWorkItemList:(id)sender
+{
+    UIButton* button = (UIButton*)sender;
+    UITableViewCell* cell = (UITableViewCell*)button.superview.superview;
+    NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
+    
+    MCustActivity* act = [_actArray objectAtIndex:indexPath.row];
+    
+    MTaskRaidersViewController* vc = [[MTaskRaidersViewController alloc] initWithCustActivity:act];
+    vc.tabBarExisted = NO;
+    vc.bNeedSaved = NO;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)actionGoRecommend:(id)sender
@@ -234,9 +260,10 @@
         posX = label.frame.origin.x + label.frame.size.width;
         posY = (height - 20) / 2;
         
-        UIImageView* imageViewAddTask = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 20, 20)];
+        UIButton* imageViewAddTask = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, 20, 20)];
         imageViewAddTask.tag = TAG_IMAGEVIEW_ADD_TASK;
-        imageViewAddTask.image = [UIImage imageNamed:@"icon_info.png"];
+        [imageViewAddTask setImage:[UIImage imageNamed:@"icon_raider.png"] forState:UIControlStateNormal];
+        [imageViewAddTask addTarget:self action:@selector(actionToGoWorkItemList:) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:imageViewAddTask];
         
         

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MGuide.h"
+#import "MCustGuide.h"
 #import "MCustActivity.h"
 #import "MCustWorkItem.h"
 
@@ -50,7 +50,7 @@
 
 + (instancetype)cellWithTableView:(UITableView *)tableView size:(CGSize)size;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier size:(CGSize)size;
-- (void)prepareWithGuide:(MGuide*)guide;
+- (void)prepareWithGuide:(MCustGuide*)guide;
 
 @end
 

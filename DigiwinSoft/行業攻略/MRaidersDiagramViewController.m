@@ -12,6 +12,8 @@
 #import "MActivity.h"
 #import "MWorkItem.h"
 #import "MDirector.h"
+#import "MDataBaseManager.h"
+
 @interface MRaidersDiagramViewController ()
 {
     NSArray *aryActivity;
@@ -49,7 +51,7 @@
 #pragma mark - create view
 - (void)loadData
 {
-    aryActivity = _guide.activityArray;
+    aryActivity = [[MDataBaseManager sharedInstance] loadActivitySampleArrayWithGuideID:_guide.gui_uuid];
     act = [aryActivity firstObject];
     aryWorkItem = act.workItemArray;
 }
@@ -126,14 +128,14 @@
     
     //Label
     UILabel *labTarget2=[[UILabel alloc]initWithFrame:CGRectMake(20,imgGray.frame.origin.y+60, 200, 15)];
-    labTarget2.text=[NSString stringWithFormat:@"指標 : %@",_guide.target.name];
+    labTarget2.text=[NSString stringWithFormat:@"指標 : %@",_guide.custTaregt.name];
     labTarget2.backgroundColor=[UIColor clearColor];
     [labTarget2 setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labTarget2];
     
     //Label
     UILabel *labValue2=[[UILabel alloc]initWithFrame:CGRectMake(labTarget2.frame.origin.x+labTarget2.frame.size.width+5,imgGray.frame.origin.y+60,100, 15)];
-    labValue2.text=[NSString stringWithFormat:@"目標值 : %@%@",_guide.target.valueT,_guide.target.unit];
+    labValue2.text=[NSString stringWithFormat:@"目標值 : %@%@",_guide.custTaregt.valueT,_guide.custTaregt.unit];
     labValue2.backgroundColor=[UIColor clearColor];
     [labValue2 setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labValue2];

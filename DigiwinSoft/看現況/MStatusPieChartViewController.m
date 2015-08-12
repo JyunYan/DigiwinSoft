@@ -44,6 +44,9 @@
     if (self) {
         _viewRect = rect;
         _pieIndex = 0;
+        
+        _dataArray = [NSArray new];
+        _issueArray = [NSArray new];
     }
     return self;
 }
@@ -53,19 +56,23 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    
-    _dataArray = [[MDataBaseManager sharedInstance] loadCompManageItemArray];
-    _issueArray = [NSArray new];
-    
-    
-    
+
+    [self prepareData];
     [self createChartView];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareData
+{
+    NSArray* array = [[MDataBaseManager sharedInstance] loadCompManageDateArrayWithLimit:1];
+    if(array.count > 0){
+        NSString* date = [array firstObject];
+        _dataArray = [[MDataBaseManager sharedInstance] loadCompManageItemArrayWithDate:date];
+    }
 }
 
 #pragma mark - create view
