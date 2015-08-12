@@ -171,7 +171,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 11;
+    return 12;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -269,8 +269,12 @@
         cell.textLabel.text = @"操作導引";
     } else if (row == 10) {
         cell.imageView.image = [UIImage imageNamed:@"icon_menu_11.png"];
+        cell.textLabel.text = @"行業切換";
+    } else if (row == 11) {
+        cell.imageView.image = [UIImage imageNamed:@"icon_menu_11.png"];
         cell.textLabel.text = @"登出";
     }
+
     cell.textLabel.font = [UIFont boldSystemFontOfSize:15.0f];
     cell.textLabel.textColor = [UIColor lightGrayColor];
     cell.textLabel.highlightedTextColor = [UIColor whiteColor];
@@ -308,7 +312,7 @@
     } else if (row == 9) {
         
     } else if (row == 10) {
-        
+        NSLog(@"行業切換");
     } else if (row == 11) {
         
     }

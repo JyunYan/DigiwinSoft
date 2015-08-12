@@ -10,7 +10,7 @@
 #import "DownPicker.h"
 #import "MDirector.h"
 #import "MDataBaseManager.h"
-
+#import "CustomIOSAlertView.h"
 #import "MRadioGroupView.h"
 
 #define TAG_TEXTFIELD_NAME  101
@@ -33,6 +33,7 @@
 @property (nonatomic, strong) UITextField* startTF;
 @property (nonatomic, strong) UITextField* endTF;
 @property (nonatomic, strong) UILabel* unitLabel;
+@property (nonatomic, strong) CustomIOSAlertView *customIOSAlertView;
 
 @end
 
@@ -207,9 +208,12 @@
     posX += titleLabel.frame.size.width;
     
     // 驚嘆號
-    UIImageView* imageViewInfo = [[UIImageView alloc] initWithFrame:CGRectMake(posX, (view.frame.size.height - 24)/2., 24, 24)];
-    imageViewInfo.image = [UIImage imageNamed:@"icon_info.png"];
+    
+    UIButton* imageViewInfo = [[UIButton alloc] initWithFrame:CGRectMake(posX, (view.frame.size.height - 24)/2., 24, 24)];
+    [imageViewInfo setBackgroundImage:[UIImage imageNamed:@"icon_info.png"] forState:UIControlStateNormal];
+    [imageViewInfo addTarget:self action:@selector(showDescAlert:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:imageViewInfo];
+
     return view;
 }
 
@@ -346,6 +350,80 @@
     
     return view;
 }
+- (UIView*)createDescView:(CGRect) rect
+{
+    CGFloat textSize = 14.0f;
+    
+    
+    UIView* view = [[UIView alloc] initWithFrame:rect];
+    view.backgroundColor = [UIColor whiteColor];
+    
+    CGFloat viewWidth = view.frame.size.width;
+    CGFloat viewHeight = view.frame.size.height;
+    
+    CGFloat width = 25;
+    CGFloat height = 25;
+    CGFloat posX = viewWidth - width - 10;
+    CGFloat posY = 10;
+    
+    UIButton *btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnClose.frame = CGRectMake(posX, posY, width, height);
+    [btnClose setImage:[UIImage imageNamed:@"icon_close.png"] forState:UIControlStateNormal];
+    [btnClose addTarget:self action:@selector(actionClose:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:btnClose];
+    
+    
+    // 標題
+    posX = 20;
+    posY = btnClose.frame.origin.y + btnClose.frame.size.height + 5;
+    width = viewWidth - posX * 2;
+    height = 30;
+    
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    titleLabel.text = [self getActivityName];
+    titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
+    [view addSubview:titleLabel];
+    
+    
+    posX = 10;
+    width = viewWidth - posX * 2;
+    posY = titleLabel.frame.origin.y + titleLabel.frame.size.height + 5;
+    height = 1;
+    
+    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    [view addSubview:lineView];
+    
+    
+    posX = 20;
+    posY = lineView.frame.origin.y + lineView.frame.size.height + 5;
+    height = 30;
+    // 說明
+    UILabel* descTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    descTitleLabel.text = @"說明：";
+    descTitleLabel.font = [UIFont systemFontOfSize:textSize];
+    [view addSubview:descTitleLabel];
+    
+    
+    posY = descTitleLabel.frame.origin.y + descTitleLabel.frame.size.height;
+    height = viewHeight - posY - 10;
+    
+    UIScrollView* scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    [view addSubview:scrollView];
+    
+    posX = 0;
+    posY = 0;
+    
+    UILabel* descLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    descLabel.font = [UIFont systemFontOfSize:textSize];
+    descLabel.text = [self getActivityDesc];;
+    [scrollView addSubview:descLabel];
+    
+    [descLabel sizeToFit];
+    [scrollView setContentSize:CGSizeMake(scrollView.frame.size.width, descLabel.frame.size.height)];
+    
+    return view;
+}
 
 #pragma mark - Table view data source
 
@@ -478,6 +556,23 @@
     if(tag == TAG_TEXTFIELD_VALUE)
         [self setValueT:textField.text];
 }
+-(void)showDescAlert:(id)sender
+{
+    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
+    CGFloat screenWidth = screenFrame.size.width;
+    
+    _customIOSAlertView = [[CustomIOSAlertView alloc] initWithParentView:self.view.superview];
+    [_customIOSAlertView setButtonTitles:nil];
+    
+    UIView* view = [self createDescView:CGRectMake(0, 0, screenWidth, 300)];
+    [_customIOSAlertView setContainerView:view];
+    [_customIOSAlertView show];
+}
+-(void)actionClose:(id)sender
+{
+    if (_customIOSAlertView)
+        [_customIOSAlertView close];
+}
 
 #pragma mark - UIGestureRecognizer
 
@@ -546,7 +641,15 @@
     NSString* str = (_type == TYPE_FOR_WORKITEM) ? _workitem.custTarget.completeDate : _act.custTarget.completeDate;
     return [str stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
 }
+- (NSString*)getActivityName
+{
+    return (_type == TYPE_FOR_WORKITEM) ? _workitem.name : _act.name;
+}
+- (NSString*)getActivityDesc
+{
+    return (_type == TYPE_FOR_WORKITEM) ? _workitem.desc : _act.desc;
 
+}
 - (void)setCustTarget:(MTarget*)target
 {
     if(_type == TYPE_FOR_ACTIVITY){
