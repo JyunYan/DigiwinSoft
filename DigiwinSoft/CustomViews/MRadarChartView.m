@@ -41,13 +41,12 @@
 {
       
     if(!_RadarChart){
-        _RadarChart = [[RPRadarChart alloc] initWithFrame:CGRectMake(0, 0,200, 200)];
+        _RadarChart = [[RPRadarChart alloc] initWithFrame:CGRectMake(0, 0,self.frame.size.width*0.6, self.frame.size.width*0.6)];
+        _RadarChart.center = CGPointMake(self.frame.size.width/2., self.frame.size.height/2.);
         _RadarChart.dataSource = self;
         _RadarChart.delegate = self;
 
-
-        _RadarChart.backgroundColor = [UIColor whiteColor];
-        
+        _RadarChart.backgroundColor = [UIColor redColor];
         
         _RadarChart.backLineWidth=1.5;  //輻射線與同心圓的線的寬度
         _RadarChart.frontLineWidth=1;  //多角形的線框的寬度
@@ -59,14 +58,7 @@
         _RadarChart.showValues=NO;
         _RadarChart.fillArea=YES;
         _RadarChart.guideLineSteps=5;
-        
-//        //Private
-//        float maxSize;
-//        float maxValue;
-//        float minValue;
-
-        
-        
+    
         [self addSubview:_RadarChart];
     }
 

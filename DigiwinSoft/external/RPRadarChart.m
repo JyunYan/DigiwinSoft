@@ -424,9 +424,8 @@ static double colorDistance(RGB e1, RGB e2)
 //        [tx drawAtPoint:CGPointMake(x, y) withFont: [UIFont fontWithName:@"Helvetica-Bold" size:11]];
 //    }
     
-    NSArray *ary=[dataSource radarChart:self aryData:ary];
     //畫輻射線
-    for (int i = 0; i < [ary count]; i++) {
+    for (int i = 0; i < numberOfSpokes; i++) {
         float a = (mvr * i) - M_PI_2;
         float x = maxSize * cos(a); //正弦
         float y = maxSize * sin(a); //餘弦
@@ -438,39 +437,37 @@ static double colorDistance(RGB e1, RGB e2)
     }
     
     
-    //製作外圍按鍵
-    for (int i = 0; i < [ary count]; i++) {
-        float a = (mvr * i) - M_PI_2;
-        float x = (maxSize+38) * cos(a); //正弦，更改後面加上的常數，可調整標籤靠近圓的距離
-        float y = (maxSize+22) * sin(a); //餘弦，更改後面加上的常數，可調整標籤靠近圓的距離
-        
-
-//        y += (y>0) ? 20 : -20;//可微調，判斷外圍標籤上下展開，(y>0)?分上半與下半
-        CGRect rect=CGRectMake(0,0, 60, 35);
-
-        UIButton *btnTitle=[[UIButton alloc]initWithFrame:rect];
-        btnTitle.titleLabel.numberOfLines=2;
-        btnTitle.titleLabel.textAlignment = NSTextAlignmentCenter;
-        btnTitle.titleLabel.font=[UIFont fontWithName:@"Helvetica-Bold" size:11];
-        btnTitle.backgroundColor=[UIColor whiteColor];
-        [btnTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [btnTitle.layer setCornerRadius:8.0]; //设置矩圆角半径
-        [[btnTitle layer] setBorderWidth:2.0f];
-        [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
-        
-        MEfficacy *mEff=ary[i];
-        
-        NSString *str=[NSString stringWithFormat:@"%@(%@)",mEff.name,mEff.pr];
-        
-        
-        
-        [btnTitle setTitle:str forState:UIControlStateNormal];
-        [btnTitle addTarget:self action:@selector(btnTitilClick:) forControlEvents:UIControlEventTouchUpInside];
-        btnTitle.center=CGPointMake((RADAR_CHART_WIDTH/2)+x,(RADAR_CHART_HEIGHT/2)+y);//加上雷達圖的中心位置
-
-        [self addSubview:btnTitle];
-
-    }
+//    //製作外圍按鍵
+//    for (int i = 0; i < numberOfSpokes; i++) {
+//        float a = (mvr * i) - M_PI_2;
+//        float x = (maxSize+38) * cos(a); //正弦，更改後面加上的常數，可調整標籤靠近圓的距離
+//        float y = (maxSize+22) * sin(a); //餘弦，更改後面加上的常數，可調整標籤靠近圓的距離
+//        
+//
+////        y += (y>0) ? 20 : -20;//可微調，判斷外圍標籤上下展開，(y>0)?分上半與下半
+//        CGRect rect=CGRectMake(0,0, 60, 35);
+//
+//        UIButton *btnTitle=[[UIButton alloc]initWithFrame:rect];
+//        btnTitle.titleLabel.numberOfLines=2;
+//        btnTitle.titleLabel.textAlignment = NSTextAlignmentCenter;
+//        btnTitle.titleLabel.font=[UIFont fontWithName:@"Helvetica-Bold" size:11];
+//        btnTitle.backgroundColor=[UIColor whiteColor];
+//        [btnTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [btnTitle.layer setCornerRadius:8.0]; //设置矩圆角半径
+//        [[btnTitle layer] setBorderWidth:2.0f];
+//        [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+//        
+//        //NSString *str=[NSString stringWithFormat:@"%@(%@)",mEff.name,mEff.pr];
+//        
+//        NSString *str = [dataSource radarChart:self titleForSpoke:i];
+//        
+//        [btnTitle setTitle:str forState:UIControlStateNormal];
+//        [btnTitle addTarget:self action:@selector(btnTitilClick:) forControlEvents:UIControlEventTouchUpInside];
+//        btnTitle.center=CGPointMake((RADAR_CHART_WIDTH/2)+x,(RADAR_CHART_HEIGHT/2)+y);//加上雷達圖的中心位置
+//
+//        [self addSubview:btnTitle];
+//
+//    }
     
     //Index Texts
     if (showGuideNumbers) {

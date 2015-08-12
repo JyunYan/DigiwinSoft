@@ -15,7 +15,7 @@
 
 #import "MTimeLineView.h"
 
-@interface MRadarChartViewController ()
+@interface MRadarChartViewController ()<MTimeLineViewDelegate>
 @property (nonatomic, strong) UIScrollView *mScroll;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
 @property (nonatomic, strong) NSMutableArray *aryData;//放入雷達圖顯示的資料
@@ -33,7 +33,7 @@
     [self createRadarChart];
     [self createBtn];
     
-    [self createTimeLineView];
+    [self initTimeLineView];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -52,7 +52,6 @@
      否則在移除雷達上出現的兩筆以上的同資料的時候，會因記憶體位置相同，把所有資料都移除。
     **/
     
-    
     //放入雷達圖顯示的資料
     NSArray *ary=[[MDataBaseManager sharedInstance]loadCompanyEfficacyArray];
     _aryData=[[NSMutableArray alloc]initWithObjects:ary[0],ary[1],ary[2], nil];
@@ -64,9 +63,13 @@
 
 }
 
-- (void)createTimeLineView
+- (void)initTimeLineView
 {
+    NSArray* array = [[MDataBaseManager sharedInstance] loadCompManageDateArrayWithLimit:24];
+    
     MTimeLineView* view = [[MTimeLineView alloc] initWithFrame:CGRectMake(0, DEVICE_SCREEN_HEIGHT - 49. - 100, DEVICE_SCREEN_WIDTH, 100)];
+    view.delegateTL = self;
+    [view setDataArray:array];
     [self.view addSubview:view];
 }
 
@@ -112,6 +115,13 @@
     _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
     _RadarChart.aryRadarChartData=_aryData;
     [_mScroll addSubview:_RadarChart];
+}
+
+#pragma mark - MTimeLineViewDelegate
+
+- (void)timeLineView:(MTimeLineView *)view didChangedIndex:(NSInteger)index
+{
+    
 }
 
 #pragma mark - UIButton
@@ -174,6 +184,8 @@
     
     return roundedImage;
 }
+
+
 /*
 #pragma mark - Navigation
 
