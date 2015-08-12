@@ -68,9 +68,6 @@
 // get color legend for a specefic data
 - (UIColor*)radarChart:(RPRadarChart*)chart colorForData:(NSInteger)atIndex;
 
-//得到要製作按鍵的資料
--(NSArray *)radarChart:(RPRadarChart*)chart aryData:(NSArray *)ary;
-
 @end
 
 @protocol RPRadarChartDelegate <NSObject>
@@ -78,6 +75,7 @@
 @optional
 
 - (void)radarChart:(RPRadarChart *)chart lineTouchedForData:(NSInteger)dataIndex atPosition:(CGPoint)point;
+- (void)radarChart:(RPRadarChart *)chart didSelectedSpokeWithIndx:(NSInteger)spokeIndex;
 
 @end
 
@@ -110,5 +108,6 @@
 @property (nonatomic) NSInteger guideLineSteps;
 @property (nonatomic, assign) id<RPRadarChartDataSource> dataSource;
 @property (nonatomic, assign) id<RPRadarChartDelegate> delegate;
-@property (nonatomic, assign) NSInteger from;
+@property (nonatomic, assign) NSInteger currentSpokeIndex;
+
 @end
