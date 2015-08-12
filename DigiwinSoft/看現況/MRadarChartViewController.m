@@ -12,9 +12,13 @@
 #import "MRouletteViewController.h"
 #import "MDataBaseManager.h"
 #import "MEfficacy.h"
+
+#import "MTimeLineView.h"
+
 #define clickTo    @"clickTo"
 
-@interface MRadarChartViewController ()
+@interface MRadarChartViewController ()<MTimeLineViewDelegate>
+
 @property (nonatomic, strong) UIScrollView *mScroll;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
 @property (nonatomic, strong) NSMutableArray *aryData;//放入雷達圖顯示的資料
@@ -32,7 +36,7 @@
     [self createRadarChart];
     [self createBtn];
     
-
+    [self initTimeLineView];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -57,7 +61,6 @@
      否則在移除雷達上出現的兩筆以上的同資料的時候，會因記憶體位置相同，把所有資料都移除。
     **/
     
-    
     //放入雷達圖顯示的資料
     NSArray *ary=[[MDataBaseManager sharedInstance]loadCompanyEfficacyArray];
     _aryData=[[NSMutableArray alloc]initWithObjects:ary[0],ary[1],ary[2], nil];
@@ -68,6 +71,17 @@
     _aryAddData=[[NSArray alloc]initWithObjects:ary1,ary2, nil];
 
 }
+
+- (void)initTimeLineView
+{
+    NSArray* array = [[MDataBaseManager sharedInstance] loadCompManageDateArrayWithLimit:24];
+    
+    MTimeLineView* view = [[MTimeLineView alloc] initWithFrame:CGRectMake(0, DEVICE_SCREEN_HEIGHT - 49. - 100, DEVICE_SCREEN_WIDTH, 100)];
+    view.delegateTL = self;
+    [view setDataArray:array];
+    [self.view addSubview:view];
+}
+
 -(void)createScroll
 {
     _mScroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT-64-49)];
@@ -105,6 +119,13 @@
     _RadarChart.aryRadarChartData=_aryData;
     _RadarChart.from=1;//1為p9使用，按下lab時push to p8。0為p7使用，按下lab時滾動下方scroll。
     [_mScroll addSubview:_RadarChart];
+}
+
+#pragma mark - MTimeLineViewDelegate
+
+- (void)timeLineView:(MTimeLineView *)view didChangedIndex:(NSInteger)index
+{
+    
 }
 
 #pragma mark - UIButton

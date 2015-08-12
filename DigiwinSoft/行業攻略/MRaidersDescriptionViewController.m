@@ -13,7 +13,6 @@
 #import "MRaidersDiagramViewController.h"
 #import "MRaidersDescriptionTableViewCell.h"
 #import "MDataBaseManager.h"
-#import "MGuide.h"
 #import "MTarget.h"
 #import "MFlowChartView.h"
 #import "MActFlowChart.h"
@@ -75,7 +74,7 @@
 #pragma mark - create view
 - (void)loadData
 {
-    aryList=[[MDataBaseManager sharedInstance] loadIssueArrayByGudieID:_guide.uuid];
+    aryList=[[MDataBaseManager sharedInstance] loadIssueArrayByGudieID:_guide.gui_uuid];
 }
 
 -(void)kkk:(NSNotification*)note

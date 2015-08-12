@@ -56,7 +56,7 @@
     [appDelegate.tabBarController.tabBar setHidden:YES];
 }
 
-- (void)setGuide:(MGuide *)guide
+- (void)setGuide:(MCustGuide *)guide
 {
     _guide = guide;
     self.title = guide.name;
@@ -95,7 +95,7 @@
     //UITextField
     UITextField *txtName=[[UITextField alloc]initWithFrame:CGRectMake(105,118, 160, 29)];
     txtName.textColor = [UIColor lightGrayColor];
-    txtName.text=_guide.target.name;
+    txtName.text=_guide.custTaregt.name;
     txtName.userInteractionEnabled=NO;
     txtName.layer.borderColor = [UIColor lightGrayColor].CGColor;
     txtName.layer.borderWidth = 1.6;
@@ -116,7 +116,7 @@
     UITextField *txtInit=[[UITextField alloc]initWithFrame:CGRectMake(105,163, 50, 29)];
     txtInit.textAlignment = NSTextAlignmentCenter;
     txtInit.textColor = [UIColor lightGrayColor];
-    txtInit.text=_guide.target.valueR;
+    txtInit.text=_guide.custTaregt.valueR;
     txtInit.userInteractionEnabled=NO;
     txtInit.layer.borderColor = [UIColor lightGrayColor].CGColor;
     txtInit.layer.borderWidth = 1.6;
@@ -125,7 +125,7 @@
     
     //Label
     UILabel *labDay=[[UILabel alloc]initWithFrame:CGRectMake(170, 170, 20, 15)];
-    labDay.text=_guide.target.unit;
+    labDay.text=_guide.custTaregt.unit;
     labDay.backgroundColor=[UIColor whiteColor];
     [labDay setFont:[UIFont systemFontOfSize:14]];
     labDay.textAlignment = NSTextAlignmentJustified;
@@ -145,12 +145,12 @@
     txtTarget.delegate = self;
     txtTarget.borderStyle=UITextBorderStyleLine;
     txtTarget.textAlignment = NSTextAlignmentCenter;
-    txtTarget.text=_guide.target.valueT;
+    txtTarget.text=_guide.custTaregt.valueT;
     [self.view addSubview:txtTarget];
 
     //Label
     labDay=[[UILabel alloc]initWithFrame:CGRectMake(170, 215, 20, 15)];
-    labDay.text=_guide.target.unit;
+    labDay.text=_guide.custTaregt.unit;
     labDay.backgroundColor=[UIColor whiteColor];
     [labDay setFont:[UIFont systemFontOfSize:14]];
     labDay.textAlignment = NSTextAlignmentJustified;
@@ -191,7 +191,7 @@
     //UITextField
     txtTargetDay=[[UITextField alloc]initWithFrame:CGRectMake(105,308, 140, 29)];
     txtTargetDay.borderStyle=UITextBorderStyleLine;
-    txtTargetDay.text = _guide.target.completeDate;
+    txtTargetDay.text = _guide.custTaregt.completeDate;
     txtTargetDay.tag=101;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(textFieldChanged:)
@@ -239,15 +239,15 @@
     AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     [appDelegate.tabBarController.tabBar setHidden:NO];
     
-    _guide.target.valueT=txtTarget.text;
-    _guide.target.completeDate=txtTargetDay.text;
+    _guide.custTaregt.valueT=txtTarget.text;
+    _guide.custTaregt.completeDate=txtTargetDay.text;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpGuideTarget" object:_guide];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)btnShowImg:(id)sender
 {
-    NSArray* array = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTarget:_guide.target limit:12];
+    NSArray* array = [[MDataBaseManager sharedInstance] loadHistoryTargetArrayWithTargetID:_guide.custTaregt.tar_uuid limit:12];
     
     MTarInfoChartView* view = [[MTarInfoChartView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height - 44)];
     [view setHistoryArray:array];

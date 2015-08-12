@@ -120,9 +120,9 @@
 {
     NSArray *aryGuide = nil;
     if(_from == GUIDE_FROM_PHEN)
-        aryGuide = [[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen:_phen];
+        aryGuide = [[MDataBaseManager sharedInstance]loadGuideSampleArrayWithPhen2:_phen];
     else if(_from == GUIDE_FROM_ISSUE)
-        aryGuide = [[MDataBaseManager sharedInstance] loadGuideSampleArrayWithIssue:_issue];
+        aryGuide = [[MDataBaseManager sharedInstance] loadGuideSampleArrayWithIssue2:_issue];
     
     _aryList = [NSMutableArray arrayWithArray:aryGuide];
 }
@@ -286,7 +286,7 @@
 {
     NSString *PassUUID=[notification object];
     for (int i=0; i<[_aryList count]; i++) {
-        MGuide *Guide=_aryList[i];
+        MCustGuide *Guide=_aryList[i];
         //找到相同UUID的Guid。
         if ([Guide.uuid isEqual:PassUUID]){
             //更改裡頭的IsCheck，reload cell。
@@ -304,10 +304,10 @@
 }
 - (void)UpGuideTarget:(NSNotification*) notification
 {
-    MGuide *PassGuide=[notification object];
+    MCustGuide *PassGuide=[notification object];
     NSString *PassUUID=PassGuide.uuid;
     for (int i=0; i<[_aryList count]; i++) {
-        MGuide *Guide=_aryList[i];
+        MCustGuide *Guide=_aryList[i];
         //找到相同UUID的Guid，置換裡面的Target。
         if ([Guide.uuid isEqual:PassUUID]){
             [_aryList[i]setTarget:PassGuide.target];
@@ -324,7 +324,7 @@
 - (void)didAssignManager:(NSNotification*)note
 {
     id object = note.object;
-    MGuide* guide = (MGuide*)object;
+    MCustGuide* guide = (MCustGuide*)object;
     [_aryList replaceObjectAtIndex:_operateIndex withObject:guide];
     
     [_tbl reloadData];
@@ -342,10 +342,10 @@
 - (void)actionAddMyList:(id)sender{
     
     BOOL b = NO;
-    for (MGuide* guide in _aryList) {
+    for (MCustGuide* guide in _aryList) {
         if (guide.isCheck) {
             b = YES;
-            [[MDataBaseManager sharedInstance]insertGuide:guide from:_from];
+            [[MDataBaseManager sharedInstance]insertCustGuide:guide from:_from];
             NSLog(@"加入:%@至DataBase",guide.name);
         }
     }
@@ -372,7 +372,7 @@
     
     NSIndexPath* indexPath = [_tbl indexPathForCell:cell];
     _operateIndex = indexPath.row;
-    MGuide* guide = [_aryList objectAtIndex:_operateIndex];
+    MCustGuide* guide = [_aryList objectAtIndex:_operateIndex];
     
     MDesignateResponsibleViewController *MDesignateResponsibleVC=[[MDesignateResponsibleViewController alloc]initWithGuide:guide];
     UINavigationController* MIndustryRaidersNav = [[UINavigationController alloc] initWithRootViewController:MDesignateResponsibleVC];
@@ -389,7 +389,7 @@
                                                object:nil];
     
     NSIndexPath* indexPath = [_tbl indexPathForCell:cell];
-    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
+    MCustGuide* guide = [_aryList objectAtIndex:indexPath.row];
     
     MInventoryTurnoverViewController *MInventoryTurnoverVC=[[MInventoryTurnoverViewController alloc]init];
     MInventoryTurnoverVC.guide=guide;
@@ -405,7 +405,7 @@
                                                object:nil];
     
     NSIndexPath* indexPath = [_tbl indexPathForCell:cell];
-    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
+    MCustGuide* guide = [_aryList objectAtIndex:indexPath.row];
     
     MRaidersDescriptionViewController *MRaidersDescVC = [[MRaidersDescriptionViewController alloc] init];
     MRaidersDescVC.guide=guide;
@@ -429,7 +429,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
+    MCustGuide* guide = [_aryList objectAtIndex:indexPath.row];
     
     CGSize size = CGSizeMake(tableView.frame.size.width, 60.);
     MGuideTableCell *cell=(MGuideTableCell *)[MGuideTableCell cellWithTableView:tableView size:size];
@@ -467,7 +467,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MGuide* guide = [_aryList objectAtIndex:indexPath.row];
+    MCustGuide* guide = [_aryList objectAtIndex:indexPath.row];
     guide.isCheck = !guide.isCheck;
     
     MGuideTableCell* cell = (MGuideTableCell*)[tableView cellForRowAtIndexPath:indexPath];

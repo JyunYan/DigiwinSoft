@@ -57,9 +57,14 @@
 - (NSArray*)loadGuideSampleArrayWithPhen:(MPhenomenon*)phen;
 - (NSArray*)loadGuideSampleArrayWithIssue:(MIssue*)issue;
 
-- (NSArray*)loadActivitySampleArrayWithGuide:(MGuide*)guide;
+- (NSArray*)loadActivitySampleArrayWithGuideID:(NSString*)uuid;
 - (NSArray*)loadWorkItemSampleArrayWithActivity:(MActivity*)act;
 - (NSArray*)loadTargetSampleArray;
+
+- (NSArray*)loadGuideSampleArrayWithPhen2:(MPhenomenon*)phen;
+- (NSArray*)loadGuideSampleArrayWithIssue2:(MIssue*)issue;
+- (NSArray*)loadActivitySampleArrayWithGuideID2:(NSString*)uuid;
+- (NSArray*)loadWorkItemSampleArrayWithActivity2:(MCustActivity*)act;
 
 // get 議題Sample By 對策
 - (NSArray*)loadIssueArrayByGudieID:(NSString*)guideid;
@@ -94,8 +99,9 @@
 - (NSArray*)loadCompEffTargetArrayWithEffID:(NSString*)uuid;
 
 #pragma mark - 看現況(管理表現)
-- (NSArray*)loadCompManageItemArray;
-- (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid;
+- (NSArray*)loadCompManageItemArrayWithDate:(NSString*)date;
+- (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid date:(NSString*)date;
+- (NSArray*)loadCompManageDateArrayWithLimit:(NSInteger)limit;
 
 #pragma mark - 看現況(行業情報)
 - (NSArray*)loadIndustryInfoKindArray;
@@ -108,11 +114,11 @@
 - (NSArray*)loadMyPlanArray;
 - (NSArray*)loadMyRaidersArray;
 
-- (NSArray*)loadCustActivityArrayWithGuide:(MCustGuide*)guide;
+- (NSArray*)loadCustActivityArrayWithCustGuideID:(NSString*)guiid;
 - (NSArray*)loadCustWorkItemArrayWithActivity:(MCustActivity*)act;
 
 // get 某企業指標實際值的歷史資料(過去一年)
-- (NSArray*)loadHistoryTargetArrayWithTarget:(MTarget*)target limit:(NSInteger)limit;
+- (NSArray*)loadHistoryTargetArrayWithTargetID:tarid limit:(NSInteger)limit;
 
 // 加入"我的規劃"清單
 - (void)insertGuides:(NSArray*)array from:(NSInteger)from;
@@ -124,6 +130,8 @@
 - (void)insertWorkItems:(NSArray*)array activityID:(NSString*)actid guideID:(NSString*)guideid;
 - (BOOL)insertWorkItem:(MWorkItem*)item activityID:(NSString*)actid guideID:(NSString*)guideid;
 
+- (void)insertCustGuides:(NSArray*)array from:(NSInteger)from;
+- (BOOL)insertCustGuide:(MCustGuide*)guide from:(NSInteger)from;
 - (void)insertCustActivitys:(NSArray*)array;
 - (BOOL)insertCustActivity:(MCustActivity*)act;
 - (void)insertCustWorkItems:(NSArray*)array;

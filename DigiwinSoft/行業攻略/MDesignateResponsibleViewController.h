@@ -11,7 +11,7 @@
 
 @interface MDesignateResponsibleViewController : UIViewController
 
-- (id)initWithGuide:(MGuide*)guide;
+- (id)initWithGuide:(MCustGuide*)guide;
 - (id)initWithCustAvtivity:(MCustActivity*)activity;
 - (id)initWithCustWorkItem:(MCustWorkItem*)workitem;
 

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MGuide.h"
+#import "MCustGuide.h"
 #import "MWorkItem.h"
 @interface MRaidersDiagramViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
@@ -15,6 +15,6 @@
     UITableView *tblWorkItem;
 }
 
-@property (nonatomic, weak) MGuide *guide;
+@property (nonatomic, weak) MCustGuide *guide;
 @property (nonatomic, assign) NSInteger from;
 @end

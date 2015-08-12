@@ -121,6 +121,8 @@
 		DC10144E1B32B66200EF7A6F /* MGuide.m in Sources */ = {isa = PBXBuildFile; fileRef = DC10144D1B32B66200EF7A6F /* MGuide.m */; };
 		DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014501B32B67F00EF7A6F /* MActivity.m */; };
 		DC1014541B32B69F00EF7A6F /* MWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1014531B32B69F00EF7A6F /* MWorkItem.m */; };
+		DC2E10A61B7852800014246E /* icon_red_arrow_left.png in Resources */ = {isa = PBXBuildFile; fileRef = DC2E10A41B7852800014246E /* icon_red_arrow_left.png */; };
+		DC2E10A71B7852800014246E /* icon_red_arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = DC2E10A51B7852800014246E /* icon_red_arrow_right.png */; };
 		DC3DF9D21B4E17C90065DF5D /* MTarMeterView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D11B4E17C90065DF5D /* MTarMeterView.m */; };
 		DC3DF9D51B4E23360065DF5D /* MTarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D41B4E23360065DF5D /* MTarChartView.m */; };
 		DC3DF9D81B4E46C00065DF5D /* MCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */; };
@@ -153,6 +155,8 @@
 		DCCB44E11B71A7B700F41752 /* MQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCB44E01B71A7B700F41752 /* MQuestion.m */; };
 		DCCB44E41B72722B00F41752 /* MIndustryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCB44E31B72722B00F41752 /* MIndustryInfo.m */; };
 		DCCB44E71B72724400F41752 /* MIndustryInfoKind.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCB44E61B72724400F41752 /* MIndustryInfoKind.m */; };
+		DCCB44EB1B7308B100F41752 /* MTimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCB44EA1B7308B100F41752 /* MTimeLineView.m */; };
+		DCCB44EE1B731A8E00F41752 /* MTimeLineAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCB44ED1B731A8E00F41752 /* MTimeLineAxis.m */; };
 		DCE951781B60C1B700E3C059 /* MWorkItemFlowChart.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE951771B60C1B700E3C059 /* MWorkItemFlowChart.m */; };
 		DCE9517B1B60C27F00E3C059 /* MActFlowChart.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE9517A1B60C27F00E3C059 /* MActFlowChart.m */; };
 		DCE951891B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE9517E1B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m */; };
@@ -443,6 +447,8 @@
 		DC1014501B32B67F00EF7A6F /* MActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MActivity.m; path = structure/MActivity.m; sourceTree = "<group>"; };
 		DC1014521B32B69F00EF7A6F /* MWorkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWorkItem.h; path = structure/MWorkItem.h; sourceTree = "<group>"; };
 		DC1014531B32B69F00EF7A6F /* MWorkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWorkItem.m; path = structure/MWorkItem.m; sourceTree = "<group>"; };
+		DC2E10A41B7852800014246E /* icon_red_arrow_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_red_arrow_left.png; sourceTree = "<group>"; };
+		DC2E10A51B7852800014246E /* icon_red_arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_red_arrow_right.png; sourceTree = "<group>"; };
 		DC3DF9D01B4E17C90065DF5D /* MTarMeterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarMeterView.h; path = CustomViews/MTarMeterView.h; sourceTree = "<group>"; };
 		DC3DF9D11B4E17C90065DF5D /* MTarMeterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarMeterView.m; path = CustomViews/MTarMeterView.m; sourceTree = "<group>"; };
 		DC3DF9D31B4E23360065DF5D /* MTarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarChartView.h; path = CustomViews/MTarChartView.h; sourceTree = "<group>"; };
@@ -500,6 +506,10 @@
 		DCCB44E31B72722B00F41752 /* MIndustryInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustryInfo.m; path = structure/MIndustryInfo.m; sourceTree = "<group>"; };
 		DCCB44E51B72724400F41752 /* MIndustryInfoKind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MIndustryInfoKind.h; path = structure/MIndustryInfoKind.h; sourceTree = "<group>"; };
 		DCCB44E61B72724400F41752 /* MIndustryInfoKind.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustryInfoKind.m; path = structure/MIndustryInfoKind.m; sourceTree = "<group>"; };
+		DCCB44E91B7308B100F41752 /* MTimeLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTimeLineView.h; path = CustomViews/TimeLineView/MTimeLineView.h; sourceTree = "<group>"; };
+		DCCB44EA1B7308B100F41752 /* MTimeLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTimeLineView.m; path = CustomViews/TimeLineView/MTimeLineView.m; sourceTree = "<group>"; };
+		DCCB44EC1B731A8E00F41752 /* MTimeLineAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTimeLineAxis.h; path = CustomViews/TimeLineView/MTimeLineAxis.h; sourceTree = "<group>"; };
+		DCCB44ED1B731A8E00F41752 /* MTimeLineAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTimeLineAxis.m; path = CustomViews/TimeLineView/MTimeLineAxis.m; sourceTree = "<group>"; };
 		DCE951761B60C1B700E3C059 /* MWorkItemFlowChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWorkItemFlowChart.h; path = CustomViews/FlowChartView/MWorkItemFlowChart.h; sourceTree = "<group>"; };
 		DCE951771B60C1B700E3C059 /* MWorkItemFlowChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MWorkItemFlowChart.m; path = CustomViews/FlowChartView/MWorkItemFlowChart.m; sourceTree = "<group>"; };
 		DCE951791B60C27F00E3C059 /* MActFlowChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MActFlowChart.h; path = CustomViews/FlowChartView/MActFlowChart.h; sourceTree = "<group>"; };
@@ -902,6 +912,8 @@
 				DCF46AE41B42AAF300C771BB /* icon_more.png */,
 				DCF46AE51B42AAF300C771BB /* icon_phone.png */,
 				DCF46AE61B42AAF300C771BB /* icon_raider.png */,
+				DC2E10A41B7852800014246E /* icon_red_arrow_left.png */,
+				DC2E10A51B7852800014246E /* icon_red_arrow_right.png */,
 				DCF46AE71B42AAF300C771BB /* icon_red_arrow.png */,
 				DCF46AE81B42AAF300C771BB /* icon_red_circle.png */,
 				DCE951B41B688F4700E3C059 /* icon_search_blue.png */,
@@ -1168,6 +1180,17 @@
 			name = RadioGroupView;
 			sourceTree = "<group>";
 		};
+		DCCB44E81B73085600F41752 /* TimeLineView */ = {
+			isa = PBXGroup;
+			children = (
+				DCCB44E91B7308B100F41752 /* MTimeLineView.h */,
+				DCCB44EA1B7308B100F41752 /* MTimeLineView.m */,
+				DCCB44EC1B731A8E00F41752 /* MTimeLineAxis.h */,
+				DCCB44ED1B731A8E00F41752 /* MTimeLineAxis.m */,
+			);
+			name = TimeLineView;
+			sourceTree = "<group>";
+		};
 		DCE951751B60C14D00E3C059 /* FlowChartView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1234,6 +1257,7 @@
 		DCF46AB21B41258F00C771BB /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				DCCB44E81B73085600F41752 /* TimeLineView */,
 				DCE9519B1B66B42300E3C059 /* MonitorMapView */,
 				DCE9517C1B60E5FF00E3C059 /* CustomTableViewCell */,
 				DCE951751B60C14D00E3C059 /* FlowChartView */,
@@ -1377,6 +1401,7 @@
 				3AFF625F1B438A46005B6238 /* icon_menu_11.png in Resources */,
 				3AF1DD031B608B07006ADBBD /* icon_arrow_right.png in Resources */,
 				DCE951B51B688F4700E3C059 /* icon_search_blue.png in Resources */,
+				DC2E10A61B7852800014246E /* icon_red_arrow_left.png in Resources */,
 				DCF46B0C1B42AAF300C771BB /* icon_red_circle.png in Resources */,
 				DCF46AFB1B42AAF300C771BB /* check_box_on.png in Resources */,
 				DC5877771B5DCCCF00D5AC5D /* Icon-Small@2x.png in Resources */,
@@ -1408,6 +1433,7 @@
 				DCF46B081B42AAF300C771BB /* icon_more.png in Resources */,
 				3AFF625A1B438A46005B6238 /* icon_menu_6.png in Resources */,
 				3AFF62591B438A46005B6238 /* icon_menu_5.png in Resources */,
+				DC2E10A71B7852800014246E /* icon_red_arrow_right.png in Resources */,
 				DCE951BB1B68916000E3C059 /* icon_menu_5_blue.png in Resources */,
 				DCF46AFC1B42AAF300C771BB /* checkbox_empty.png in Resources */,
 				3AE08C541B5CCEBC00B46895 /* icon_star_half.png in Resources */,
@@ -1498,6 +1524,7 @@
 				DCCAB1AC1B4F841500AA1CD2 /* ASAnimationManager.m in Sources */,
 				38CCC4941B6767EA00CF9731 /* MEfficacyViewController.m in Sources */,
 				D06C2D421B381850009D2082 /* FMDatabaseAdditions.m in Sources */,
+				DCCB44EB1B7308B100F41752 /* MTimeLineView.m in Sources */,
 				3AB4CE141B32839300143374 /* MSeeStatusViewController.m in Sources */,
 				DC0ADF641B316E340019236D /* MSettingViewController.m in Sources */,
 				DCB3FDF51B56C00C00ED5BFA /* MRaidersTableHeader.m in Sources */,
@@ -1534,6 +1561,7 @@
 				383E2F841B4BD9CD00472513 /* MReportViewController.m in Sources */,
 				380F35351B6A0E9500E9138B /* MBarChartView.m in Sources */,
 				3A03AA1E1B3BD5CA00923ABB /* DownPicker.m in Sources */,
+				DCCB44EE1B731A8E00F41752 /* MTimeLineAxis.m in Sources */,
 				DCE951891B60E6AC00E3C059 /* MIndustryRaidersTableViewCell.m in Sources */,
 				3A711B911B3800C100E94211 /* SWTableViewCell.m in Sources */,
 				38FD52F81B54C2F600AC03F4 /* MRadarChartView.m in Sources */,
