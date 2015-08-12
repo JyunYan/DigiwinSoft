@@ -21,6 +21,7 @@
 @property (nonatomic, strong) UILabel* title4;  //完成度
 @property (nonatomic, strong) UIImageView* imageView1;  //目標趨勢
 @property (nonatomic, strong) UIButton* button1; //電話
+@property (nonatomic, strong) MUser* user;
 
 @end
 
@@ -94,6 +95,7 @@
     _button1.center = CGPointMake(_title3.center.x, _button1.center.y);
     _button1.backgroundColor = [UIColor clearColor];
     [_button1 setImage:[UIImage imageNamed:@"icon_phone.png"] forState:UIControlStateNormal];
+    [_button1 addTarget:self action:@selector(actionTelephone:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_button1];
     
     posX += _title3.frame.size.width;
@@ -163,6 +165,25 @@
     }
     return NO;
 }
+- (void)actionTelephone:(UIButton *)button
+{
+    /*
+     NSInteger tag = button.tag;
+     NSInteger index = tag - TAG_BUTTON_TELEPHONE;
+     MEvent* event = [_eventArray objectAtIndex:index];
+     */
+    _user = [MDirector sharedInstance].currentUser;
+
+    BOOL isPhone = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel://"]];
+    if (isPhone) {
+        NSString* url = [@"tel://" stringByAppendingString:_user.phone];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    } else {
+        UIAlertView *emailAlert = [[UIAlertView alloc] initWithTitle:@"Call Phone Failure" message:@"Your device is not configured to call phone" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [emailAlert show];
+    }
+}
+
 
 
 @end

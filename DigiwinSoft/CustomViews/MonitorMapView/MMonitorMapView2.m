@@ -27,6 +27,9 @@
 
 @property (nonatomic, strong) NSMutableArray* filterArray;
 
+@property (nonatomic, strong) UIPageControl *pageControl;
+@property (nonatomic, strong) UIScrollView* scroll;
+
 @end
 
 @implementation MMonitorMapView2
@@ -73,19 +76,39 @@
     CGFloat posY = 0;
     CGFloat width = self.frame.size.width;
     
-    UIScrollView* scroll = [self createSegmentScrollViewWithFrame:CGRectMake(0, posY, width, 40.)];
-    [self addSubview:scroll];
+    _scroll = [self createSegmentScrollViewWithFrame:CGRectMake(0, posY, width, 40.)];
+    [self addSubview:_scroll];
     
-    posY += scroll.frame.size.height;
+    posY += _scroll.frame.size.height;
     
     //計量表;
     _meterView = [self createMeterView:CGRectMake(0, posY, width, width*0.36)];
     [self addSubview:_meterView];
     
-    posY += _meterView.frame.size.height + 10;
+    posY += _meterView.frame.size.height + 5;
+
+    _pageControl=[self createPageControlWithFrame:CGRectMake(10., posY, self.frame.size.width-20, 10.)];
+    [self addSubview:_pageControl];
+    
+    posY += _pageControl.frame.size.height + 5;
     //
     _table = [self createTableViewWithFrame:CGRectMake(10., posY, self.frame.size.width - 20, self.frame.size.height - posY)];
     [self addSubview:_table];
+    
+}
+-(UIPageControl*)createPageControlWithFrame:(CGRect)frame
+{
+    if(_issueGroup.count == 0)
+        return nil;
+    
+    NSInteger index = _issueSegment.selectedSegmentIndex;
+    MIssue* issue = [_issueGroup objectAtIndex:index];
+    NSArray* array = issue.issTypeArray;
+    
+    UIPageControl* pageControl = [[UIPageControl alloc] initWithFrame:frame];
+    pageControl.numberOfPages=[array count];
+    pageControl.backgroundColor=[UIColor clearColor];
+    return pageControl;
 }
 
 - (UIScrollView*)createSegmentScrollViewWithFrame:(CGRect)frame
@@ -127,20 +150,27 @@
     MIssue* issue = [_issueGroup objectAtIndex:index];
     NSArray* array = issue.issTypeArray;
     
-    UIScrollView* scroll = [[UIScrollView alloc] initWithFrame:frame];
-    scroll.backgroundColor = [UIColor clearColor];
-    scroll.pagingEnabled = YES;
-    scroll.contentSize = CGSizeMake(frame.size.width * array.count, frame.size.height);
-    
+    _scroll = [[UIScrollView alloc] initWithFrame:frame];
+    _scroll.backgroundColor = [UIColor clearColor];
+    _scroll.pagingEnabled = YES;
+    _scroll.contentSize = CGSizeMake(frame.size.width * array.count, frame.size.height);
+    _scroll.delegate=self;
     for (int i=0; i<array.count; i++) {
         MIssType* type = [array objectAtIndex:i];
         
         MMonitorMeterView3* view = [[MMonitorMeterView3 alloc] initWithFrame:CGRectMake(i*frame.size.width, 0, frame.size.width, frame.size.height)];
         view.issType = type;
-        [scroll addSubview:view];
+        [_scroll addSubview:view];
     }
     
-    return scroll;
+    return _scroll;
+}
+- (void)scrollViewDidScroll:(UIScrollView *)sender {
+    
+    CGFloat width = self.frame.size.width;
+    NSInteger currentPage = ((_scroll.contentOffset.x - width / 2) / width) + 1;
+//    NSLog(@"currentPage:%ld",(long)currentPage);
+    [_pageControl setCurrentPage:currentPage];
 }
 
 // 計量表
