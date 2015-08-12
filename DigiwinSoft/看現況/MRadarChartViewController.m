@@ -15,7 +15,10 @@
 
 #import "MTimeLineView.h"
 
+#define clickTo    @"clickTo"
+
 @interface MRadarChartViewController ()<MTimeLineViewDelegate>
+
 @property (nonatomic, strong) UIScrollView *mScroll;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
 @property (nonatomic, strong) NSMutableArray *aryData;//放入雷達圖顯示的資料
@@ -39,8 +42,14 @@
 {
     [super viewWillAppear:animated];
     self.automaticallyAdjustsScrollViewInsets = NO;
-}
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clickToRadar:) name:clickTo object:nil];
 
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:clickTo object:nil];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -83,12 +92,6 @@
 
 -(void)createBtn
 {
-    UIButton *btn= [[UIButton alloc] initWithFrame:CGRectMake(0, 100, 60, 30)];
-    [btn addTarget:self action:@selector(toPage8:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setTitle:@"Page8" forState:UIControlStateNormal];
-    btn.backgroundColor=[UIColor brownColor];
-    [_mScroll addSubview:btn];
-    
     //按鍵數量不固定
     NSInteger btnCount= [_aryAddData count];
     CGFloat btnWidth=40;
@@ -114,6 +117,7 @@
 {
     _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
     _RadarChart.aryRadarChartData=_aryData;
+    _RadarChart.from=1;//1為p9使用，按下lab時push to p8。0為p7使用，按下lab時滾動下方scroll。
     [_mScroll addSubview:_RadarChart];
 }
 
@@ -149,13 +153,10 @@
     [_RadarChart removeFromSuperview];
     _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
     _RadarChart.aryRadarChartData=_aryData;//把選擇的新增或移除資料加進去
+    _RadarChart.from=1;
     [_mScroll addSubview:_RadarChart];
 }
--(void)toPage8:(id)sender
-{
-    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
-    [self.navigationController pushViewController:MRouletteVC animated:YES];
-}
+
 #pragma other
 -(UIImage *)checked
 {
@@ -185,7 +186,12 @@
     return roundedImage;
 }
 
-
+- (void)clickToRadar:(NSNotification*) notification
+{
+    NSLog(@"push");
+    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]init];
+    [self.navigationController pushViewController:MRouletteVC animated:YES];
+}
 /*
 #pragma mark - Navigation
 

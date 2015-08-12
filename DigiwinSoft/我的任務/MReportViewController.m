@@ -242,7 +242,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 10;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -251,11 +251,20 @@
         MReportEditTableCell* cell = [tableView dequeueReusableCellWithIdentifier:@"ReportEditTableCell"];
         if(!cell)
             cell = [[MReportEditTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ReportEditTableCell"];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
         return cell;
     }else{
         MReportTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"ReportTableViewCell"];
         if(!cell)
             cell = [[MReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ReportTableViewCell"];
+        cell.labReportDate.text=@"回報日期:2015/05/10";
+        cell.labState.text=@"任務進度:已完成";
+        cell.labValueT.text=@"實際值:7天";
+        cell.labFinishDay.text=@"完成日期:2015/08/31";
+        cell.labReason.text=@"雅虎公司，是美國的跨國網際網路上市公司，全球網際網路服務公司及全球入口網站巨擘。提供一系列網際網路服務，包括：搜尋引擎、電子信箱、新聞等。Yahoo!由史丹佛大學台灣裔研究生楊致遠和大衛·";
+
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+
         return cell;
     }
     

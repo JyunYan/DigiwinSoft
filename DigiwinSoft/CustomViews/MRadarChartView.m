@@ -58,7 +58,14 @@
         _RadarChart.showValues=NO;
         _RadarChart.fillArea=YES;
         _RadarChart.guideLineSteps=5;
-    
+        
+//        //Private
+//        float maxSize;
+//        float maxValue;
+//        float minValue;
+
+        _RadarChart.from=_from;
+        
         [self addSubview:_RadarChart];
     }
 
@@ -111,12 +118,6 @@
 
 - (void)radarChart:(RPRadarChart *)chart lineTouchedForData:(NSInteger)dataIndex atPosition:(CGPoint)point
 {
-    NSLog(@"Line %d touched at (%f,%f)", dataIndex, point.x, point.y);
+    NSLog(@"Line %d touched at (%f,%f)", (int)dataIndex, point.x, point.y);
 }
-- (void)btnTitilClick:(id)sender
-{
-    NSLog(@"%ld",(long)[sender tag]);
-    NSLog(@"成功成功成功");
-}
-
 @end

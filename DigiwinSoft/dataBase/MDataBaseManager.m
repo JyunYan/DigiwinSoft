@@ -2296,7 +2296,7 @@ static MDataBaseManager* _director = nil;
     // delete guide
     NSString* sql = @"delete from U_GUIDE where ID = ?";
     BOOL b = [self.db executeUpdate:sql, guide.uuid];
-    if(!b)
+    if(!b)  
         NSLog(@"delete guide failed [%@] : %@", guide.uuid, [self.db lastErrorMessage]);
     
     // delete activitys

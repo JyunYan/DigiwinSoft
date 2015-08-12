@@ -78,7 +78,6 @@
 @optional
 
 - (void)radarChart:(RPRadarChart *)chart lineTouchedForData:(NSInteger)dataIndex atPosition:(CGPoint)point;
-- (void)btnTitilClick:(RPRadarChart *)sender;
 
 @end
 
@@ -100,6 +99,7 @@
     float maxSize;
     float maxValue;
     float minValue;
+    NSInteger from;
 }
 
 // @property (nonatomic, strong) NSDictionary *values;
@@ -110,5 +110,5 @@
 @property (nonatomic) NSInteger guideLineSteps;
 @property (nonatomic, assign) id<RPRadarChartDataSource> dataSource;
 @property (nonatomic, assign) id<RPRadarChartDelegate> delegate;
-
+@property (nonatomic, assign) NSInteger from;
 @end

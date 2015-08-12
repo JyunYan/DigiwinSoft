@@ -44,6 +44,9 @@
 #import "RPRadarChart.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MEfficacy.h"
+#define clickTo    @"clickTo"
+#define kClickScroll    @"clickScroll"
+
 @interface RPRadarChart ()
 
 -(void) drawChartInContext:(CGContextRef) cx forIndex:(NSInteger)index;
@@ -436,38 +439,49 @@ static double colorDistance(RGB e1, RGB e2)
 
     }
     
-    
-//    //製作外圍按鍵
-//    for (int i = 0; i < numberOfSpokes; i++) {
-//        float a = (mvr * i) - M_PI_2;
-//        float x = (maxSize+38) * cos(a); //正弦，更改後面加上的常數，可調整標籤靠近圓的距離
-//        float y = (maxSize+22) * sin(a); //餘弦，更改後面加上的常數，可調整標籤靠近圓的距離
+    //製作外圍按鍵
+    for (int i = 0; i < numberOfSpokes; i++) {
+        float a = (mvr * i) - M_PI_2;
+        float x = (maxSize+38) * cos(a); //正弦，更改後面加上的常數，可調整標籤靠近圓的距離
+        float y = (maxSize+22) * sin(a); //餘弦，更改後面加上的常數，可調整標籤靠近圓的距離
+        
+
+//        y += (y>0) ? 20 : -20;//可微調，判斷外圍標籤上下展開，(y>0)?分上半與下半
+        CGRect rect=CGRectMake(0,0, 60, 35);
+
+        UIButton *btnTitle=[[UIButton alloc]initWithFrame:rect];
+        btnTitle.titleLabel.numberOfLines=2;
+        btnTitle.titleLabel.textAlignment = NSTextAlignmentCenter;
+        btnTitle.titleLabel.font=[UIFont fontWithName:@"Helvetica-Bold" size:11];
+        btnTitle.backgroundColor=[UIColor whiteColor];
+        [btnTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btnTitle.layer setCornerRadius:8.0]; //设置矩圆角半径
+        [[btnTitle layer] setBorderWidth:2.0f];
+        [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+        
+        
+        if (_from==0&&i==0) {
+        
+            [btnTitle setBackgroundColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0]];
+            [btnTitle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+        }
+        
+        
+        
+//        MEfficacy *mEff=ary[i];
 //        
-//
-////        y += (y>0) ? 20 : -20;//可微調，判斷外圍標籤上下展開，(y>0)?分上半與下半
-//        CGRect rect=CGRectMake(0,0, 60, 35);
-//
-//        UIButton *btnTitle=[[UIButton alloc]initWithFrame:rect];
-//        btnTitle.titleLabel.numberOfLines=2;
-//        btnTitle.titleLabel.textAlignment = NSTextAlignmentCenter;
-//        btnTitle.titleLabel.font=[UIFont fontWithName:@"Helvetica-Bold" size:11];
-//        btnTitle.backgroundColor=[UIColor whiteColor];
-//        [btnTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        [btnTitle.layer setCornerRadius:8.0]; //设置矩圆角半径
-//        [[btnTitle layer] setBorderWidth:2.0f];
-//        [[btnTitle layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+//        NSString *str=[NSString stringWithFormat:@"%@(%@)",mEff.name,mEff.pr];
 //        
-//        //NSString *str=[NSString stringWithFormat:@"%@(%@)",mEff.name,mEff.pr];
 //        
-//        NSString *str = [dataSource radarChart:self titleForSpoke:i];
-//        
+//        btnTitle.tag=i;
 //        [btnTitle setTitle:str forState:UIControlStateNormal];
 //        [btnTitle addTarget:self action:@selector(btnTitilClick:) forControlEvents:UIControlEventTouchUpInside];
 //        btnTitle.center=CGPointMake((RADAR_CHART_WIDTH/2)+x,(RADAR_CHART_HEIGHT/2)+y);//加上雷達圖的中心位置
 //
 //        [self addSubview:btnTitle];
-//
-//    }
+
+    }
     
     //Index Texts
     if (showGuideNumbers) {
@@ -486,8 +500,36 @@ static double colorDistance(RGB e1, RGB e2)
 }
 - (void)btnTitilClick:(id)sender
 {
-    if(delegate && [delegate respondsToSelector:@selector(btnTitilClick:)])
-        [delegate btnTitilClick:self];
+    //1為p9使用，按下lab時push to p8。0為p7使用，按下lab時滾動下方scroll。
+    if (_from) {
+        NSLog(@"from=1");
+        [[NSNotificationCenter defaultCenter] postNotificationName:clickTo object:nil];
+    }
+    else
+    {
+        NSLog(@"from=0");
+        
+
+        for (UIView *view in self.subviews)
+        {
+            if ([view isMemberOfClass:[UIButton class]])//revert all btn style
+            {
+                UIButton *btn=(UIButton *)view;
+                [btn setBackgroundColor:[UIColor whiteColor]];
+                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [[btn layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+            }
+        }
+    
+        //set Clicked btn style
+        [sender setBackgroundColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0]];
+        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [[sender layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+
+        //post clickScroll
+        NSNumber* numberTag = [NSNumber numberWithInteger:[sender tag]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kClickScroll object:numberTag];
+    }
 }
 
 #pragma mark - Setters

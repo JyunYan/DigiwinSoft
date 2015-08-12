@@ -79,7 +79,7 @@
     
     //draw bar
     UIImageView* imgBar=[[UIImageView alloc]initWithFrame:CGRectMake(80+disLenth+earlyDaydis,(TABLE_CELL_HEIGHT-10)/2, barLenth, 14)];
-    imgBar.backgroundColor=[UIColor colorWithRed:112.0/255.0 green:200.0/255.0 blue:223.0/255.0 alpha:1];
+    imgBar.backgroundColor=[UIColor grayColor];
 
     if (startDate.length!=0&&completeDate.length!=0)
     {

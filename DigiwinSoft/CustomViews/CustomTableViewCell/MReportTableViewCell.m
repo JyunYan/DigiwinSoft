@@ -34,32 +34,46 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        UILabel *labTitle = [[UILabel alloc] init];
-        self.labTitle = labTitle;
-        [self.contentView addSubview:labTitle];
+        
+        _labState = [self createLabelWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH, 20)];
+        _labState.backgroundColor=[UIColor lightGrayColor];
+        [self.contentView addSubview:_labState];
+        
+        _labValueT = [self createLabelWithFrame:CGRectMake(10, 20, DEVICE_SCREEN_WIDTH-20, 15)];
+        _labValueT.backgroundColor=[UIColor clearColor];
+        _labValueT.textAlignment=NSTextAlignmentLeft;
+        [self.contentView addSubview:_labValueT];
+        
+        _labFinishDay = [self createLabelWithFrame:CGRectMake(10, 20, DEVICE_SCREEN_WIDTH-20, 15)];
+        _labFinishDay.backgroundColor=[UIColor clearColor];
+        _labFinishDay.textAlignment=NSTextAlignmentRight;
+        [self.contentView addSubview:_labFinishDay];
+        
+        _labReason = [self createLabelWithFrame:CGRectMake(10, 35, DEVICE_SCREEN_WIDTH-20, 70)];
+        _labReason.backgroundColor=[UIColor clearColor];
+        _labReason.numberOfLines = 0;
+        _labReason.textAlignment=NSTextAlignmentLeft;
+        _labReason.layer.borderColor=[UIColor lightGrayColor].CGColor;
+        _labReason.layer.borderWidth=1;
+        [self.contentView addSubview:_labReason];
+        
+        _labReportDate = [self createLabelWithFrame:CGRectMake(10, 100, DEVICE_SCREEN_WIDTH-20, 20)];
+        _labReportDate.backgroundColor=[UIColor clearColor];
+        _labReportDate.textColor=[UIColor lightGrayColor];
+        _labReportDate.textAlignment=NSTextAlignmentRight;
+        [self.contentView addSubview:_labReportDate];
 
-        UILabel *lab = [[UILabel alloc] init];
-        self.lab = lab;
-        [self.contentView addSubview:lab];
-        
-        UILabel *labState = [[UILabel alloc] init];
-        self.labState = labState;
-        [self.contentView addSubview:labState];
-        
-        UILabel *labReason = [[UILabel alloc] init];
-        self.labReason = labReason;
-        [self.contentView addSubview:labReason];
-        
-        UILabel *labValueT = [[UILabel alloc] init];
-        self.labValueT = labValueT;
-        [self.contentView addSubview:labValueT];
-        
-        UILabel *labFinishDay = [[UILabel alloc] init];
-        self.labFinishDay = labFinishDay;
-        [self.contentView addSubview:labFinishDay];
-
+       
     }
     return self;
 }
-
+- (UILabel*)createLabelWithFrame:(CGRect)frame
+{
+    UILabel* label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor=[UIColor clearColor];
+    label.textColor=[UIColor blackColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = [UIFont systemFontOfSize:12];
+    return label;
+}
 @end
