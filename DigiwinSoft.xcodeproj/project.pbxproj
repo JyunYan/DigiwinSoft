@@ -130,6 +130,7 @@
 		DC3DF9D51B4E23360065DF5D /* MTarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D41B4E23360065DF5D /* MTarChartView.m */; };
 		DC3DF9D81B4E46C00065DF5D /* MCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */; };
 		DC3DF9DE1B4ED13E0065DF5D /* MConcentricCircles.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */; };
+		DC518A991B7C52200045929E /* MMgRadarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DC518A981B7C52200045929E /* MMgRadarButton.m */; };
 		DC5877731B5DCCCF00D5AC5D /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC58776D1B5DCCCF00D5AC5D /* Icon-60@2x.png */; };
 		DC5877741B5DCCCF00D5AC5D /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC58776E1B5DCCCF00D5AC5D /* Icon-60@3x.png */; };
 		DC5877751B5DCCCF00D5AC5D /* Icon-Small-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC58776F1B5DCCCF00D5AC5D /* Icon-Small-40@2x.png */; };
@@ -463,6 +464,8 @@
 		DC3DF9D71B4E46C00065DF5D /* MCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCoordinate.m; path = structure/MCoordinate.m; sourceTree = "<group>"; };
 		DC3DF9DC1B4ED13E0065DF5D /* MConcentricCircles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MConcentricCircles.h; path = CustomViews/MConcentricCircles.h; sourceTree = "<group>"; };
 		DC3DF9DD1B4ED13E0065DF5D /* MConcentricCircles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MConcentricCircles.m; path = CustomViews/MConcentricCircles.m; sourceTree = "<group>"; };
+		DC518A971B7C52200045929E /* MMgRadarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMgRadarButton.h; path = CustomViews/MMgRadarButton.h; sourceTree = "<group>"; };
+		DC518A981B7C52200045929E /* MMgRadarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMgRadarButton.m; path = CustomViews/MMgRadarButton.m; sourceTree = "<group>"; };
 		DC58776D1B5DCCCF00D5AC5D /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
 		DC58776E1B5DCCCF00D5AC5D /* Icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@3x.png"; sourceTree = "<group>"; };
 		DC58776F1B5DCCCF00D5AC5D /* Icon-Small-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-40@2x.png"; sourceTree = "<group>"; };
@@ -1303,6 +1306,8 @@
 				3A0542EE1B5F7B2600EC7878 /* MStatusLineChartView.m */,
 				380F35331B6A0E9500E9138B /* MBarChartView.h */,
 				380F35341B6A0E9500E9138B /* MBarChartView.m */,
+				DC518A971B7C52200045929E /* MMgRadarButton.h */,
+				DC518A981B7C52200045929E /* MMgRadarButton.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1616,6 +1621,7 @@
 				DCCB44E11B71A7B700F41752 /* MQuestion.m in Sources */,
 				382998321B3982BE0045B3BD /* MRaidersDiagramViewController.m in Sources */,
 				3A03AA1F1B3BD5CA00923ABB /* UIDownPicker.m in Sources */,
+				DC518A991B7C52200045929E /* MMgRadarButton.m in Sources */,
 				3AE9972E1B54B41B005D590C /* MTaskRaidersViewController.m in Sources */,
 				DCE9518D1B60E6AC00E3C059 /* MReportTableViewCell.m in Sources */,
 				3A1363AE1B4A186000BA05F2 /* MTasksDeployedViewController.m in Sources */,

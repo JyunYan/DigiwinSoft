@@ -49,7 +49,7 @@
     [drawer setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
 
     self.window.rootViewController = drawer;
-    
+    [self.window makeKeyAndVisible];
     //Splash
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenW = screenRect.size.width;
@@ -76,8 +76,10 @@
 
     [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"bg.jpg"]
-                                           forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"bg.jpg"] forBarMetrics:UIBarMetricsDefault];
+    
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0)
+        [[UINavigationBar appearance] setTranslucent:YES];
     
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
@@ -123,7 +125,7 @@
     _tabBarController.selectedIndex = 0;
     
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        [[UINavigationBar appearance] setTranslucent:YES];
+        //[[UINavigationBar appearance] setTranslucent:YES];
     }
     
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
@@ -136,7 +138,7 @@
     _tabBarController.selectedIndex = 1;
     
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        [[UINavigationBar appearance] setTranslucent:YES];
+        //[[UINavigationBar appearance] setTranslucent:YES];
     }
     
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
@@ -149,7 +151,7 @@
     _tabBarController.selectedIndex = 2;
     
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        [[UINavigationBar appearance] setTranslucent:YES];
+        //[[UINavigationBar appearance] setTranslucent:YES];
     }
     
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
@@ -162,7 +164,7 @@
     _tabBarController.selectedIndex = 3;
     
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        [[UINavigationBar appearance] setTranslucent:YES];
+        //[[UINavigationBar appearance] setTranslucent:YES];
     }
     
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
@@ -175,7 +177,7 @@
     _tabBarController.selectedIndex = 4;
     
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        [[UINavigationBar appearance] setTranslucent:YES];
+        //[[UINavigationBar appearance] setTranslucent:YES];
     }
     
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
@@ -204,7 +206,7 @@
 
 
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        [[UINavigationBar appearance] setTranslucent:YES];
+        //[[UINavigationBar appearance] setTranslucent:YES];
     }
     
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
@@ -215,7 +217,7 @@
 - (void) toggleTabBar
 {
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        [[UINavigationBar appearance] setTranslucent:YES];
+        //[[UINavigationBar appearance] setTranslucent:YES];
     }
 
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
@@ -229,7 +231,7 @@
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        [[UINavigationBar appearance] setTranslucent:YES];
+        //[[UINavigationBar appearance] setTranslucent:YES];
     }
 
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
@@ -245,7 +247,7 @@
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        [[UINavigationBar appearance] setTranslucent:YES];
+        //[[UINavigationBar appearance] setTranslucent:YES];
     }
 
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
@@ -261,7 +263,7 @@
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
     if([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        [[UINavigationBar appearance] setTranslucent:YES];
+        //[[UINavigationBar appearance] setTranslucent:YES];
     }
 
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;

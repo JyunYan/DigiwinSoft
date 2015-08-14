@@ -71,7 +71,7 @@
     NSArray* array = [[MDataBaseManager sharedInstance] loadCompManageDateArrayWithLimit:1];
     if(array.count > 0){
         NSString* date = [array firstObject];
-        _dataArray = [[MDataBaseManager sharedInstance] loadCompManageItemArrayWithDate:date];
+        _dataArray = [[MDataBaseManager sharedInstance] loadCompManageItemArrayWithDate:date withComplex:YES];
     }
 }
 

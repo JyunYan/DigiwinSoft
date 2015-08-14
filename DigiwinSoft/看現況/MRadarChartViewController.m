@@ -14,6 +14,7 @@
 #import "MEfficacy.h"
 
 #import "MTimeLineView.h"
+#import "MMgRadarButton.h"
 
 #define clickTo    @"clickTo"
 
@@ -21,6 +22,9 @@
 
 @property (nonatomic, strong) UIScrollView *mScroll;
 @property (nonatomic, strong) MRadarChartView* RadarChart;
+
+@property (nonatomic, strong) NSArray* catagoryArray;
+
 @property (nonatomic, strong) NSMutableArray *aryData;//放入雷達圖顯示的資料
 @property (nonatomic, strong) NSArray *aryAddData;//測試加入雷達圖的資料
 @end
@@ -94,8 +98,8 @@
 {
     //按鍵數量不固定
     NSInteger btnCount= [_aryAddData count];
-    CGFloat btnWidth=40;
-    CGFloat btnHeight=40;
+    CGFloat btnWidth=50;
+    CGFloat btnHeight=50;
     
     UIView *btnView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, ((btnCount*40)+(btnCount-1)*10), 40)];
     btnView.backgroundColor=[UIColor whiteColor];
@@ -103,12 +107,10 @@
     [_mScroll addSubview:btnView];
 
     for (NSInteger i=0; i<btnCount; i++) {
-            UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(i*50, 0, btnWidth, btnHeight)];
-            [btn setBackgroundImage:[UIImage imageNamed:@"icon_gray_circle.png"] forState:UIControlStateNormal];
+            MMgRadarButton *btn =[[MMgRadarButton alloc]initWithFrame:CGRectMake(i*50, 0, btnWidth, btnHeight)];
             [btn addTarget:self action:@selector(btnAddRadar:) forControlEvents:UIControlEventTouchUpInside];
             btn.tag=101+i;
             [btn setTitle:@"產" forState:UIControlStateNormal];
-            btn.layer.cornerRadius=btnWidth/2;
             [btnView addSubview:btn];
         }
     

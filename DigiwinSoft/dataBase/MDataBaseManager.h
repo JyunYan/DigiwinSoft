@@ -99,7 +99,7 @@
 - (NSArray*)loadCompEffTargetArrayWithEffID:(NSString*)uuid;
 
 #pragma mark - 看現況(管理表現)
-- (NSArray*)loadCompManageItemArrayWithDate:(NSString*)date;
+- (NSArray*)loadCompManageItemArrayWithDate:(NSString*)date withComplex:(BOOL)bComplex;
 - (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid date:(NSString*)date;
 - (NSArray*)loadCompManageDateArrayWithLimit:(NSInteger)limit;
 
