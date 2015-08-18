@@ -54,8 +54,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
     
 }
 - (void)didReceiveMemoryWarning {

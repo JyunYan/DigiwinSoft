@@ -63,9 +63,9 @@
     //_RadarChart.lineColor=[UIColor blackColor];
     //_RadarChart.fillColor=[UIColor whiteColor];
     radar.drawGuideLines=YES;  //顯示同心圓
-    radar.showGuideNumbers=NO;
-    radar.showValues=NO;
-    radar.fillArea=YES;
+    radar.showGuideNumbers = NO;
+    radar.showValues = NO;
+    radar.fillArea = YES;
     radar.guideLineSteps=5;
     
     radar.currentSpokeIndex = 0;

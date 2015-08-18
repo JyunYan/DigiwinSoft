@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSArray* issTypeArray;//類別array(監控地圖)
 
 @property (nonatomic, strong) NSString* pr; //PR值(找現況)
+@property (nonatomic, strong) NSString* mgUuid; //管理項目id(管理表現)
 
 
 @end

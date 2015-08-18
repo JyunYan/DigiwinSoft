@@ -286,8 +286,17 @@
     return nil;
 }
 
+- (void)clean
+{
+    for (UIView* view in self.subviews) {
+        [view removeFromSuperview];
+    }
+}
+
 - (void)drawRect:(CGRect)rect
 {
+    [self clean];
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     /* 取得目前轉換矩陣，將矩陣倒置後存到圖像內文中 */
@@ -317,6 +326,9 @@
             CGContextStrokePath(context);
             
             CGContextClosePath(context);
+            
+            [self addTapViewWithPoint:point];
+            
         }
         if(point.type == TYPE_FOR_DESC){
             // add text label
@@ -404,6 +416,31 @@
     }
     
     CGContextClosePath(context);
+}
+
+- (void)addTapViewWithPoint:(MFlowChartPoint2*)point
+{
+    CGFloat side = MIN(self.frame.size.width/NUMBER_FOR_COLUMN, self.frame.size.height/NUMBER_FOR_ROW);
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, side*1.8, side*1.8)];
+    view.center = CGPointMake(point.coordinate.x, point.coordinate.y);
+    view.tag = point.index;
+    view.backgroundColor = [UIColor redColor];
+    view.alpha = 0.3;
+    [self addSubview:view];
+    
+    UITapGestureRecognizer* recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    [view addGestureRecognizer:recognizer];
+}
+
+- (void)handleSingleTap:(UITapGestureRecognizer*)recognizer
+{
+    NSInteger index = recognizer.view.tag;
+    MFlowChartPoint2* point = [_points objectAtIndex:index];
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(actFlowChart:didSelectedActivity:)])
+        [_delegate actFlowChart:self didSelectedActivity:point.activity];
+        
+    NSLog(@"xxx");
 }
 
 - (void)addLabelWithPoint:(MFlowChartPoint2*)point

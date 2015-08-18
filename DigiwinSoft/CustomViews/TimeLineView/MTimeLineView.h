@@ -16,6 +16,8 @@
 
 @interface MTimeLineView : UIScrollView
 
+@property (nonatomic, readonly) NSInteger startIndex;
+@property (nonatomic, assign) NSInteger endIndex;
 @property (nonatomic, strong) id<MTimeLineViewDelegate> delegateTL;
 
 - (void)setDataArray:(NSArray *)dataArray;

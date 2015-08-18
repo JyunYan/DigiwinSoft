@@ -99,9 +99,17 @@
 - (NSArray*)loadCompEffTargetArrayWithEffID:(NSString*)uuid;
 
 #pragma mark - 看現況(管理表現)
-- (NSArray*)loadCompManageItemArrayWithDate:(NSString*)date;
-- (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid date:(NSString*)date;
+// 取得資料日期(降冪)
 - (NSArray*)loadCompManageDateArrayWithLimit:(NSInteger)limit;
+//取得管理表現的項目, bComplex : 是否包含"綜合表現"
+- (NSArray*)loadCompManageItemArrayWithComplex:(BOOL)bComplex;
+//某管理表現項目在某日期的歷史資料
+- (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid date:(NSString*)date;
+//最近的歷史資料
+- (NSArray*)loadRecentCompManageHistoryData;
+//最近的歷史資料(降冪,最多limit筆)
+- (NSDictionary*)loadCompManageHistoryDataWithLimit:(NSInteger)limit;
+- (NSArray*)loadCompManageItemArrayWithDate:(NSString*)date withComplex:(BOOL)bComplex;
 
 #pragma mark - 看現況(行業情報)
 - (NSArray*)loadIndustryInfoKindArray;

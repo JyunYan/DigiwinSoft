@@ -645,7 +645,7 @@ static MDataBaseManager* _director = nil;
         act.suggestSkill = [self loadSuggestSkillWithID:act.act_m_id type:1];
         
         // 工作項目
-        [act.workItemArray addObjectsFromArray:[self loadWorkItemSampleArrayWithActivity:act]];
+        [act.workItemArray addObjectsFromArray:[self loadWorkItemSampleArrayWithActivity2:act]];
         
         [array addObject:act];
     }
@@ -667,6 +667,7 @@ static MDataBaseManager* _director = nil;
     
     FMResultSet* rs = [self.db executeQuery:sql, act.uuid];
     while ([rs next]) {
+        
         MWorkItem* item = [MWorkItem new];
         item.uuid = [rs stringForColumn:@"ID"];
         item.desc = [rs stringForColumn:@"DESCRIPTION"];
@@ -1647,13 +1648,36 @@ static MDataBaseManager* _director = nil;
 
 #pragma mark - 看現況(管理表現)
 
-- (NSArray*)loadCompManageItemArrayWithDate:(NSString*)date
+// 取得資料日期(降冪)
+- (NSArray*)loadCompManageDateArrayWithLimit:(NSInteger)limit
+{
+    NSMutableArray* array = [NSMutableArray new];
+    if(limit < 1)
+        return array;
+    
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select DATE from R_COMP_MA_ISSUE where COMP_ID = ? group by DATE order by DATE desc";
+    sql = [NSString stringWithFormat:@"%@ limit %d", sql, (int)limit];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, compid];
+    while ([rs next]) {
+        NSString* dateString = [rs stringForColumn:@"DATE"];
+        [array addObject:dateString];
+    }
+    return array;
+}
+
+//取得管理表現的項目, bComplex : 是否包含"綜合表現"
+- (NSArray*)loadCompManageItemArrayWithComplex:(BOOL)bComplex
 {
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
     NSString* sql = @"select * from M_MANAGE_ITEM as mmi inner join R_COMP_MANAGE as rci on rci.MA_ID = mmi.ID where rci.COMP_ID = ?";
     //select *
     //from M_MANAGE_ITEM as mmi
     //inner join R_COMP_MANAGE as rci on rci.MA_ID = mmi.ID
+    
+    if(!bComplex)
+        sql = [sql stringByAppendingString:@" and mmi.TYPE = '0'"];
     
     NSMutableArray* array = [NSMutableArray new];
     
@@ -1666,14 +1690,12 @@ static MDataBaseManager* _director = nil;
         manageItem.type = [rs stringForColumn:@"TYPE"];
         manageItem.review = [rs stringForColumn:@"REVIEW"];
         
-        NSArray* issArray = [self loadCompMaItemIssueArrayWithMaItemID:manageItem.uuid date:date];
-        manageItem.issueArray = issArray;
- 
         [array addObject:manageItem];
     }
     return array;
 }
 
+//某管理表現項目在某日期的歷史資料
 - (NSArray*)loadCompMaItemIssueArrayWithMaItemID:(NSString*)uuid date:(NSString*)date
 {
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
@@ -1695,6 +1717,7 @@ static MDataBaseManager* _director = nil;
         issue.desc = [rs stringForColumn:@"DESCRIPTION"];
         issue.reads = [rs stringForColumn:@"READS"];
         issue.pr = [rs stringForColumn:@"ISSUE_PR"];
+        issue.mgUuid = uuid;
         
         NSString* tarid = [rs stringForColumn:@"TAR_ID"];
         MTarget* target = [self loadTargetInfoWithID:tarid];
@@ -1705,20 +1728,70 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
-- (NSArray*)loadCompManageDateArrayWithLimit:(NSInteger)limit
+//最近的歷史資料
+- (NSArray*)loadRecentCompManageHistoryData
 {
-    NSMutableArray* array = [NSMutableArray new];
-    if(limit < 1)
-        return array;
+    NSArray* dateArray = [self loadCompManageDateArrayWithLimit:1];
+    NSString* dateString = (dateArray.count == 0) ? @"" : [dateArray firstObject];
     
+    NSArray* items = [self loadCompManageItemArrayWithComplex:YES];
+    
+    for (MManageItem* item in items) {
+        if([item.type isEqualToString:@"1"])
+            continue;
+        
+        NSArray* issues = [self loadCompMaItemIssueArrayWithMaItemID:item.uuid date:dateString];
+        item.issueArray = issues;
+    }
+    
+    return items;
+}
+
+//最近的歷史資料(降冪,最多limit筆)
+- (NSDictionary*)loadCompManageHistoryDataWithLimit:(NSInteger)limit
+{
+    NSArray* dateArray = [self loadCompManageDateArrayWithLimit:limit];
+
+    NSMutableDictionary* dict = [NSMutableDictionary new];
+    for(NSString* date in dateArray){
+        NSArray* items = [self loadCompManageItemArrayWithComplex:NO];
+        for (MManageItem* item in items) {
+            NSArray* issues = [self loadCompMaItemIssueArrayWithMaItemID:item.uuid date:date];
+            item.issueArray = issues;
+        }
+        [dict setObject:items forKey:date];
+    }
+    
+    return dict;
+}
+
+- (NSArray*)loadCompManageItemArrayWithDate:(NSString*)date withComplex:(BOOL)bComplex
+{
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* sql = @"select DATE from R_COMP_MA_ISSUE where COMP_ID = ? group by DATE order by DATE desc";
-    sql = [NSString stringWithFormat:@"%@ limit %d", sql, (int)limit];
+    NSString* sql = @"select * from M_MANAGE_ITEM as mmi inner join R_COMP_MANAGE as rci on rci.MA_ID = mmi.ID where rci.COMP_ID = ?";
+    //select *
+    //from M_MANAGE_ITEM as mmi
+    //inner join R_COMP_MANAGE as rci on rci.MA_ID = mmi.ID
+    
+    if(bComplex)
+        sql = [sql stringByAppendingString:@" and mmi.TYPE = '0'"];
+    
+    
+    NSMutableArray* array = [NSMutableArray new];
     
     FMResultSet* rs = [self.db executeQuery:sql, compid];
     while ([rs next]) {
-        NSString* dateString = [rs stringForColumn:@"DATE"];
-        [array addObject:dateString];
+        MManageItem* manageItem = [MManageItem new];
+        manageItem.uuid = [rs stringForColumn:@"ID"];
+        manageItem.name = [rs stringForColumn:@"NAME"];
+        manageItem.s_name = [rs stringForColumn:@"S_NAME"];
+        manageItem.type = [rs stringForColumn:@"TYPE"];
+        manageItem.review = [rs stringForColumn:@"REVIEW"];
+        
+        NSArray* issArray = [self loadCompMaItemIssueArrayWithMaItemID:manageItem.uuid date:date];
+        manageItem.issueArray = issArray;
+ 
+        [array addObject:manageItem];
     }
     return array;
 }

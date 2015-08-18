@@ -10,10 +10,17 @@
 #import "MCustGuide.h"
 #import "MCustActivity.h"
 
+@protocol MTaskRaidersViewControllerDelegate <NSObject>
+
+- (void)didActivityChanged:(MCustActivity*)activity;
+
+@end
+
 @interface MTaskRaidersViewController : UIViewController
 
 @property (nonatomic, assign) NSInteger tabBarExisted;
 @property (nonatomic, assign) BOOL bNeedSaved;
+@property (nonatomic, strong) id<MTaskRaidersViewControllerDelegate> delegate;
 
 - (id)initWithCustGuide:(MCustGuide*) guide Index:(NSInteger) index;
 - (id)initWithCustActivity:(MCustActivity*)activity;

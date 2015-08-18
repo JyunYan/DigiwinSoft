@@ -8,42 +8,52 @@
 
 #import "MRadarChartViewController.h"
 #import "MConfig.h"
-#import "MRadarChartView.h"
+#import "MMgRadarChartView.h"
 #import "MRouletteViewController.h"
 #import "MDataBaseManager.h"
 #import "MEfficacy.h"
 
 #import "MTimeLineView.h"
+#import "MMgRadarButton.h"
+#import "MManageItem.h"
 
 #define clickTo    @"clickTo"
+#define kRadarSpokeQualityMax   8
 
-@interface MRadarChartViewController ()<MTimeLineViewDelegate>
+@interface MRadarChartViewController ()<MTimeLineViewDelegate, MMgRadarChartViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *mScroll;
-@property (nonatomic, strong) MRadarChartView* RadarChart;
-@property (nonatomic, strong) NSMutableArray *aryData;//放入雷達圖顯示的資料
-@property (nonatomic, strong) NSArray *aryAddData;//測試加入雷達圖的資料
+@property (nonatomic, strong) MMgRadarChartView* RadarChart;
+@property (nonatomic, strong) MTimeLineView* timeLineView;
+
+@property (nonatomic, strong) NSArray* dateArray;//歷史資料日期
+
+@property (nonatomic, strong) NSDictionary* data;   //雷達圖所有資料
+@property (nonatomic, strong) NSMutableArray *data1;//雷達圖顯示資料1
+@property (nonatomic, strong) NSMutableArray *data2;//雷達圖顯示資料2
+@property (nonatomic, strong) NSMutableArray* catagoryButtons;//雷達圖分類button
 @end
 
 @implementation MRadarChartViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.title = @"應用價值成熟度模型";
     self.view.backgroundColor=[UIColor whiteColor];
     [self prepareData];
-    [self createScroll];
-    [self createRadarChart];
-    [self createBtn];
-    
-    [self initTimeLineView];
+    [self initViews];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clickToRadar:) name:clickTo object:nil];
-
+    
+    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
+    
+    [_RadarChart refresh];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -61,100 +71,237 @@
      否則在移除雷達上出現的兩筆以上的同資料的時候，會因記憶體位置相同，把所有資料都移除。
     **/
     
-    //放入雷達圖顯示的資料
-    NSArray *ary=[[MDataBaseManager sharedInstance]loadCompanyEfficacyArray];
-    _aryData=[[NSMutableArray alloc]initWithObjects:ary[0],ary[1],ary[2], nil];
-    //測試加入雷達圖的資料
-    NSArray *aryAdd=[[MDataBaseManager sharedInstance]loadCompanyEfficacyArray];
-    NSArray *ary1=[[NSArray alloc]initWithObjects:aryAdd[3],aryAdd[4], nil];
-    NSArray *ary2=[[NSArray alloc]initWithObjects:aryAdd[0],aryAdd[1],aryAdd[3],aryAdd[4], nil];
-    _aryAddData=[[NSArray alloc]initWithObjects:ary1,ary2, nil];
-
-}
-
-- (void)initTimeLineView
-{
-    NSArray* array = [[MDataBaseManager sharedInstance] loadCompManageDateArrayWithLimit:24];
+    _dateArray = [[MDataBaseManager sharedInstance] loadCompManageDateArrayWithLimit:24];
+    _data = [[MDataBaseManager sharedInstance] loadCompManageHistoryDataWithLimit:24];
     
-    MTimeLineView* view = [[MTimeLineView alloc] initWithFrame:CGRectMake(0, DEVICE_SCREEN_HEIGHT - 49. - 100, DEVICE_SCREEN_WIDTH, 100)];
-    view.delegateTL = self;
-    [view setDataArray:array];
-    [self.view addSubview:view];
+    _data1 = [NSMutableArray new];
+    _data2 = [NSMutableArray new];
+    _catagoryButtons = [NSMutableArray new];
 }
 
--(void)createScroll
+- (BOOL)isValidSpokeQuality
 {
-    _mScroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT-64-49)];
-    _mScroll.backgroundColor=[UIColor whiteColor];
-    _mScroll.contentSize=CGSizeMake(DEVICE_SCREEN_WIDTH, 560.);
-    [self.view addSubview:_mScroll];
-}
-
--(void)createBtn
-{
-    //按鍵數量不固定
-    NSInteger btnCount= [_aryAddData count];
-    CGFloat btnWidth=40;
-    CGFloat btnHeight=40;
+    if(_dateArray.count == 0)
+        return YES;
     
-    UIView *btnView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, ((btnCount*40)+(btnCount-1)*10), 40)];
-    btnView.backgroundColor=[UIColor whiteColor];
-    btnView.center=_mScroll.center;
-    [_mScroll addSubview:btnView];
-
-    for (NSInteger i=0; i<btnCount; i++) {
-            UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(i*50, 0, btnWidth, btnHeight)];
-            [btn setBackgroundImage:[UIImage imageNamed:@"icon_gray_circle.png"] forState:UIControlStateNormal];
-            [btn addTarget:self action:@selector(btnAddRadar:) forControlEvents:UIControlEventTouchUpInside];
-            btn.tag=101+i;
-            [btn setTitle:@"產" forState:UIControlStateNormal];
-            btn.layer.cornerRadius=btnWidth/2;
-            [btnView addSubview:btn];
+    NSInteger count = 0;
+    
+    NSInteger index = 0;
+    NSString* date = [_dateArray firstObject];
+    NSArray* items = [_data objectForKey:date];
+    
+    for(MMgRadarButton* button in _catagoryButtons){
+        
+        if(button.isChecked == YES){
+            MManageItem* item = [items objectAtIndex:index];
+            count += item.issueArray.count;
         }
+        index++;
+    }
     
+    return (count <= kRadarSpokeQualityMax);
 }
--(void)createRadarChart
+
+- (void)setData1WithDate:(NSString*)date
 {
-    _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
-    _RadarChart.aryRadarChartData=_aryData;
-    //_RadarChart.from=1;//1為p9使用，按下lab時push to p8。0為p7使用，按下lab時滾動下方scroll。
+    [_data1 removeAllObjects];
+    
+    NSInteger index = 0;
+    NSArray* items = [_data objectForKey:date];
+    
+    for(MMgRadarButton* button in _catagoryButtons){
+        
+        if(button.isChecked == YES){
+             MManageItem* item = [items objectAtIndex:index];
+            [_data1 addObjectsFromArray:item.issueArray];
+        }
+        index++;
+    }
+}
+
+- (void)setData2WithDate:(NSString*)date
+{
+    [_data2 removeAllObjects];
+    
+    NSInteger index = 0;
+    NSArray* items = [_data objectForKey:date];
+    
+    for(MMgRadarButton* button in _catagoryButtons){
+        
+        if(button.isChecked == YES){
+            MManageItem* item = [items objectAtIndex:index];
+            [_data2 addObjectsFromArray:item.issueArray];
+        }
+        index++;
+    }
+}
+
+- (void)initViews
+{
+    _mScroll = [self createScrollWithFrame:CGRectMake(0, 64., DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT-64.-49)];
+    [self.view addSubview:_mScroll];
+    
+     CGFloat posY = 0.;
+    
+    //雷達圖
+    _RadarChart = [self createRadarChartWithFrame:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_WIDTH*0.8)];
     [_mScroll addSubview:_RadarChart];
+    
+    posY += _RadarChart.frame.size.height;
+    
+    //分類buttons
+    UIView* btnView = [self createButtonsViewWithFrame:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_WIDTH*0.2)];
+    [_mScroll addSubview:btnView];
+    
+    posY += btnView.frame.size.height;
+    
+    //時間軸
+    _timeLineView = [self createTimeLineViewWithFrame:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, 100)];
+    [_mScroll addSubview:_timeLineView];
+    
+    posY += _timeLineView.frame.size.height;
+    
+    _mScroll.contentSize = CGSizeMake(_mScroll.frame.size.width, posY);
+}
+
+-(UIScrollView*)createScrollWithFrame:(CGRect)frame
+{
+    UIScrollView* scroll =[[UIScrollView alloc]initWithFrame:frame];
+    scroll.backgroundColor=[UIColor whiteColor];
+    scroll.contentSize=CGSizeMake(DEVICE_SCREEN_WIDTH, 560.);
+    
+    return scroll;
+}
+
+-(MMgRadarChartView*)createRadarChartWithFrame:(CGRect)frame
+{
+    MMgRadarChartView* radar = [[MMgRadarChartView alloc] initWithFrame:frame];
+    radar.delegate = self;
+    radar.dataOld = _data2;
+    radar.dataNow = _data1;
+    //_RadarChart.from=1;//1為p9使用，按下lab時push to p8。0為p7使用，按下lab時滾動下方scroll。
+    
+    return radar;
+}
+
+-(UIView*)createButtonsViewWithFrame:(CGRect)frame
+{
+    NSArray* categorys = [[MDataBaseManager sharedInstance] loadCompManageItemArrayWithComplex:NO];
+    
+    UIView* base = [[UIView alloc] initWithFrame:frame];
+    base.backgroundColor = [UIColor clearColor];
+    
+    UIView* view = [[UIView alloc] initWithFrame:CGRectZero];
+    view.backgroundColor = [UIColor clearColor];
+    [base addSubview:view];
+    
+    CGFloat posX = 0.;
+    CGFloat interval = base.frame.size.width*0.025;
+    
+    for (MManageItem* item in categorys) {
+        
+        CGFloat posY = base.frame.size.height * 0.1;
+        CGFloat width = base.frame.size.height * 0.7;
+        
+        MMgRadarButton *btn =[[MMgRadarButton alloc]initWithFrame:CGRectMake(posX, posY, width, width)];
+        [btn addTarget:self action:@selector(btnAddRadar:) forControlEvents:UIControlEventTouchUpInside];
+        [btn setTitle:item.s_name forState:UIControlStateNormal];
+        [view addSubview:btn];
+        [_catagoryButtons addObject:btn];
+        
+        posX += btn.frame.size.width;
+        posX += interval;
+    }
+    
+    posX -= interval;
+    view.frame = CGRectMake(0, 0, posX, base.frame.size.height);
+    view.center = CGPointMake(base.frame.size.width/2., base.frame.size.height/2.);
+    
+    return base;
+}
+
+- (MTimeLineView*)createTimeLineViewWithFrame:(CGRect)frame
+{
+    MTimeLineView* view = [[MTimeLineView alloc] initWithFrame:frame];
+    view.delegateTL = self;
+    [view setDataArray:_dateArray];
+    
+    return view;
+}
+
+#pragma mark - MMgRadarChartViewDelegate
+
+- (void)radarChartView:(MMgRadarChartView *)chart didSelectedSpokeWithIndx:(NSInteger)spokeIndex
+{
+    MIssue* issue = [_data1 objectAtIndex:spokeIndex];
+    NSString* mgUuid = issue.mgUuid;
+    NSString* uuid = issue.uuid;
+    NSLog(@"uuid = %@", issue.mgUuid);
+    
+    // find manage item
+    MManageItem* mgItem;
+    NSString* date = [_dateArray firstObject];
+    NSArray* array = [_data objectForKey:date];
+    for (MManageItem* item in array) {
+        if([mgUuid isEqualToString:item.uuid]){
+            mgItem = item;
+            break;
+        }
+    }
+    
+    //find default index
+    NSInteger index = 0;
+    for (MIssue* iss in mgItem.issueArray) {
+        if([uuid isEqualToString:iss.uuid])
+            break;
+        index++;
+    }
+    
+    MRouletteViewController *MRouletteVC=[[MRouletteViewController alloc]initWithManageItem:mgItem];
+    MRouletteVC.defaultIndex = index;
+    [self.navigationController pushViewController:MRouletteVC animated:YES];
 }
 
 #pragma mark - MTimeLineViewDelegate
 
 - (void)timeLineView:(MTimeLineView *)view didChangedIndex:(NSInteger)index
 {
+    NSInteger index1 = view.startIndex;
+    NSString* dateString1 = [_dateArray objectAtIndex:index1];
+    [self setData1WithDate:dateString1];
     
+    NSInteger index2 = index;
+    NSString* dateString2 = [_dateArray objectAtIndex:index2];
+    [self setData2WithDate:dateString2];
+    
+    [_RadarChart refresh];
 }
 
 #pragma mark - UIButton
 -(void)btnAddRadar:(id)sender
 {
-    if ([sender isSelected]) {
-        //取消選擇
-        [sender setBackgroundImage:[UIImage imageNamed:@"icon_gray_circle.png"] forState:UIControlStateNormal];
-        [sender setSelected:NO];
-        [_aryData removeObjectsInArray:_aryAddData[[sender tag]-101]];
-        
-    } else {
-        //選擇
-        if (([_aryData count]+([_aryAddData[[sender tag]-101]count]))>8)//先檢查加入後是否會超過八筆
-        {
-            UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"雷達圖最多只能顯示八筆資料" delegate:self cancelButtonTitle:@"確認" otherButtonTitles:nil, nil];
-            [theAlert show];
-            return;
-        }
-        [sender setBackgroundImage:[self checked] forState:UIControlStateNormal];
-        [sender setSelected:YES];
-         [_aryData addObjectsFromArray:_aryAddData[[sender tag]-101]];
+    MMgRadarButton* button = (MMgRadarButton*)sender;
+    button.isChecked = !button.isChecked;
+    
+    if(![self isValidSpokeQuality]){
+        button.isChecked = NO;
+        UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"雷達圖最多只能顯示八筆資料" delegate:self cancelButtonTitle:@"確認" otherButtonTitles:nil, nil];
+        [theAlert show];
+        return;
     }
     
-    [_RadarChart removeFromSuperview];
-    _RadarChart = [[MRadarChartView alloc] initWithFrame:CGRectMake((DEVICE_SCREEN_WIDTH/2)-100, 20, 200, 200)];
-    _RadarChart.aryRadarChartData=_aryData;//把選擇的新增或移除資料加進去
-    [_mScroll addSubview:_RadarChart];
+    NSInteger index1 = _timeLineView.startIndex;
+    NSString* dateString1 = [_dateArray objectAtIndex:index1];
+    [self setData1WithDate:dateString1];
+    
+    NSInteger index2 = _timeLineView.endIndex;
+    NSString* dateString2 = [_dateArray objectAtIndex:index2];
+    [self setData2WithDate:dateString2];
+    
+    [_RadarChart refresh];
 }
+
+
 
 #pragma other
 -(UIImage *)checked

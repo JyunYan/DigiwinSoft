@@ -24,6 +24,9 @@
     if(self = [super initWithFrame:frame]){
         self.backgroundColor = [UIColor colorWithRed:238.0f/255.0f green:238.0f/255.0f blue:238.0f/255.0f alpha:1.0f];
         self.contentSize = CGSizeMake(frame.size.width, frame.size.height);
+        
+        _startIndex = 0;
+        
         [self initTimeLineAxis];
     }
     return self;
@@ -69,10 +72,10 @@
         return;
     
     if(!_arrowLeft)
-        _arrowLeft = [self addArrowImageWithName:@"icon_red_arrow_left.png" pointIndex:0];
+        _arrowLeft = [self addArrowImageWithName:@"icon_red_arrow_left.png" pointIndex:_startIndex];
     
     if(!_arrowRight){
-        _arrowRight = [self addArrowImageWithName:@"icon_red_arrow_right.png" pointIndex:0];
+        _arrowRight = [self addArrowImageWithName:@"icon_red_arrow_right.png" pointIndex:_startIndex];
         
         UIPanGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleSinglePan:)];
         recognizer.maximumNumberOfTouches = 1;
@@ -144,13 +147,15 @@
             
             currentIndex = MIN(points.count-1, index);
             
+            _endIndex = currentIndex;
+            
             MTLAxisPoint* point = [points objectAtIndex:currentIndex];
             
             _arrowRight.center = CGPointMake(point.centerX, point.centerY);
             _axis.endIndex = currentIndex;
             [_axis setNeedsDisplay];
             
-            if(_delegateTL && ![_delegateTL respondsToSelector:@selector(timeLineView:didChangedIndex:)])
+            if(_delegateTL && [_delegateTL respondsToSelector:@selector(timeLineView:didChangedIndex:)])
                 [_delegateTL timeLineView:self didChangedIndex:currentIndex];
             
         }
@@ -160,7 +165,9 @@
     if(velocity.x < 0){
         NSInteger index = (location.x - start.centerX) / interval;
         if(index < currentIndex){
-            currentIndex = MAX(0, index);
+            currentIndex = MAX(_startIndex, index);
+            
+            _endIndex = currentIndex;
             
             MTLAxisPoint* point = [points objectAtIndex:currentIndex];
             
@@ -168,7 +175,7 @@
             _axis.endIndex = currentIndex;
             [_axis setNeedsDisplay];
             
-            if(_delegateTL && ![_delegateTL respondsToSelector:@selector(timeLineView:didChangedIndex:)])
+            if(_delegateTL && [_delegateTL respondsToSelector:@selector(timeLineView:didChangedIndex:)])
                 [_delegateTL timeLineView:self didChangedIndex:currentIndex];
         }
     }
