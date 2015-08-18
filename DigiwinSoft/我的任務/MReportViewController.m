@@ -263,8 +263,9 @@
     }
 }
 
--(void)textFieldChanged
+-(void)textFieldChanged:(UITextField*)textField
 {
+
     _datePicker=[[UIDatePicker alloc]init];//WithFrame:CGRectMake(0,screenHeight-70,screenWidth, 70)];
     _datelocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];
     _datePicker.locale = _datelocale;
@@ -277,14 +278,14 @@
     UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelPicker)];
     toolBar.items = [NSArray arrayWithObject:right];
     _txtTargetDay.inputAccessoryView = toolBar;
-    
+
 }
 
 -(void) cancelPicker {
     if ([self.view endEditing:NO]) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        //        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"yyyy-MM-dd" options:0 locale:_datelocale];
-        //        [formatter setDateFormat:dateFormat];
+        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"yyyy-MM-dd" options:0 locale:_datelocale];
+        [formatter setDateFormat:dateFormat];
         [formatter setDateFormat:@"yyyy-MM-dd"];
         [formatter setLocale:_datelocale];
         

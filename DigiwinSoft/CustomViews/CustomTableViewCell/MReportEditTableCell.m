@@ -9,7 +9,7 @@
 #import "MReportEditTableCell.h"
 #import "MRadioGroupView.h"
 #import "MDirector.h"
-
+#define TEXT_FIELD_DATE 102
 @interface MReportEditTableCell ()<MRadioGroupViewDelegate, UITextViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) MRadioGroupView* group;
@@ -17,6 +17,8 @@
 @property (nonatomic, strong) UITextField* textValue;
 @property (nonatomic, strong) UITextField* textUnit;
 @property (nonatomic, strong) UITextField* textDate;
+@property (nonatomic, strong) UIDatePicker* picker;
+@property (nonatomic, strong) NSLocale *datelocale;
 
 @end
 
@@ -94,6 +96,7 @@
         
         // 完成日
         _textDate = [self createDateTextFieldWithFrame:CGRectMake(posX, posY, DEVICE_SCREEN_WIDTH*0.4, 30)];
+        _textDate.tag=TEXT_FIELD_DATE;
         [self addSubview:_textDate];
     }
     return self;
@@ -118,10 +121,6 @@
 {
     UIColor* lightGrayColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     
-    UIDatePicker* picker = [[UIDatePicker alloc]init];//WithFrame:CGRectMake(0,screenHeight-70,screenWidth, 70)];
-    picker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];
-    picker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
-    picker.datePickerMode = UIDatePickerModeDate;
     
     // 建立 UIToolbar
     UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH, 44)];
@@ -132,9 +131,14 @@
     textField.delegate = self;
     textField.layer.borderColor=[lightGrayColor CGColor];
     textField.layer.borderWidth=2;
-    textField.inputView = picker;
+    textField.inputView = _picker;
     textField.inputAccessoryView = toolBar;
-    
+    textField.tag=TEXT_FIELD_DATE;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(textFieldChanged:)
+                                                 name:UITextFieldTextDidBeginEditingNotification
+                                               object:nil];
+
     return textField;
 }
 
@@ -184,5 +188,36 @@
 {
     [_textView resignFirstResponder];
 }
+//日期選擇textField
+-(void)textFieldChanged:(NSNotification *)notification
+{
+    UITextField *textField = (UITextField *)notification.object;
+    
+    if(textField.tag == TEXT_FIELD_DATE) {
+    _picker=[[UIDatePicker alloc]init];//WithFrame:CGRectMake(0,screenHeight-70,screenWidth, 70)];
+    _datelocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];
+    _picker.locale = _datelocale;
+    _picker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    _picker.datePickerMode = UIDatePickerModeDate;
+    _textDate.inputView = _picker;
+    
+    // 建立 UIToolbar
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelPicker)];
+    toolBar.items = [NSArray arrayWithObject:right];
+    _textDate.inputAccessoryView = toolBar;
+    }
+}
 
+-(void) cancelPicker {
+    if ([self endEditing:NO]) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"yyyy-MM-dd" options:0 locale:_datelocale];
+        [formatter setDateFormat:dateFormat];
+        [formatter setLocale:_datelocale];
+        
+        //將選取後的日期填入UITextField
+        _textDate.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:_picker.date]];
+    }
+}
 @end
