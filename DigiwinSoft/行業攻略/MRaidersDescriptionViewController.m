@@ -12,18 +12,20 @@
 #import "MInventoryTurnoverViewController.h"
 #import "MRaidersDiagramViewController.h"
 #import "MRaidersDescriptionTableViewCell.h"
+#import "MTaskRaidersViewController.h"
 #import "MDataBaseManager.h"
 #import "MTarget.h"
 #import "MFlowChartView.h"
 #import "MActFlowChart.h"
 
-@interface MRaidersDescriptionViewController ()<UITextFieldDelegate>
+@interface MRaidersDescriptionViewController ()<UITextFieldDelegate, MActFlowChartDelegate, MTaskRaidersViewControllerDelegate>
 {
     CGFloat screenWidth;
     CGFloat screenHeight;
 }
 
 @property (nonatomic, strong) MPMoviePlayerController* player;
+@property (nonatomic, strong) MActFlowChart* flowChart;
 
 @end
 
@@ -177,12 +179,13 @@
 //    [chart setItems:_guide.activityArray];
 //    [scroll addSubview:chart];
     
-    MActFlowChart* chart = [[MActFlowChart alloc] initWithFrame:CGRectMake(0, offset, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_WIDTH*0.6)];
-    chart.backgroundColor = [UIColor whiteColor];
-    [chart setItems:_guide.activityArray];
-    [scroll addSubview:chart];
+    _flowChart = [[MActFlowChart alloc] initWithFrame:CGRectMake(0, offset, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_WIDTH*0.6)];
+    _flowChart.backgroundColor = [UIColor whiteColor];
+    _flowChart.delegate = self;
+    [_flowChart setItems:_guide.activityArray];
+    [scroll addSubview:_flowChart];
     
-    offset += chart.frame.size.height + 10.;
+    offset += _flowChart.frame.size.height + 10.;
     
     //議題table
     CGFloat height = aryList.count * MRaidersDescriptionTableViewCell_HEIGHT + 40.;
@@ -346,6 +349,37 @@
     label.textAlignment = NSTextAlignmentCenter;
     
     return label;
+}
+
+#pragma mark - MActFlowChartDelegate
+
+- (void)actFlowChart:(MActFlowChart *)chart didSelectedActivity:(MCustActivity *)activity
+{
+    MTaskRaidersViewController* vc = [[MTaskRaidersViewController alloc] initWithCustActivity:activity];
+    vc.delegate = self;
+    vc.tabBarExisted = NO;
+    vc.bNeedSaved = NO;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - MTaskRaidersViewControllerDelegate
+
+- (void)didActivityChanged:(MCustActivity *)activity
+{
+    //save into guide, but not save into sqlite
+    NSInteger index = 0;
+    for (MCustActivity* act in _guide.activityArray) {
+        if([act.uuid isEqualToString:activity.uuid]){
+            [_guide.activityArray replaceObjectAtIndex:index withObject:activity];
+            break;
+        }
+        index++;
+    }
+    
+    // refresh flowChart
+    NSArray* array = _guide.activityArray;
+    [_flowChart setItems:array];
+    [_flowChart setNeedsDisplay];
 }
 
 /*

@@ -131,4 +131,11 @@ static MDirector* _director = nil;
     return [formatter stringFromDate:[NSDate date]];
 }
 
+- (CGFloat) getOriginY
+{
+    if([UIDevice currentDevice].systemVersion.floatValue >= 8.0)
+        return 64.;
+    return 0.;
+}
+
 @end

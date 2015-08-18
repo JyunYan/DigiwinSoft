@@ -645,7 +645,7 @@ static MDataBaseManager* _director = nil;
         act.suggestSkill = [self loadSuggestSkillWithID:act.act_m_id type:1];
         
         // 工作項目
-        [act.workItemArray addObjectsFromArray:[self loadWorkItemSampleArrayWithActivity:act]];
+        [act.workItemArray addObjectsFromArray:[self loadWorkItemSampleArrayWithActivity2:act]];
         
         [array addObject:act];
     }
@@ -667,6 +667,7 @@ static MDataBaseManager* _director = nil;
     
     FMResultSet* rs = [self.db executeQuery:sql, act.uuid];
     while ([rs next]) {
+        
         MWorkItem* item = [MWorkItem new];
         item.uuid = [rs stringForColumn:@"ID"];
         item.desc = [rs stringForColumn:@"DESCRIPTION"];

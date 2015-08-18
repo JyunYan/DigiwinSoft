@@ -218,6 +218,9 @@
     [_act.workItemArray replaceObjectAtIndex:_selectedIndex withObject:workitem];
     
     [_tableView reloadData];
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(didActivityChanged:)])
+        [_delegate didActivityChanged:_act];
 }
 
 - (void)didSettingTarget:(NSNotification*)notification
@@ -226,6 +229,9 @@
     
     MCustWorkItem* workitem = (MCustWorkItem*)notification.object;
     [_act.workItemArray replaceObjectAtIndex:_selectedIndex withObject:workitem];
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(didActivityChanged:)])
+        [_delegate didActivityChanged:_act];
 }
 
 #pragma mark - MWorkItemTableCellDelegate

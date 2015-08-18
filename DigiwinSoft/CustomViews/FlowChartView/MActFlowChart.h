@@ -18,7 +18,16 @@
 #define ARROW_DIRECTION_DOWN    3
 #define ARROW_DIRECTION_RIGHT   4
 
+@class MActFlowChart;
+
+@protocol MActFlowChartDelegate <NSObject>
+@optional
+- (void)actFlowChart:(MActFlowChart*)chart didSelectedActivity:(MCustActivity*)activity;
+@end
+
 @interface MActFlowChart : UIView
+
+@property (nonatomic, strong) id<MActFlowChartDelegate> delegate;
 
 - (void)setItems:(NSArray*)array;
 
