@@ -25,7 +25,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    //[NSThread sleepForTimeInterval:3.];
+    
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [self loadData];
     [self addMainMenu];

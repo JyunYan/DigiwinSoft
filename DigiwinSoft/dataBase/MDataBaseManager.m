@@ -1716,6 +1716,7 @@ static MDataBaseManager* _director = nil;
         issue.desc = [rs stringForColumn:@"DESCRIPTION"];
         issue.reads = [rs stringForColumn:@"READS"];
         issue.pr = [rs stringForColumn:@"ISSUE_PR"];
+        issue.mgUuid = uuid;
         
         NSString* tarid = [rs stringForColumn:@"TAR_ID"];
         MTarget* target = [self loadTargetInfoWithID:tarid];
@@ -1726,7 +1727,7 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
-//最近的歷史資料 (降冪,最多limit筆)
+//最近的歷史資料
 - (NSArray*)loadRecentCompManageHistoryData
 {
     NSArray* dateArray = [self loadCompManageDateArrayWithLimit:1];
@@ -1745,11 +1746,23 @@ static MDataBaseManager* _director = nil;
     return items;
 }
 
-//- (NSArray*)loadCompManageHistoryDataWithLimit:(NSInteger)limit
-//{
-//    NSArray* dateArray = [self loadCompManageDateArrayWithLimit:limit];
-//    
-//}
+//最近的歷史資料(降冪,最多limit筆)
+- (NSDictionary*)loadCompManageHistoryDataWithLimit:(NSInteger)limit
+{
+    NSArray* dateArray = [self loadCompManageDateArrayWithLimit:limit];
+
+    NSMutableDictionary* dict = [NSMutableDictionary new];
+    for(NSString* date in dateArray){
+        NSArray* items = [self loadCompManageItemArrayWithComplex:NO];
+        for (MManageItem* item in items) {
+            NSArray* issues = [self loadCompMaItemIssueArrayWithMaItemID:item.uuid date:date];
+            item.issueArray = issues;
+        }
+        [dict setObject:items forKey:date];
+    }
+    
+    return dict;
+}
 
 - (NSArray*)loadCompManageItemArrayWithDate:(NSString*)date withComplex:(BOOL)bComplex
 {

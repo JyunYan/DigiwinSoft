@@ -22,12 +22,12 @@
     self = [super initWithFrame:frame];
     if(self){
         
-        _isChecked = YES;
+        _isChecked = NO;
         _radius = frame.size.width / 2.;
         
         [self addMarkImageView];
         
-        [self setBackgroundImage:[UIImage imageNamed:@"icon_blue_circle.png"] forState:UIControlStateNormal];
+        [self setBackgroundImage:[UIImage imageNamed:@"icon_gray_circle.png"] forState:UIControlStateNormal];
         self.layer.cornerRadius = _radius;
     }
     return self;
@@ -42,6 +42,7 @@
     _markImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     _markImageView.layer.cornerRadius = _markImageView.frame.size.width/2.;
     _markImageView.clipsToBounds = YES;
+    _markImageView.hidden = YES;
     [self addSubview:_markImageView];
 }
 
@@ -49,6 +50,10 @@
 {
     _isChecked = isChecked;
     _markImageView.hidden = !isChecked;
+    
+    //change bg image
+    NSString* name = isChecked ? @"icon_blue_circle.png" : @"icon_gray_circle.png";
+    [self setBackgroundImage:[UIImage imageNamed:name] forState:UIControlStateNormal];
 }
 
 @end

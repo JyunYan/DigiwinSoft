@@ -43,7 +43,6 @@
 #import <QuartzCore/CALayer.h>
 #import "RPRadarChart.h"
 #import <QuartzCore/QuartzCore.h>
-#import "MEfficacy.h"
 #define clickTo    @"clickTo"
 #define kClickScroll    @"clickScroll"
 
@@ -128,7 +127,7 @@ static double colorDistance(RGB e1, RGB e2)
             }
         }
     }
-
+    
     return NO;
 }
 
@@ -221,7 +220,7 @@ static double colorDistance(RGB e1, RGB e2)
                 char *window = [self getScanWindowAtPoint:point];
                 color = [colors objectAtIndex:pathIndex];
                 if (YES == [self color:(UIColor*)color inScanWindow:(unsigned char*)window]) {
-                    NSLog(@"Path %d touched", (int)pathIndex);
+                    NSLog(@"Path %d touched", pathIndex);
                     touched = true;
                     break;
                 }
@@ -251,11 +250,12 @@ static double colorDistance(RGB e1, RGB e2)
 
 - (void)drawRect:(CGRect)rect
 {
+    [self clean];
+    
     if (self.dataSource == nil) {
         NSLog(@"No data source for radar chart");
         return;
     }
-    
     
     if (bitmapCtx == nil) {
         CGColorSpaceRef colorRef = CGColorSpaceCreateDeviceRGB();
@@ -263,13 +263,11 @@ static double colorDistance(RGB e1, RGB e2)
     } else {
         CGContextClearRect(bitmapCtx, rect);
     }
-
+    
     UIGraphicsPushContext(bitmapCtx);
     CGContextSaveGState(bitmapCtx);
     CGContextTranslateCTM(bitmapCtx, rect.size.width / 2, rect.size.height / 2);
     
-    
-    [self releaseOldPaths];
     
     maxValue = [dataSource maximumValueInRadarChart:self];
     
@@ -277,11 +275,18 @@ static double colorDistance(RGB e1, RGB e2)
     paths = [NSMutableArray arrayWithCapacity:dataCounts];
     colors = [NSMutableArray arrayWithCapacity:dataCounts];
     
+    //實心圓
+    [self drawBaseBackGroundInContext:bitmapCtx];
+    
+    //多角形
     for (int i=0; i < dataCounts; i++) {
         [self drawChartInContext:bitmapCtx forIndex:i];
     }
     
+    //圓邊線&輻射線
     [self drawBackGroundInContext:bitmapCtx];
+    [self releaseOldPaths];
+    
     // draw bitmap to screen context and pop the previous context
     CGImageRef imgRef = CGBitmapContextCreateImage(bitmapCtx);
     UIGraphicsPopContext();
@@ -289,13 +294,10 @@ static double colorDistance(RGB e1, RGB e2)
     CGImageRelease(imgRef);
     
     CGContextRestoreGState(bitmapCtx);
-    
 }
+
 -(void) drawChartInContext:(CGContextRef) cx forIndex:(NSInteger)index
 {
-    
-    
-    
     CGContextSetLineWidth(cx, frontLineWidth);
     
     // NSDictionary *d = (key == nil) ? values : [values objectForKey:key] ;
@@ -303,28 +305,17 @@ static double colorDistance(RGB e1, RGB e2)
     UIColor *flColor = fillColor;
     UIColor *stColor = lineColor;
     UIColor *dtColor = dotColor;
-
-    float mvr = (2 * M_PI) / numberOfSpokes;
-    float spcr = maxSize / guideLineSteps;
-    
-    
-    //畫灰色實心圓
-    CGContextMoveToPoint(cx,0, 0);
-    CGContextSetRGBFillColor(cx, 212.0f / 255.0f, 219.0f / 255.0f, 227.0f / 255.0f, 1.0f);
-    CGContextAddArc(cx, 0,0, spcr*5,  0,  2*M_PI, 0);
-    CGContextFillPath(cx);
-
-    
     
     stColor = dtColor = [dataSource radarChart:self colorForData:index];
-    flColor = [dtColor colorWithAlphaComponent:1.0]; //多角形區塊透明度
+    flColor = [dtColor colorWithAlphaComponent:0.5];
     [colors setObject:stColor atIndexedSubscript:index];
     
+    float mvr = (2*M_PI) / numberOfSpokes;
     float fx =0;
     float fy =0;
     int mi = 0;
     
-    //DRAW LINES
+    //DRAW LINES (多角形區域)
     CGContextSetAllowsAntialiasing(cx, true);
     CGMutablePathRef path = CGPathCreateMutable();
     [paths addObject:[NSValue valueWithPointer:path]];
@@ -344,19 +335,19 @@ static double colorDistance(RGB e1, RGB e2)
             CGPathAddLineToPoint(path, NULL, x,  y);
         }
         mi++;
-    }    
+    }
     CGPathAddLineToPoint(path, NULL, fx, fy);
     CGContextAddPath(cx, path);
     if (fillArea) {
         CGContextSetFillColorWithColor(cx, flColor.CGColor);
-        CGContextFillPath(cx);   
+        CGContextFillPath(cx);
     }
     CGContextSetStrokeColorWithColor(cx, stColor.CGColor);
     CGContextAddPath(cx, path);
     CGContextStrokePath(cx);
     CGContextSetAllowsAntialiasing(cx, true);
     
-    // DRAW VALUES
+    // DRAW VALUES (多角形每個點的值)
     mi= 0;
     for (int spoke=0; spoke < numberOfSpokes; spoke++) {
         float orgValue = [dataSource radarChart:self valueForData:index forSpoke:spoke];
@@ -371,16 +362,11 @@ static double colorDistance(RGB e1, RGB e2)
             NSString *str = [NSString stringWithFormat:@"%1.0f", orgValue];
             x += 5;
             y -= 7;
-            
-            NSMutableDictionary* dict = [NSMutableDictionary new];
-            [dict setObject:[UIFont fontWithName:@"Helvetica-Bold" size:12] forKey:NSFontAttributeName];
-            
             CGContextSetFillColorWithColor(cx, [UIColor blackColor].CGColor);
-            //[str drawAtPoint:CGPointMake(x, y) withFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
-            [str drawAtPoint:CGPointMake(x, y) withAttributes:dict];
+            [str drawAtPoint:CGPointMake(x, y) withFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
         }
         mi++;
-    }    
+    }
     CGContextMoveToPoint(cx, 0, 0);
     
 }
@@ -390,60 +376,52 @@ static double colorDistance(RGB e1, RGB e2)
     CGContextSetLineWidth(cx, backLineWidth);
     
     const NSInteger numberOfSpokes = [dataSource numberOfSopkesInRadarChart:self];
-
+    
     float mvr = (2 * M_PI) / numberOfSpokes;
     float spcr = maxSize / guideLineSteps;
     
     
     
-    
-    //Index Lines畫同心圓
+    //Index Lines (空心同心圓)
     if (drawGuideLines) {
         CGContextSetStrokeColorWithColor(cx, [UIColor whiteColor].CGColor);
-                for (int j= 0; j <= guideLineSteps+1; j++) {
-                    float cur = j*spcr;
-                    if (j<6) {
-                        CGContextStrokeEllipseInRect(cx, CGRectMake(-cur, -cur, cur*2, cur*2));
-                        
-
-                    }
-                    else//畫最外圍的圓，貼標籤對齊用
-                    {
-//                        CGContextStrokeEllipseInRect(cx, CGRectMake(-cur-12, -cur-12, (cur+12)*2, (cur+12)*2));
-                    }
-            }
-
+        for (int j = 0; j <= guideLineSteps; j++) {
+            float cur = j*spcr;
+            CGContextStrokeEllipseInRect(cx, CGRectMake(-cur, -cur, cur*2, cur*2));
+        }
         CGContextStrokePath(cx);
-
     }
-    CGContextSetFillColorWithColor(cx, [UIColor greenColor].CGColor);
-    CGContextFillPath(cx);
     
-    //畫輻射線
+    //Base lines (輻射線)
+    CGContextSetStrokeColorWithColor(cx, [UIColor whiteColor].CGColor);
     for (int i = 0; i < numberOfSpokes; i++) {
         float a = (mvr * i) - M_PI_2;
-        float x = maxSize * cos(a); //正弦
-        float y = maxSize * sin(a); //餘弦
-        
+        float x = maxSize * cos(a);
+        float y = maxSize * sin(a);
         CGContextMoveToPoint(cx, 0, 0);
         CGContextAddLineToPoint(cx, x , y);
-        CGContextStrokePath(cx);
-
-    }
-    
-    //製作外圍按鍵
-    for (int i = 0; i < numberOfSpokes; i++) {
-        float a = (mvr * i) - M_PI_2;
-        float x = (maxSize*1.6) * cos(a); //正弦，更改後面加上的常數，可調整標籤靠近圓的距離
-        float y = (maxSize*1.3) * sin(a); //餘弦，更改後面加上的常數，可調整標籤靠近圓的距離
         
-//        y += (y>0) ? 20 : -20;//可微調，判斷外圍標籤上下展開，(y>0)?分上半與下半
+        CGContextStrokePath(cx);
+        
+        /*
+        NSString *tx = [dataSource radarChart:self titleForSpoke:i];
+        CGSize s =[tx sizeWithFont:[UIFont fontWithName:@"Helvetica-Bold" size:11]];
+        x -= s.width/2;
+        x += 5;
+        y += (y>0) ? 10 : -20;
+        CGContextSetFillColorWithColor(cx, [UIColor whiteColor].CGColor);
+        [tx drawAtPoint:CGPointMake(x, y) withFont: [UIFont fontWithName:@"Helvetica-Bold" size:11]];
+         */
+        
+        //製作外圍按鍵
+        x = (maxSize*1.7) * cos(a); //正弦，更改後面加上的常數，可調整標籤靠近圓的距離
+        y = (maxSize*1.3) * sin(a); //餘弦，更改後面加上的常數，可調整標籤靠近圓的距離
+        
         CGPoint center = CGPointMake(x + self.frame.size.width/2., y + self.frame.size.height/2.);
         NSString* title = [dataSource radarChart:self titleForSpoke:i];
-        UIButton* button = [self createSpokeButtonWithCenter:center size:CGSizeMake(maxSize*0.8, maxSize*0.5) title:title tag:i];
+        UIButton* button = [self createSpokeButtonWithCenter:center size:CGSizeMake(maxSize*0.85, maxSize*0.46) title:title tag:i];
         [self addSubview:button];
         [_spokeButtons addObject:button];
-
     }
     
     [self setSpokeButtonSelected];
@@ -452,18 +430,24 @@ static double colorDistance(RGB e1, RGB e2)
     if (showGuideNumbers) {
         for(float i = spcr; i <= maxSize; i+=spcr)
         {
-            NSDictionary* dict = [NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Helvetica" size:11] forKey:NSFontAttributeName];
-            
             NSString *str = [NSString stringWithFormat:@"%1.0f",( i * maxValue) / maxSize];
             CGSize s = [str sizeWithFont:[UIFont fontWithName:@"Helvetica" size:12]];
             float x = i * cos(M_PI_2) + 5 + s.width;
             float y = i * sin(M_PI_2) + 5;
             CGContextSetFillColorWithColor(cx, [UIColor darkGrayColor].CGColor);
-            [str drawAtPoint:CGPointMake(- x, - y) withAttributes:dict];
+            [str drawAtPoint:CGPointMake(- x, - y) withFont: [UIFont fontWithName:@"Helvetica" size:11]];
         }
     }
     CGContextMoveToPoint(cx, 0, 0);
     
+}
+
+-(void) drawBaseBackGroundInContext:(CGContextRef) cx
+{
+    //實心圓
+    CGContextSetFillColorWithColor(cx, [UIColor colorWithRed:212.0/255.0 green:219.0/255.0 blue:227.0/255.0 alpha:1.].CGColor);
+    CGContextAddArc(cx, 0, 0, maxSize, 0, M_PI*2, 0);
+    CGContextFillPath(cx);
 }
 
 - (UIButton*)createSpokeButtonWithCenter:(CGPoint)center size:(CGSize)size title:(NSString*)title tag:(NSInteger)tag
@@ -478,9 +462,11 @@ static double colorDistance(RGB e1, RGB e2)
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
     
-    [[button layer] setCornerRadius:8.0]; //设置矩圆角半径
-    [[button layer] setBorderWidth:2.0f];
-    [[button layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+    [button setBackgroundImage:[UIImage imageNamed:@"rect_white.png"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"rect_blue.png"] forState:UIControlStateSelected];
+    //[[button layer] setCornerRadius:8.0]; //设置矩圆角半径
+    //[[button layer] setBorderWidth:2.0f];
+    //[[button layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
     
     [button addTarget:self action:@selector(btnTitilClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -489,8 +475,12 @@ static double colorDistance(RGB e1, RGB e2)
 
 - (void)clean
 {
-    
+    for (UIView* view in self.subviews) {
+        [view removeFromSuperview];
+    }
+    [_spokeButtons removeAllObjects];
 }
+
 
 #pragma mark - spoke button methods
 
@@ -514,14 +504,16 @@ static double colorDistance(RGB e1, RGB e2)
         UIButton* button = [_spokeButtons objectAtIndex:i];
         if(i == _currentSpokeIndex){
             //selected
-            [button setBackgroundColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0]];
+            [button setSelected:YES];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [[button layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+//            [[button layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+//            [button setBackgroundColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0]];
         }else{
             //unselected
-            button.backgroundColor=[UIColor whiteColor];
+            [button setSelected:NO];
             [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [[button layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+//            [[button layer] setBorderColor:[UIColor colorWithRed:140.0/255.0 green:211.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor];
+//            button.backgroundColor=[UIColor whiteColor];
         }
     }
 }
