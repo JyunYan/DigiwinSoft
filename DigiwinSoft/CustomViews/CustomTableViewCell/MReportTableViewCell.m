@@ -34,7 +34,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        
         _labState = [self createLabelWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH, 20)];
         _labState.backgroundColor=[UIColor lightGrayColor];
         [self.contentView addSubview:_labState];

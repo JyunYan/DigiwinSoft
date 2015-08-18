@@ -10,8 +10,9 @@
 #import "MCustGuide.h"
 #import "MCustActivity.h"
 #import "MCustWorkItem.h"
+#import "SWTableViewCell.h"
 
-@interface MRaidersTableCell : UITableViewCell
+@interface MRaidersTableCell : SWTableViewCell<SWTableViewCellDelegate>
 
 @property (nonatomic, strong) UIButton *btnCheck;
 @property (nonatomic, strong) UIButton *btnManager;
@@ -46,7 +47,7 @@
 
 @interface MGuideTableCell : MRaidersTableCell
 
-@property (nonatomic) id<MGuideTableCellDelegate> delegate;
+@property (nonatomic, strong) id<MGuideTableCellDelegate> delegateG;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView size:(CGSize)size;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier size:(CGSize)size;
@@ -69,7 +70,7 @@
 
 @interface MActivityTableCell : MRaidersTableCell
 
-@property (nonatomic) id<MActivityTableCellDelegate> delegate;
+@property (nonatomic) id<MActivityTableCellDelegate> delegateA;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView size:(CGSize)size;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier size:(CGSize)size;
@@ -90,8 +91,7 @@
 @end
 
 @interface MWorkItemTableCell : MRaidersTableCell
-
-@property (nonatomic) id<MWorkItemTableCellDelegate> delegate;
+@property (nonatomic) id<MWorkItemTableCellDelegate> delegateW;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView size:(CGSize)size;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier size:(CGSize)size;

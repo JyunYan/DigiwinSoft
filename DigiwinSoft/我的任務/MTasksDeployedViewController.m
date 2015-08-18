@@ -25,7 +25,7 @@
 #define TAG_BUTTON_RAIDERS 3000
 
 
-@interface MTasksDeployedViewController ()<UITableViewDelegate, UITableViewDataSource, MActivityTableCellDelegate>
+@interface MTasksDeployedViewController ()<UITableViewDelegate, UITableViewDataSource, MActivityTableCellDelegate,SWTableViewCellDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) NSMutableArray* activityArray;
@@ -468,6 +468,8 @@
     CGSize size = CGSizeMake(tableView.frame.size.width, 50.);
     MActivityTableCell* cell = [MActivityTableCell cellWithTableView:tableView size:size];
     [cell setDelegate:self];
+    [cell setDelegateA:self];
+
     [cell prepareWithCustActivity:act];
     
     return cell;

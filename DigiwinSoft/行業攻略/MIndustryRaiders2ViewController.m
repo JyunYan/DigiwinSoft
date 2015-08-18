@@ -21,7 +21,7 @@
 #import "MRaidersTableHeader.h"
 
 #import "ASAnimationManager.h"
-@interface MIndustryRaiders2ViewController ()<MGuideTableCellDelegate>
+@interface MIndustryRaiders2ViewController ()<MGuideTableCellDelegate, SWTableViewCellDelegate>
 {
     //screenSize
     //CGFloat screenWidth;
@@ -37,7 +37,7 @@
 @property (nonatomic, strong) UIView* guideView; //對策view
 @property (nonatomic, strong) UITableView *tbl;
 @property (nonatomic, assign) NSInteger from;
-
+@property (nonatomic, strong) UIButton* button;
 @end
 
 @implementation MIndustryRaiders2ViewController
@@ -183,12 +183,12 @@
     
     CGFloat posY = _tbl.frame.origin.y + _tbl.frame.size.height;
     
-    UIButton* button = [[UIButton alloc]initWithFrame:CGRectMake(0, posY, view.frame.size.width, 40.)];
-    button.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
-    [button setTitle:@"+加入我的規劃清單" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(actionAddMyList:) forControlEvents:UIControlEventTouchUpInside]; //設定按鈕動作
-    [view addSubview:button];
+    _button = [[UIButton alloc]initWithFrame:CGRectMake(0, posY, view.frame.size.width, 40.)];
+    _button.backgroundColor = [[MDirector sharedInstance] getCustomGrayColor];
+    [_button setTitle:@"+加入我的規劃清單" forState:UIControlStateNormal];
+    [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_button addTarget:self action:@selector(actionAddMyList:) forControlEvents:UIControlEventTouchUpInside]; //設定按鈕動作
+    [view addSubview:_button];
     
     return view;
 }
@@ -207,7 +207,7 @@
     UITextView* textView=[[UITextView alloc]initWithFrame:CGRectMake(posX,posY,DEVICE_SCREEN_WIDTH*0.95, view.frame.size.height*0.6)];
     textView.backgroundColor=[UIColor whiteColor];
     textView.text=text;
-    textView.font=[UIFont systemFontOfSize:14.];
+    textView.font=[UIFont systemFontOfSize:16.];
     textView.editable=NO;
     [view addSubview:textView];
     
@@ -434,6 +434,7 @@
     CGSize size = CGSizeMake(tableView.frame.size.width, 60.);
     MGuideTableCell *cell=(MGuideTableCell *)[MGuideTableCell cellWithTableView:tableView size:size];
     [cell setDelegate:self];
+    [cell setDelegateG:self];
     [cell prepareWithGuide:guide];
 
     return cell;
@@ -472,6 +473,22 @@
     
     MGuideTableCell* cell = (MGuideTableCell*)[tableView cellForRowAtIndexPath:indexPath];
     [cell prepareWithGuide:guide];
+    
+    if([self isCheckAny])
+        _button.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
+    else
+        _button.backgroundColor = [[MDirector sharedInstance] getCustomGrayColor];
+}
+#pragma mark - check
+-(BOOL)isCheckAny
+{
+    BOOL b = NO;
+    for (MCustGuide* guide in _aryList) {
+        if (guide.isCheck) {
+            b = YES;
+        }
+    }
+    return b;
 }
 
 /*

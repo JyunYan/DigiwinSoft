@@ -11,10 +11,10 @@
 
 @interface MReportTableViewCell : UITableViewCell
 
-@property (nonatomic, weak) UILabel *labReportDate;
-@property (nonatomic, weak) UILabel *labState;
-@property (nonatomic, weak) UILabel *labReason;
-@property (nonatomic, weak) UILabel *labValueT;
-@property (nonatomic, weak) UILabel *labFinishDay;
+@property (nonatomic, strong) UILabel *labReportDate;
+@property (nonatomic, strong) UILabel *labState;
+@property (nonatomic, strong) UILabel *labReason;
+@property (nonatomic, strong) UILabel *labValueT;
+@property (nonatomic, strong) UILabel *labFinishDay;
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 @end

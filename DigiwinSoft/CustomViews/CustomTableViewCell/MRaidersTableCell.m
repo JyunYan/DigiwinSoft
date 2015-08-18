@@ -150,20 +150,20 @@
 
 - (void)btnManager:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(btnManagerClicked:)])
-        [_delegate btnManagerClicked:self];
+    if(_delegateG && [_delegateG respondsToSelector:@selector(btnManagerClicked:)])
+        [_delegateG btnManagerClicked:self];
 }
 
 - (void)btnTargetSet:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(btnTargetSetClicked:)])
-        [_delegate btnTargetSetClicked:self];
+    if(_delegateG && [_delegateG respondsToSelector:@selector(btnTargetSetClicked:)])
+        [_delegateG btnTargetSetClicked:self];
 }
 
 - (void)btnRaiders:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(btnRaidersClicked:)])
-        [_delegate btnRaidersClicked:self];
+    if(_delegateG && [_delegateG respondsToSelector:@selector(btnRaidersClicked:)])
+        [_delegateG btnRaidersClicked:self];
 }
 
 - (void)prepareWithGuide:(MCustGuide*)guide
@@ -264,20 +264,20 @@
 
 - (void)btnManager:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(btnManagerClicked:)])
-        [_delegate btnManagerClicked:self];
+    if(_delegateA && [_delegateA respondsToSelector:@selector(btnManagerClicked:)])
+        [_delegateA btnManagerClicked:self];
 }
 
 - (void)btnTargetSet:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(btnTargetSetClicked:)])
-        [_delegate btnTargetSetClicked:self];
+    if(_delegateA && [_delegateA respondsToSelector:@selector(btnTargetSetClicked:)])
+        [_delegateA btnTargetSetClicked:self];
 }
 
 - (void)btnRaiders:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(btnRaidersClicked:)])
-        [_delegate btnRaidersClicked:self];
+    if(_delegateA && [_delegateA respondsToSelector:@selector(btnRaidersClicked:)])
+        [_delegateA btnRaidersClicked:self];
 }
 
 - (void)prepareWithCustActivity:(MCustActivity*)activity
@@ -318,7 +318,9 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier size:(CGSize)size
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
     if (self) {
+        
         
         CGFloat offset = 10.;
         CGFloat width = size.width;
@@ -328,7 +330,7 @@
         self.labName = [self createLabelWithFrame:CGRectMake(offset, 0, width * 0.6 - offset, height)
                                              font:[UIFont systemFontOfSize:14.]
                                     textAlignment:NSTextAlignmentLeft];
-        [self addSubview:self.labName];
+        [self.contentView addSubview:self.labName];
         
         offset += self.labName.frame.size.width;
         
@@ -338,13 +340,13 @@
         self.btnManager.imageView.layer.cornerRadius = self.btnManager.imageView.frame.size.width / 2;
         self.btnManager.imageView.clipsToBounds = YES;;
         [self.btnManager addTarget:self action:@selector(btnManager:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.btnManager];
+        [self.contentView addSubview:self.btnManager];
         
         //負責人name
         self.managerLabel = [self createLabelWithFrame:CGRectMake(offset, height - 16, self.btnManager.frame.size.width, 16)
                                                   font:[UIFont systemFontOfSize:12.]
                                          textAlignment:NSTextAlignmentCenter];
-        [self addSubview:self.managerLabel];
+        [self.contentView addSubview:self.managerLabel];
         
         offset += self.btnManager.frame.size.width;
         
@@ -352,22 +354,21 @@
         self.btnTargetSet = [self createButtonWithImage:[UIImage imageNamed:@"icon_menu_8.png"]
                                                   frame:CGRectMake(offset, 0, width * 0.2, height)];
         [self.btnTargetSet addTarget:self action:@selector(btnTargetSet:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.btnTargetSet];
-        
+        [self.contentView addSubview:self.btnTargetSet];
     }
     return self;
 }
 
 - (void)btnManager:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(btnManagerClicked:)])
-        [_delegate btnManagerClicked:self];
+    if(_delegateW && [_delegateW respondsToSelector:@selector(btnManagerClicked:)])
+        [_delegateW btnManagerClicked:self];
 }
 
 - (void)btnTargetSet:(id)sender
 {
-    if(_delegate && [_delegate respondsToSelector:@selector(btnTargetSetClicked:)])
-        [_delegate btnTargetSetClicked:self];
+    if(_delegateW && [_delegateW respondsToSelector:@selector(btnTargetSetClicked:)])
+        [_delegateW btnTargetSetClicked:self];
 }
 
 - (void)prepareWithCustWorkItem:(MCustWorkItem*)workitem

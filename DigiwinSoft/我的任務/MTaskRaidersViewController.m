@@ -17,14 +17,15 @@
 
 #import "MRaidersTableCell.h"
 
-
+#import "SWTableViewCell.h"
+#import "MCustomAlertView.h"
 #define TAG_LABEL_WORKITEM 100
 
 #define TAG_BUTTON_APPOINT_RESPONSIBLE 1000
 #define TAG_BUTTON_TARGET 2000
 
 
-@interface MTaskRaidersViewController ()<UITableViewDelegate, UITableViewDataSource, MWorkItemTableCellDelegate>
+@interface MTaskRaidersViewController ()<UITableViewDelegate, UITableViewDataSource, MWorkItemTableCellDelegate,SWTableViewCellDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
 
@@ -283,6 +284,9 @@
     
     CGSize size = CGSizeMake(tableView.frame.size.width, 50.);
     MWorkItemTableCell* cell = [MWorkItemTableCell cellWithTableView:tableView size:size];
+    
+    cell.rightUtilityButtons = [self rightButtons];
+    [cell setDelegateW:self];
     [cell setDelegate:self];
     [cell prepareWithCustWorkItem:workitem];
     
@@ -326,6 +330,54 @@
 
     _activityArray = activityArray;
     _act = [_activityArray objectAtIndex:_actIndex];
+}
+#pragma mark - SWTableViewDelegate
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+            MCustomAlertView *alert = [[MCustomAlertView alloc] initWithTitle:@"訊息"
+                                                                      message:@"請再次確認是否要刪除？"
+                                                                     delegate:self
+                                                            cancelButtonTitle:@"取消"
+                                                            otherButtonTitles:@"確定", nil];
+//          [alert setObject:guide];
+            [alert show];
+            
+            NSLog(@"clock button was pressed");
+      }
+
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+//    [rightUtilityButtons sw_addUtilityButtonWithColor:
+//     [UIColor colorWithRed:141.0f/255.0f green:206.0f/255.0f blue:231.0f/255.0f alpha:1.0]
+//                                                title:@"轉攻略"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:140.0f/255.0f green:205.0f/255.0f blue:230.0f/255.0f alpha:1.0]
+                                                title:@"刪除"];
+    
+    return rightUtilityButtons;
+}
+
+#pragma mark - UIAlertView methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            NSLog(@"Cancel Button Pressed");
+            break;
+            
+        case 1:
+        {
+            MCustomAlertView *customAlertView = (MCustomAlertView*)alertView;
+            MCustGuide* guide = [customAlertView object];
+            [[MDataBaseManager sharedInstance] deleteFromPlanWithCustGude:guide];
+            
+//            _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
+            [_tableView reloadData];
+            break;
+        }
+    }
 }
 
 @end

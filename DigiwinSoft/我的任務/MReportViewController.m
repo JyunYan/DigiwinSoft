@@ -26,9 +26,6 @@
 @property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) NSLocale *datelocale;
 @property (nonatomic, strong) UITextField *txtTargetDay;
-//@property (nonatomic, strong) UIButton *btnNotStart;
-//@property (nonatomic, strong) UIButton *btnStart;
-//@property (nonatomic, strong) UIButton *btnFinish;
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UITextField *TextField;
 @property (nonatomic, strong) UITextField *txtUnit;
@@ -36,6 +33,8 @@
 @property (nonatomic, strong) MCustGuide* guide;
 @property (nonatomic, strong) MCustActivity* activity;
 @property (nonatomic, strong) MCustWorkItem* workItem;
+@property (nonatomic, strong) UIButton* button;
+
 @end
 
 @implementation MReportViewController
@@ -53,12 +52,15 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor= [UIColor whiteColor];
-    
-    _tableView = [self createTableView];
+    CGFloat posY=64.;
+    _tableView = [self createTableViewWithFrame:CGRectMake(0., posY, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 40.- 64.)];
     [self.view addSubview:_tableView];
+
+    posY+=_tableView.frame.size.height;
     
-    [self createTextView];
-    [self createTextField];
+    _button=[self createButtonWithFrame:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, 40.)];
+    [self.view addSubview:_button];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -111,6 +113,7 @@
     {
         NSLog(@"不屬於任何型別");
     }
+
 }
 
 
@@ -127,10 +130,19 @@
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
-
-- (UITableView*)createTableView
+- (UIButton*)createButtonWithFrame:(CGRect)frame
 {
-    UITableView* table = [[UITableView alloc] initWithFrame:CGRectMake(0., 64., DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 42.- 64.) style:UITableViewStylePlain];
+    UIButton *button = [[UIButton alloc]initWithFrame:frame];
+    button.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
+    [button setTitle:@"+確認" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(actionConfirm:) forControlEvents:UIControlEventTouchUpInside]; //設定按鈕動作
+    return button;
+}
+- (UITableView*)createTableViewWithFrame:(CGRect)frame
+
+{
+    UITableView* table = [[UITableView alloc] initWithFrame:frame];
     table.dataSource = self;
     table.delegate = self;
     table.backgroundColor = [UIColor whiteColor];
@@ -139,45 +151,6 @@
     return table;
 }
 
--(void)createTextView
-{
-    _textView=[[UITextView alloc]initWithFrame:CGRectMake(15,35,DEVICE_SCREEN_WIDTH-30, 180)];
-    _textView.backgroundColor=[UIColor whiteColor];
-    _textView.text=@"";
-    _textView.font=[UIFont systemFontOfSize:12];
-    _textView.editable=NO;
-    _textView.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
-    _textView.layer.borderWidth=2;
-    
-}
--(void)createTextField
-{
-    _TextField=[[UITextField alloc]initWithFrame:CGRectMake(65,_textView.frame.origin.y+_textView.frame.size.height+7, 50, 30)];
-    _TextField.backgroundColor=[UIColor clearColor];
-    _TextField.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
-    _TextField.layer.borderWidth=2;
-    
-    _txtUnit=[[UITextField alloc]initWithFrame:CGRectMake(120,_textView.frame.origin.y+_textView.frame.size.height+7, 50, 30)];
-    _txtUnit.backgroundColor=[UIColor clearColor];
-    _txtUnit.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
-    _txtUnit.layer.borderWidth=2;
-    _txtUnit.placeholder = @"單位";
-    _txtUnit.textAlignment=NSTextAlignmentCenter;
-    [_txtUnit setFont:[UIFont systemFontOfSize:12]];
-    
-    _txtTargetDay=[[UITextField alloc]initWithFrame:CGRectMake(65,_textView.frame.origin.y+_textView.frame.size.height+50, 120, 29)];
-    _txtTargetDay.borderStyle=UITextBorderStyleLine;
-    _txtTargetDay.tag=101;
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textFieldChanged)
-                                                 name:UITextFieldTextDidBeginEditingNotification
-                                               object:_txtTargetDay];
-    _txtTargetDay.rightViewMode = UITextFieldViewModeAlways;
-    _txtTargetDay.rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_red_circle.png"]];
-    _txtTargetDay.layer.borderColor=[[UIColor colorWithRed:158.0/255.0 green:158.0/255.0 blue:158.0/255.0 alpha:1]CGColor];
-    _txtTargetDay.layer.borderWidth=2;
-    
-}
 #pragma mark - UIButton
 
 - (void)actionConfirm:(id) sender
@@ -254,9 +227,7 @@
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
         return cell;
     }else{
-        MReportTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"ReportTableViewCell"];
-        if(!cell)
-            cell = [[MReportTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ReportTableViewCell"];
+        MReportTableViewCell *cell=(MReportTableViewCell *)[MReportTableViewCell cellWithTableView:tableView];
         cell.labReportDate.text=@"回報日期:2015/05/10";
         cell.labState.text=@"任務進度:已完成";
         cell.labValueT.text=@"實際值:7天";

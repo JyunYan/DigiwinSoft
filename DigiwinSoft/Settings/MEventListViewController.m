@@ -101,7 +101,7 @@
     
     
     CGFloat posX = 0;
-    CGFloat posY = 0;
+    CGFloat posY = 64;
     CGFloat width = screenWidth;
     CGFloat height = 50;
     
@@ -169,7 +169,6 @@
     
     CGFloat textSize = 16.0f;
 
-    
     int itemCount1 = [self getEventCountWithStatus:@"0"];
     int itemCount2 = [self getEventCountWithStatus:@"1"];
     int itemCount3 = itemCount1 + itemCount2;
