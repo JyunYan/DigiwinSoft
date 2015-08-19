@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCustGuide.h"
+#import "MCustActivity.h"
+#import "MCustWorkItem.h"
 
 @interface MReportViewController : UIViewController
 @property (nonatomic, strong)id task;
+
+- (id)initWithCustGuide:(MCustGuide*)guide;
+- (id)initWithCustActivity:(MCustActivity*)activity;
+- (id)initWithCustWorkItem:(MCustWorkItem*)workitem;
+
 @end

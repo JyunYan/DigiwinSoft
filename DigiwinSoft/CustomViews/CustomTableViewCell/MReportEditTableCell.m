@@ -9,7 +9,11 @@
 #import "MReportEditTableCell.h"
 #import "MRadioGroupView.h"
 #import "MDirector.h"
-#define TEXT_FIELD_DATE 102
+
+#define TEXT_FIELD_VALUE        101
+#define TEXT_FIELD_DATE         102
+
+
 @interface MReportEditTableCell ()<MRadioGroupViewDelegate, UITextViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) MRadioGroupView* group;
@@ -17,8 +21,6 @@
 @property (nonatomic, strong) UITextField* textValue;
 @property (nonatomic, strong) UITextField* textUnit;
 @property (nonatomic, strong) UITextField* textDate;
-@property (nonatomic, strong) UIDatePicker* picker;
-@property (nonatomic, strong) NSLocale *datelocale;
 
 @end
 
@@ -32,7 +34,6 @@
         CGFloat posX = 20.;
         CGFloat posY = 0.;
         UIColor* grayColor = [[MDirector sharedInstance] getCustomGrayColor];
-        UIColor* lightGrayColor = [[MDirector sharedInstance] getCustomLightGrayColor];
         
         // title
         UILabel *label = [self createLabelWithFrame:CGRectMake(posX,posY,DEVICE_SCREEN_WIDTH,40) text:@"請回報任務進度:"];
@@ -56,14 +57,8 @@
         posY += _group.frame.size.height;
         
         // 說明
-        _textView = [[UITextView alloc]initWithFrame:CGRectMake(posX, posY, DEVICE_SCREEN_WIDTH-posX*2, 180)];
-        _textView.backgroundColor=[UIColor whiteColor];
-        _textView.font=[UIFont systemFontOfSize:14.];
-        _textView.textColor = grayColor;
+        _textView = [self createTextViewWithFrame:CGRectMake(posX, posY, DEVICE_SCREEN_WIDTH-posX*2, 180)];
         _textView.text=@"描述ㄧ";
-        _textView.inputAccessoryView = [self createDoneToolBarToKeyboard];
-        _textView.layer.borderColor = [lightGrayColor CGColor];
-        _textView.layer.borderWidth = 2.;
         [self addSubview:_textView];
         
         posY += _textView.frame.size.height + 20;
@@ -75,6 +70,7 @@
         
         // 實際值
         _textValue = [self createTextFieldWithFrame:CGRectMake(posX, posY, DEVICE_SCREEN_WIDTH*0.2, 30)];
+        _textValue.tag = TEXT_FIELD_VALUE;
         [self addSubview:_textValue];
         
         posX += _textValue.frame.size.width + 20;
@@ -113,6 +109,7 @@
     textField.textAlignment = NSTextAlignmentCenter;
     textField.layer.borderColor=[lightGrayColor CGColor];
     textField.layer.borderWidth = 2;
+    [textField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
     
     return textField;
 }
@@ -121,54 +118,53 @@
 {
     UIColor* lightGrayColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     
+    //建立 date picker
+    UIDatePicker* picker = [[UIDatePicker alloc] init];
+    picker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];;
+    picker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    picker.datePickerMode = UIDatePickerModeDate;
+    [picker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
     
     // 建立 UIToolbar
     UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH, 44)];
     UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(closeDatePicker:)];
     toolBar.items = [NSArray arrayWithObject:right];
     
+    // 建立 left view
+    UIView* left = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
+    left.backgroundColor = [UIColor clearColor];
+    
     UITextField* textField = [[UITextField alloc]initWithFrame:frame];
     textField.delegate = self;
     textField.layer.borderColor=[lightGrayColor CGColor];
     textField.layer.borderWidth=2;
-    textField.inputView = _picker;
+    textField.inputView = picker;
     textField.inputAccessoryView = toolBar;
-    textField.tag=TEXT_FIELD_DATE;
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textFieldChanged:)
-                                                 name:UITextFieldTextDidBeginEditingNotification
-                                               object:nil];
-
+    textField.leftView = left;
+    textField.leftViewMode = UITextFieldViewModeAlways;
+    
     return textField;
 }
 
-- (UILabel*)createLabelWithFrame:(CGRect)frame text:(NSString*)text
+- (UITextView*)createTextViewWithFrame:(CGRect)frame
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    label.font = [UIFont systemFontOfSize:14.0f];
-    label.backgroundColor=[UIColor clearColor];
-    label.text = text;
+    // 建立 UIToolbar
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH, 44)];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                          target:self
+                                                                          action:@selector(doneButtonClickedDismissKeyboard)];
+    toolBar.items = [NSArray arrayWithObject:right];
     
-    return label;
-}
-
-- (void)closeDatePicker:(id)sender
-{
-    [self endEditing:YES];
-}
-
-#pragma mark - MRadioGroupViewDelegate
-
-- (void)didRadioGroupIndexChanged:(MRadioGroupView *)radioGroupView
-{
+    UITextView* textView = [[UITextView alloc]initWithFrame:frame];
+    textView.delegate = self;
+    textView.backgroundColor=[UIColor whiteColor];
+    textView.font=[UIFont systemFontOfSize:14.];
+    textView.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    textView.inputAccessoryView = toolBar;
+    textView.layer.borderColor = [[[MDirector sharedInstance] getCustomLightGrayColor] CGColor];
+    textView.layer.borderWidth = 2.;
     
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return YES;
+    return textView;
 }
 
 -(UIToolbar*)createDoneToolBarToKeyboard
@@ -184,40 +180,105 @@
     return doneToolbar;
 }
 
--(void)doneButtonClickedDismissKeyboard
+- (UILabel*)createLabelWithFrame:(CGRect)frame text:(NSString*)text
 {
-    [_textView resignFirstResponder];
-}
-//日期選擇textField
--(void)textFieldChanged:(NSNotification *)notification
-{
-    UITextField *textField = (UITextField *)notification.object;
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    label.font = [UIFont systemFontOfSize:14.0f];
+    label.backgroundColor=[UIColor clearColor];
+    label.text = text;
     
-    if(textField.tag == TEXT_FIELD_DATE) {
-    _picker=[[UIDatePicker alloc]init];//WithFrame:CGRectMake(0,screenHeight-70,screenWidth, 70)];
-    _datelocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];
-    _picker.locale = _datelocale;
-    _picker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
-    _picker.datePickerMode = UIDatePickerModeDate;
-    _textDate.inputView = _picker;
-    
-    // 建立 UIToolbar
-    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelPicker)];
-    toolBar.items = [NSArray arrayWithObject:right];
-    _textDate.inputAccessoryView = toolBar;
-    }
+    return label;
 }
 
--(void) cancelPicker {
-    if ([self endEditing:NO]) {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"yyyy-MM-dd" options:0 locale:_datelocale];
-        [formatter setDateFormat:dateFormat];
-        [formatter setLocale:_datelocale];
-        
-        //將選取後的日期填入UITextField
-        _textDate.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:_picker.date]];
-    }
+- (void)setUnit:(NSString *)unit
+{
+    _unit = unit;
+    _textUnit.text = unit;
 }
+
+- (void)prepare
+{
+    _group.selectedIndex = [_report.status integerValue];
+    _textView.text = _report.desc;
+    _textValue.text = _report.value;
+    _textDate.text = [_report.completed stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+}
+
+#pragma mark - tool bar action
+
+//dismiss picker
+- (void)closeDatePicker:(id)sender
+{
+    [self endEditing:YES];
+}
+
+//dismiss keyboard
+-(void)doneButtonClickedDismissKeyboard
+{
+    [self endEditing:YES];
+}
+
+#pragma mark - date picker action
+
+//日期selected
+- (void)datePickerValueChanged:(UIDatePicker*)picker
+{
+    NSDate* date = [picker date];
+    
+    NSDateFormatter* fm = [NSDateFormatter new];
+    fm.dateFormat = @"yyyy/MM/dd";
+    _textDate.text = [fm stringFromDate:date];
+    
+    fm.dateFormat = @"yyyy-MM-dd";
+    _report.completed = [fm stringFromDate:date];
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(reportEditTableCell:didChangedReport:)])
+        [_delegate reportEditTableCell:self didChangedReport:_report];
+}
+
+#pragma mark - MRadioGroupViewDelegate
+
+//狀態selected
+- (void)didRadioGroupIndexChanged:(MRadioGroupView *)radioGroupView
+{
+    NSInteger index = radioGroupView.selectedIndex;
+    NSString* status = [NSString stringWithFormat:@"%d", (int)index];
+    _report.status = status;
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(reportEditTableCell:didChangedReport:)])
+        [_delegate reportEditTableCell:self didChangedReport:_report];
+}
+
+#pragma mark - UITextViewDelegate
+
+//內容edited
+- (void)textViewDidChange:(UITextView *)textView
+{
+    _report.desc = textView.text;
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(reportEditTableCell:didChangedReport:)])
+        [_delegate reportEditTableCell:self didChangedReport:_report];
+}
+
+#pragma mark - UITextFieldDelegate 相關
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark - UITextField 相關
+
+//目標值edited
+-(void)textFieldChanged:(UITextField*)textField
+{
+    if(textField.tag == TEXT_FIELD_VALUE)
+        _report.value = _textValue.text;
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(reportEditTableCell:didChangedReport:)])
+        [_delegate reportEditTableCell:self didChangedReport:_report];
+}
+
 @end

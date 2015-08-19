@@ -226,12 +226,22 @@
 
     }else if (segmentedIndex == 1)
     {
-        NSLog(@"xxx");
-        MReportViewController* MReportVC = [[MReportViewController alloc] init];
-        
         id task=[_taskDataArry objectAtIndex:indexPath.row];
-        MReportVC.task=task;
-        UINavigationController* MReportNav = [[UINavigationController alloc] initWithRootViewController:MReportVC];
+        MReportViewController* vc = nil;
+        if([task isKindOfClass:[MCustGuide class]]){
+            MCustGuide* guide = (MCustGuide*)task;
+            vc = [[MReportViewController alloc] initWithCustGuide:guide];
+        }
+        else if([task isKindOfClass:[MCustActivity class]]){
+            MCustActivity* activity = (MCustActivity*)task;
+            vc = [[MReportViewController alloc] initWithCustActivity:activity];
+        }
+        else if([task isKindOfClass:[MCustWorkItem class]]){
+            MCustWorkItem* workitem = (MCustWorkItem*)task;
+            vc = [[MReportViewController alloc] initWithCustWorkItem:workitem];
+        }
+        
+        UINavigationController* MReportNav = [[UINavigationController alloc] initWithRootViewController:vc];
         MReportNav.navigationBar.barStyle = UIStatusBarStyleLightContent;
         [self presentViewController:MReportNav animated:NO completion:nil];
         //[self.navigationController pushViewController:MReportVC animated:YES];

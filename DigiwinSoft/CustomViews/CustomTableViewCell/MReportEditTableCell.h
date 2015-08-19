@@ -8,9 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import "MConfig.h"
+#import "MReport.h"
 
 #define kReportEditTableCellHeight  370
 
+@class MReportEditTableCell;
+
+@protocol MReportEditTableCellDelegate <NSObject>
+
+- (void)reportEditTableCell:(MReportEditTableCell*)cell didChangedReport:(MReport*)report;
+
+@end
+
 @interface MReportEditTableCell : UITableViewCell
+
+@property (nonatomic, strong) MReport* report;
+@property (nonatomic, strong) NSString* unit;
+@property (nonatomic, strong) id<MReportEditTableCellDelegate> delegate;
+
+- (void)prepare;
 
 @end
