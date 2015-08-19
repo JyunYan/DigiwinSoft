@@ -11,6 +11,7 @@
 #import "MCarouselItemView.h"
 #import "MPhenomenon.h"
 #import "MDirector.h"
+#import "MTraceLineView.h"
 
 @interface MRaiderCarouselView ()<iCarouselDataSource, iCarouselDelegate>
 
@@ -24,24 +25,30 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
+    
+    [self clean];
     [self addBackgrouondImage];
     [self addIndustryLabel];
     [self addCarouselView];
 }
 
-- (void) addBackgrouondImage
+- (void)clean
 {
-    UIImageView* imageView = (UIImageView*)[self viewWithTag:101];
-    if(!imageView){
-        imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        imageView.image = [UIImage imageNamed:@"bg_industry_raider.jpg"];
-        [self addSubview:imageView];
+    for (UIView* view in self.subviews) {
+        [view removeFromSuperview];
     }
 }
 
+- (void) addBackgrouondImage
+{
+    UIImageView* imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    imageView.image = [UIImage imageNamed:@"bg_industry_raider.jpg"];
+    [self addSubview:imageView];}
+
 - (void) addIndustryLabel
 {
-    CGFloat y = (DEVICE_SCREEN_HEIGHT == 480) ? 60 : 100;
+    CGFloat bgHeight = DEVICE_SCREEN_HEIGHT - 64 - 49;
+    CGFloat y = (DEVICE_SCREEN_WIDTH == 320.) ? 60 : bgHeight * 0.15;
     
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, y, DEVICE_SCREEN_WIDTH, 40)];
     label.backgroundColor = [UIColor clearColor];
@@ -55,16 +62,42 @@
 - (void) addCarouselView
 {
     CGFloat bgHeight = DEVICE_SCREEN_HEIGHT - 64 - 49;
-    CGFloat y = (DEVICE_SCREEN_HEIGHT == 480) ? 140 : (bgHeight * 0.386);
-    
-    _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, y, DEVICE_SCREEN_WIDTH, 280)]; //214 260
+    CGFloat y = bgHeight * 0.3;
+
+    _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(-DEVICE_SCREEN_WIDTH*0.2, y, DEVICE_SCREEN_WIDTH*1.4, 280)]; //214 260
     _carousel.dataSource = self;
     _carousel.delegate = self;
-    _carousel.type = iCarouselTypeInvertedCylinder;
+    _carousel.type = iCarouselTypeCylinder;
     _carousel.bounceDistance = 10.;
     _carousel.backgroundColor = [UIColor clearColor];
     [self addSubview:_carousel];
+    
+    [self addTraceLine];
 }
+
+// 橢圓軌跡線
+- (void)addTraceLine
+{
+    CGRect frame = [self getTraceLineFrame];
+    MTraceLineView* view = [[MTraceLineView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor clearColor];
+    view.center = CGPointMake(_carousel.frame.size.width/2., view.center.y);
+    [_carousel addSubview:view];
+    
+    [_carousel sendSubviewToBack:view];
+}
+
+- (CGRect)getTraceLineFrame
+{
+    if(DEVICE_SCREEN_WIDTH == 320.) // 3.5 & 4 inch
+        return CGRectMake(0, 4, 312, 63);
+    if(DEVICE_SCREEN_WIDTH == 375.) // 4.7 inch
+        return CGRectMake(0, 5, 356., 67);
+    if(DEVICE_SCREEN_WIDTH == 414.) // 5.5 inch
+        return CGRectMake(0, 4, 380., 72.);
+    return CGRectZero;
+}
+
 
 #pragma mark - iCarouselDataSource 相關
 
@@ -96,6 +129,7 @@
 //    ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
 //    ciview.content = @"小批量接單沒好配套，呆滯急遽增加";
 //    ciview.content = @"現代的個人出版到各類紀念冊甚至是攝影集的製作，都可以進行少量且高品質的印刷，其印製的效率與品質也逐年進步。";
+//    ciview.content = @"";
     
     ciview.onFacus = (index == carousel.currentItemIndex);
     [ciview setNeedsDisplay];
@@ -124,7 +158,6 @@
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel
 {
     NSInteger index = carousel.currentItemIndex;
-    
     NSInteger leftIndex = index - 1;
     if(leftIndex < 0)
         leftIndex = 10 - 1;

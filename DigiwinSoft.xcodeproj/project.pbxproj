@@ -158,6 +158,7 @@
 		DCB3FDF51B56C00C00ED5BFA /* MRaidersTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDF41B56C00C00ED5BFA /* MRaidersTableHeader.m */; };
 		DCB3FDF91B5A375900ED5BFA /* MRadioGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDF81B5A375900ED5BFA /* MRadioGroupView.m */; };
 		DCB3FDFC1B5A395900ED5BFA /* MRadioButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDFB1B5A395900ED5BFA /* MRadioButtonView.m */; };
+		DCB770741B846391006654F3 /* MTraceLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB770731B846391006654F3 /* MTraceLineView.m */; };
 		DCCAB1AC1B4F841500AA1CD2 /* ASAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCAB1AB1B4F841500AA1CD2 /* ASAnimationManager.m */; };
 		DCCB44E11B71A7B700F41752 /* MQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCB44E01B71A7B700F41752 /* MQuestion.m */; };
 		DCCB44E41B72722B00F41752 /* MIndustryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCB44E31B72722B00F41752 /* MIndustryInfo.m */; };
@@ -514,6 +515,8 @@
 		DCB3FDF81B5A375900ED5BFA /* MRadioGroupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRadioGroupView.m; path = CustomViews/RadioGroupView/MRadioGroupView.m; sourceTree = "<group>"; };
 		DCB3FDFA1B5A395900ED5BFA /* MRadioButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRadioButtonView.h; path = CustomViews/RadioGroupView/MRadioButtonView.h; sourceTree = "<group>"; };
 		DCB3FDFB1B5A395900ED5BFA /* MRadioButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRadioButtonView.m; path = CustomViews/RadioGroupView/MRadioButtonView.m; sourceTree = "<group>"; };
+		DCB770721B846391006654F3 /* MTraceLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTraceLineView.h; sourceTree = "<group>"; };
+		DCB770731B846391006654F3 /* MTraceLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTraceLineView.m; sourceTree = "<group>"; };
 		DCCAB1AA1B4F841500AA1CD2 /* ASAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASAnimationManager.h; sourceTree = "<group>"; };
 		DCCAB1AB1B4F841500AA1CD2 /* ASAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASAnimationManager.m; sourceTree = "<group>"; };
 		DCCB44DF1B71A7B700F41752 /* MQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MQuestion.h; path = structure/MQuestion.h; sourceTree = "<group>"; };
@@ -1319,6 +1322,8 @@
 				380F35341B6A0E9500E9138B /* MBarChartView.m */,
 				DC518A971B7C52200045929E /* MMgRadarButton.h */,
 				DC518A981B7C52200045929E /* MMgRadarButton.m */,
+				DCB770721B846391006654F3 /* MTraceLineView.h */,
+				DCB770731B846391006654F3 /* MTraceLineView.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1661,6 +1666,7 @@
 				DCE951C41B6947EF00E3C059 /* MMeterView2.m in Sources */,
 				DCB3FDF91B5A375900ED5BFA /* MRadioGroupView.m in Sources */,
 				3A0542EC1B5F58F400EC7878 /* MStatusLineChartViewController.m in Sources */,
+				DCB770741B846391006654F3 /* MTraceLineView.m in Sources */,
 				3AB4CE1A1B32848B00143374 /* MMyTaskViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
