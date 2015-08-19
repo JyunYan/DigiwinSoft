@@ -111,7 +111,7 @@
     posY = pieFrame.origin.y + pieFrame.size.height - 15;
 
     UILabel* unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 25)];
-    unitLabel.text = @"單位：PR值";
+    unitLabel.text = @"";
     unitLabel.textColor = [UIColor grayColor];
     unitLabel.font = [UIFont boldSystemFontOfSize:12.];
     [self.view addSubview:unitLabel];

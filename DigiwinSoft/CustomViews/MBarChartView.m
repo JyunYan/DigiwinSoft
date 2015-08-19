@@ -9,6 +9,9 @@
 #import "MBarChartView.h"
 #import "MEfficacy.h"
 #import "MTarget.h"
+#import "MDirector.h"
+
+#define SCALE 1.6
 @implementation MBarChartView
 
 - (id)initWithFrame:(CGRect)frame
@@ -56,15 +59,15 @@
         CGFloat value=[[_aryBarData.effTargetArray[i]pr] floatValue];
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSetFillColorWithColor(context, [UIColor lightGrayColor].CGColor);//填充顏色
-        CGContextFillRect(context,CGRectMake(80, (i*25)+68, value*1.6, 10));//填充框
+        CGContextFillRect(context,CGRectMake(80, (i*25)+68, value*SCALE, 10));//填充框
         CGContextDrawPath(context, kCGPathFillStroke);//繪畫路徑
         
         //barValue
-            UILabel *labValue=[[UILabel alloc]initWithFrame:CGRectMake(80+(value*1.6)+2, (i*25)+68,25, 10)];
+            UILabel *labValue=[[UILabel alloc]initWithFrame:CGRectMake((80+(value*SCALE)+2), (i*25)+68,25, 10)];
             labValue.text=[data.effTargetArray[i]pr];
             labValue.font=[UIFont systemFontOfSize:12];
             labValue.textAlignment=NSTextAlignmentLeft;
-            labValue.backgroundColor=[UIColor whiteColor];
+            labValue.backgroundColor=[UIColor clearColor];
             [self addSubview:labValue];
 
 
@@ -74,6 +77,32 @@
     CGContextMoveToPoint(ctx, 80, 65);
     CGContextAddLineToPoint(ctx, 80, 182);
     CGContextStrokePath(ctx);
+    
+    //橫線
+    CGContextMoveToPoint(ctx, 80, 182);
+    CGContextAddLineToPoint(ctx, 80+(100*SCALE), 182);
+    CGContextStrokePath(ctx);
+    
+    //绘制虚线
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(context, 1.5);
+    UIColor *CustomBlue=[[MDirector sharedInstance] getCustomBlueColor];
+    CGContextSetStrokeColorWithColor(context, CustomBlue.CGColor);
+    CGFloat dashArray[] = {4,2};
+    CGContextSetLineDash(context, 0, dashArray, 2);
+    CGContextMoveToPoint(context, 80+(80*SCALE), 65);
+    CGContextAddLineToPoint(context, 80+(80*SCALE), 182);
+    CGContextStrokePath(context);
+    
+    //lab80
+    UILabel *labVa=[[UILabel alloc]initWithFrame:CGRectMake((80+(80*SCALE)-10), 182, 20, 20)];
+    labVa.font=[UIFont systemFontOfSize:12];
+    labVa.textAlignment=NSTextAlignmentCenter;
+    labVa.backgroundColor=[UIColor clearColor];
+    labVa.textColor=[[MDirector sharedInstance] getCustomBlueColor];
+    labVa.text=@"80";
+    [self addSubview:labVa];
+
 }
 
 /*

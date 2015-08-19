@@ -67,7 +67,7 @@
     
     
     CGFloat posX = 0;
-    CGFloat posY = 0;
+    CGFloat posY = 64;
     CGFloat width = screenWidth;
     CGFloat height = 160;
     
