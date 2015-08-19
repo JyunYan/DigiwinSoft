@@ -1156,17 +1156,9 @@ static MDataBaseManager* _director = nil;
     NSString* gui_id = report.gui_id;
     NSString* act_id = report.act_id;
     NSString* wi_id = report.wi_id;
-    
+
     if (uuid == nil || [uuid isEqualToString:@""]) {
-        if (gui_id && ![gui_id isEqualToString:@""]) {
-            uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_GUIDE_UUID_PREV];
-        } else if (act_id && ![act_id isEqualToString:@""]) {
-            uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_ACT_UUID_PREV];
-        } else if (wi_id && ![wi_id isEqualToString:@""]) {
-            uuid = [[MDirector sharedInstance] getCustUuidWithPrev:CUST_WORK_ITEM_UUID_PREV];
-        }
-    } else {
-        return NO;
+        uuid = [[MDirector sharedInstance] getCustUuidWithPrev:REPORT_UUID_PREV];
     }
 
     NSString* status = report.status;
