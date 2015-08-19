@@ -78,6 +78,8 @@
     
     self.view.backgroundColor= [UIColor whiteColor];
     CGFloat posY=64.;
+    
+    _reportArray = [[MDataBaseManager sharedInstance] loadReports];
     _tableView = [self createTableViewWithFrame:CGRectMake(0., posY, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 40.- 64.)];
     [self.view addSubview:_tableView];
 
@@ -104,7 +106,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(goToBackPage:)];
-    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
+    self.navigationItem.leftBarButtonItem = back;
 }
 
 
@@ -164,11 +166,6 @@
     _report.create_date = [fm stringFromDate:[NSDate date]];
     
 
-//    _report.status=@"0";
-//    _report.desc = @"123";
-//    _report.value = @"123";
-//    _report.completed = @"2015/01/01";
-
     
     BOOL bOK = [[MDataBaseManager sharedInstance] insertReport:_report];
     if (bOK) {
@@ -208,7 +205,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    if ([_reportArray count]==0) {
+        return 1;
+    }
+    return [_reportArray count]+1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -228,14 +228,24 @@
         return cell;
     }else{
         MReportTableViewCell *cell=(MReportTableViewCell *)[MReportTableViewCell cellWithTableView:tableView];
-        cell.labReportDate.text=@"回報日期:2015/05/10";
-        cell.labState.text=@"任務進度:已完成";
-        cell.labValueT.text=@"實際值:7天";
-        cell.labFinishDay.text=@"完成日期:2015/08/31";
-        cell.labReason.text=@"雅虎公司，是美國的跨國網際網路上市公司，全球網際網路服務公司及全球入口網站巨擘。提供一系列網際網路服務，包括：搜尋引擎、電子信箱、新聞等。Yahoo!由史丹佛大學台灣裔研究生楊致遠和大衛·";
-
+        MReport* report=_reportArray[indexPath.row-1];
+        cell.labReportDate.text=[NSString stringWithFormat:@"回報日期:%@",report.create_date];
+        cell.labValueT.text=[NSString stringWithFormat:@"實際值:%@天",report.value];
+        cell.labFinishDay.text=[NSString stringWithFormat:@"完成日期:%@",report.completed];
+        cell.labReason.text=report.desc;
+        
+        NSString *status;
+        if ([report.status isEqualToString:@"0"]) {
+            status=@"未開始";
+        }
+        else if([report.status isEqualToString:@"1"]) {
+            status=@"進行中";
+        }
+        else{
+            status=@"已完成";
+        }
+        cell.labState.text=[NSString stringWithFormat:@"任務進度:%@",status];
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
-
         return cell;
     }
     
