@@ -25,9 +25,9 @@
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) NSLocale *datelocale;
-@property (nonatomic, strong) UITextField *txtTargetDay;
-@property (nonatomic, strong) UITextView *textView;
-@property (nonatomic, strong) UITextField *TextField;
+//@property (nonatomic, strong) UITextField *txtTargetDay;
+//@property (nonatomic, strong) UITextView *textView;
+//@property (nonatomic, strong) UITextField *TextField;
 @property (nonatomic, strong) UITextField *txtUnit;
 @property (nonatomic, strong) NSArray *reportArray;
 @property (nonatomic, strong) MCustGuide* guide;
@@ -86,8 +86,8 @@
         _guide=(MCustGuide *)_task;
         self.title=_guide.name;
         [self initState:_guide.status];
-        _textView.text=_guide.desc;
-        _TextField.text=_guide.target.valueT;
+//        _textView.text=_guide.desc;
+//        _TextField.text=_guide.target.valueT;
         _txtUnit.text=_guide.target.unit;
         
     }
@@ -96,8 +96,8 @@
         _workItem=(MCustWorkItem *)_task;
         self.title=_workItem.name;
         [self initState:_workItem.status];
-        _textView.text=_workItem.desc;
-        _TextField.text=_workItem.target.valueT;
+//        _textView.text=_workItem.desc;
+//        _TextField.text=_workItem.target.valueT;
         _txtUnit.text=_workItem.target.unit;
     }
     else if ([_task isKindOfClass:[MCustActivity class]])
@@ -105,8 +105,8 @@
         _activity=(MCustActivity *)_task;
         self.title=_activity.name;
         [self initState:_activity.status];
-        _textView.text=_activity.desc;
-        _TextField.text=_activity.target.valueT;
+//        _textView.text=_activity.desc;
+//        _TextField.text=_activity.target.valueT;
         _txtUnit.text=_activity.target.unit;
     }
     else
@@ -173,9 +173,15 @@
         report.act_id = _activity.uuid;
     }
     
-    report.desc = _textView.text;
-    report.value = _TextField.text;
-    report.completed = _txtTargetDay.text;
+//    report.desc = _textView.text;
+//    report.value = _TextField.text;
+//    report.completed = _txtTargetDay.text;#define REPORT_UUID_PREV    @"REP-"
+    report.status=@"0";
+    report.desc = @"123";
+    report.value = @"123";
+    report.completed = @"2015/01/01";
+    report.uuid=[[MDirector sharedInstance] getCustUuidWithPrev:REPORT_UUID_PREV];
+
     
     BOOL bOK = [[MDataBaseManager sharedInstance] insertReport:report];
     if (bOK) {
@@ -263,36 +269,36 @@
     }
 }
 
--(void)textFieldChanged:(UITextField*)textField
-{
-
-    _datePicker=[[UIDatePicker alloc]init];//WithFrame:CGRectMake(0,screenHeight-70,screenWidth, 70)];
-    _datelocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];
-    _datePicker.locale = _datelocale;
-    _datePicker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
-    _datePicker.datePickerMode = UIDatePickerModeDate;
-    _txtTargetDay.inputView = _datePicker;
-    
-    // 建立 UIToolbar
-    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelPicker)];
-    toolBar.items = [NSArray arrayWithObject:right];
-    _txtTargetDay.inputAccessoryView = toolBar;
-
-}
-
--(void) cancelPicker {
-    if ([self.view endEditing:NO]) {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"yyyy-MM-dd" options:0 locale:_datelocale];
-        [formatter setDateFormat:dateFormat];
-        [formatter setDateFormat:@"yyyy-MM-dd"];
-        [formatter setLocale:_datelocale];
-        
-        //將選取後的日期填入UITextField
-        _txtTargetDay.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:_datePicker.date]];
-    }
-}
+//-(void)textFieldChanged:(UITextField*)textField
+//{
+//
+//    _datePicker=[[UIDatePicker alloc]init];//WithFrame:CGRectMake(0,screenHeight-70,screenWidth, 70)];
+//    _datelocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];
+//    _datePicker.locale = _datelocale;
+//    _datePicker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+//    _datePicker.datePickerMode = UIDatePickerModeDate;
+//    _txtTargetDay.inputView = _datePicker;
+//    
+//    // 建立 UIToolbar
+//    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+//    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelPicker)];
+//    toolBar.items = [NSArray arrayWithObject:right];
+//    _txtTargetDay.inputAccessoryView = toolBar;
+//
+//}
+//
+//-(void) cancelPicker {
+//    if ([self.view endEditing:NO]) {
+//        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"yyyy-MM-dd" options:0 locale:_datelocale];
+//        [formatter setDateFormat:dateFormat];
+//        [formatter setDateFormat:@"yyyy-MM-dd"];
+//        [formatter setLocale:_datelocale];
+//        
+//        //將選取後的日期填入UITextField
+//        _txtTargetDay.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:_datePicker.date]];
+//    }
+//}
 -(void)initState:(NSString *)state
 {
     

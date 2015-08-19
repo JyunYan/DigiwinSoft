@@ -16,7 +16,7 @@
 #define CUST_ACT_UUID_PREV  @"CACT-"
 #define CUST_WORK_ITEM_UUID_PREV @"CWI-"
 #define CUST_TARGET_UUID_PREV   @"CTAR-"
-
+#define REPORT_UUID_PREV    @"REP-"
 #define DATE_FORMATE_01 @"yyyy-MM-dd HH:mm:ss"
 
 /* 從哪裏進入p5 */
