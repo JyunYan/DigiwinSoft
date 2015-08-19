@@ -424,23 +424,12 @@
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, side*1.8, side*1.8)];
     view.center = CGPointMake(point.coordinate.x, point.coordinate.y);
     view.tag = point.index;
-    view.backgroundColor = [UIColor redColor];
-    view.alpha = 0.3;
+    //view.backgroundColor = [UIColor redColor];
+    //view.alpha = 0.3;
     [self addSubview:view];
     
     UITapGestureRecognizer* recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [view addGestureRecognizer:recognizer];
-}
-
-- (void)handleSingleTap:(UITapGestureRecognizer*)recognizer
-{
-    NSInteger index = recognizer.view.tag;
-    MFlowChartPoint2* point = [_points objectAtIndex:index];
-    
-    if(_delegate && [_delegate respondsToSelector:@selector(actFlowChart:didSelectedActivity:)])
-        [_delegate actFlowChart:self didSelectedActivity:point.activity];
-        
-    NSLog(@"xxx");
 }
 
 - (void)addLabelWithPoint:(MFlowChartPoint2*)point
@@ -459,6 +448,19 @@
     label.text = point.title;
     
     [self addSubview:label];
+}
+
+#pragma mark - UITapGestureRecognizer actions
+
+- (void)handleSingleTap:(UITapGestureRecognizer*)recognizer
+{
+    NSInteger index = recognizer.view.tag;
+    MFlowChartPoint2* point = [_points objectAtIndex:index];
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(actFlowChart:didSelectedActivity:)])
+        [_delegate actFlowChart:self didSelectedActivity:point.activity];
+    
+    NSLog(@"xxx");
 }
 
 @end

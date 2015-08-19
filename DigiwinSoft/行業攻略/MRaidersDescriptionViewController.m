@@ -34,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title=@"對策實際說明";
+    self.title=_guide.name;
     self.view.backgroundColor = [UIColor whiteColor];
 
     [self loadData];

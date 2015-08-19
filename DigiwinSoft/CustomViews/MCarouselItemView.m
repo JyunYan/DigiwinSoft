@@ -54,9 +54,11 @@
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.alignment = NSTextAlignmentCenter;
     
-    CGFloat x = (self.bounds.size.width - _pointSize * array.count) / 2.;
-    for (NSString* str in array) {
+    NSInteger count = MIN(array.count, 2);
+    CGFloat x = (self.bounds.size.width - _pointSize * count) / 2.;
+    for (int i=0; i<count; i++) {
        // NSString* string = [self getContentWithString:str];
+        NSString* str = [array objectAtIndex:i];
         NSAttributedString* attString = [[NSAttributedString alloc] initWithString:str
                                                                         attributes:@{NSFontAttributeName:font,
                                                                                      NSForegroundColorAttributeName:color,

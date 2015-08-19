@@ -150,11 +150,11 @@
     //Segmented
     NSString* item1 = (_from == GUIDE_FROM_PHEN) ? @"說明" : @"議題說明";
     NSArray *itemArray = [NSArray arrayWithObjects:item1,@"建議對策",nil];
-    MCustomSegmentedControl* segment = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(DEVICE_SCREEN_WIDTH, 40) BarIndex:1 TextSize:14.];
+    MCustomSegmentedControl* segment = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(DEVICE_SCREEN_WIDTH, 40) BarIndex:0 TextSize:14.];
     segment.frame = CGRectMake(0, posY,DEVICE_SCREEN_WIDTH, 40);
     [segment addTarget:self action:@selector(actionSegmented:) forControlEvents:UIControlEventValueChanged];
     segment.tintColor=[UIColor clearColor];
-    segment.selectedSegmentIndex = 1;
+    segment.selectedSegmentIndex = 0;
     [self.view addSubview:segment];
     
     posY += segment.frame.size.height;
@@ -164,6 +164,8 @@
 
     _guideView = [self createGuideViewWithFrame:CGRectMake(0, posY, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - posY - 49.)];
     [self.view addSubview:_guideView];
+    
+    [self.view bringSubviewToFront:_descView];
     
 }
 
@@ -301,6 +303,8 @@
             }
         }
     }
+    
+    _button.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
 }
 - (void)UpGuideTarget:(NSNotification*) notification
 {

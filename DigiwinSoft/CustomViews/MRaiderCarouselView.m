@@ -57,7 +57,7 @@
     CGFloat bgHeight = DEVICE_SCREEN_HEIGHT - 64 - 49;
     CGFloat y = (DEVICE_SCREEN_HEIGHT == 480) ? 140 : (bgHeight * 0.386);
     
-    _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, y, DEVICE_SCREEN_WIDTH, 260)]; //214
+    _carousel = [[iCarousel alloc] initWithFrame:CGRectMake(0, y, DEVICE_SCREEN_WIDTH, 280)]; //214 260
     _carousel.dataSource = self;
     _carousel.delegate = self;
     _carousel.type = iCarouselTypeInvertedCylinder;
@@ -70,18 +70,26 @@
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    return _phenArray.count;
+    // 數量要夠大, 滑動效果才好看
+    NSInteger count = _phenArray.count;
+    if(count == 0)
+        return 0;
+    else if(count < 100)
+        return count * (100/count + 1);
+    else
+        return count;
 }
 
 - (UIView*)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     if(!view){
-        view = [[MCarouselItemView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH / 5., 280)];
+        view = [[MCarouselItemView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH*0.2, 280)];
         view.backgroundColor = [UIColor clearColor];
         view.alpha = .3;
     }
     
-    MPhenomenon* phen = [_phenArray objectAtIndex:index];
+    NSInteger count = _phenArray.count;
+    MPhenomenon* phen = [_phenArray objectAtIndex:index%count];
     
     MCarouselItemView* ciview = (MCarouselItemView*)view;
     ciview.content = phen.subject;
@@ -100,7 +108,7 @@
 
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel
 {
-    return DEVICE_SCREEN_WIDTH * 0.24;
+    return DEVICE_SCREEN_WIDTH * 0.2;
 }
 
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
@@ -108,7 +116,8 @@
     if(index != carousel.currentItemIndex)
         return;
     
-    NSNumber* number = [NSNumber numberWithInteger:index];
+    NSInteger count = _phenArray.count;
+    NSNumber* number = [NSNumber numberWithInteger:index%count];
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectedPhen object:number];
 }
 
@@ -126,6 +135,16 @@
     [carousel reloadItemAtIndex:index animated:NO];
     [carousel reloadItemAtIndex:leftIndex animated:NO];
     [carousel reloadItemAtIndex:rightIndex animated:NO];
+}
+
+- (CATransform3D)carousel:(iCarousel *)carousel itemTransformForOffset:(CGFloat)offset baseTransform:(CATransform3D)transform
+{
+    transform = CATransform3DTranslate(transform, 0.0, 0.0, -138.5);
+    transform = CATransform3DRotate(transform, 180*M_PI/180., 0.0, 1.0, 0.0);
+    return CATransform3DTranslate(transform, 0.0, 0.0, 138.5 + 0.01);
+    //return transform;
+    
+    //return CATransform3DRotate(transform, 0.0, 0.0, 1.0, 0.0);
 }
 
 @end
