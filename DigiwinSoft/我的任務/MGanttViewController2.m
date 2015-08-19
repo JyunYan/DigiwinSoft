@@ -166,7 +166,7 @@
         
         if(changYear)//save the new year offset.X for chang backgroundColor
         {
-            NSLog(@"%@顯示在%d",strDate,(MONTH_INTERVAL*(i+1)));
+            NSLog(@"%@顯示在%ld",strDate,(MONTH_INTERVAL*(i+1)));
             NSNumber * numX = [NSNumber numberWithFloat:(MONTH_INTERVAL*(i+1))];
             [_changColorX addObject:numX];
             changYear=NO;
@@ -274,8 +274,18 @@
     MGanttTableViewCell *cell=(MGanttTableViewCell *)[MGanttTableViewCell cellWithTableView:tableView];
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     
-    //頭像
-    cell.imgViewHead.image=[UIImage imageNamed:@"icon_manager.png"];
+    //負責人image
+    NSString* uuid=[[_guide.activityArray[indexPath.row]manager]uuid];
+    if(uuid && ![uuid isEqualToString:@""]){
+        cell.imgViewHead.image=[UIImage imageNamed:@"z_thumbnail.jpg"];
+//        負責人name
+//        cell.managerLabel.text = [[_guide.activityArray[indexPath.row]manager]name];
+    }else{
+        cell.imgViewHead.image=[UIImage imageNamed:@"icon_manager.png"];
+//        負責人name
+//        cell.managerLabel.text = @"";
+    }
+
     
     //時程bar，title
     NSString *startDate=[[_guide.activityArray[indexPath.row] custTarget] startDate];

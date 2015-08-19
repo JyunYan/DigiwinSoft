@@ -37,9 +37,21 @@
     if (self) {
         
         //頭像
-        _imgViewHead=[[UIImageView alloc] initWithFrame:CGRectMake((MONTH_INTERVAL-40)/2,0, 40, 40)];
+        _imgViewHead=[[UIImageView alloc] initWithFrame:CGRectMake((MONTH_INTERVAL-26)/2,(TABLE_CELL_HEIGHT/2)-13, 26, 26)];
         _imgViewHead.backgroundColor=[UIColor clearColor];
+        _imgViewHead.layer.cornerRadius=13;
+        _imgViewHead.layer.masksToBounds=YES;
         [self.contentView addSubview:_imgViewHead];
+        
+        
+        //負責人name
+        _managerLabel =[[UILabel alloc]initWithFrame:CGRectMake((MONTH_INTERVAL-30)/2,(TABLE_CELL_HEIGHT/2)-10, 30, 20)];
+        _managerLabel.font=[UIFont systemFontOfSize:12.];
+        _managerLabel.textAlignment=NSTextAlignmentCenter;
+        _managerLabel.backgroundColor=[UIColor clearColor];
+        _managerLabel.textColor=[UIColor whiteColor];
+        [self.contentView addSubview:_managerLabel];
+        
        }
     return self;
 }
@@ -74,18 +86,22 @@
     CGFloat disLenth=(days2==0)?0:((days2*MONTH_INTERVAL)/30);
     
     //最早的天數
-    NSString *earlyDay=[earlyDate substringWithRange:NSMakeRange(8, 2)];
-    CGFloat earlyDaydis = ([earlyDay floatValue]*MONTH_INTERVAL)/30;
-    
-    //draw bar
-    UIImageView* imgBar=[[UIImageView alloc]initWithFrame:CGRectMake(80+disLenth+earlyDaydis,(TABLE_CELL_HEIGHT-10)/2, barLenth, 14)];
-    imgBar.backgroundColor=[UIColor grayColor];
-
-    if (startDate.length!=0&&completeDate.length!=0)
-    {
-    [self.contentView addSubview:imgBar];
+    UIImageView* imgBar;
+    if (earlyDate.length!=0&&startDate.length!=0) {
+        NSString *earlyDay=[earlyDate substringWithRange:NSMakeRange(8, 2)];
+        CGFloat earlyDaydis = ([earlyDay floatValue]*MONTH_INTERVAL)/30;
+        
+        //draw bar
+        imgBar=[[UIImageView alloc]initWithFrame:CGRectMake(80+disLenth+earlyDaydis,(TABLE_CELL_HEIGHT-10)/2, barLenth, 14)];
+        imgBar.backgroundColor=[UIColor grayColor];
+        [self.contentView addSubview:imgBar];
     }
-    //draw lab
+    else
+    {
+       imgBar=[[UIImageView alloc]initWithFrame:CGRectMake(80+disLenth,(TABLE_CELL_HEIGHT-10)/2, barLenth, 14)];
+    }
+    
+      //draw lab
     UILabel *lab=[[UILabel alloc]initWithFrame:CGRectMake(imgBar.frame.origin.x+imgBar.frame.size.width+10,(TABLE_CELL_HEIGHT-10)/2,120, 14)];
     lab.text=title;
     lab.font=[UIFont systemFontOfSize:12];

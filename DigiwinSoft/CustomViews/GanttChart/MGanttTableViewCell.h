@@ -13,6 +13,7 @@
 @interface MGanttTableViewCell : UITableViewCell
 @property (nonatomic, strong) UIImageView* imgViewHead;
 @property (nonatomic, strong) UILabel *labTitle;
+@property (nonatomic, strong) UILabel *managerLabel;
 
 - (void)createtimeBar:(NSString*)startDate :(NSString*)completeDate :(NSString*)earlyDate :(NSString*)title;
 
