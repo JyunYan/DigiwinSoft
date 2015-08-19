@@ -160,7 +160,7 @@
     
     // create date
     NSDateFormatter* fm = [NSDateFormatter new];
-    fm.dateFormat = @"yyyy-MM-dd";
+    fm.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     _report.create_date = [fm stringFromDate:[NSDate date]];
     
 
