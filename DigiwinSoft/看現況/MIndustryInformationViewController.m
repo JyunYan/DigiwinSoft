@@ -236,16 +236,9 @@
         titleLabel.textColor = [UIColor blackColor];
         [cell addSubview:titleLabel];
         
-        UILabel* dotLabel = [[UILabel alloc] initWithFrame:CGRectMake(width*0.95-15., posY+10, 15., 10.)];
-        dotLabel.font = [UIFont boldSystemFontOfSize:13.];
-        dotLabel.textColor = [UIColor whiteColor];
-        dotLabel.text = @"⋯";
-        dotLabel.backgroundColor = [UIColor lightGrayColor];
-        [cell addSubview:dotLabel];
-        
         posY = titleLabel.frame.origin.y + titleLabel.frame.size.height;
         
-        UILabel* descLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width*0.9, 45.)];
+        UILabel* descLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width*0.85, 45.)];
         descLabel.tag = TAG_LABEL_DESC;
         descLabel.font = [UIFont systemFontOfSize:12.];
         descLabel.textColor = [UIColor grayColor];
@@ -262,6 +255,7 @@
     titleLabel.text = info.subject;
     descLabel.text = info.desc;
     
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 

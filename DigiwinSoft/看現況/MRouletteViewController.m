@@ -27,6 +27,7 @@
 
 @property (nonatomic, assign) CGFloat scale;
 @property (nonatomic, strong) MManageItem* manaItem;
+@property (nonatomic, strong) UIPageControl *pageControl;
 @end
 
 @implementation MRouletteViewController
@@ -85,10 +86,26 @@
     _carousel = [self createRoulett];
     [scroll addSubview:_carousel];
     
+    NSArray* array = _manaItem.issueArray;
+    NSInteger count = array.count;
+    _pageControl=[self createPageControl:CGRectMake(0,(120*_scale)+40, DEVICE_SCREEN_WIDTH, 20) number:count];
+    [scroll addSubview:_pageControl];
+    [scroll bringSubviewToFront:_pageControl];
+
     UIButton* button = [self createGudieButton];
     [scroll addSubview:button];
     
     scroll.contentSize = CGSizeMake(DEVICE_SCREEN_WIDTH, button.frame.origin.y + button.frame.size.height + 20);
+}
+
+- (UIPageControl*)createPageControl:(CGRect)frame number:(NSInteger)indexNum
+{
+    UIPageControl *pageControl=[[UIPageControl alloc]initWithFrame:frame];
+    pageControl.backgroundColor=[UIColor clearColor];
+    pageControl.numberOfPages=indexNum;
+    pageControl.pageIndicatorTintColor = [UIColor colorWithRed:225./255. green:225./255. blue:225./255. alpha:1.];
+    pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:140./255. green:140./255. blue:140./255. alpha:1.];
+    return pageControl;
 }
 
 - (iCarousel*)createRoulett
@@ -265,6 +282,7 @@
     
     _meterView.target = issue.target;
     [_meterView setNeedsDisplay];
+    [_pageControl setCurrentPage:index%count];
 }
 
 

@@ -540,14 +540,52 @@
     NSInteger tag = button.tag;
     if(tag == TAG_TEXTFIELD_START){
         UIDatePicker* picker = (UIDatePicker*)_startTF.inputView;
-        _startTF.text = [fm2 stringFromDate:picker.date];
-        [self setStartDate:[fm1 stringFromDate:picker.date]];
+        NSString *strStartTF=[fm2 stringFromDate:picker.date];
         
+        if ([self compareDate:_endTF.text withDate:strStartTF]) {
+            UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:@"訊息" message:@"日期設定錯誤" delegate:self cancelButtonTitle:@"確認" otherButtonTitles:nil, nil];
+            [theAlert show];
+            return;
+        }
+        
+        _startTF.text =strStartTF;
+        [self setStartDate:[fm1 stringFromDate:picker.date]];
+    
     }else if(tag == TAG_TEXTFIELD_END){
         UIDatePicker* picker = (UIDatePicker*)_endTF.inputView;
-        _endTF.text = [fm2 stringFromDate:picker.date];
+        NSString *strEndTF=[fm2 stringFromDate:picker.date];
+
+        if ([self compareDate:strEndTF withDate:_startTF.text]) {
+            UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:@"訊息" message:@"日期設定錯誤" delegate:self cancelButtonTitle:@"確認" otherButtonTitles:nil, nil];
+            [theAlert show];
+            return;
+        }
+
+        _endTF.text = strEndTF;
         [self setEndDate:[fm1 stringFromDate:picker.date]];
     }
+}
+
+-(int)compareDate:(NSString*)date01 withDate:(NSString*)date02{
+    int ci;
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    NSDate *dt1 = [[NSDate alloc] init];
+    NSDate *dt2 = [[NSDate alloc] init];
+    dt1 = [df dateFromString:date01];
+    dt2 = [df dateFromString:date02];
+    NSComparisonResult result = [dt1 compare:dt2];
+    switch (result)
+    {
+            //date02比date01大
+        case NSOrderedAscending: ci=1; break;
+            //date02比date01小
+        case NSOrderedDescending: ci=0; break;
+            //date02=date01
+        case NSOrderedSame: ci=0; break;
+        default: NSLog(@"erorr dates %@, %@", dt2, dt1); break;
+    }
+    return ci;
 }
 
 - (void)textFieldDidChanged:(UITextField*)textField

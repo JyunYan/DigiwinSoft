@@ -75,7 +75,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    if(_guide)
+        self.title=_guide.name;
     
+    if(_workItem)
+        self.title=_workItem.name;
+    
+    if(_activity)
+        self.title=_activity.name;
+
     self.view.backgroundColor= [UIColor whiteColor];
     CGFloat posY=64.;
     
