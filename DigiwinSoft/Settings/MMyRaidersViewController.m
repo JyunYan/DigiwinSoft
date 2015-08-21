@@ -160,20 +160,19 @@
     UILabel* presentValueLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PRESENT_VALUE];
     UILabel* personInChargeLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PERSON_IN_CHARGE];
     
-    NSString* countermeasureStr = [NSString stringWithFormat:@"對策：%@", guide.name];
-    countermeasureLabel.text = countermeasureStr;
+
+    countermeasureLabel.attributedText=[self attStr:@"對策：" content:guide.name];
     
-    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", target.name];
-    indexLabel.text = indexStr;
-    
-    NSString* presentValueStr = @"現值：";
+    indexLabel.attributedText=[self attStr:@"指標：" content:target.name];
+
+    NSString* presentValueStr = @"";
     if (target.valueR && ![target.valueR isEqualToString:@""])
         presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", target.valueR, target.unit];
-    presentValueLabel.text = presentValueStr;
-    
+    presentValueLabel.attributedText=[self attStr:@"現值：" content:presentValueStr];
+
     MUser* user = guide.manager;
-    NSString* personInChargeStr = [NSString stringWithFormat:@"負責人：%@", user.name];
-    personInChargeLabel.text = personInChargeStr;
+    personInChargeLabel.attributedText=[self attStr:@"負責人：" content:user.name];
+
 
     return cell;
 }
@@ -191,6 +190,27 @@
 
     MKeyActivitiesViewController* vc = [[MKeyActivitiesViewController alloc] initWithCustGuide:guide];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - other
+
+-(NSMutableAttributedString *)attStr:(NSString*)title content:(NSString*)desc
+{
+    NSMutableAttributedString *attStr=[[NSMutableAttributedString alloc]initWithString:title attributes:nil];
+    if (desc == nil || [desc isEqualToString:@""]) {
+        
+        //紅色"尚未設定"
+        NSDictionary * attributesRED = [NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
+        NSAttributedString * strDefault = [[NSAttributedString alloc] initWithString:@"尚未設定" attributes:attributesRED];
+        
+        [attStr appendAttributedString:strDefault];
+    }
+    else
+    {
+        NSAttributedString * subString = [[NSAttributedString alloc] initWithString:desc attributes:nil];
+        [attStr appendAttributedString:subString];
+    }
+    return attStr;
 }
 
 @end

@@ -162,9 +162,8 @@
     posY = 10;
 
     // 緣起
-    NSString* subjectStr = [NSString stringWithFormat:@"緣起：%@", name];
     UILabel* subjectLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    subjectLabel.text = subjectStr;
+    subjectLabel.attributedText = [self attStr:@"緣起：" content:name];
     subjectLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [header addSubview:subjectLabel];
     
@@ -181,20 +180,18 @@
     width = (tableWidth - posX) / 2;
     height = 30;
     //指標
-    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", tname];
     UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    indexLabel.text = indexStr;
     indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    indexLabel.attributedText = [self attStr:@"指標：" content:tname];
     indexLabel.font = [UIFont systemFontOfSize:textSize];
     [header addSubview:indexLabel];
     
     
     posX = indexLabel.frame.origin.x + indexLabel.frame.size.width;
     // 現值
-    NSString* presentValueStr = [NSString stringWithFormat:@"現值：%@", value];
     UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    presentValueLabel.text = presentValueStr;
     presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    presentValueLabel.attributedText = [self attStr:@"現值：" content:value];
     presentValueLabel.font = [UIFont systemFontOfSize:textSize];
     [header addSubview:presentValueLabel];
     
@@ -297,20 +294,18 @@
     UILabel* presentValueLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PRESENT_VALUE];
     UILabel* personInChargeLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PERSON_IN_CHARGE];
     
-    NSString* countermeasureStr = [NSString stringWithFormat:@"對策：%@", guide.name];
-    countermeasureLabel.text = countermeasureStr;
+    countermeasureLabel.attributedText = [self attStr:@"對策：" content:guide.name];
     
-    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", target.name];
-    indexLabel.text = indexStr;
+    indexLabel.attributedText = [self attStr:@"指標：" content:target.name];
     
-    NSString* presentValueStr = @"現值：";
+    NSString* presentValueStr = @"";
     if (target.valueR && ![target.valueR isEqualToString:@""])
-        presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", target.valueR, target.unit];
-    presentValueLabel.text = presentValueStr;
-    
+        presentValueStr = [NSString stringWithFormat:@"%@ %@", target.valueR, target.unit];
+    presentValueLabel.attributedText = [self attStr:@"現值：" content:presentValueStr];
+
+
     MUser* user = guide.manager;
-    NSString* personInChargeStr = [NSString stringWithFormat:@"負責人：%@", user.name];
-    personInChargeLabel.text = personInChargeStr;
+    personInChargeLabel.attributedText = [self attStr:@"負責人：" content:user.name];
    
     return cell;
 }
@@ -416,4 +411,24 @@
     }
 }
 
+#pragma mark - other
+
+-(NSMutableAttributedString *)attStr:(NSString*)title content:(NSString*)desc
+{
+    NSMutableAttributedString *attStr=[[NSMutableAttributedString alloc]initWithString:title attributes:nil];
+    if (desc == nil || [desc isEqualToString:@""]) {
+        
+        //紅色"尚未設定"
+        NSDictionary * attributesRED = [NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
+        NSAttributedString * strDefault = [[NSAttributedString alloc] initWithString:@"尚未設定" attributes:attributesRED];
+        
+        [attStr appendAttributedString:strDefault];
+    }
+    else
+    {
+        NSAttributedString * subString = [[NSAttributedString alloc] initWithString:desc attributes:nil];
+        [attStr appendAttributedString:subString];
+    }
+    return attStr;
+}
 @end

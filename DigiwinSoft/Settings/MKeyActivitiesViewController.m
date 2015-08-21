@@ -121,32 +121,31 @@
     height = 30;
     
     // 指標
-    NSString* indexStr = [NSString stringWithFormat:@"指標：%@", _guide.custTaregt.name];
     UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    indexLabel.text = indexStr;
     indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    indexLabel.attributedText=[self attStr:@"指標：" content:_guide.custTaregt.name];
     indexLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:indexLabel];
     
     
     posY = indexLabel.frame.origin.y + indexLabel.frame.size.height;
     // 現值
-    NSString* presentValueStr = @"現值：";
+    NSString* presentValueStr = @"";
     if (_guide.custTaregt.valueR && ![_guide.custTaregt.valueR isEqualToString:@""])
-        presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", _guide.custTaregt.valueR, _guide.custTaregt.unit];
+        presentValueStr = [NSString stringWithFormat:@"%@ %@", _guide.custTaregt.valueR, _guide.custTaregt.unit];
     UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 25, height)];
-    presentValueLabel.text = presentValueStr;
     presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    presentValueLabel.attributedText=[self attStr:@"現值：" content:presentValueStr];
+
     presentValueLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:presentValueLabel];
     
     
     posX = presentValueLabel.frame.origin.x + presentValueLabel.frame.size.width;
     // 負責人
-    NSString* personInChargeStr = [NSString stringWithFormat:@"負責人：%@", _guide.manager.name];
     UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 25, height)];
-    personInChargeLabel.text = personInChargeStr;
     personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    personInChargeLabel.attributedText=[self attStr:@"負責人：" content:_guide.manager.name];
     personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:personInChargeLabel];
     
@@ -231,10 +230,10 @@
     
     
     // info
-    MCustActivity* activity = [_activityArray objectAtIndex:section];
-    NSString* keyActivitiesStr = @"關鍵活動：";
+    MCustActivity* activity =[_activityArray objectAtIndex:section];
+    NSString* keyActivitiesStr = @"";
     if (activity.name)
-        keyActivitiesStr = [NSString stringWithFormat:@"關鍵活動：%@", activity.name];
+        keyActivitiesStr = [NSString stringWithFormat:@"%@", activity.name];
 
     MUser* user = activity.manager;
     NSString* personInChargeStr = user.name;
@@ -256,8 +255,8 @@
     height = 35;
     // 關鍵活動
     UILabel* keyActivitiesLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    keyActivitiesLabel.text = keyActivitiesStr;
     keyActivitiesLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
+    keyActivitiesLabel.attributedText=[self attStr:@"關鍵活動：" content:keyActivitiesStr];
     keyActivitiesLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [infoView addSubview:keyActivitiesLabel];
     
@@ -509,6 +508,27 @@
     if(!image)
         image = nil;
     return image;
+}
+
+#pragma mark - other
+
+-(NSMutableAttributedString *)attStr:(NSString*)title content:(NSString*)desc
+{
+    NSMutableAttributedString *attStr=[[NSMutableAttributedString alloc]initWithString:title attributes:nil];
+    if (desc == nil || [desc isEqualToString:@""]) {
+        
+        //紅色"尚未設定"
+        NSDictionary * attributesRED = [NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
+        NSAttributedString * strDefault = [[NSAttributedString alloc] initWithString:@"尚未設定" attributes:attributesRED];
+        
+        [attStr appendAttributedString:strDefault];
+    }
+    else
+    {
+        NSAttributedString * subString = [[NSAttributedString alloc] initWithString:desc attributes:nil];
+        [attStr appendAttributedString:subString];
+    }
+    return attStr;
 }
 
 @end
