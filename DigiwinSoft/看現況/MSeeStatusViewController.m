@@ -30,7 +30,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"看現況";
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     [self addMainMenu];
     
     [self createEfficacyViewController];

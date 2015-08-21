@@ -83,6 +83,7 @@
     
     if(_activity)
         self.title=_activity.name;
+    self.extendedLayoutIncludesOpaqueBars = YES;
 
     self.view.backgroundColor= [UIColor whiteColor];
     CGFloat posY=64.;

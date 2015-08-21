@@ -23,6 +23,8 @@
     // Do any additional setup after loading the view.
     self.title=@"登入";
     [self addMainMenu];
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
 }
 
 - (void)didReceiveMemoryWarning {

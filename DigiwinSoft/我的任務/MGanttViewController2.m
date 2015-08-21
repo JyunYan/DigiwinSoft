@@ -38,6 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.extendedLayoutIncludesOpaqueBars = YES;
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor whiteColor];
     self.view.transform= CGAffineTransformMakeRotation(M_PI_2);

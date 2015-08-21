@@ -47,7 +47,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     [self addMainMenu];
     [self addTextField];
     [self creatTableView];

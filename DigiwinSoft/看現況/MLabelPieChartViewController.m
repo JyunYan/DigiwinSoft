@@ -81,7 +81,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-        
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     UIView* pieView = [self createPieView:_viewRect];
     [self.view addSubview:pieView];
 }

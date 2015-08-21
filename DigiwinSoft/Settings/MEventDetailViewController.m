@@ -50,6 +50,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     // Do any additional setup after loading the view.
     
     self.title = @"事件清單";

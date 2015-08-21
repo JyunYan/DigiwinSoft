@@ -51,7 +51,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor lightGrayColor];
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     
     CGFloat viewWidth = _viewFrame.size.width;
     CGFloat viewHeight = _viewFrame.size.height;

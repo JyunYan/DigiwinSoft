@@ -42,7 +42,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     self.title = @"我的規劃";
     self.view.backgroundColor = [UIColor lightGrayColor];
     

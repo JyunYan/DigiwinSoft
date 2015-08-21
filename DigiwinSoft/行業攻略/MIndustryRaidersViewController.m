@@ -32,7 +32,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self loadData];
     [self addMainMenu];
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
 //    MLoginViewController *MLoginVC=[[MLoginViewController alloc]init];
 //    [self presentViewController:MLoginVC animated:YES completion:nil];
 }

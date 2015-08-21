@@ -30,7 +30,8 @@
     // Do any additional setup after loading the view.
     self.title=@"攻略展開圖";
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     [self loadData];
     [self addMainMenu];
     

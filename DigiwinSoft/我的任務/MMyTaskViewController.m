@@ -55,7 +55,8 @@
     [self addMainMenu];
     [self createSegmentedView];
     [self createTableView];
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     self.title = @"我的任務";
 }
 

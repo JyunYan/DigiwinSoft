@@ -38,7 +38,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     self.title = @"應用價值成熟度模型";
     self.view.backgroundColor=[UIColor whiteColor];
     [self prepareData];

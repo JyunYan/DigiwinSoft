@@ -34,7 +34,8 @@
     
     self.title = @"建議寶物";
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     [self addMainMenu];
     
     

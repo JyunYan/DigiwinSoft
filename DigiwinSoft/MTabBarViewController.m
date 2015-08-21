@@ -28,6 +28,7 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
+    self.extendedLayoutIncludesOpaqueBars = YES;
 
     UITabBarItem* item1 = [[UITabBarItem alloc] initWithTitle:@"監控地圖" image:[UIImage imageNamed:@"tab_icon_1.png"] tag:0];
     MMonitorMapViewController* vc1 = [[MMonitorMapViewController alloc] init];

@@ -47,6 +47,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     self.title = _manaItem.name;
     self.view.backgroundColor=[UIColor whiteColor];
     [self initViews];

@@ -71,7 +71,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self loadData];
     [self addMainMenu];
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     //for p25 加入對策清單
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(actionAddPlan:) name:@"actionAddPlan" object:nil];
 }

@@ -52,7 +52,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     self.title = @"事件清單";
     self.view.backgroundColor = [UIColor whiteColor];
     

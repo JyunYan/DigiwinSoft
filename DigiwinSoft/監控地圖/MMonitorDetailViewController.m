@@ -45,7 +45,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
     self.view.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     self.title = _data.guide.name;
     

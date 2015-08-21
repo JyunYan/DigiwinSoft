@@ -36,6 +36,7 @@
     // Do any additional setup after loading the view.
     self.title=_guide.name;
     self.view.backgroundColor = [UIColor whiteColor];
+    self.extendedLayoutIncludesOpaqueBars = YES;
 
     [self loadData];
     [self addMainMenu];

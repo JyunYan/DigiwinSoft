@@ -75,7 +75,8 @@
     self.view.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
     
     [self addMainMenu];
-    
+    self.extendedLayoutIncludesOpaqueBars = YES;
+
 
     CGFloat posY = 64.;
     CGFloat height = 50;

@@ -59,6 +59,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.extendedLayoutIncludesOpaqueBars = YES;
 
     _targetArray = [[MDataBaseManager sharedInstance] loadTargetSampleArray];
     
