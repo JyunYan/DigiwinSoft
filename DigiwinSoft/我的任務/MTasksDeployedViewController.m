@@ -49,7 +49,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"我的任務";
+    self.title = @"對策設定";
     self.view.backgroundColor = [UIColor lightGrayColor];
     self.extendedLayoutIncludesOpaqueBars = YES;
 

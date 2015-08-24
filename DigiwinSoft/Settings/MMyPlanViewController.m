@@ -189,10 +189,10 @@
     
     
     posX = indexLabel.frame.origin.x + indexLabel.frame.size.width;
-    // 現值
+    // 目標值
     UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    presentValueLabel.attributedText = [self attStr:@"現值：" content:value];
+    presentValueLabel.attributedText = [self attStr:@"目標值：" content:value];
     presentValueLabel.font = [UIFont systemFontOfSize:textSize];
     [header addSubview:presentValueLabel];
     
@@ -302,7 +302,7 @@
     NSString* presentValueStr = @"";
     if (target.valueR && ![target.valueR isEqualToString:@""])
         presentValueStr = [NSString stringWithFormat:@"%@ %@", target.valueR, target.unit];
-    presentValueLabel.attributedText = [self attStr:@"現值：" content:presentValueStr];
+    presentValueLabel.attributedText = [self attStr:@"目標值：" content:presentValueStr];
 
 
     MUser* user = guide.manager;
