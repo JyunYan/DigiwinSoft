@@ -117,6 +117,8 @@
 
 - (MTarget*)loadTargetInfoWithID:(NSString*)uuid;
 
+//更新行業情報為已讀
+- (void)updateIndustryInfo:(NSString*)ID;
 #pragma mark - 我的規劃/我的攻略
 // get 我的規劃/我的攻略
 - (NSArray*)loadMyPlanArray;
