@@ -62,10 +62,10 @@
     UILabel* label = nil;
     
     // 計量表下方字樣左邊小圖
-    [self createRectAtView:self frame:CGRectMake(189, 702, 37,37) color:self.blueColor];
-    [self createRectAtView:self frame:CGRectMake(385, 702, 37,37) color:self.greenColor];
-    [self createRectAtView:self frame:CGRectMake(579, 702, 37,37) color:self.grayColor];
-    [self createRectAtView:self frame:CGRectMake(772, 702, 37,37) color:self.yellowColor];
+//    [self createRectAtView:self frame:CGRectMake(189, 702, 37,37) color:self.blueColor];
+//    [self createRectAtView:self frame:CGRectMake(385, 702, 37,37) color:self.greenColor];
+//    [self createRectAtView:self frame:CGRectMake(579, 702, 37,37) color:self.grayColor];
+//    [self createRectAtView:self frame:CGRectMake(772, 702, 37,37) color:self.yellowColor];
     
     if(!_hideName){
         label = [self createTextAtView:self frame:CGRectMake(230,155,620,55) text:self.target.name color:self.darkGrayColor fontSize:14];
@@ -83,10 +83,15 @@
     label.textAlignment = NSTextAlignmentCenter;
     
     // 計量表下方字樣
-    [self createTextAtView:self frame:CGRectMake(242,702, 104,37) text:@"自己" color:self.grayColor fontSize:12];
-    [self createTextAtView:self frame:CGRectMake(437,702, 104,37) text:@"低標" color:self.grayColor fontSize:12];
-    [self createTextAtView:self frame:CGRectMake(629,702, 104,37) text:@"均標" color:self.grayColor fontSize:12];
-    [self createTextAtView:self frame:CGRectMake(825,702, 104,37) text:@"頂標" color:self.grayColor fontSize:12];
+//    [self createTextAtView:self frame:CGRectMake(242,702, 104,37) text:@"自己" color:self.grayColor fontSize:12];
+//    [self createTextAtView:self frame:CGRectMake(437,702, 104,37) text:@"低標" color:self.grayColor fontSize:12];
+//    [self createTextAtView:self frame:CGRectMake(629,702, 104,37) text:@"均標" color:self.grayColor fontSize:12];
+//    [self createTextAtView:self frame:CGRectMake(825,702, 104,37) text:@"頂標" color:self.grayColor fontSize:12];
+    
+    [self createTextAtView:self frame:CGRectMake(250,680, 104,37) text:@"自己" color:self.grayColor fontSize:12];
+    [self createTextAtView:self frame:CGRectMake(420,680, 104,37) text:@"低標" color:self.grayColor fontSize:12];
+    [self createTextAtView:self frame:CGRectMake(588,680, 104,37) text:@"均標" color:self.grayColor fontSize:12];
+    [self createTextAtView:self frame:CGRectMake(750,680, 104,37) text:@"頂標" color:self.grayColor fontSize:12];
     
     // 計量表
     for(int i = 0; i < 10; i++)
