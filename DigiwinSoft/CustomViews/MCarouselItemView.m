@@ -73,10 +73,10 @@
 {
     _onFacus = onFacus;
     if(onFacus){
-        _pointSize = (DEVICE_SCREEN_HEIGHT == 480) ? 18. : 22.;
+        _pointSize = (DEVICE_SCREEN_HEIGHT == 480) ? 16. : 22.;
         _alpha = 1.;
     }else{
-        _pointSize = 14.;
+        _pointSize = (DEVICE_SCREEN_HEIGHT == 480) ? 12. : 14.;
         _alpha = 1.;
     }
 }

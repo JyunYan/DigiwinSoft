@@ -465,7 +465,7 @@ static MDataBaseManager* _director = nil;
         guide.suggestSkill = [self loadSuggestSkillWithID:guide.gui_uuid type:0];
         
         // 關鍵活動
-        [guide.activityArray addObjectsFromArray:[self loadActivitySampleArrayWithGuideID2:guide.gui_uuid]];
+        [guide.activityArray addObjectsFromArray:[self loadActivitySampleArrayWithGuide2:guide]];
         
         [array addObject:guide];
     }
@@ -554,7 +554,7 @@ static MDataBaseManager* _director = nil;
         guide.suggestSkill = [self loadSuggestSkillWithID:guide.gui_uuid type:0];
         
         // 關鍵活動
-        [guide.activityArray addObjectsFromArray:[self loadActivitySampleArrayWithGuideID2:guide.gui_uuid]];
+        [guide.activityArray addObjectsFromArray:[self loadActivitySampleArrayWithGuide2:guide]];
         
         [array addObject:guide];
     }
@@ -604,7 +604,7 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
-- (NSArray*)loadActivitySampleArrayWithGuideID2:(NSString*)uuid
+- (NSArray*)loadActivitySampleArrayWithGuide2:(MCustGuide*)guide
 {
     NSString* sql = @"select ma.*, mt.NAME, mt.UNIT, mt.TREND from R_GUIDE_ACT as rga inner join M_ACTIVITY as ma on rga.ACT_ID = ma.ID inner join M_TARGET as mt on ma.TAR_ID = mt.ID where rga.GUIDE_ID = ?";
     // select ma.*, mt.NAME, mt.UNIT, mt.TREND
@@ -615,7 +615,7 @@ static MDataBaseManager* _director = nil;
     
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, uuid];
+    FMResultSet* rs = [self.db executeQuery:sql, guide.gui_uuid];
     while ([rs next]) {
         
         MCustActivity* act = [MCustActivity new];
@@ -628,7 +628,7 @@ static MDataBaseManager* _director = nil;
         act.previos2 = [rs stringForColumn:@"PREVIOS_2"];
         act.status = @"0";
         act.comp_id = [MDirector sharedInstance].currentUser.companyId;
-        act.guide_id = uuid;
+        act.guide_id = guide.uuid;
         
         // 指標
         MCustTarget* target = act.custTarget;

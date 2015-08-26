@@ -63,7 +63,7 @@
 
 - (NSArray*)loadGuideSampleArrayWithPhen2:(MPhenomenon*)phen;
 - (NSArray*)loadGuideSampleArrayWithIssue2:(MIssue*)issue;
-- (NSArray*)loadActivitySampleArrayWithGuideID2:(NSString*)uuid;
+- (NSArray*)loadActivitySampleArrayWithGuide2:(MCustGuide*)guide;
 - (NSArray*)loadWorkItemSampleArrayWithActivity2:(MCustActivity*)act;
 
 // get 議題Sample By 對策
