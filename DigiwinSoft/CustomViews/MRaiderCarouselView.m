@@ -17,10 +17,27 @@
 
 @property (nonatomic, strong) iCarousel* carousel;
 @property (nonatomic, assign) NSInteger itemCount;
+@property (nonatomic, assign) BOOL bFirst;
+
 @end
 
 @implementation MRaiderCarouselView
 
+- (id)init
+{
+    if(self = [super init]){
+        _bFirst = YES;
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    if(self = [super initWithFrame:frame]){
+        _bFirst = YES;
+    }
+    return self;
+}
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -115,7 +132,6 @@
 //    
 //    if(index == current)
 //        return 1.;
-//    
 //}
 
 #pragma mark - iCarouselDataSource 相關
@@ -145,12 +161,26 @@
     
     MCarouselItemView* ciview = (MCarouselItemView*)view;
     ciview.content = phen.subject;
+    ciview.onFacus = (index == carousel.currentItemIndex);
+    
+    if (_bFirst){
+        if(index == 0)
+            ciview.alpha = 1.;
+        else if(index == 1 || index == _itemCount-1)
+            ciview.alpha = 0.8;
+        else if(index == 2 || index == _itemCount-2)
+            ciview.alpha = 0.6;
+        else if(index == 7 || index == _itemCount-7)
+            ciview.alpha = 0.4;
+        else
+            ciview.alpha = 0.0;
+    }
+    
 //    ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
 //    ciview.content = @"小批量接單沒好配套，呆滯急遽增加";
-    ciview.content = @"現代的個人出版到各類紀念冊甚至是攝影集的製作，都可以進行少量且高品質的印刷，其印製的效率與品質也逐年進步。";
+//    ciview.content = @"現代的個人出版到各類紀念冊甚至是攝影集的製作，都可以進行少量且高品質的印刷，其印製的效率與品質也逐年進步。";
 //    ciview.content = @"";
     
-    ciview.onFacus = (index == carousel.currentItemIndex);
     
     [ciview setNeedsDisplay];
     
@@ -176,18 +206,59 @@
 
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel
 {
-    NSInteger last = _itemCount - 1;
+    _bFirst = NO;
+    [self refresh];
     
-    NSInteger index = carousel.currentItemIndex;
-    NSInteger leftIndex = index - 1;
-    if(leftIndex < 0)
-        leftIndex = last;
-    NSInteger rightIndex = index + 1;
-    if(rightIndex == last)
-        rightIndex = 0;
-    [carousel reloadItemAtIndex:index animated:NO];
-    [carousel reloadItemAtIndex:leftIndex animated:NO];
-    [carousel reloadItemAtIndex:rightIndex animated:NO];
+//    NSInteger last = _itemCount - 1;
+//    
+//    NSInteger index = carousel.currentItemIndex;
+//    NSInteger leftIndex = index - 1;
+//    if(leftIndex < 0)
+//        leftIndex = last;
+//    NSInteger rightIndex = index + 1;
+//    if(rightIndex == last)
+//        rightIndex = 0;
+//    [carousel reloadItemAtIndex:index animated:NO];
+//    [carousel reloadItemAtIndex:leftIndex animated:NO];
+//    [carousel reloadItemAtIndex:rightIndex animated:NO];
+}
+
+- (void)refresh
+{
+    NSInteger currentIndex = _carousel.currentItemIndex;
+    [_carousel reloadItemAtIndex:currentIndex animated:NO];
+    
+    for(int i=1;i<=10;i++){
+        NSInteger right = currentIndex + i;
+        NSInteger left = currentIndex - i;
+        CGFloat alpha = 0.;
+        
+        if(right >= _itemCount)
+            right -= _itemCount;
+        
+        if(left < 0)
+            left += _itemCount;
+
+        if(i==1)
+            alpha = 0.8;
+        if(i==2)
+            alpha = 0.6;
+        if(i==7)
+            alpha = 0.4;
+        
+        [self refreshWithIndex:right alpha:alpha];
+        [self refreshWithIndex:left alpha:alpha];
+    }
+}
+
+- (void)refreshWithIndex:(NSInteger)index alpha:(CGFloat)alpha
+{
+    NSInteger currentIndex = _carousel.currentItemIndex;
+    
+    MCarouselItemView* view = (MCarouselItemView*)[_carousel itemViewAtIndex:index];
+    view.onFacus = (index == currentIndex);
+    view.alpha = alpha;
+    [view setNeedsDisplay];
 }
 
 @end

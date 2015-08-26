@@ -29,7 +29,7 @@
 - (UILabel*)createLabelWithFrame:(CGRect)frame font:(UIFont*)font textAlignment:(NSTextAlignment)textAlignment;
 
 - (UIImage*)imageWithCustTarget:(MCustTarget*)taregt;
-- (UIImage*)imageWithTarget:(MTarget*)taregt;
+//- (UIImage*)imageWithTarget:(MTarget*)taregt;
 
 @end
 
