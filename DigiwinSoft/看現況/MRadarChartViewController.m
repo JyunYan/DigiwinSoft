@@ -182,6 +182,12 @@
     radar.dataNow = _data1;
     //_RadarChart.from=1;//1為p9使用，按下lab時push to p8。0為p7使用，按下lab時滾動下方scroll。
     
+    if(_dateArray.count > 0){
+        NSString* dateString = [_dateArray firstObject];
+        radar.dateOldString = dateString;
+        radar.dateNewString = dateString;
+    }
+    
     return radar;
 }
 
@@ -274,6 +280,10 @@
     NSInteger index2 = index;
     NSString* dateString2 = [_dateArray objectAtIndex:index2];
     [self setData2WithDate:dateString2];
+    
+    
+    _RadarChart.dateNewString = dateString1;
+    _RadarChart.dateOldString = dateString2;
     
     [_RadarChart refresh];
 }

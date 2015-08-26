@@ -226,7 +226,7 @@
     if(_dashLineView)
         return;
     
-    CGFloat width = self.frame.size.width * 0.2;
+    CGFloat width = self.frame.size.width * 0.4;
     _dashLineView = [[MDashedLine alloc] initWithFrame:CGRectMake(0, 0, width, self.bounds.size.height)];
     _dashLineView.center = CGPointMake(self.bounds.size.width, self.bounds.size.height / 2.);
     _dashLineView.backgroundColor = [UIColor clearColor];

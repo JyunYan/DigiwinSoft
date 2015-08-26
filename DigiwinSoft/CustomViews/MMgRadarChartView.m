@@ -87,12 +87,12 @@
     
     posX += imgNow.frame.size.width + 4.;
     
-    UILabel* dateNow = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, 64, frame.size.height)];
+    UILabel* dateNow = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, 50, frame.size.height)];
     dateNow.backgroundColor = [UIColor clearColor];
     dateNow.font = [UIFont boldSystemFontOfSize:14.];
     dateNow.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     dateNow.textAlignment = NSTextAlignmentCenter;
-    dateNow.text = @"20151212";
+    dateNow.text = [_dateNewString stringByReplacingOccurrencesOfString:@"-" withString:@""];
     [view addSubview:dateNow];
     
     posX += dateNow.frame.size.width + 20.;
@@ -103,12 +103,12 @@
     
     posX += imgOld.frame.size.width + 4.;
     
-    UILabel* dateOld = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, 64, frame.size.height)];
+    UILabel* dateOld = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, 50, frame.size.height)];
     dateOld.backgroundColor = [UIColor clearColor];
     dateOld.font = [UIFont boldSystemFontOfSize:14.];
     dateOld.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     dateOld.textAlignment = NSTextAlignmentCenter;
-    dateOld.text = @"20151212";
+    dateOld.text = [_dateOldString stringByReplacingOccurrencesOfString:@"-" withString:@""];
     [view addSubview:dateOld];
     
     posX += dateOld.frame.size.width;
