@@ -10,6 +10,25 @@
 
 @implementation MCarouselItemView
 
+- (id)init
+{
+    if(self = [super init]){
+        _alpha = 1.;
+        _pointSize = 16.;
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    if(self = [super initWithFrame:frame]){
+        _alpha = 1.;
+        _pointSize = 16.;
+    }
+    return self;
+}
+
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
@@ -83,10 +102,10 @@
 {
     _onFacus = onFacus;
     if(onFacus){
-        _pointSize = (DEVICE_SCREEN_HEIGHT == 480) ? 18. : 22.;
+        _pointSize = (DEVICE_SCREEN_HEIGHT == 480) ? 16. : 22.;
         _alpha = 1.;
     }else{
-        _pointSize = 14.;
+        _pointSize = (DEVICE_SCREEN_HEIGHT == 480) ? 12. : 14.;
         _alpha = 1.;
     }
 }
