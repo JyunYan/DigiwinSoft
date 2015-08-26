@@ -21,6 +21,9 @@
 @property (nonatomic, strong) NSArray *dataNow;
 @property (nonatomic, strong) NSArray *dataOld;
 
+@property (nonatomic, strong) NSString* dateNewString;
+@property (nonatomic, strong) NSString* dateOldString;
+
 @property (nonatomic, strong) id<MMgRadarChartViewDelegate> delegate;
 
 - (void)setCurrentSpokeIndex:(NSInteger)index;
