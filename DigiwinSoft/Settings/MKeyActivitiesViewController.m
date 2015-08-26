@@ -132,8 +132,8 @@
     posY = indexLabel.frame.origin.y + indexLabel.frame.size.height;
     // 目標值
     NSString* presentValueStr = @"";
-    if (_guide.custTaregt.valueR && ![_guide.custTaregt.valueR isEqualToString:@""])
-        presentValueStr = [NSString stringWithFormat:@"%@ %@", _guide.custTaregt.valueR, _guide.custTaregt.unit];
+    if (_guide.custTaregt.valueT && ![_guide.custTaregt.valueT isEqualToString:@""])
+        presentValueStr = [NSString stringWithFormat:@"%@ %@", _guide.custTaregt.valueT, _guide.custTaregt.unit];
     UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 25, height)];
     presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     presentValueLabel.attributedText=[self attStr:@"目標值：" content:presentValueStr];

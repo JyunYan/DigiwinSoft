@@ -101,7 +101,7 @@
     
     //Label
     UILabel *labValue=[[UILabel alloc]initWithFrame:CGRectMake(labTarget.frame.origin.x+labTarget.frame.size.width+5,125,100, 15)];
-    labValue.text=[NSString stringWithFormat:@"目標值 : %@%@",valueR,unit];
+    labValue.text=[NSString stringWithFormat:@"目標值 : %@%@",valueT,unit];
     labValue.backgroundColor=[UIColor clearColor];
     [labValue setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labValue];
@@ -138,7 +138,7 @@
     
     //Label
     UILabel *labValue2=[[UILabel alloc]initWithFrame:CGRectMake(labTarget2.frame.origin.x+labTarget2.frame.size.width+5,imgGray.frame.origin.y+60,100, 15)];
-    labValue2.text=[NSString stringWithFormat:@"目標值 : %@%@",_guide.custTaregt.valueR,_guide.custTaregt.unit];
+    labValue2.text=[NSString stringWithFormat:@"目標值 : %@%@",_guide.custTaregt.valueT,_guide.custTaregt.unit];
     labValue2.backgroundColor=[UIColor clearColor];
     [labValue2 setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labValue2];
