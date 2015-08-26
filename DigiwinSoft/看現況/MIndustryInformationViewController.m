@@ -75,6 +75,7 @@
 {
     [super viewWillAppear:animated];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     [_tableView reloadData];
 }
 
