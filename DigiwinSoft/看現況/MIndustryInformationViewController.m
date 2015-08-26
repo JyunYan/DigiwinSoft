@@ -23,6 +23,7 @@
 
 #define TAG_LABEL_TITLE 300
 #define TAG_LABEL_DESC 400
+#define TAG_LABEL_DOT 500
 
 
 @interface MIndustryInformationViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -54,7 +55,6 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self prepareData];
     
     CGFloat posX = _viewRect.origin.x;
     CGFloat posY = _viewRect.origin.y;
@@ -75,6 +75,8 @@
 {
     [super viewWillAppear:animated];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    [self prepareData];
+    [_tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -237,6 +239,12 @@
         titleLabel.textColor = [UIColor blackColor];
         [cell addSubview:titleLabel];
         
+        UIImageView* imgDot=[[UIImageView alloc]initWithFrame:CGRectMake(6, posY+12, 6, 6)];
+        imgDot.backgroundColor=[UIColor lightGrayColor];
+        imgDot.layer.cornerRadius=5;
+        imgDot.tag=TAG_LABEL_DOT;
+        [cell addSubview:imgDot];
+
         posY = titleLabel.frame.origin.y + titleLabel.frame.size.height;
         
         UILabel* descLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width*0.85, 45.)];
@@ -250,11 +258,15 @@
     
     UILabel* titleLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_TITLE];
     UILabel* descLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_DESC];
+    UIImageView* imgDot = (UIImageView*)[cell viewWithTag:TAG_LABEL_DOT];
 
     MIndustryInfo* info = [_infoArray objectAtIndex:indexPath.row];
     
     titleLabel.text = info.subject;
     descLabel.text = info.desc;
+    
+    UIColor* color = [[MDirector sharedInstance] getCustomBlueColor];
+    imgDot.backgroundColor=info.isRead?[UIColor clearColor]:color;
     
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
@@ -268,6 +280,7 @@
     
     MIndustryInfo* info = [_infoArray objectAtIndex:indexPath.row];
     
+    [[MDataBaseManager sharedInstance]updateIndustryInfo:info.uuid];
     MInformationDetailViewController* vc = [[MInformationDetailViewController alloc] initWithIndustryInfo:info];
     //vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];

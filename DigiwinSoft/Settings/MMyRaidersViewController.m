@@ -168,8 +168,8 @@
 
     NSString* presentValueStr = @"";
     if (target.valueR && ![target.valueR isEqualToString:@""])
-        presentValueStr = [NSString stringWithFormat:@"現值：%@ %@", target.valueR, target.unit];
-    presentValueLabel.attributedText=[self attStr:@"現值：" content:presentValueStr];
+        presentValueStr = [NSString stringWithFormat:@"%@ %@", target.valueR, target.unit];
+    presentValueLabel.attributedText=[self attStr:@"目標值：" content:presentValueStr];
 
     MUser* user = guide.manager;
     personInChargeLabel.attributedText=[self attStr:@"負責人：" content:user.name];

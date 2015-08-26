@@ -1823,6 +1823,7 @@ static MDataBaseManager* _director = nil;
         info.subject = [rs stringForColumn:@"SUBJECT"];
         info.desc = [rs stringForColumn:@"DESCRIPTION"];
         info.url = [rs stringForColumn:@"URL"];
+        info.isRead=[rs boolForColumn:@"READ"];
         
         MIndustryInfoKind* kind = [MIndustryInfoKind new];
         kind.uuid = [rs stringForColumn:@"KIND_ID"];
@@ -2385,6 +2386,15 @@ static MDataBaseManager* _director = nil;
     }
     
     return b;
+}
+//更新行業情報為已讀
+- (void)updateIndustryInfo:(NSString*)ID
+{
+    NSString* READ=@"1";
+    NSString* sql = @"update M_INFORMATION set READ = ? where ID = ?";
+    BOOL b = [self.db executeUpdate:sql,READ,ID];
+    if(!b)NSLog(@"update guide release to %@ failed: %@", READ, [self.db lastErrorMessage]);
+    else NSLog(@"update Finish");
 }
 
 @end

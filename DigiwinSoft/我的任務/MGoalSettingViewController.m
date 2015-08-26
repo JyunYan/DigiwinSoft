@@ -33,6 +33,8 @@
 @property (nonatomic, strong) UITextField* startTF;
 @property (nonatomic, strong) UITextField* endTF;
 @property (nonatomic, strong) UILabel* unitLabel;
+@property (nonatomic, strong) UITextField* valueText;
+
 @property (nonatomic, strong) CustomIOSAlertView *customIOSAlertView;
 
 @end
@@ -279,12 +281,13 @@
     
     // 數值value
     NSString* text = [self getValue];
-    UITextField* textfield = [self createTextFieldWithFrame:CGRectMake(posX, posY, width*0.2, 30.)
+    _valueText = [self createTextFieldWithFrame:CGRectMake(posX, posY, width*0.2, 30.)
                                                        text:text
                                                         tag:TAG_TEXTFIELD_VALUE];
-    [view addSubview:textfield];
+    _valueText.enabled=NO;
+    [view addSubview:_valueText];
     
-    posX += textfield.frame.size.width + 10;
+    posX += _valueText.frame.size.width + 10;
     
     // 數值單位
     NSString* unit = [self getUnit];
@@ -634,7 +637,18 @@
 {
     NSInteger index = radioGroupView.selectedIndex;
     [self setValueType:index];
-}
+    
+    switch (index) {
+        case 0:
+            _valueText.enabled=NO;
+            break;
+        case 1:
+            _valueText.enabled=YES;
+            break;
+        default:
+            break;
+    }
+    }
 
 #pragma mark - activity / workitem 區分
 

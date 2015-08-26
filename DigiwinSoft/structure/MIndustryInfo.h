@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString* subject;
 @property (nonatomic, strong) NSString* desc;
 @property (nonatomic, strong) NSString* url;
+@property (nonatomic, assign) BOOL isRead;
 
 @property (nonatomic, strong) MIndustryInfoKind* kind;
 
