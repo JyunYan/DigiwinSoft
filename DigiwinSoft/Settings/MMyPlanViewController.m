@@ -152,11 +152,11 @@
     if(guide.fromPhen){
         name = guide.fromPhen.subject;
         tname = guide.fromPhen.target.name;
-        value = [NSString stringWithFormat:@"%@ %@", guide.fromPhen.target.valueR, guide.fromPhen.target.unit];
+        value = [NSString stringWithFormat:@"%@ %@", guide.fromPhen.target.valueT, guide.fromPhen.target.unit];
     }else if (guide.fromIssue){
         name = guide.fromIssue.name;
         tname = guide.fromIssue.target.name;
-        value = [NSString stringWithFormat:@"%@ %@", guide.fromIssue.target.valueR, guide.fromIssue.target.unit];
+        value = [NSString stringWithFormat:@"%@ %@", guide.fromIssue.target.valueT, guide.fromIssue.target.unit];
     }
     
 
@@ -300,8 +300,8 @@
     indexLabel.attributedText = [self attStr:@"指標：" content:target.name];
     
     NSString* presentValueStr = @"";
-    if (target.valueR && ![target.valueR isEqualToString:@""])
-        presentValueStr = [NSString stringWithFormat:@"%@ %@", target.valueR, target.unit];
+    if (target.valueT && ![target.valueT isEqualToString:@""])
+        presentValueStr = [NSString stringWithFormat:@"%@ %@", target.valueT, target.unit];
     presentValueLabel.attributedText = [self attStr:@"目標值：" content:presentValueStr];
 
 
