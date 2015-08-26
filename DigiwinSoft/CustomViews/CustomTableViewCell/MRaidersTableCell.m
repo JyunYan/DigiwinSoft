@@ -208,6 +208,7 @@
     if (cell == nil) {
         cell = [[MActivityTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier size:size];
     }
+
     return cell;
 }
 
@@ -224,8 +225,8 @@
         self.labName = [self createLabelWithFrame:CGRectMake(offset, 0, width * 0.45 - offset, height)
                                              font:[UIFont systemFontOfSize:14.]
                                     textAlignment:NSTextAlignmentLeft];
-        [self addSubview:self.labName];
-        
+        [self.contentView addSubview:self.labName];
+
         offset += self.labName.frame.size.width;
         
         //指派負責人
@@ -234,13 +235,13 @@
         self.btnManager.imageView.layer.cornerRadius = self.btnManager.imageView.frame.size.width / 2;
         self.btnManager.imageView.clipsToBounds = YES;;
         [self.btnManager addTarget:self action:@selector(btnManager:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.btnManager];
+        [self.contentView addSubview:self.btnManager];
         
         //負責人name
         self.managerLabel = [self createLabelWithFrame:CGRectMake(offset, height - 16, self.btnManager.frame.size.width, 16)
                                                   font:[UIFont systemFontOfSize:12.]
                                          textAlignment:NSTextAlignmentCenter];
-        [self addSubview:self.managerLabel];
+        [self.contentView addSubview:self.managerLabel];
         
         offset += self.btnManager.frame.size.width;
         
@@ -248,7 +249,7 @@
         self.btnTargetSet = [self createButtonWithImage:[UIImage imageNamed:@"icon_menu_8.png"]
                                                   frame:CGRectMake(offset, 0, width * 0.18, height)];
         [self.btnTargetSet addTarget:self action:@selector(btnTargetSet:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.btnTargetSet];
+        [self.contentView addSubview:self.btnTargetSet];
         
         offset += self.btnTargetSet.frame.size.width;
         
@@ -256,7 +257,7 @@
         self.btnRaiders = [self createButtonWithImage:[UIImage imageNamed:@"icon_raider.png"]
                                                 frame:CGRectMake(offset, 0, width * 0.18, height)];
         [self.btnRaiders addTarget:self action:@selector(btnRaiders:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.btnRaiders];
+        [self.contentView addSubview:self.btnRaiders];
         
     }
     return self;

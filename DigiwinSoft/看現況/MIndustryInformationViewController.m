@@ -55,7 +55,7 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
+    [self prepareData];
     CGFloat posX = _viewRect.origin.x;
     CGFloat posY = _viewRect.origin.y;
     CGFloat width = _viewRect.size.width;
@@ -75,7 +75,6 @@
 {
     [super viewWillAppear:animated];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self prepareData];
     [_tableView reloadData];
 }
 
@@ -271,6 +270,19 @@
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    // Force your tableview margins (this may be a bad idea)
+    if ([_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([_tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 #pragma mark - Table view delegate
 
@@ -281,6 +293,7 @@
     MIndustryInfo* info = [_infoArray objectAtIndex:indexPath.row];
     
     [[MDataBaseManager sharedInstance]updateIndustryInfo:info.uuid];
+    [_infoArray[indexPath.row]setIsRead:YES];
     MInformationDetailViewController* vc = [[MInformationDetailViewController alloc] initWithIndustryInfo:info];
     //vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
