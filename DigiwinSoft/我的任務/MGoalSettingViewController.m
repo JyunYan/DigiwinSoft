@@ -284,7 +284,6 @@
     _valueText = [self createTextFieldWithFrame:CGRectMake(posX, posY, width*0.2, 30.)
                                                        text:text
                                                         tag:TAG_TEXTFIELD_VALUE];
-    _valueText.enabled=NO;
     [view addSubview:_valueText];
     
     posX += _valueText.frame.size.width + 10;
@@ -641,9 +640,12 @@
     switch (index) {
         case 0:
             _valueText.enabled=NO;
+            _valueText.textColor=[UIColor lightGrayColor];
             break;
         case 1:
             _valueText.enabled=YES;
+            _valueText.textColor=[UIColor blackColor];
+
             break;
         default:
             break;

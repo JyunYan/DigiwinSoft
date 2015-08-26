@@ -91,8 +91,6 @@
     
     offset += label.frame.size.width;
     
-    label = [self createTitleLabelWithText:@"攻略" frame:CGRectMake(offset, 0, width*0.18, height)];
-    [self addSubview:label];
 }
 
 @end

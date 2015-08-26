@@ -16,7 +16,7 @@
 #import "MGanttViewController2.h"
 #import "MRaidersTableCell.h"
 #import "MRaidersTableHeader.h"
-
+#import "MCustomAlertView.h"
 
 #define TAG_LABEL_ACTIVITY 100
 
@@ -90,6 +90,20 @@
     
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ReloadGuide" object:array];
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    // Force your tableview margins (this may be a bad idea)
+    if ([_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([_tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -419,17 +433,10 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)btnRaidersClicked:(MActivityTableCell *)cell
+- (void)btnRaidersClicked:(MActivityTableCell*)cell
 {
-    NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
-    _selectedIndex = indexPath.row;
-    MCustActivity* act = [_activityArray objectAtIndex:_selectedIndex];
     
-    MTaskRaidersViewController* vc = [[MTaskRaidersViewController alloc] initWithCustActivity:act];
-    vc.tabBarExisted = NO;
-    [self.navigationController pushViewController:vc animated:YES];
 }
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -473,10 +480,30 @@
     MActivityTableCell* cell = [MActivityTableCell cellWithTableView:tableView size:size];
     [cell setDelegate:self];
     [cell setDelegateA:self];
-
     [cell prepareWithCustActivity:act];
+    cell.rightUtilityButtons = [self rightButtons];
     
+    cell.btnRaiders.hidden=YES;
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+
     return cell;
+}
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 #pragma mark - Table view delegate
@@ -484,6 +511,38 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    _selectedIndex = indexPath.row;
+    MCustActivity* act = [_activityArray objectAtIndex:_selectedIndex];
+    MTaskRaidersViewController* vc = [[MTaskRaidersViewController alloc] initWithCustActivity:act];
+    vc.tabBarExisted = NO;
+    [self.navigationController pushViewController:vc animated:YES];
 }
+#pragma mark - SWTableViewDelegate
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    MCustomAlertView *alert = [[MCustomAlertView alloc] initWithTitle:@"訊息"
+                                                              message:@"請再次確認是否要刪除？"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"取消"
+                                                    otherButtonTitles:@"確定", nil];
+    //          [alert setObject:guide];
+    [alert show];
+    
+    NSLog(@"clock button was pressed");
+}
+
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    //    [rightUtilityButtons sw_addUtilityButtonWithColor:
+    //     [UIColor colorWithRed:141.0f/255.0f green:206.0f/255.0f blue:231.0f/255.0f alpha:1.0]
+    //                                                title:@"轉攻略"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:140.0f/255.0f green:205.0f/255.0f blue:230.0f/255.0f alpha:1.0]
+                                                title:@"刪除"];
+    
+    return rightUtilityButtons;
+}
+
 
 @end
