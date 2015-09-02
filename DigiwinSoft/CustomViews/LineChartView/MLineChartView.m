@@ -16,6 +16,8 @@
 @property (nonatomic, strong) MDashedLine* dashLineView;
 @property (nonatomic, strong) NSString* topString;
 
+@property (nonatomic) CGFloat dashedLineWidth;
+
 @end
 
 @implementation MLineChartView
@@ -28,6 +30,8 @@
         _points = [NSMutableArray new];
         _scale = 1.;
         _gapX = 0.;
+        
+        _dashedLineWidth = 0.;
     }
     
     return self;
@@ -41,6 +45,8 @@
         _points = [NSMutableArray new];
         _scale = 1.;
         _gapX = 0.;
+        
+        _dashedLineWidth = 0.;
     }
     
     return self;
@@ -60,14 +66,16 @@
     if(count == 0)
         return;
     
-    _gapX = self.frame.size.width / (count - 1);
+    _dashedLineWidth = self.frame.size.width * 0.4;
+
+    _gapX = (self.frame.size.width - _dashedLineWidth) / (count - 1);
     for (int index = 0; index < points.count; index++) {
         
         MTarget* target = [points objectAtIndex:index];
         
         MCoordinate* coord = [MCoordinate new];
         coord.target = target;
-        coord.x = index * _gapX;
+        coord.x = index * _gapX + _dashedLineWidth / 2;
         coord.y = [target.valueR integerValue] * _scale;
         
         [_points addObject:coord];
@@ -110,7 +118,7 @@
     /* 開始繪製矩形*/
     CGContextBeginPath(context);
     CGContextSetRGBFillColor(context, 212./255., 219./255., 227./255., 1.0);
-    CGContextAddRect( context , CGRectMake(0, 0, rect.size.width , rect.size.height));
+    CGContextAddRect( context , CGRectMake(_dashedLineWidth / 2, 0, rect.size.width - _dashedLineWidth, rect.size.height));
     CGContextClosePath(context);
     CGContextDrawPath(context,kCGPathFill);
     
@@ -192,7 +200,9 @@
 
 - (void)drawCoordinateAxis:(CGContextRef)context
 {
-    NSInteger width = self.frame.size.width;
+    CGFloat posX = _dashedLineWidth / 2;
+    
+    NSInteger width = self.frame.size.width - posX;
     NSInteger height = self.frame.size.height;
     
     CGContextSetLineWidth(context, 2.0);
@@ -200,13 +210,13 @@
     CGContextSetStrokeColorWithColor(context, color.CGColor);
     
     /* axis_x */
-    CGContextMoveToPoint(context, 0.0, 1.0);
-    CGContextAddLineToPoint(context, width, 1.0);
+    CGContextMoveToPoint(context, 0.0 + posX, 1.0);
+    CGContextAddLineToPoint(context, width - posX, 1.0);
     CGContextStrokePath(context);
     
     /* axis_y */
-    CGContextMoveToPoint(context, 1.0, 0.0);
-    CGContextAddLineToPoint(context, 1.0, height);
+    CGContextMoveToPoint(context, 1.0 + posX, 0.0);
+    CGContextAddLineToPoint(context, 1.0 + posX, height);
     CGContextStrokePath(context);
     
     NSInteger point_y = height / 4;
@@ -215,7 +225,7 @@
     {
         color = [UIColor whiteColor];// lifgt gray
         CGContextSetStrokeColorWithColor(context, color.CGColor);
-        CGContextMoveToPoint(context, 0.0, point_y * count);
+        CGContextMoveToPoint(context, 0.0 + posX, point_y * count);
         CGContextAddLineToPoint(context, width, point_y * count);
         CGContextStrokePath(context);
     }
@@ -226,9 +236,8 @@
     if(_dashLineView)
         return;
     
-    CGFloat width = self.frame.size.width * 0.4;
-    _dashLineView = [[MDashedLine alloc] initWithFrame:CGRectMake(0, 0, width, self.bounds.size.height)];
-    _dashLineView.center = CGPointMake(self.bounds.size.width, self.bounds.size.height / 2.);
+    _dashLineView = [[MDashedLine alloc] initWithFrame:CGRectMake(0, 0, _dashedLineWidth, self.bounds.size.height)];
+    _dashLineView.center = CGPointMake(self.bounds.size.width - _dashedLineWidth / 2, self.bounds.size.height / 2.);
     _dashLineView.backgroundColor = [UIColor clearColor];
     _dashLineView.topText = _topString;
     [self addSubview:_dashLineView];
@@ -244,7 +253,8 @@
 {
     UIView* view = recognizer.view;
     CGPoint point = [recognizer locationInView:self];
-    BOOL b = CGRectContainsPoint(self.bounds, point);
+    CGRect rect = CGRectMake(self.bounds.origin.x + _dashedLineWidth/2, self.bounds.origin.y, self.bounds.size.width - _dashedLineWidth, self.bounds.size.height);
+    BOOL b = CGRectContainsPoint(rect, point);
     
     if(recognizer.state == UIGestureRecognizerStateBegan){
         NSLog(@"begin");
@@ -252,10 +262,10 @@
         NSLog(@"changed");
         if(b)   // in rect
             view.center = CGPointMake(point.x, view.center.y);
-        else if(point.x < 0 && point.y > 0 && point.y < self.bounds.size.height)    //左側 out rect
-            view.center = CGPointMake(0, view.center.y);
-        else if (point.x > self.bounds.size.width && point.y > 0 && point.y < self.bounds.size.height)  //右側 out rect
-            view.center = CGPointMake(self.bounds.size.width, view.center.y);
+        else if(point.x < _dashedLineWidth / 2 && point.y > 0 && point.y < self.bounds.size.height)    //左側 out rect
+            view.center = CGPointMake(_dashedLineWidth / 2, view.center.y);
+        else if (point.x > self.bounds.size.width - _dashedLineWidth / 2 && point.y > 0 && point.y < self.bounds.size.height)  //右側 out rect
+            view.center = CGPointMake(self.bounds.size.width - _dashedLineWidth / 2, view.center.y);
         [self setBottomTextAtPoint:view.center];
         [self setTopTextAtPoint:view.center];
     }else if(recognizer.state == UIGestureRecognizerStateEnded){
@@ -283,8 +293,8 @@
 
 - (void)setTopTextAtPoint:(CGPoint)point
 {
-    CGFloat right = self.bounds.size.width;
-    CGFloat left = self.bounds.origin.x;
+    CGFloat right = self.bounds.size.width - _dashedLineWidth / 2;
+    CGFloat left = self.bounds.origin.x + _dashedLineWidth / 2;
     
     //if最右測
     if(point.x >= right){
@@ -317,8 +327,8 @@
 
 - (void)setBottomTextAtPoint:(CGPoint)point;
 {
-    CGFloat right = self.bounds.size.width;
-    CGFloat left = self.bounds.origin.x;
+    CGFloat right = self.bounds.size.width - _dashedLineWidth / 2;
+    CGFloat left = self.bounds.origin.x + _dashedLineWidth / 2;
     
     //if最左測
     if(point.x >= right){

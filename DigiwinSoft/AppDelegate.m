@@ -17,6 +17,7 @@
 #import "MMyTaskViewController.h"
 #import "MConfig.h"
 #import "MDataBaseManager.h"
+#import "MReachabilityManager.h"
 
 @interface AppDelegate ()
 
@@ -66,6 +67,8 @@
     }
     [self.window addSubview:splashView];
     [self.window bringSubviewToFront:splashView];
+    
+    [[MReachabilityManager sharedInstance] start];
     
     //SplashAnimate
     [UIView animateWithDuration:1. delay:0. options:0 animations:^{
