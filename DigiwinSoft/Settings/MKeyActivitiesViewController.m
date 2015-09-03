@@ -155,8 +155,9 @@
 
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 30, 30)];
     imageView.backgroundColor = [UIColor clearColor];
-//    imageView.image = [self loadLocationImage:nil];;
-    imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
+//    imageView.image = [self loadLocationImage:nil];
+    if (_guide.manager.name != nil && ![_guide.manager.name isEqualToString:@""])
+        imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
     imageView.layer.cornerRadius = imageView.frame.size.width / 2.;
     imageView.layer.masksToBounds = YES;
     [view addSubview:imageView];

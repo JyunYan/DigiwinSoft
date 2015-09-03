@@ -78,6 +78,7 @@
 		3A85470F1B969DD50074B7A2 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8547061B969DD50074B7A2 /* UIImageView+AFNetworking.m */; };
 		3A8547151B969EB50074B7A2 /* MReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8547121B969EB50074B7A2 /* MReachabilityManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3A8547161B969EB50074B7A2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8547141B969EB50074B7A2 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3A88647F1B97EED9001960F3 /* chart.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A88647E1B97EED9001960F3 /* chart.png */; };
 		3A8D5B881B4F7F4F0025374B /* MMonitorDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8D5B871B4F7F4F0025374B /* MMonitorDetailViewController.m */; };
 		3A8D5B8B1B4F800B0025374B /* MMonitorPageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8D5B8A1B4F800B0025374B /* MMonitorPageContentViewController.m */; };
 		3AB4CE0A1B32822500143374 /* MIndustryRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4CE091B32822500143374 /* MIndustryRaidersViewController.m */; };
@@ -398,6 +399,7 @@
 		3A8547121B969EB50074B7A2 /* MReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MReachabilityManager.m; sourceTree = "<group>"; };
 		3A8547131B969EB50074B7A2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		3A8547141B969EB50074B7A2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		3A88647E1B97EED9001960F3 /* chart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chart.png; sourceTree = "<group>"; };
 		3A8D5B861B4F7F4F0025374B /* MMonitorDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMonitorDetailViewController.h; sourceTree = "<group>"; };
 		3A8D5B871B4F7F4F0025374B /* MMonitorDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMonitorDetailViewController.m; sourceTree = "<group>"; };
 		3A8D5B891B4F800B0025374B /* MMonitorPageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMonitorPageContentViewController.h; sourceTree = "<group>"; };
@@ -957,6 +959,7 @@
 		3AB4CE301B32A12300143374 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3A88647E1B97EED9001960F3 /* chart.png */,
 				38EB1B9C1B7BA0DD004392EC /* bg.jpg */,
 				DCF46AD11B42AAF300C771BB /* bg_industry_raider.jpg */,
 				DCF46AD21B42AAF300C771BB /* bg_status.png */,
@@ -1580,6 +1583,7 @@
 				3A5EA3601B57455D00B5360F /* center.png in Resources */,
 				DC5877781B5DCCCF00D5AC5D /* Icon-Small@3x.png in Resources */,
 				38EB1B9D1B7BA0DD004392EC /* bg.jpg in Resources */,
+				3A88647F1B97EED9001960F3 /* chart.png in Resources */,
 				DC0ADF691B316E340019236D /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
