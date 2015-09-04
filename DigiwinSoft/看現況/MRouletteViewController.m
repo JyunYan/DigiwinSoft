@@ -151,7 +151,7 @@
     
     //往下一頁button
     UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(DEVICE_SCREEN_WIDTH*0.88 - 32., 4, 32, 32)];
-    button.backgroundColor = [[MDirector sharedInstance] getCustomLightGrayColor];
+    [button setBackgroundImage:[UIImage imageNamed:@"chart.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(nextPage:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
 

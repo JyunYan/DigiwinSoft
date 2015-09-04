@@ -98,8 +98,11 @@
     UILabel* label = nil;
     
     // 折線圖
+    CGFloat lineChartWidth = 742;
+    CGFloat dashedLineWidth = lineChartWidth * 0.4;
+    CGRect frame = [[MDirector sharedInstance] getScaledRect:CGRectMake(192-dashedLineWidth+45, 1078-830, lineChartWidth+dashedLineWidth*2-90, 630)];
     MLineChartView* quartz = [[MLineChartView alloc] init];
-    quartz.frame = [[MDirector sharedInstance] getScaledRect:CGRectMake(192,1078-830,742,630)];
+    quartz.frame = frame;
     quartz.points = (NSMutableArray*)_historys;
     quartz.scale = quartz.frame.size.height / 120.;
     quartz.backgroundColor = [UIColor clearColor];

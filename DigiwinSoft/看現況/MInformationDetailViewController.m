@@ -10,6 +10,14 @@
 #import "MDirector.h"
 #import "MConfig.h"
 
+#import "AFNetworking.h"
+#import "MReachabilityManager.h"
+#import "ASFileManager.h"
+
+
+#define TAG_IMAGEVIEW 100
+
+
 @interface MInformationDetailViewController ()
 
 @property (nonatomic, strong) MIndustryInfo* info;
@@ -35,6 +43,11 @@
     
     [self addMainMenu];
     [self initContentView];
+    
+    if([_info.url hasPrefix:@"http"] && [self loadLocationImage:_info.url] == nil){
+        NSURL* url = [NSURL URLWithString:_info.url];
+        [self downloadImageWithUrl:url];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -59,7 +72,9 @@
 -(UIView*) createTopView:(CGRect) rect
 {
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:rect];
-    imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
+//    imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
+    imageView.image = [self loadLocationImage:_info.url];
+    imageView.tag = TAG_IMAGEVIEW;
     return imageView;
 }
 
@@ -133,6 +148,59 @@
                                   attributes:dict
                                      context:nil].size;
     return size;
+}
+
+#pragma mark -request method
+
+-(void)downloadImageWithUrl:(NSURL*)url
+{
+    if(![[MReachabilityManager sharedInstance] isInternetAvailable]){
+        [[MDirector sharedInstance] showAlertDialog:@"無法連線,請檢查網路是否連線!"];
+        return;
+    }
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:[url absoluteString] parameters:nil];
+    
+    AFImageRequestOperation *operation = [[AFImageRequestOperation alloc] initWithRequest:request];
+    
+    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        UIImage* image = (UIImage*)responseObject;
+        NSString* key = [request.URL absoluteString];
+        [self saveImage:image Url:key];
+        
+        UIImageView* imageView = (UIImageView*)[self.view viewWithTag:TAG_IMAGEVIEW];
+        imageView.image = [self loadLocationImage:key];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"訊息" message:@"網頁下載失敗" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [av show];
+        
+    }];
+    [operation start];
+}
+
+-(UIImage*)loadLocationImage:(NSString*)urlstr
+{
+    if(!urlstr)
+        return nil;
+    
+    NSArray* array = [urlstr componentsSeparatedByString:@"/"];
+    NSString* filename = [array lastObject];
+    
+    return [ASFileManager loadImageWithFileName:filename];
+}
+
+-(void)saveImage:(UIImage*)image Url:(NSString*)urlstr
+{
+    NSArray* array = [urlstr componentsSeparatedByString:@"/"];
+    NSString* filename = [array lastObject];
+    [ASFileManager saveImage:image FileName:filename];
 }
 
 @end
