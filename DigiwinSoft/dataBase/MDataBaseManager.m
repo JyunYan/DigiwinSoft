@@ -837,8 +837,80 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
+- (NSArray*)loadAllHistoryTargetArrayWithTargetID:(NSString*)tarid
+{
+    NSString* indid = [MDirector sharedInstance].currentUser.industryId;
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select * from R_IND_TAR as rit inner join M_TARGET as tar on tar.ID = rit.TAR_ID inner join R_COMP_TAR as rct on tar.ID = rct.TAR_ID where rit.IND_ID = ? and tar.ID = ? and rct.COMP_ID = ? order by rct.DATETIME desc";
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, indid, tarid, compid];
+    while([rs next]){
+        MTarget* target = [MTarget new];
+        target.uuid = [rs stringForColumn:@"ID"];
+        target.name = [rs stringForColumn:@"NAME"];
+        
+        target.unit = [rs stringForColumn:@"UNIT"];
+        target.trend = [rs stringForColumn:@"TREND"];
+        
+        target.valueR = [rs stringForColumn:@"VALUE_R"];
+        target.valueT = [rs stringForColumn:@"VALUE_T"];
+        
+        target.datetime = [rs stringForColumn:@"DATETIME"];
+        
+        target.top = [rs stringForColumn:@"TOP"];
+        target.avg = [rs stringForColumn:@"AVG"];
+        target.bottom = [rs stringForColumn:@"BOTTOM"];
+        target.upMin = [rs stringForColumn:@"UP_MIN"];
+        target.upMax = [rs stringForColumn:@"UP_MAX"];
+        
+        [array insertObject:target atIndex:0];
+    }
+    return array;
+    
+    /*
+    //test
+    NSArray* array = [self loadHistoryTargetArrayWithTargetID:tarid limit:12];
+    
+    NSMutableArray* array2 = [NSMutableArray new];
+    NSMutableArray* last = [NSMutableArray new];
+    for (MTarget* target in array) {
+        if([target.datetime hasPrefix:@"2015"])
+            [last addObject:target];
+        if([target.datetime hasPrefix:@"2014"]){
+            NSString* datetime = [target.datetime stringByReplacingOccurrencesOfString:@"2014" withString:@"2005"];
+            target.datetime = datetime;
+            [array2 addObject:target];
+        }
+    }
+    
+    for (int i=2006; i<2015; i++) {
+        array = [self loadHistoryTargetArrayWithTargetID:tarid limit:12];
+        int index = 1;
+        for (MTarget* target in array) {
+            NSString* datetime = [NSString stringWithFormat:@"%d-%02d-01", i, index];
+            //NSLog(@"%02d : %@", index, datetime);
+            target.datetime = datetime;
+            [array2 addObject:target];
+            index ++;
+        }
+    }
+    
+    [array2 addObjectsFromArray:last];
+    
+    int index = 0;
+    for (MTarget* target in array2) {
+        NSLog(@"%@ : %@", target.datetime, target.valueR);
+        index++;
+    }
+    return array2;
+    */
+    
+}
+
 // p29
-- (NSArray*)loadHistoryTargetArrayWithTargetID:tarid limit:(NSInteger)limit
+- (NSArray*)loadHistoryTargetArrayWithTargetID:(NSString*)tarid limit:(NSInteger)limit
 {
     NSString* indid = [MDirector sharedInstance].currentUser.industryId;
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
@@ -854,11 +926,11 @@ static MDataBaseManager* _director = nil;
         sql = [NSString stringWithFormat:@"%@ limit %d", sql, (int)limit];
     
     NSMutableArray* array = [NSMutableArray new];
-    
+
     NSString* unit = @"";
     NSString* datetime = @"";
 
-    FMResultSet* rs = [self.db executeQuery:sql, indid, tarid, compid, limit];
+    FMResultSet* rs = [self.db executeQuery:sql, indid, tarid, compid];
     while([rs next]){
         MTarget* target = [MTarget new];
         target.uuid = [rs stringForColumn:@"ID"];

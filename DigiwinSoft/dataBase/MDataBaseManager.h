@@ -129,6 +129,7 @@
 
 // get 某企業指標實際值的歷史資料(過去一年)
 - (NSArray*)loadHistoryTargetArrayWithTargetID:tarid limit:(NSInteger)limit;
+- (NSArray*)loadAllHistoryTargetArrayWithTargetID:(NSString*)tarid;
 
 // 加入"我的規劃"清單
 - (void)insertGuides:(NSArray*)array from:(NSInteger)from;

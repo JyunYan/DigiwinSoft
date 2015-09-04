@@ -149,7 +149,7 @@
     //對策name
     UITextField* title = [[UITextField alloc]initWithFrame:CGRectMake(0,offset, DEVICE_SCREEN_WIDTH, 44)];
     title.delegate = self;
-    title.text=_guide.name;
+    title.text=@"";
     title.backgroundColor=[UIColor whiteColor];
     title.font = [UIFont systemFontOfSize:14];
     [scroll addSubview:title];

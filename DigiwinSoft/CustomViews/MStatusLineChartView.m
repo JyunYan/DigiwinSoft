@@ -34,11 +34,13 @@
     [self recreateTarChartView];
     
     //折線圖2
-    CGRect frame2 = [[MDirector sharedInstance] getScaledRect:CGRectMake(0, 845, 1080, 780)];
+    CGFloat y = _chart.frame.origin.y + _chart.frame.size.height;
+    //CGRect frame2 = [[MDirector sharedInstance] getScaledRect:CGRectMake(0, 940, 1080, 780)];
+    CGRect frame2 = CGRectMake(0, y, DEVICE_SCREEN_WIDTH, 200);
     MTarChartView2* chart2 = [[MTarChartView2 alloc] initWithFrame:frame2];
     chart2.delegate = self;
     chart2.historys = _historyArray;
-    chart2.backgroundColor = [UIColor clearColor];
+    chart2.backgroundColor = [UIColor whiteColor];
     [self addSubview:chart2];
 }
 
@@ -48,7 +50,7 @@
         [_chart removeFromSuperview];
     
     NSArray* subArray = [_historyArray subarrayWithRange: [self getSubArrayRange]];
-    CGRect frame = [[MDirector sharedInstance] getScaledRect:CGRectMake(0, 0, 1080, 830)];
+    CGRect frame = [[MDirector sharedInstance] getScaledRect:CGRectMake(0, 0, 1080, 940)];
     _chart = [[MTarChartView alloc] initWithFrame:frame];
     _chart.historys = subArray;
     _chart.backgroundColor = [UIColor clearColor];
@@ -69,25 +71,16 @@
     return NSMakeRange(startIndex, subCount);
 }
 
-#pragma mark - MTarChartView2 delegate
+#pragma mark - MTarChartView2Delegate
 
-- (void)moveRange:(NSString *)direction
+- (void)designatedChartDidChanged:(MTarChartView2 *)chartView
 {
-    if ([direction isEqualToString:@"left"]) {
-        if (_rangeIndex > 0)
-            _rangeIndex--;
-        else
-            return;
-    } else if ([direction isEqualToString:@"right"]) {
-        if (_rangeIndex < 2)
-            _rangeIndex++;
-        else
-            return;
-    } else {
-        return;
-    }
+    NSArray* historys = chartView.historys;
+    NSInteger dataIndex = chartView.dataIndex;
+    NSArray* array = [historys objectAtIndex:dataIndex];
     
-    [self recreateTarChartView];
+    _chart.historys = array;
+    [_chart setNeedsDisplay];
 }
 
 @end

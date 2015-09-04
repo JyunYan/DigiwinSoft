@@ -85,14 +85,14 @@
                                                                                      NSParagraphStyleAttributeName:paragraphStyle}];
         if(count==1)
         {
-        [attString drawInRect:CGRectMake(x, self.bounds.origin.y + 15., _pointSize, self.bounds.size.height)];
+            [attString drawInRect:CGRectMake(x, self.bounds.origin.y + 15., _pointSize, self.bounds.size.height)];
         }
         else
         {
-        if (i==0)
-        [attString drawInRect:CGRectMake(x+22, self.bounds.origin.y + 15., _pointSize, self.bounds.size.height)];
-        else
-        [attString drawInRect:CGRectMake(x+22, self.bounds.origin.y + 36., _pointSize, self.bounds.size.height)];
+            if (i==0)
+                [attString drawInRect:CGRectMake(x+22, self.bounds.origin.y + 15., _pointSize, self.bounds.size.height)];
+            else
+                [attString drawInRect:CGRectMake(x+22, self.bounds.origin.y + 24., _pointSize, self.bounds.size.height)];
         }
         x-= _pointSize;
     }

@@ -169,9 +169,11 @@
         else if(index == 1 || index == _itemCount-1)
             ciview.alpha = 0.8;
         else if(index == 2 || index == _itemCount-2)
+            ciview.alpha = 0.7;
+        else if(index == 3 || index == _itemCount-3)
             ciview.alpha = 0.6;
-        else if(index == 7 || index == _itemCount-7)
-            ciview.alpha = 0.4;
+        else if(index == 8 || index == _itemCount-8)
+            ciview.alpha = 0.5;
         else
             ciview.alpha = 0.0;
     }
@@ -242,9 +244,11 @@
         if(i==1)
             alpha = 0.8;
         if(i==2)
+            alpha = 0.7;
+        if(i==3)
             alpha = 0.6;
-        if(i==7)
-            alpha = 0.4;
+        if(i==8)
+            alpha = 0.5;
         
         [self refreshWithIndex:right alpha:alpha];
         [self refreshWithIndex:left alpha:alpha];

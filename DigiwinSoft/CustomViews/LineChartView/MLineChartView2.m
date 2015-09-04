@@ -124,10 +124,12 @@
     /* 折線圖 */
     [self drawLineWithContext:context];
     
+    [self drawYearLabel];
+    
     CGContextRestoreGState(context);
     
     // add chart range view
-    [self addChartRangeView];
+    //[self addChartRangeView];
 }
 
 - (void)fillAreaWithContext:(CGContextRef)context
@@ -189,6 +191,20 @@
     }
     
     CGContextStrokePath(context);
+}
+
+- (void)drawYearLabel
+{
+    MCoordinate* coord = [_points firstObject];
+    NSString* year = [coord.target.datetime substringToIndex:4];
+    
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 30.)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor colorWithRed:85./255. green:85./255. blue:85./255. alpha:1.];
+    label.font = [UIFont systemFontOfSize:13.];
+    label.text = year;
+    [self addSubview:label];
 }
 
 - (void)addChartRangeView

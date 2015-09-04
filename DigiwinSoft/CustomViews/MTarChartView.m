@@ -93,6 +93,8 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    [self clean];
+    
     UILabel* label = nil;
     
     // 折線圖
@@ -127,6 +129,13 @@
     
     //長灰線
     [self createRectAtView:self frame:CGRectMake(290,964-830,500,2) color:[UIColor colorWithRed:187/255.0 green:187/255.0 blue:187/255.0 alpha:187/255.0]];
+}
+
+- (void)clean
+{
+    for (UIView* view in self.subviews) {
+        [view removeFromSuperview];
+    }
 }
 
 -(void) createRectAtView:(UIView*)view  frame:(CGRect)frame color:(UIColor*)color
