@@ -18,6 +18,8 @@
 #import "MConfig.h"
 #import "MDataBaseManager.h"
 #import "MReachabilityManager.h"
+#import "MIndustry.h"
+#import "MDirector.h"
 
 @interface AppDelegate ()
 
@@ -25,13 +27,40 @@
 
 @implementation AppDelegate
 
+- (void)login
+{
+    BOOL login = [[MDataBaseManager sharedInstance] loginWithAccount:@"amigo" Password:@"amigo" CompanyID:@"cmp-001"];
+    if(login){
+        
+        NSUserDefaults* pref = [NSUserDefaults standardUserDefaults];
+        NSString* compid = [pref stringForKey:@"CompId"];
+        NSString* name = [pref stringForKey:@"CompName"];
+        
+        //設定當前industry
+        if(compid && name){
+            MIndustry* industry = [MIndustry new];
+            industry.uuid = compid;
+            industry.name = name;
+            [MDirector sharedInstance].currentIndustry = industry;
+        }else{
+            NSArray* array = [[MDataBaseManager sharedInstance] loadIndustryArray];
+            if(array.count > 0){
+                MIndustry* industry = [array firstObject];
+                [MDirector sharedInstance].currentIndustry = industry;
+                
+                [pref setObject:industry.uuid forKey:@"CompId"];
+                [pref setObject:industry.name forKey:@"CompName"];
+                [pref synchronize];
+            }
+        }
+    }
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [MDataBaseManager sharedInstance];
-    
-    [[MDataBaseManager sharedInstance] loginWithAccount:@"amigo" Password:@"amigo" CompanyID:@"cmp-001"];
+    [self login];
     
     //123
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -120,6 +149,10 @@
 {
     MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
     [drawer toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+    [drawer toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
+        UINavigationController* nav = (UINavigationController*)drawer.leftDrawerViewController;
+        [nav popToRootViewControllerAnimated:YES];
+    }];
 }
 
 - (void) toggleMonitorMap

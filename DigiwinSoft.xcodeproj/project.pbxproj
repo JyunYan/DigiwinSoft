@@ -165,6 +165,8 @@
 		DC6A52B31B3D2E6E001A373F /* MDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6A52B21B3D2E6E001A373F /* MDirector.m */; };
 		DC8135291B49BB29003B56AA /* MTarInfoChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8135281B49BB29003B56AA /* MTarInfoChartView.m */; };
 		DC81352E1B4A57C8003B56AA /* z_thumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */; };
+		DCA9251A1B993B20003B11F0 /* MIndustry.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA925191B993B20003B11F0 /* MIndustry.m */; };
+		DCA9251D1B995448003B11F0 /* MIndustryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA9251C1B995448003B11F0 /* MIndustryListViewController.m */; };
 		DCB3FDE91B54ABA900ED5BFA /* MFlowChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDE81B54ABA900ED5BFA /* MFlowChartView.m */; };
 		DCB3FDEF1B55F67B00ED5BFA /* MFlowChartPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDEE1B55F67B00ED5BFA /* MFlowChartPoint.m */; };
 		DCB3FDF51B56C00C00ED5BFA /* MRaidersTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB3FDF41B56C00C00ED5BFA /* MRaidersTableHeader.m */; };
@@ -541,6 +543,10 @@
 		DC8135271B49BB29003B56AA /* MTarInfoChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MTarInfoChartView.h; path = CustomViews/MTarInfoChartView.h; sourceTree = "<group>"; };
 		DC8135281B49BB29003B56AA /* MTarInfoChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MTarInfoChartView.m; path = CustomViews/MTarInfoChartView.m; sourceTree = "<group>"; };
 		DC81352D1B4A57C8003B56AA /* z_thumbnail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = z_thumbnail.jpg; sourceTree = "<group>"; };
+		DCA925181B993B20003B11F0 /* MIndustry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MIndustry.h; path = structure/MIndustry.h; sourceTree = "<group>"; };
+		DCA925191B993B20003B11F0 /* MIndustry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndustry.m; path = structure/MIndustry.m; sourceTree = "<group>"; };
+		DCA9251B1B995448003B11F0 /* MIndustryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIndustryListViewController.h; sourceTree = "<group>"; };
+		DCA9251C1B995448003B11F0 /* MIndustryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIndustryListViewController.m; sourceTree = "<group>"; };
 		DCB3FDE71B54ABA900ED5BFA /* MFlowChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MFlowChartView.h; path = CustomViews/MFlowChartView.h; sourceTree = "<group>"; };
 		DCB3FDE81B54ABA900ED5BFA /* MFlowChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MFlowChartView.m; path = CustomViews/MFlowChartView.m; sourceTree = "<group>"; };
 		DCB3FDED1B55F67B00ED5BFA /* MFlowChartPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MFlowChartPoint.h; path = structure/MFlowChartPoint.h; sourceTree = "<group>"; };
@@ -765,6 +771,8 @@
 				3A03AA221B3BFF0500923ABB /* MEventDetailViewController.m */,
 				3A5B9E9B1B3D0756005DE125 /* MRecommendTreasuresViewController.h */,
 				3A5B9E9C1B3D0756005DE125 /* MRecommendTreasuresViewController.m */,
+				DCA9251B1B995448003B11F0 /* MIndustryListViewController.h */,
+				DCA9251C1B995448003B11F0 /* MIndustryListViewController.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1237,6 +1245,8 @@
 				DC10144A1B32985600EF7A6F /* MUser.m */,
 				DC1014521B32B69F00EF7A6F /* MWorkItem.h */,
 				DC1014531B32B69F00EF7A6F /* MWorkItem.m */,
+				DCA925181B993B20003B11F0 /* MIndustry.h */,
+				DCA925191B993B20003B11F0 /* MIndustry.m */,
 			);
 			name = structure;
 			sourceTree = "<group>";
@@ -1604,9 +1614,11 @@
 			files = (
 				3A8D5B8B1B4F800B0025374B /* MMonitorPageContentViewController.m in Sources */,
 				DCE951AA1B66C6E200E3C059 /* MMonitorTableCell1.m in Sources */,
+				DCA9251A1B993B20003B11F0 /* MIndustry.m in Sources */,
 				D06C2D271B37A5CD009D2082 /* MDataBaseManager.m in Sources */,
 				3A03AA121B3B9B1900923ABB /* MEventSelectViewController.m in Sources */,
 				3A85470D1B969DD50074B7A2 /* AFURLConnectionOperation.m in Sources */,
+				DCA9251D1B995448003B11F0 /* MIndustryListViewController.m in Sources */,
 				DCE951CA1B69C9F000E3C059 /* MMonitorTableCell2.m in Sources */,
 				3A81B9481B4CDAB600EAF996 /* MGoalSettingViewController.m in Sources */,
 				DC1014511B32B67F00EF7A6F /* MActivity.m in Sources */,

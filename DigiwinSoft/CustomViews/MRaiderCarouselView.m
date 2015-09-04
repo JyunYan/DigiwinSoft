@@ -73,7 +73,7 @@
     label.font = [UIFont boldSystemFontOfSize:24.];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
-    label.text = [MDirector sharedInstance].currentUser.industryName;
+    label.text = [MDirector sharedInstance].currentIndustry.name;
     [self addSubview:label];
 }
 

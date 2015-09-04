@@ -27,5 +27,6 @@
 #define kDidSelectedPhen    @"didSelectedPhen"
 #define kDidAssignManager   @"didAssignManager"
 #define kDidSettingTarget   @"didSettingTarget"
+#define kIndustryDidChanged @"industryDidChanged"
 
 #endif

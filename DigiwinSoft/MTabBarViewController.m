@@ -30,6 +30,11 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.extendedLayoutIncludesOpaqueBars = YES;
 
+    [self initViews];
+}
+
+- (void)initViews
+{
     UITabBarItem* item1 = [[UITabBarItem alloc] initWithTitle:@"監控地圖" image:[UIImage imageNamed:@"tab_icon_1.png"] tag:0];
     MMonitorMapViewController* vc1 = [[MMonitorMapViewController alloc] init];
     UINavigationController* nc1 = [[UINavigationController alloc] initWithRootViewController:vc1];

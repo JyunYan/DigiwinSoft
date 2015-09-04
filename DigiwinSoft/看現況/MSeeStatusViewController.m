@@ -54,7 +54,16 @@
 {
     [super viewWillAppear:animated];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(industryDidChanged:) name:kIndustryDidChanged object:nil];
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -196,6 +205,35 @@
 {
     AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
     [delegate toggleLeft];
+}
+
+#pragma mark - NSNotification actions
+
+- (void)industryDidChanged:(NSNotification*)note
+{
+    // clear
+    [_MEfficacyViewController removeFromParentViewController];
+    [_MEfficacyViewController.view removeFromSuperview];
+    
+    [_pieChartViewController removeFromParentViewController];
+    [_pieChartViewController.view removeFromSuperview];
+    
+    [_industryInformationViewController removeFromParentViewController];
+    [_industryInformationViewController.view removeFromSuperview];
+    
+    // recreate pages
+    [self createEfficacyViewController];
+    [self createPieChartViewController];
+    [self createIndustryInformationViewController];
+    
+    // reset default page
+    [self addChildViewController:_MEfficacyViewController];
+    [self.view addSubview:_MEfficacyViewController.view];
+    
+    // reset segment
+    [_customSegmentedControl moveImgblueBar:0];
+    [_customSegmentedControl setSelectedSegmentIndex:0];
+    [self.view bringSubviewToFront:_customSegmentedControl];
 }
 
 @end

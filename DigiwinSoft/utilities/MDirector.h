@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "MConfig.h"
 #import "MUser.h"
+#import "MIndustry.h"
 #import "MPhenomenon.h"
 #import "MIssue.h"
 
 @interface MDirector : NSObject
 
-@property (nonatomic, strong) MUser* currentUser;   // 目前的user
+@property (nonatomic, strong) MUser* currentUser;           // 目前的user
+@property (nonatomic, strong) MIndustry* currentIndustry;   // 目前的行業
 
 @property (nonatomic, strong) MPhenomenon* selectedPhen;
 @property (nonatomic, strong) MIssue* selectedIssue;

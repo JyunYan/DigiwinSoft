@@ -48,6 +48,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectedPhen:) name:kDidSelectedPhen object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(industryDidChanged:) name:kIndustryDidChanged object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -208,6 +209,16 @@
     NSInteger index = [number integerValue];
     
     [self goToNextPageWithPhenIndex:index];
+}
+
+- (void)industryDidChanged:(NSNotification*)note
+{
+    [self loadData];
+    
+    _rcView.phenArray = aryList;
+    [_rcView setNeedsDisplay];
+    
+    [tbl reloadData];
 }
 
 @end

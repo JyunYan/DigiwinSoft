@@ -45,7 +45,15 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    [self clean];
     [self initViews];
+}
+
+- (void)clean
+{
+    for (UIView* view in self.subviews) {
+        [view removeFromSuperview];
+    }
 }
 
 - (void)initViews

@@ -35,6 +35,7 @@
 
 +(MDataBaseManager*) sharedInstance;
 - (BOOL)loginWithAccount:(NSString*)account Password:(NSString*)pwd CompanyID:(NSString*)compid;
+- (NSArray*)loadIndustryArray;
 
 #pragma mark - 事件 相關
 - (NSArray*)loadEventsWithUser:(MUser*)user;

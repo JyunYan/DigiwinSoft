@@ -19,8 +19,8 @@
 @property (nonatomic, strong) NSString* phone;      // 電話號碼
 
 
-@property (nonatomic, strong) NSString* industryId;     // 行業代號
-@property (nonatomic, strong) NSString* industryName;   // 行業名稱
+//@property (nonatomic, strong) NSString* industryId;     // 行業代號
+//@property (nonatomic, strong) NSString* industryName;   // 行業名稱
 
 @property (nonatomic, strong) NSString* companyId;      // 企業代號
 @property (nonatomic, strong) NSString* companyName;    // 企業名稱

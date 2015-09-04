@@ -14,6 +14,7 @@
 #import "MQuestion.h"
 #import "MIndustryInfo.h"
 #import "MIndustryInfoKind.h"
+#import "MIndustry.h"
 
 @implementation MDataBaseManager
 
@@ -80,11 +81,9 @@ static MDataBaseManager* _director = nil;
 
 - (BOOL) loginWithAccount:(NSString*)account Password:(NSString*)pwd CompanyID:(NSString*)compid
 {
-    NSString* sql = @"select b.NAME, c.NAME, e.* from R_IND_COMP as a inner join M_INDUSTRY as b on a.IND_ID = b.ID inner join M_COMPANY as c on a.COMP_ID = c.ID inner join M_USER as d on d.COMP_ID = c.ID inner join M_EMPLOYEE as e on e.ID = d.EMP_ID where d.ACCOUNT = ? and d.PASSWORD = ? and d.COMP_ID = ?";
-    //select b.NAME, c.NAME, e.*
-    //from R_IND_COMP as a
-    //inner join M_INDUSTRY as b on a.IND_ID = b.ID
-    //inner join M_COMPANY as c on a.COMP_ID = c.ID
+    NSString* sql = @"select c.NAME, e.* from M_COMPANY as c inner join M_USER as d on d.COMP_ID = c.ID inner join M_EMPLOYEE as e on e.ID = d.EMP_ID where d.ACCOUNT = ? and d.PASSWORD = ? and d.COMP_ID = ?";
+    //select c.NAME, e.*
+    //from M_COMPANY as c
     //inner join M_USER as d on d.COMP_ID = c.ID
     //inner join M_EMPLOYEE as e on e.ID = d.EMP_ID
     //where d.ACCOUNT = 'amigo2' and d.PASSWORD = 'amigo2' and d.COMP_ID = 'cmp-001'
@@ -93,12 +92,12 @@ static MDataBaseManager* _director = nil;
     if([rs next]){
         
         MUser* user = [MUser new];
-        user.industryName = [rs stringForColumnIndex:0];    // industry name
-        user.companyName = [rs stringForColumnIndex:1];     // company name
+        //user.industryName = [rs stringForColumnIndex:0];    // industry name
+        user.companyName = [rs stringForColumnIndex:0];     // company name
         user.uuid = [rs stringForColumn:@"ID"];
-        user.industryId = [rs stringForColumn:@"IND_ID"];
+        //user.industryId = [rs stringForColumn:@"IND_ID"];
         user.companyId = [rs stringForColumn:@"COMP_ID"];
-        user.name = [rs stringForColumnIndex:5];            // user name
+        user.name = [rs stringForColumnIndex:3];            // user name
         user.phone = [rs stringForColumn:@"PHONE"];
         user.email = [rs stringForColumn:@"EMAIL"];
         user.arrive_date = [rs stringForColumn:@"ARRIVE_DATE"];
@@ -112,6 +111,24 @@ static MDataBaseManager* _director = nil;
     }else{
         return NO;
     }
+}
+
+- (NSArray*)loadIndustryArray
+{
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select * from R_IND_COMP as ric inner join M_INDUSTRY as ind on ind.ID = ric.IND_ID where ric.COMP_ID = ?";
+    
+    NSMutableArray* array = [NSMutableArray new];
+    
+    FMResultSet* rs = [self.db executeQuery:sql, compid];
+    while ([rs next]) {
+        MIndustry* industry = [MIndustry new];
+        industry.uuid = [rs stringForColumn:@"ID"];
+        industry.name = [rs stringForColumn:@"NAME"];
+        
+        [array addObject:industry];
+    }
+    return array;
 }
 
 - (NSArray*)loadAllSkills
@@ -353,7 +370,7 @@ static MDataBaseManager* _director = nil;
 // p1, p2, p3
 - (NSArray*)loadPhenArray
 {
-    NSString* uuid = [MDirector sharedInstance].currentUser.industryId;
+    NSString* uuid = [MDirector sharedInstance].currentIndustry.uuid;
     NSString* sql = @"select p.*, t.NAME, t.UNIT, t.TREND from R_IND_PHEN as rip inner join M_PHENOMENON as p on p.ID = rip.PHEN_ID inner join M_TARGET as t on t.ID = p.TAR_ID where rip.IND_ID = ?";
     // select p.*, t.NAME, t.UNIT, t.TREND
     // from R_IND_PHEN as rip
@@ -765,10 +782,9 @@ static MDataBaseManager* _director = nil;
 - (NSArray*)loadEmployeeArray
 {
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* sql = @"select ind.NAME, comp.NAME, emp.* from M_EMPLOYEE as emp inner join M_INDUSTRY as ind on ind.ID = emp.IND_ID inner join M_COMPANY as comp on comp.ID = emp.COMP_ID where COMP_ID = ?";
-    // select ind.NAME, comp.NAME, emp.*
+    NSString* sql = @"select comp.NAME, emp.* from M_EMPLOYEE as emp inner join M_COMPANY as comp on comp.ID = emp.COMP_ID where COMP_ID = ?";
+    // select comp.NAME, emp.*
     // from M_EMPLOYEE as emp
-    // inner join M_INDUSTRY as ind on ind.ID = emp.IND_ID
     // inner join M_COMPANY as comp on comp.ID = emp.COMP_ID
     // where COMP_ID = ?
     
@@ -777,10 +793,10 @@ static MDataBaseManager* _director = nil;
     FMResultSet* rs = [self.db executeQuery:sql, compid];
     while ([rs next]) {
         MUser* user = [MUser new];
-        user.industryName = [rs stringForColumnIndex:0];    // industry name
+        //user.industryName = [rs stringForColumnIndex:0];    // industry name
         user.companyName = [rs stringForColumnIndex:1];     // company name
         user.uuid = [rs stringForColumn:@"ID"];
-        user.industryId = [rs stringForColumn:@"IND_ID"];
+        //user.industryId = [rs stringForColumn:@"IND_ID"];
         user.companyId = [rs stringForColumn:@"COMP_ID"];
         user.name = [rs stringForColumnIndex:5];            // user name
         user.phone = [rs stringForColumn:@"PHONE"];
@@ -798,7 +814,7 @@ static MDataBaseManager* _director = nil;
 // p25
 - (NSArray*)loadIssueArrayByGudieID:(NSString*)guideid
 {
-    NSString* industryId = [MDirector sharedInstance].currentUser.industryId;
+    NSString* industryId = [MDirector sharedInstance].currentIndustry.uuid;
     NSString* sql = @"select tar.NAME, tar.UNIT, tar.TREND, iss.*, rit.* from R_GUIDE_ISSUE as rgi inner join M_ISSUE as iss on iss.ID = rgi.ISSUE_ID inner join M_TARGET as tar on iss.TAR_ID = tar.ID inner join R_IND_TAR as rit on rit.TAR_ID = tar.ID where rgi.GUIDE_ID = ? AND rit.IND_ID = ?";
     // select tar.NAME, tar.UNIT, tar.TREND, iss.*, rit.*
     // from R_GUIDE_ISSUE as rgi
@@ -839,7 +855,7 @@ static MDataBaseManager* _director = nil;
 
 - (NSArray*)loadAllHistoryTargetArrayWithTargetID:(NSString*)tarid
 {
-    NSString* indid = [MDirector sharedInstance].currentUser.industryId;
+    NSString* indid = [MDirector sharedInstance].currentIndustry.uuid;
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
     NSString* sql = @"select * from R_IND_TAR as rit inner join M_TARGET as tar on tar.ID = rit.TAR_ID inner join R_COMP_TAR as rct on tar.ID = rct.TAR_ID where rit.IND_ID = ? and tar.ID = ? and rct.COMP_ID = ? order by rct.DATETIME desc";
     
@@ -912,7 +928,7 @@ static MDataBaseManager* _director = nil;
 // p29
 - (NSArray*)loadHistoryTargetArrayWithTargetID:(NSString*)tarid limit:(NSInteger)limit
 {
-    NSString* indid = [MDirector sharedInstance].currentUser.industryId;
+    NSString* indid = [MDirector sharedInstance].currentIndustry.uuid;
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
     NSString* sql = @"select * from R_IND_TAR as rit inner join M_TARGET as tar on tar.ID = rit.TAR_ID inner join R_COMP_TAR as rct on tar.ID = rct.TAR_ID where rit.IND_ID = ? and tar.ID = ? and rct.COMP_ID = ? order by rct.DATETIME desc";
     // select *
@@ -1601,17 +1617,18 @@ static MDataBaseManager* _director = nil;
 
 - (NSArray*)loadQuestionArrayWithKeyword:(NSString*)keyword
 {
+    if(!keyword || [keyword isEqualToString:@""])
+        return [NSArray new];
+    
     NSString* sql = @"select * from M_QUESTION as q";
     
     // 模糊搜尋
-    if(keyword && ![keyword isEqualToString:@""]){
-        for (int index = 0; index < keyword.length; index++) {
-            NSString* keychar = [keyword substringWithRange:NSMakeRange(index, 1)];
-            if(index == 0)
-                sql = [sql stringByAppendingFormat:@" where q.SUBJECT like '%%%@%%'", keychar];
-            else
-                sql = [sql stringByAppendingFormat:@" or q.SUBJECT like '%%%@%%'", keychar];
-        }
+    for (int index = 0; index < keyword.length; index++) {
+        NSString* keychar = [keyword substringWithRange:NSMakeRange(index, 1)];
+        if(index == 0)
+            sql = [sql stringByAppendingFormat:@" where q.SUBJECT like '%%%@%%'", keychar];
+        else
+            sql = [sql stringByAppendingFormat:@" or q.SUBJECT like '%%%@%%'", keychar];
     }
     
     NSMutableArray* array = [NSMutableArray new];
@@ -1882,7 +1899,7 @@ static MDataBaseManager* _director = nil;
 
 - (NSArray*)loadIndustryInfoArrayWithKindID:(NSString*)kindid
 {
-    NSString* indid = [MDirector sharedInstance].currentUser.industryId;
+    NSString* indid = [MDirector sharedInstance].currentIndustry.uuid;
     NSString* sql = @"select info.*, kind.NAME from R_IND_INFO as rii inner join M_INFORMATION as info on info.ID = rii.INFO_ID inner join M_INFO_KIND as kind on kind.ID = info.KIND_ID where kind.ID = ? and rii.IND_ID = ?";
     
     NSMutableArray* array = [NSMutableArray new];
@@ -2009,10 +2026,9 @@ static MDataBaseManager* _director = nil;
         return nil;
     
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* sql = @"select ind.NAME, comp.NAME, emp.* from M_EMPLOYEE as emp inner join M_INDUSTRY as ind on ind.ID = emp.IND_ID inner join M_COMPANY as comp on comp.ID = emp.COMP_ID where emp.ID = ? and emp.COMP_ID = ? limit 1";
-    // select ind.NAME, comp.NAME, emp.*
+    NSString* sql = @"select comp.NAME, emp.* from M_EMPLOYEE as emp inner join M_COMPANY as comp on comp.ID = emp.COMP_ID where emp.ID = ? and emp.COMP_ID = ? limit 1";
+    // select comp.NAME, emp.*
     // from M_EMPLOYEE as emp
-    // inner join M_INDUSTRY as ind on ind.ID = emp.IND_ID
     // inner join M_COMPANY as comp on comp.ID = emp.COMP_ID
     // where emp.ID = 'emp-001' and emp.COMP_ID = 'cmp-001'
     // limit 1
@@ -2021,10 +2037,10 @@ static MDataBaseManager* _director = nil;
     if([rs next]){
         
         MUser* employee = [MUser new];
-        employee.industryName = [rs stringForColumnIndex:0];    // industry name
+        //employee.industryName = [rs stringForColumnIndex:0];    // industry name
         employee.companyName = [rs stringForColumnIndex:1];     // company name
         employee.uuid = [rs stringForColumn:@"ID"];
-        employee.industryId = [rs stringForColumn:@"IND_ID"];
+        //employee.industryId = [rs stringForColumn:@"IND_ID"];
         employee.companyId = [rs stringForColumn:@"COMP_ID"];
         employee.name = [rs stringForColumn:@"NAME"];            // user name
         employee.phone = [rs stringForColumn:@"PHONE"];

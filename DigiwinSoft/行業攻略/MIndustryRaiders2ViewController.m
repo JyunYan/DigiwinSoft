@@ -339,11 +339,6 @@
 
 #pragma mark - UIButton
 
--(void)clickedBtnSetting:(id)sender
-{
-    AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
-    [delegate toggleLeft];
-}
 - (void)actionAddMyList:(id)sender{
     
     BOOL b = NO;

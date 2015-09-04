@@ -63,10 +63,17 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self refresh];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(industryDidChanged:) name:kIndustryDidChanged object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -324,6 +331,13 @@
 {
     MTasksDeployedViewController* vc = [[MTasksDeployedViewController alloc] initWithCustGuide:custGuide];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - NSNotification actions
+
+- (void)industryDidChanged:(NSNotification*)note
+{
+    [self refresh];
 }
 
 @end

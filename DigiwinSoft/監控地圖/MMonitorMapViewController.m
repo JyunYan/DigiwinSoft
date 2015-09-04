@@ -60,6 +60,18 @@
     [self addMainMenu];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(industryDidChanged:) name:kIndustryDidChanged object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -167,6 +179,29 @@
             return YES;
     }
     return NO;
+}
+
+#pragma mark - NSNotification actions
+
+- (void)industryDidChanged:(NSNotification*)note
+{
+    _dataArray = [[MDataBaseManager sharedInstance] loadMonitorGuideData];
+    [self prepareIssueGroup];
+    
+    if(_monMapView1){
+        [_monMapView1 setDataArray:_dataArray];
+        [_monMapView1 setIssueGroup:_issueGroup];
+        [_monMapView1 setNeedsDisplay];
+    }
+    if(_monMapView2){
+        [_monMapView2 setDataArray:_dataArray];
+        [_monMapView2 setIssueGroup:_issueGroup];
+        [_monMapView2 setNeedsDisplay];
+    }
+    
+    UISegmentedControl* segment = (UISegmentedControl*)self.navigationItem.titleView;
+    segment.selectedSegmentIndex = 0;
+    [self bringMonitorMapView1ToFront];
 }
 
 @end

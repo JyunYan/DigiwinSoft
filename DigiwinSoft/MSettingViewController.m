@@ -14,6 +14,7 @@
 #import "MDirector.h"
 #import "MSettingTableViewCell.h"
 #import "MDataBaseManager.h"
+#import "MIndustryListViewController.h"
 
 
 #define TAG_IMAGEVIEW_NUM 100
@@ -38,20 +39,8 @@
     self.view.backgroundColor = [UIColor blackColor];
 
     
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-
-    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    CGFloat screenWidth = screenFrame.size.width;
-    CGFloat screenHeight = screenFrame.size.height;
-    
-    
-    CGFloat posX = 0;
-    CGFloat posY = 0;
-    CGFloat width = screenWidth - 60;
-    CGFloat height = screenHeight + statusBarHeight;
-    
-    UIView* listView = [self createListView:CGRectMake(posX, posY, width, height)];
-    [self.view addSubview:listView];
+    _tableView = [self createListView:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH - 60., DEVICE_SCREEN_HEIGHT)];
+    [self.view addSubview:_tableView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -68,27 +57,17 @@
 
 #pragma mark - create view
 
-- (UIView*)createListView:(CGRect) rect
+- (UITableView*)createListView:(CGRect) rect
 {
-    UIView* view = [[UIView alloc] initWithFrame:rect];
+    UITableView* table = [[UITableView alloc] initWithFrame:rect];
+    table.backgroundColor = [UIColor whiteColor];
+    table.delegate = self;
+    table.dataSource = self;
+    table.backgroundColor = [UIColor blackColor];
+    table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    table.bounces = NO;
     
-    CGFloat viewWidth = rect.size.width;
-    CGFloat viewHeight = rect.size.height;
-    
-    CGFloat posX = 0;
-    CGFloat posY = 0;
-    CGFloat width = viewWidth;
-    CGFloat height = viewHeight;
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor blackColor];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [view addSubview:_tableView];
-    
-    return view;
+    return table;
 }
 
 
@@ -314,6 +293,8 @@
         
     } else if (row == 10) {
         NSLog(@"行業切換");
+        MIndustryListViewController* vc = [[MIndustryListViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (row == 11) {
         
     }

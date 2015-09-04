@@ -63,7 +63,17 @@
     [super viewWillAppear:animated];
     self.automaticallyAdjustsScrollViewInsets = NO;
     //[self prepareData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(industryDidChanged:) name:kIndustryDidChanged object:nil];
+    
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
@@ -422,4 +432,16 @@
     NSString *formatted = [formatter stringFromNumber:num];
     return formatted;
 }
+
+#pragma mark - NSNotification actions
+
+- (void)industryDidChanged:(NSNotification*)note
+{
+    _textField.text = @"";
+    _selectedQuestion = nil;
+    _tblResult.hidden = YES;
+    
+    [_tbl reloadData];
+}
+
 @end
