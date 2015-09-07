@@ -269,8 +269,11 @@
     
     MUser* user = [_array objectAtIndex:indexPath.row];
     
+    UIImage* image = [UIImage imageNamed:user.thumbnail];
+    image = (image) ? image : [UIImage imageNamed:@"icon_manager.png"];
+    
     checkbox.image = (user.bSelected) ? [UIImage imageNamed:@"checkbox_fill.png"] : [UIImage imageNamed:@"checkbox_empty.png"];
-    thumbnail.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
+    thumbnail.image = image;
     name.text = [NSString stringWithFormat:@"姓名 : %@", user.name];
     level.text = [NSString stringWithFormat:@"職能 : %@", [self getSkillStringWithEmployee:user]];
     day.text = [NSString stringWithFormat:@"到職日 : %@", user.arrive_date];

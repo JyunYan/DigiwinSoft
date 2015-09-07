@@ -82,8 +82,8 @@
     view.backgroundColor = [UIColor blackColor];
     
     
-//    NSURL *movieURL = [NSURL URLWithString:_treasure.url];
-    NSURL *movieURL = [NSURL URLWithString:@"http://techslides.com/demos/sample-videos/small.mp4"];
+    NSURL *movieURL = [NSURL URLWithString:_treasure.url];
+//    NSURL *movieURL = [NSURL URLWithString:@"http://techslides.com/demos/sample-videos/small.mp4"];
     _moviePlayerView = [[MPMoviePlayerController alloc] initWithContentURL:movieURL];
         
     _moviePlayerView.scalingMode = MPMovieScalingModeAspectFit;
