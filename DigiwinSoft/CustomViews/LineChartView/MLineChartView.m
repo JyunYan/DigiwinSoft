@@ -206,12 +206,12 @@
     NSInteger height = self.frame.size.height;
     
     CGContextSetLineWidth(context, 2.0);
-    UIColor* color = [UIColor lightGrayColor];// deep bule
+    UIColor* color = [UIColor lightGrayColor];
     CGContextSetStrokeColorWithColor(context, color.CGColor);
     
     /* axis_x */
     CGContextMoveToPoint(context, 0.0 + posX, 1.0);
-    CGContextAddLineToPoint(context, width - posX, 1.0);
+    CGContextAddLineToPoint(context, width, 1.0);
     CGContextStrokePath(context);
     
     /* axis_y */
@@ -223,7 +223,7 @@
     
     for (int count = 1; count < 5; count++)
     {
-        color = [UIColor whiteColor];// lifgt gray
+        color = [UIColor whiteColor];// light gray
         CGContextSetStrokeColorWithColor(context, color.CGColor);
         CGContextMoveToPoint(context, 0.0 + posX, point_y * count);
         CGContextAddLineToPoint(context, width, point_y * count);
