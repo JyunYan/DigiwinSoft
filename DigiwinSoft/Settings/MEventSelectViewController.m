@@ -54,7 +54,7 @@
     // Do any additional setup after loading the view.
     self.extendedLayoutIncludesOpaqueBars = YES;
 
-    self.title = @"事件清單";
+    self.title = NSLocalizedString(@"事件清單", @"事件清單");
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self addMainMenu];
@@ -154,7 +154,7 @@
     UIView* leftView = [[UILabel alloc] initWithFrame:CGRectMake(posX, 0, width/2, height)];
     [bottomView addSubview:leftView];
     // 事件碼
-    NSString* eventCodeStr = [NSString stringWithFormat:@"事件碼：%@", _event.uuid];
+    NSString* eventCodeStr = [NSString stringWithFormat:@"%@：%@", NSLocalizedString(@"事件碼", @"事件碼"), _event.uuid];
     UILabel* eventCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width/2, 30)];
     eventCodeLabel.text = eventCodeStr;
     eventCodeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
@@ -163,7 +163,7 @@
     
     posY = eventCodeLabel.frame.origin.y + eventCodeLabel.frame.size.height;
     // 發生日
-    NSString* occurrenceDateStr = [NSString stringWithFormat:@"發生日：%@", _event.start];
+    NSString* occurrenceDateStr = [NSString stringWithFormat:@"%@：%@", NSLocalizedString(@"發生日", @"發生日"), _event.start];
     UILabel* occurrenceDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, 30)];
     occurrenceDateLabel.text = occurrenceDateStr;
     occurrenceDateLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
@@ -172,7 +172,7 @@
     
     posY = occurrenceDateLabel.frame.origin.y + occurrenceDateLabel.frame.size.height;
     // 發生期間
-    NSString* duringHappenStr = [NSString stringWithFormat:@"發生期間：%@", [self getPeriodDayWithStartDate:_event.start]];
+    NSString* duringHappenStr = [NSString stringWithFormat:@"%@：%@", NSLocalizedString(@"發生期間", @"發生期間"), [self getPeriodDayWithStartDate:_event.start]];
     UILabel* duringHappenLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, posY, width/2, 30)];
     duringHappenLabel.text = duringHappenStr;
     duringHappenLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
@@ -190,7 +190,7 @@
     posY = 0;
 
     UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 70, 30)];
-    personInChargeTitleLabel.text = @"負 責 人 ：";
+    personInChargeTitleLabel.text = [NSString stringWithFormat:@"%@ ：", NSLocalizedString(@"負責人", @"負責人")];
     personInChargeTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     personInChargeTitleLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:personInChargeTitleLabel];
@@ -208,7 +208,7 @@
     posY = personInChargeLabel.frame.origin.y + personInChargeLabel.frame.size.height;
 
     UILabel* reportingHierarchyTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 70, 30)];
-    reportingHierarchyTitleLabel.text = @"上報層級：";
+    reportingHierarchyTitleLabel.text = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"上報層級", @"上報層級")];
     reportingHierarchyTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     reportingHierarchyTitleLabel.font = [UIFont systemFontOfSize:textSize];
     [rightView addSubview:reportingHierarchyTitleLabel];
@@ -238,7 +238,7 @@
 
     UIButton* nextButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     nextButton.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
-    [nextButton setTitle:@"下一步" forState:UIControlStateNormal];
+    [nextButton setTitle:NSLocalizedString(@"下一步", @"下一步") forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(actionNext:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:nextButton];
     
@@ -246,7 +246,7 @@
     
     UIButton* addButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     addButton.backgroundColor = [UIColor lightGrayColor];
-    [addButton setTitle:@"新增" forState:UIControlStateNormal];
+    [addButton setTitle:NSLocalizedString(@"新增", @"新增") forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(actionAdd:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:addButton];
 
@@ -340,6 +340,7 @@
     return 0;
 }
 
+/*
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     CGFloat tableWidth = tableView.frame.size.width;
@@ -402,6 +403,7 @@
     
     return header;
 }
+*/
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -450,7 +452,7 @@
         
         // 現象狀況
         UILabel* phenomenonStatusTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, height)];
-        phenomenonStatusTitleLabel.text = @"現象狀況：";
+        phenomenonStatusTitleLabel.text = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"現象狀況", @"現象狀況")];
         phenomenonStatusTitleLabel.font = [UIFont systemFontOfSize:textSize];
         phenomenonStatusTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         [cell addSubview:phenomenonStatusTitleLabel];
@@ -468,7 +470,7 @@
         
         // 可能原因
         UILabel* possibleCausesTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 75, 30)];
-        possibleCausesTitleLabel.text = @"可能原因：";
+        possibleCausesTitleLabel.text = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"可能原因", @"可能原因")];
         possibleCausesTitleLabel.font = [UIFont systemFontOfSize:textSize];
         possibleCausesTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         [cell addSubview:possibleCausesTitleLabel];

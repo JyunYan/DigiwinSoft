@@ -75,7 +75,7 @@
     
     //Label
     UILabel *labAvgTarget=[[UILabel alloc]initWithFrame:CGRectMake(20,80, 85, 15)];
-    labAvgTarget.text=@"衡量指標設定";
+    labAvgTarget.text = NSLocalizedString(@"衡量指標設定", @"衡量指標設定");
     labAvgTarget.backgroundColor=[UIColor whiteColor];
     [labAvgTarget setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labAvgTarget];
@@ -87,7 +87,7 @@
     
     //Label
     UILabel *labName=[[UILabel alloc]initWithFrame:CGRectMake(20,125, 85, 15)];
-    labName.text=@"指標名稱";
+    labName.text = NSLocalizedString(@"指標名稱", @"指標名稱");
     labName.backgroundColor=[UIColor whiteColor];
     [labName setFont:[UIFont systemFontOfSize:14]];
     labName.textAlignment = NSTextAlignmentJustified;
@@ -107,7 +107,7 @@
     
     //Label
     UILabel *labInit=[[UILabel alloc]initWithFrame:CGRectMake(20, 170, 85, 15)];
-    labInit.text=@"初始值";
+    labInit.text = NSLocalizedString(@"初始值", @"初始值");
     labInit.backgroundColor=[UIColor whiteColor];
     [labInit setFont:[UIFont systemFontOfSize:14]];
     labInit.textAlignment = NSTextAlignmentJustified;
@@ -135,7 +135,7 @@
     
     //Label
     UILabel *labTarget=[[UILabel alloc]initWithFrame:CGRectMake(20,215, 85, 15)];
-    labTarget.text=@"目標值";
+    labTarget.text = NSLocalizedString(@"目標值", @"目標值");
     labTarget.backgroundColor=[UIColor whiteColor];
     [labTarget setFont:[UIFont systemFontOfSize:14]];
     labTarget.textAlignment = NSTextAlignmentJustified;
@@ -170,7 +170,7 @@
     
     //Label
     UILabel *labscheduleTarget=[[UILabel alloc]initWithFrame:CGRectMake(20,270, 85, 15)];
-    labscheduleTarget.text=@"時程設定";
+    labscheduleTarget.text = NSLocalizedString(@"時程設定", @"時程設定");
     labscheduleTarget.backgroundColor=[UIColor whiteColor];
     [labscheduleTarget setFont:[UIFont systemFontOfSize:14]];
     labscheduleTarget.textAlignment = NSTextAlignmentJustified;
@@ -183,7 +183,7 @@
     
     //Label
     UILabel *labTargetDay=[[UILabel alloc]initWithFrame:CGRectMake(20,315, 120, 15)];
-    labTargetDay.text=@"預計達成日";
+    labTargetDay.text = NSLocalizedString(@"預計達成日", @"預計達成日");
     labTargetDay.backgroundColor=[UIColor whiteColor];
     [labTargetDay setFont:[UIFont systemFontOfSize:14]];
     labTargetDay.textAlignment = NSTextAlignmentJustified;

@@ -44,7 +44,7 @@
     // Do any additional setup after loading the view.
     self.extendedLayoutIncludesOpaqueBars = YES;
 
-    self.title = @"我的規劃";
+    self.title = NSLocalizedString(@"我的規劃", @"我的規劃");
     self.view.backgroundColor = [UIColor lightGrayColor];
     
     [self addMainMenu];
@@ -161,10 +161,11 @@
     
 
     posY = 10;
-
+    
     // 緣起
+    NSString* title = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"緣起", @"緣起")];
     UILabel* subjectLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    subjectLabel.attributedText = [self attStr:@"緣起：" content:name];
+    subjectLabel.attributedText = [self attStr:title content:name];
     subjectLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [header addSubview:subjectLabel];
     
@@ -181,18 +182,20 @@
     width = (tableWidth - posX) / 2;
     height = 30;
     //指標
+    title = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"指標", @"指標")];
     UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    indexLabel.attributedText = [self attStr:@"指標：" content:tname];
+    indexLabel.attributedText = [self attStr:title content:tname];
     indexLabel.font = [UIFont systemFontOfSize:textSize];
     [header addSubview:indexLabel];
     
     
     posX = indexLabel.frame.origin.x + indexLabel.frame.size.width;
     // 目標值
+    title = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"目標值", @"目標值")];
     UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    presentValueLabel.attributedText = [self attStr:@"目標值：" content:value];
+    presentValueLabel.attributedText = [self attStr:title content:value];
     presentValueLabel.font = [UIFont systemFontOfSize:textSize];
     [header addSubview:presentValueLabel];
     
@@ -295,18 +298,22 @@
     UILabel* presentValueLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PRESENT_VALUE];
     UILabel* personInChargeLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PERSON_IN_CHARGE];
     
-    countermeasureLabel.attributedText = [self attStr:@"對策：" content:guide.name];
+    NSString* str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"對策", @"對策")];
+    countermeasureLabel.attributedText = [self attStr:str content:guide.name];
     
-    indexLabel.attributedText = [self attStr:@"指標：" content:target.name];
+    str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"指標", @"指標")];
+    indexLabel.attributedText = [self attStr:str content:target.name];
     
+    str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"目標值", @"目標值")];
     NSString* presentValueStr = @"";
     if (target.valueT && ![target.valueT isEqualToString:@""])
         presentValueStr = [NSString stringWithFormat:@"%@ %@", target.valueT, target.unit];
-    presentValueLabel.attributedText = [self attStr:@"目標值：" content:presentValueStr];
+    presentValueLabel.attributedText = [self attStr:str content:presentValueStr];
 
-
+    
     MUser* user = guide.manager;
-    personInChargeLabel.attributedText = [self attStr:@"負責人：" content:user.name];
+    str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"負責人", @"負責人")];
+    personInChargeLabel.attributedText = [self attStr:str content:user.name];
    
     return cell;
 }
@@ -348,12 +355,12 @@
                     _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
                     [_tableView reloadData];
 
-                    [[MDirector sharedInstance] showAlertDialog:@"轉入成功"];
+                    [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"轉入成功", @"轉入成功")];
                 } else {
-                    [[MDirector sharedInstance] showAlertDialog:@"轉入失敗"];
+                    [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"轉入失敗", @"轉入失敗")];
                 }
             } else {
-                [[MDirector sharedInstance] showAlertDialog:@"此規劃尚未指派負責人"];
+                [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"此規劃尚未指派負責人", @"此規劃尚未指派負責人")];
             }
             
             NSLog(@"clock button was pressed");
@@ -361,11 +368,11 @@
         }
         case 1:
         {
-            MCustomAlertView *alert = [[MCustomAlertView alloc] initWithTitle:@"訊息"
-                                                            message:@"請再次確認是否要刪除？"
+            MCustomAlertView *alert = [[MCustomAlertView alloc] initWithTitle:NSLocalizedString(@"訊息", @"訊息")
+                                                            message:NSLocalizedString(@"請再次確認是否要刪除？", @"請再次確認是否要刪除？")
                                                            delegate:self
-                                                  cancelButtonTitle:@"取消"
-                                                  otherButtonTitles:@"確定", nil];
+                                                  cancelButtonTitle:NSLocalizedString(@"取消", @"取消")
+                                                  otherButtonTitles:NSLocalizedString(@"確定", @"確定"), nil];
             [alert setObject:guide];
             [alert show];
 
@@ -382,10 +389,10 @@
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:141.0f/255.0f green:206.0f/255.0f blue:231.0f/255.0f alpha:1.0]
-                                                title:@"轉攻略"];
+                                                title:NSLocalizedString(@"轉攻略", @"轉攻略")];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:140.0f/255.0f green:205.0f/255.0f blue:230.0f/255.0f alpha:1.0]
-                                                title:@"刪除"];
+                                                title:NSLocalizedString(@"刪除", @"刪除")];
     
     return rightUtilityButtons;
 }
@@ -403,10 +410,13 @@
         {
             MCustomAlertView *customAlertView = (MCustomAlertView*)alertView;
             MCustGuide* guide = [customAlertView object];
-            [[MDataBaseManager sharedInstance] deleteFromPlanWithCustGude:guide];
-            
-            _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
+            BOOL b = [[MDataBaseManager sharedInstance] deleteFromPlanWithCustGude:guide];
+            if(b)
+                _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
+            else
+                [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"刪除失敗", @"刪除失敗")];
             [_tableView reloadData];
+            
             break;
         }
     }
@@ -421,7 +431,7 @@
         
         //紅色"尚未設定"
         NSDictionary * attributesRED = [NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
-        NSAttributedString * strDefault = [[NSAttributedString alloc] initWithString:@"尚未設定" attributes:attributesRED];
+        NSAttributedString * strDefault = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"尚未設定", @"尚未設定") attributes:attributesRED];
         
         [attStr appendAttributedString:strDefault];
     }

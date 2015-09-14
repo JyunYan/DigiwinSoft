@@ -17,6 +17,10 @@
 #import "MTarget.h"
 #import "MFlowChartView.h"
 #import "MActFlowChart.h"
+#import "MVideoPlayerView.h"
+
+
+
 
 @interface MRaidersDescriptionViewController ()<UITextFieldDelegate, MActFlowChartDelegate, MTaskRaidersViewControllerDelegate>
 {
@@ -24,8 +28,9 @@
     CGFloat screenHeight;
 }
 
-@property (nonatomic, strong) MPMoviePlayerController* player;
+//@property (nonatomic, strong) MPMoviePlayerController* player;
 @property (nonatomic, strong) MActFlowChart* flowChart;
+@property (nonatomic, strong) MVideoPlayerView* player;
 
 @end
 
@@ -64,7 +69,7 @@
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.rightBarButtonItem = bar_item;
     
-    [_player prepareToPlay];
+    //[_player prepareToPlay];
 
 //    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 //    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
@@ -72,6 +77,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [_player pause];
 }
 
 #pragma mark - create view
@@ -80,23 +86,23 @@
     aryList=[[MDataBaseManager sharedInstance] loadIssueArrayByGudieID:_guide.gui_uuid];
 }
 
--(void)kkk:(NSNotification*)note
-{
-    if(_player.playbackState == MPMoviePlaybackStatePlaying){
-        [_player setFullscreen:YES animated:YES];
-        NSLog(@"ppp");
-    }
-    if(_player.playbackState == MPMoviePlaybackStateStopped){
-        [_player setFullscreen:NO animated:YES];
-        NSLog(@"end1");
-    }
-}
-
-- (void)ggg:(NSNotification*)note
-{
-    [_player setFullscreen:NO animated:YES];
-    NSLog(@"end");
-}
+//-(void)playerStateDidChange:(NSNotification*)note
+//{
+//    if(_player.playbackState == MPMoviePlaybackStatePlaying){
+//        [_player setFullscreen:YES animated:YES];
+//        NSLog(@"ppp");
+//    }
+//    if(_player.playbackState == MPMoviePlaybackStateStopped){
+//        [_player setFullscreen:NO animated:YES];
+//        NSLog(@"end1");
+//    }
+//}
+//
+//- (void)playerDidFinish:(NSNotification*)note
+//{
+//    [_player setFullscreen:NO animated:YES];
+//    NSLog(@"end");
+//}
 
 -(void)addMainMenu
 {
@@ -107,24 +113,29 @@
     
     CGFloat offset = 20.+44.;
     
-    // prepare video
-    NSURL* url = [NSURL URLWithString:_guide.url];
-    _player = [[MPMoviePlayerController alloc] initWithContentURL:url];
-    _player.scalingMode = MPMovieScalingModeAspectFit;
-    _player.view.frame = CGRectMake(0.0, offset,DEVICE_SCREEN_WIDTH, 170.0);
-    _player.shouldAutoplay = NO;
-    [self.view addSubview: _player.view];
+//    // prepare video
+//    NSURL* url = [NSURL URLWithString:_guide.url];
+//    _player = [[MPMoviePlayerController alloc] initWithContentURL:url];
+//    _player.scalingMode = MPMovieScalingModeAspectFit;
+//    _player.view.frame = CGRectMake(0.0, offset,DEVICE_SCREEN_WIDTH, 170.0);
+//    _player.shouldAutoplay = NO;
+//    [self.view addSubview: _player.view];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerStateDidChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerDidFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kkk:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ggg:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+    _player = [[MVideoPlayerView alloc] initWithFrame:CGRectMake(0, offset, DEVICE_SCREEN_WIDTH, 170.)];
+    [_player setUrl:_guide.url];
+    [self.view addSubview:_player];
     
-    offset += _player.view.frame.size.height;
+    offset += _player.frame.size.height;
     
     //btnAdd
     btn=[[UIButton alloc]initWithFrame:CGRectMake(0,DEVICE_SCREEN_HEIGHT-35,DEVICE_SCREEN_WIDTH, 35)];
     btn.backgroundColor=[UIColor purpleColor];
     btn.backgroundColor=[UIColor colorWithRed:245.0/255.0 green:113.0/255.0 blue:116.0/255.0 alpha:1];
-    [btn setTitle:@"+加入對策清單" forState:UIControlStateNormal];
+    [btn setTitle:NSLocalizedString(@"+加入對策清單", @"+加入對策清單") forState:UIControlStateNormal];
     btn.titleLabel.textColor=[UIColor whiteColor];
     [btn addTarget:self action:@selector(actionAddMyList:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
@@ -209,7 +220,7 @@
     //btnTargetSet
     UIButton *btnTargetSet=[[UIButton alloc]initWithFrame:CGRectMake(0 ,0, 75, 24)];
     btnTargetSet.backgroundColor=[UIColor colorWithRed:116.0/255.0 green:192.0/255.0 blue:222.0/255.0 alpha:1];
-    [btnTargetSet setTitle:@"指標設定" forState:UIControlStateNormal];
+    [btnTargetSet setTitle:NSLocalizedString(@"指標設定", @"指標設定") forState:UIControlStateNormal];
     [btnTargetSet addTarget:self action:@selector(actionTargetSet:) forControlEvents:UIControlEventTouchUpInside];
     btnTargetSet.titleLabel.font = [UIFont systemFontOfSize:11];
     [view addSubview:btnTargetSet];
@@ -308,19 +319,19 @@
     viewSection.backgroundColor=[UIColor whiteColor];
     
     UILabel *labRelation = [self createIssueColumnLabelWithFrame:CGRectMake(offset, 0 , width*0.4, 40.)];
-    labRelation.text = @"關聯議題";
+    labRelation.text = NSLocalizedString(@"關聯議題", @"關聯議題");
     [viewSection addSubview:labRelation];
     
     offset += labRelation.frame.size.width + gap;
     
     UILabel *labMeasure = [self createIssueColumnLabelWithFrame:CGRectMake(offset, 0 , width*0.36, 40.)];
-    labMeasure.text = @"衡量指標";
+    labMeasure.text = NSLocalizedString(@"衡量指標", @"衡量指標");
     [viewSection addSubview:labMeasure];
 
     offset += labMeasure.frame.size.width + gap;
     
     UILabel *labGrade = [self createIssueColumnLabelWithFrame:CGRectMake(offset, 0 , width*0.24, 20.)];
-    labGrade.text = @"實績提升率";
+    labGrade.text = NSLocalizedString(@"實績提升率", @"實績提升率");
     [viewSection addSubview:labGrade];
 
     UILabel *labMin = [self createIssueColumnLabelWithFrame:CGRectMake(offset, 20 , width*0.12, 20.)];

@@ -136,7 +136,7 @@
 {
     UIButton *button = [[UIButton alloc]initWithFrame:frame];
     button.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
-    [button setTitle:@"+確認" forState:UIControlStateNormal];
+    [button setTitle:NSLocalizedString(@"+確認", @"+確認") forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(actionConfirm:) forControlEvents:UIControlEventTouchUpInside]; //設定按鈕動作
     return button;

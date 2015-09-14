@@ -65,7 +65,7 @@
 
     _targetArray = [[MDataBaseManager sharedInstance] loadTargetSampleArray];
     
-    self.title = @"目標設定";
+    self.title = NSLocalizedString(@"目標設定", @"目標設定");
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -229,7 +229,7 @@
     CGFloat width = self.tableView.frame.size.width;
     // 目標設定
     UILabel* goalSettingTitleLabel = [self createLabelWithFrame:CGRectMake(20, posY, width, 24)
-                                                           text:@"目標設定"
+                                                           text:NSLocalizedString(@"目標設定", @"目標設定")
                                                       textColor:[UIColor lightGrayColor]
                                                            font:[UIFont boldSystemFontOfSize:14.]
                                             textAlignmentCenter:NSTextAlignmentLeft];
@@ -261,7 +261,7 @@
     CGFloat width = self.tableView.frame.size.width;
     // 目標值
     UILabel* goalSettingTitleLabel = [self createLabelWithFrame:CGRectMake(20, posY, width, 24)
-                                                           text:@"目標值"
+                                                           text:NSLocalizedString(@"目標值", @"目標值")
                                                       textColor:[UIColor lightGrayColor]
                                                            font:[UIFont boldSystemFontOfSize:14.]
                                             textAlignmentCenter:NSTextAlignmentLeft];
@@ -274,7 +274,7 @@
     group.selectedIndex = [self getValueType];
     group.ciricleColor = [UIColor lightGrayColor];
     group.titleColor = [[MDirector sharedInstance] getCustomGrayColor];
-    group.items = [NSArray arrayWithObjects:@"Y/N", @"數值", nil];
+    group.items = [NSArray arrayWithObjects:@"Y/N", NSLocalizedString(@"數值", @"數值"), nil];
     [view addSubview:group];
     
     posX += group.frame.size.width + 10;
@@ -314,7 +314,7 @@
     
     // 執行時間起迄
     UILabel* goalSettingTitleLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width, 24)
-                                                           text:@"執行時間起迄"
+                                                           text:NSLocalizedString(@"執行時間起迄", @"執行時間起迄")
                                                       textColor:[UIColor lightGrayColor]
                                                            font:[UIFont boldSystemFontOfSize:14.]
                                             textAlignmentCenter:NSTextAlignmentLeft];
@@ -333,7 +333,7 @@
     
     // 至
     UILabel* label = [self createLabelWithFrame:CGRectMake(posX, posY, 30., 30.)
-                                           text:@"至"
+                                           text:NSLocalizedString(@"至", @"至")
                                       textColor:[[MDirector sharedInstance] getCustomGrayColor]
                                            font:[UIFont boldSystemFontOfSize:14.]
                             textAlignmentCenter:NSTextAlignmentCenter];
@@ -403,7 +403,7 @@
     height = 30;
     // 說明
     UILabel* descTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    descTitleLabel.text = @"說明：";
+    descTitleLabel.text = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"說明", @"說明")];
     descTitleLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:descTitleLabel];
     
@@ -546,7 +546,11 @@
         NSString *strStartTF=[fm2 stringFromDate:picker.date];
         
         if ([self compareDate:_endTF.text withDate:strStartTF]) {
-            UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:@"訊息" message:@"日期設定錯誤" delegate:self cancelButtonTitle:@"確認" otherButtonTitles:nil, nil];
+            UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"訊息", @"訊息")
+                                                            message:NSLocalizedString(@"日期設定錯誤", @"日期設定錯誤")
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"確認", @"確認")
+                                                  otherButtonTitles:nil, nil];
             [theAlert show];
             return;
         }
@@ -559,7 +563,11 @@
         NSString *strEndTF=[fm2 stringFromDate:picker.date];
 
         if ([self compareDate:strEndTF withDate:_startTF.text]) {
-            UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:@"訊息" message:@"日期設定錯誤" delegate:self cancelButtonTitle:@"確認" otherButtonTitles:nil, nil];
+            UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"訊息", @"訊息")
+                                                            message:NSLocalizedString(@"日期設定錯誤", @"日期設定錯誤")
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"確認", @"確認")
+                                                  otherButtonTitles:nil, nil];
             [theAlert show];
             return;
         }
@@ -656,7 +664,7 @@
 
 - (NSString*)getSubjectType
 {
-    return (_type == TYPE_FOR_WORKITEM) ? @"工作項目" : @"關鍵活動";
+    return (_type == TYPE_FOR_WORKITEM) ? NSLocalizedString(@"工作項目", @"工作項目") : NSLocalizedString(@"關鍵活動", @"關鍵活動");
 }
 
 - (NSString*)getSubject

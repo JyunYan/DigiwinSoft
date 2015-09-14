@@ -15,7 +15,7 @@
 
 #import "MDirector.h"
 
-@interface MIndustryRaidersViewController ()
+@interface MIndustryRaidersViewController ()<MLoginViewControllerDelegate>
 
 @property (nonatomic, strong) MRaiderCarouselView* rcView;
 
@@ -27,14 +27,10 @@
     [super viewDidLoad];
     
     //[NSThread sleepForTimeInterval:3.];
-    
-    
     self.view.backgroundColor = [UIColor whiteColor];
-    [self loadData];
-    [self addMainMenu];
     self.extendedLayoutIncludesOpaqueBars = YES;
-//    MLoginViewController *MLoginVC=[[MLoginViewController alloc]init];
-//    [self presentViewController:MLoginVC animated:YES completion:nil];
+    
+    [self addMainMenu];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,6 +45,15 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectedPhen:) name:kDidSelectedPhen object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(industryDidChanged:) name:kIndustryDidChanged object:nil];
+    
+    BOOL isLogin = [MDirector sharedInstance].isLogin;
+    if(isLogin){
+        [self refresh];
+    }else{
+        MLoginViewController *vc=[[MLoginViewController alloc]init];
+        vc.delegate = self;
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -202,6 +207,16 @@
     [self.navigationController pushViewController:MIndustryRaiders2VC animated:YES];
 }
 
+- (void)refresh
+{
+    [self loadData];
+    
+    _rcView.phenArray = aryList;
+    [_rcView setNeedsDisplay];
+    
+    [tbl reloadData];
+}
+
 #pragma mark - NSNotification actions 
 - (void)didSelectedPhen:(NSNotification*)note
 {
@@ -213,12 +228,14 @@
 
 - (void)industryDidChanged:(NSNotification*)note
 {
-    [self loadData];
-    
-    _rcView.phenArray = aryList;
-    [_rcView setNeedsDisplay];
-    
-    [tbl reloadData];
+    [self refresh];
+}
+
+#pragma mark - MLoginViewControllerDelegate
+
+- (void)didLoginSuccessed:(MLoginViewController *)viewController
+{
+    [self refresh];
 }
 
 @end

@@ -149,6 +149,13 @@
 - (void)insertCustWorkItems:(NSArray*)array;
 - (BOOL)insertCustWorkItem:(MCustWorkItem*)item;
 
+- (BOOL)deleteCustActivityWithGuideId:(NSString*)uuid;
+- (BOOL)deleteCustActivity:(MCustActivity*)activity;
+- (BOOL)deleteCustWorkItemWithGuideId:(NSString*)uuid;
+- (BOOL)deleteCustWorkItemWithActivityId:(NSString*)uuid;
+- (BOOL)deleteCustWorkItem:(MCustWorkItem*)item;
+- (BOOL)deleteCustTargetWithId:(NSString*)uuid;
+
 // 更新對策 release 狀態 Yes:攻略 No:規劃
 - (BOOL)updateGuide:(MCustGuide*)guide release:(BOOL)release;
 

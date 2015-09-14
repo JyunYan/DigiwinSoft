@@ -7,6 +7,7 @@
 //
 
 #import "MRaidersTableCell.h"
+#import "UIButton+AFNetworking.h"
 
 @implementation MRaidersTableCell
 
@@ -172,13 +173,15 @@
     self.labName.text = guide.name;
     
     NSString* uuid= guide.manager.uuid;
-    if(uuid && ![uuid isEqualToString:@""]){
-        [self.btnManager setImage:[UIImage imageNamed:@"z_thumbnail.jpg"] forState:UIControlStateNormal];
+    if(uuid && ![uuid isEqualToString:@""])
         self.managerLabel.text = guide.manager.name;
-    }else{
-        [self.btnManager setImage:[UIImage imageNamed:@"icon_manager.png"] forState:UIControlStateNormal];
+    else
         self.managerLabel.text = @"";
-    }
+    
+    [self.btnManager setImageForState:UIControlStateNormal
+                              withURL:[NSURL URLWithString:guide.manager.thumbnail]
+                     placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
+    
     
     // 目標設定button
     UIImage* image = [self imageWithCustTarget2:guide.custTaregt];
@@ -288,13 +291,14 @@
     
     //負責人image
     NSString* uuid= activity.manager.uuid;
-    if(uuid && ![uuid isEqualToString:@""]){
-        [self.btnManager setImage:[UIImage imageNamed:@"z_thumbnail.jpg"] forState:UIControlStateNormal];
+    if(uuid && ![uuid isEqualToString:@""])
         self.managerLabel.text = activity.manager.name;
-    }else{
-        [self.btnManager setImage:[UIImage imageNamed:@"icon_manager.png"] forState:UIControlStateNormal];
+    else
         self.managerLabel.text = @"";
-    }
+    
+    [self.btnManager setImageForState:UIControlStateNormal
+                              withURL:[NSURL URLWithString:activity.manager.thumbnail]
+                     placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
     
     // 目標設定button
     UIImage* image = [self imageWithCustTarget:activity.custTarget];
@@ -379,13 +383,14 @@
     
     //負責人image
     NSString* uuid = workitem.manager.uuid;
-    if(uuid && ![uuid isEqualToString:@""]){
-        [self.btnManager setImage:[UIImage imageNamed:@"z_thumbnail.jpg"] forState:UIControlStateNormal];
+    if(uuid && ![uuid isEqualToString:@""])
         self.managerLabel.text = workitem.manager.name;
-    }else{
-        [self.btnManager setImage:[UIImage imageNamed:@"icon_manager.png"] forState:UIControlStateNormal];
+    else
         self.managerLabel.text = @"";
-    }
+    
+    [self.btnManager setImageForState:UIControlStateNormal
+                              withURL:[NSURL URLWithString:workitem.manager.thumbnail]
+                     placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
     
     // 目標設定button
     UIImage* image = [self imageWithCustTarget:workitem.custTarget];

@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"看現況";
+    self.title = NSLocalizedString(@"看現況", @"看現況");
     self.extendedLayoutIncludesOpaqueBars = YES;
 
     [self addMainMenu];
@@ -80,7 +80,7 @@
     UIBarButtonItem* bar_item = [[UIBarButtonItem alloc] initWithCustomView:settingbutton];
     self.navigationItem.leftBarButtonItem = bar_item;
     
-    NSArray *itemArray = [NSArray arrayWithObjects:@"經營效能",@"管理表現",@"行業情報",nil];
+    NSArray *itemArray = [NSArray arrayWithObjects:NSLocalizedString(@"經營效能", @"經營效能"),NSLocalizedString(@"管理表現", @"管理表現"),NSLocalizedString(@"行業情報", @"行業情報"),nil];
     _customSegmentedControl = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(DEVICE_SCREEN_WIDTH, 40) BarIndex:0 TextSize:14.];
     _customSegmentedControl.frame = CGRectMake(0,44+20,DEVICE_SCREEN_WIDTH, 40);
     [_customSegmentedControl addTarget:self

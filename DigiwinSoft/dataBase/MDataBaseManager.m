@@ -798,7 +798,7 @@ static MDataBaseManager* _director = nil;
         user.uuid = [rs stringForColumn:@"ID"];
         //user.industryId = [rs stringForColumn:@"IND_ID"];
         user.companyId = [rs stringForColumn:@"COMP_ID"];
-        user.name = [rs stringForColumnIndex:5];            // user name
+        user.name = [rs stringForColumnIndex:3];            // user name
         user.phone = [rs stringForColumn:@"PHONE"];
         user.email = [rs stringForColumn:@"EMAIL"];
         user.arrive_date = [rs stringForColumn:@"ARRIVE_DATE"];
@@ -2350,6 +2350,35 @@ static MDataBaseManager* _director = nil;
     return b;
 }
 
+- (BOOL)deleteCustActivityWithGuideId:(NSString*)uuid
+{
+    NSString* sql = @"delete from U_ACTIVITY where GUIDE_ID = ?";
+    BOOL b = [self.db executeUpdate:sql, uuid];
+    if(b){
+        
+    }else{
+        NSLog(@"delete activity failed : %@", [self.db lastErrorMessage]);
+    }
+    return b;
+}
+
+- (BOOL)deleteCustActivity:(MCustActivity*)activity
+{
+    NSString* sql = @"delete from U_ACTIVITY where ID = ?";
+    BOOL b = [self.db executeUpdate:sql, activity.uuid];
+    if(b){
+        [self deleteCustTargetWithId:activity.custTarget.uuid];
+        
+        for (MCustWorkItem* item in activity.workItemArray) {
+            [self deleteCustWorkItem:item];
+        }
+        
+    }else{
+        NSLog(@"delete activity failed : %@", [self.db lastErrorMessage]);
+    }
+    return b;
+}
+
 - (void)insertCustWorkItems:(NSArray*)array
 {
     for (MCustWorkItem* item in array) {
@@ -2388,6 +2417,43 @@ static MDataBaseManager* _director = nil;
     return b;
 }
 
+- (BOOL)deleteCustWorkItemWithGuideId:(NSString*)uuid
+{
+    NSString* sql = @"delete from U_WORK_ITEM where GUIDE_ID = ?";
+    BOOL b = [self.db executeUpdate:sql, uuid];
+    if(b){
+        
+    }else{
+        NSLog(@"delete work item failed : %@", [self.db lastErrorMessage]);
+    }
+    return b;
+}
+
+- (BOOL)deleteCustWorkItemWithActivityId:(NSString*)uuid
+{
+    NSString* sql = @"delete from U_WORK_ITEM where ACT_ID = ?";
+    BOOL b = [self.db executeUpdate:sql, uuid];
+    if(b){
+        
+    }else{
+        NSLog(@"delete work item failed : %@", [self.db lastErrorMessage]);
+    }
+    return b;
+}
+
+- (BOOL)deleteCustWorkItem:(MCustWorkItem*)item
+{
+    NSString* sql = @"delete from U_WORK_ITEM where ID = ?";
+    BOOL b = [self.db executeUpdate:sql, item.uuid];
+    if(b){
+        [self deleteCustTargetWithId:item.custTarget.uuid];
+    }else{
+        NSLog(@"delete work item failed : %@", [self.db lastErrorMessage]);
+    }
+    return b;
+}
+
+
 - (BOOL)insertTarget:(MTarget*)target withID:(NSString*)uuid
 {
     NSString* sql = @"insert into U_TARGET ('ID','TAR_M_ID','NAME','VALUE_T','UNIT','START_DATE','COMPLETED','TREND','TYPE') values(?,?,?,?,?,?,?,?,?)";
@@ -2407,6 +2473,13 @@ static MDataBaseManager* _director = nil;
     BOOL b = [self.db executeUpdate:sql, uuid, target.tar_uuid, target.name, target.valueT, target.unit, target.startDate, target.completeDate,target.trend, target.type];
     if(!b)
         NSLog(@"add target failed [%@] : %@", uuid, [self.db lastErrorMessage]);
+    return b;
+}
+
+- (BOOL)deleteCustTargetWithId:(NSString*)uuid
+{
+    NSString* sql = @"delete from U_TARGET where ID = ?";
+    BOOL b = [self.db executeUpdate:sql, uuid];
     return b;
 }
 

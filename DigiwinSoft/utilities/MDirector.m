@@ -99,10 +99,10 @@ static MDirector* _director = nil;
 
 - (void)showAlertDialog:(NSString*) msg
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"訊息"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"訊息", @"訊息")
                                                     message:msg
                                                    delegate:nil
-                                          cancelButtonTitle:@"確定"
+                                          cancelButtonTitle:NSLocalizedString(@"確定", @"確定")
                                           otherButtonTitles: nil];
     [alert show];
 }

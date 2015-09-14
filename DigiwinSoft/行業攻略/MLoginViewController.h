@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class MLoginViewController;
+
+@protocol MLoginViewControllerDelegate <NSObject>
+
+- (void)didLoginSuccessed:(MLoginViewController*)viewController;
+
+@end
+
 @interface MLoginViewController : UIViewController<UITextFieldDelegate>
+
+@property (nonatomic, strong) id<MLoginViewControllerDelegate> delegate;
 
 @end

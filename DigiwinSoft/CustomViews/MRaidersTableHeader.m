@@ -40,22 +40,22 @@
     CGFloat height = self.size.height;
     
     UILabel *label = nil;
-    label = [self createTitleLabelWithText:@"對策名稱" frame:CGRectMake(offset,0,width*0.45, height)];
+    label = [self createTitleLabelWithText:NSLocalizedString(@"對策名稱", @"對策名稱") frame:CGRectMake(offset,0,width*0.45, height)];
     [self addSubview:label];
     
     offset += label.frame.size.width;
     
-    label = [self createTitleLabelWithText:@"負責人" frame:CGRectMake(offset, 0, width*0.18, height)];
+    label = [self createTitleLabelWithText:NSLocalizedString(@"負責人", @"負責人") frame:CGRectMake(offset, 0, width*0.18, height)];
     [self addSubview:label];
     
     offset += label.frame.size.width;
     
-    label = [self createTitleLabelWithText:@"目標" frame:CGRectMake(offset, 0, width*0.18, height)];
+    label = [self createTitleLabelWithText:NSLocalizedString(@"目標", @"目標") frame:CGRectMake(offset, 0, width*0.18, height)];
     [self addSubview:label];
     
     offset += label.frame.size.width;
     
-    label = [self createTitleLabelWithText:@"攻略" frame:CGRectMake(offset, 0, width*0.18, height)];
+    label = [self createTitleLabelWithText:NSLocalizedString(@"攻略", @"攻略") frame:CGRectMake(offset, 0, width*0.18, height)];
     [self addSubview:label];
 }
 
@@ -76,17 +76,17 @@
     CGFloat height = self.size.height;
     
     UILabel *label = nil;
-    label = [self createTitleLabelWithText:@"關鍵活動" frame:CGRectMake(offset,0,width*0.45, height)];
+    label = [self createTitleLabelWithText:NSLocalizedString(@"關鍵活動", @"關鍵活動") frame:CGRectMake(offset,0,width*0.45, height)];
     [self addSubview:label];
     
     offset += label.frame.size.width;
     
-    label = [self createTitleLabelWithText:@"負責人" frame:CGRectMake(offset, 0, width*0.18, height)];
+    label = [self createTitleLabelWithText:NSLocalizedString(@"負責人", @"負責人") frame:CGRectMake(offset, 0, width*0.18, height)];
     [self addSubview:label];
     
     offset += label.frame.size.width;
     
-    label = [self createTitleLabelWithText:@"目標" frame:CGRectMake(offset, 0, width*0.18, height)];
+    label = [self createTitleLabelWithText:NSLocalizedString(@"目標", @"目標") frame:CGRectMake(offset, 0, width*0.18, height)];
     [self addSubview:label];
     
     offset += label.frame.size.width;
@@ -110,17 +110,17 @@
     CGFloat height = self.size.height;
     
     UILabel *label = nil;
-    label = [self createTitleLabelWithText:@"工作項目" frame:CGRectMake(offset,0,width*0.6, height)];
+    label = [self createTitleLabelWithText:NSLocalizedString(@"工作項目", @"工作項目") frame:CGRectMake(offset,0,width*0.6, height)];
     [self addSubview:label];
     
     offset += label.frame.size.width;
     
-    label = [self createTitleLabelWithText:@"負責人" frame:CGRectMake(offset, 0, width*0.2, height)];
+    label = [self createTitleLabelWithText:NSLocalizedString(@"負責人", @"負責人") frame:CGRectMake(offset, 0, width*0.2, height)];
     [self addSubview:label];
     
     offset += label.frame.size.width;
     
-    label = [self createTitleLabelWithText:@"目標" frame:CGRectMake(offset, 0, width*0.2, height)];
+    label = [self createTitleLabelWithText:NSLocalizedString(@"目標", @"目標") frame:CGRectMake(offset, 0, width*0.2, height)];
     [self addSubview:label];
 }
 

@@ -18,6 +18,8 @@
 @property (nonatomic, strong) MUser* currentUser;           // 目前的user
 @property (nonatomic, strong) MIndustry* currentIndustry;   // 目前的行業
 
+@property (nonatomic, assign) BOOL isLogin; //是否登入
+
 @property (nonatomic, strong) MPhenomenon* selectedPhen;
 @property (nonatomic, strong) MIssue* selectedIssue;
 

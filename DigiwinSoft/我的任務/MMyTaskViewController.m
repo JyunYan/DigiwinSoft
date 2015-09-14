@@ -57,7 +57,7 @@
     [self createTableView];
     self.extendedLayoutIncludesOpaqueBars = YES;
 
-    self.title = @"我的任務";
+    self.title = NSLocalizedString(@"我的任務", @"我的任務");
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -116,9 +116,9 @@
 {
     [self loadData];
     
-    NSString *title0=[NSString stringWithFormat:@"待佈署任務(%lu)",(unsigned long)[aryPrepare count]];
-    NSString *title1=[NSString stringWithFormat:@"進度回報(%lu)",(unsigned long)[aryRepost count]];
-    NSString *title2=[NSString stringWithFormat:@"已完成任務(%lu)",(unsigned long)[aryFinish count]];
+    NSString *title0=[NSString stringWithFormat:@"%@(%lu)", NSLocalizedString(@"待佈署任務", @"待佈署任務"), (unsigned long)[aryPrepare count]];
+    NSString *title1=[NSString stringWithFormat:@"%@(%lu)", NSLocalizedString(@"進度回報", @"進度回報"), (unsigned long)[aryRepost count]];
+    NSString *title2=[NSString stringWithFormat:@"%@(%lu)", NSLocalizedString(@"已完成任務", @"已完成任務"), (unsigned long)[aryFinish count]];
     [_customSegmentedControl setTitle:title0 forSegmentAtIndex:0];
     [_customSegmentedControl setTitle:title1 forSegmentAtIndex:1];
     [_customSegmentedControl setTitle:title2 forSegmentAtIndex:2];
@@ -145,9 +145,9 @@
     CGFloat width = self.view.frame.size.width - 10;
     CGFloat height = 40;
 
-    NSString *title0=[NSString stringWithFormat:@"待佈署任務(%lu)",(unsigned long)[aryPrepare count]];
-    NSString *title1=[NSString stringWithFormat:@"進度回報(%lu)",(unsigned long)[aryRepost count]];
-    NSString *title2=[NSString stringWithFormat:@"已完成任務(%lu)",(unsigned long)[aryFinish count]];
+    NSString *title0=[NSString stringWithFormat:@"%@(%lu)", NSLocalizedString(@"待佈署任務", @"待佈署任務"),(unsigned long)[aryPrepare count]];
+    NSString *title1=[NSString stringWithFormat:@"%@(%lu)", NSLocalizedString(@"進度回報", @"進度回報"),(unsigned long)[aryRepost count]];
+    NSString *title2=[NSString stringWithFormat:@"%@(%lu)", NSLocalizedString(@"已完成任務", @"已完成任務"),(unsigned long)[aryFinish count]];
     NSArray* array = [[NSArray alloc] initWithObjects:title0,title1,title2, nil];
     _customSegmentedControl = [[MCustomSegmentedControl alloc] initWithItems:array BarSize:CGSizeMake(width, height) BarIndex:0 TextSize:13.];
     _customSegmentedControl.frame = CGRectMake(0, 64, width, height);

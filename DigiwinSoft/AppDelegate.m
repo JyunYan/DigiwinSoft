@@ -27,32 +27,29 @@
 
 @implementation AppDelegate
 
-- (void)login
+- (void)detectLoginState
 {
-    BOOL login = [[MDataBaseManager sharedInstance] loginWithAccount:@"amigo" Password:@"amigo" CompanyID:@"cmp-001"];
-    if(login){
-        
-        NSUserDefaults* pref = [NSUserDefaults standardUserDefaults];
-        NSString* compid = [pref stringForKey:@"CompId"];
-        NSString* name = [pref stringForKey:@"CompName"];
-        
-        //設定當前industry
-        if(compid && name){
-            MIndustry* industry = [MIndustry new];
-            industry.uuid = compid;
-            industry.name = name;
-            [MDirector sharedInstance].currentIndustry = industry;
-        }else{
-            NSArray* array = [[MDataBaseManager sharedInstance] loadIndustryArray];
-            if(array.count > 0){
-                MIndustry* industry = [array firstObject];
-                [MDirector sharedInstance].currentIndustry = industry;
-                
-                [pref setObject:industry.uuid forKey:@"CompId"];
-                [pref setObject:industry.name forKey:@"CompName"];
-                [pref synchronize];
-            }
-        }
+    NSUserDefaults* pref = [NSUserDefaults standardUserDefaults];
+    BOOL isLogin = [pref boolForKey:@"IsLogin"];
+    NSString* account = [pref stringForKey:@"Account"];
+    NSString* password = [pref stringForKey:@"Password"];
+    NSString* compid = [pref stringForKey:@"CompanyId"];
+    NSString* industryId = [pref stringForKey:@"IndustryId"];
+    NSString* industryName = [pref stringForKey:@"IndustryName"];
+    
+    [MDirector sharedInstance].isLogin = isLogin;
+    
+    if(!isLogin)
+        return;
+    
+    [[MDataBaseManager sharedInstance] loginWithAccount:account Password:password CompanyID:compid];
+    
+    //設定當前industry
+    if(industryId && industryName){
+        MIndustry* industry = [MIndustry new];
+        industry.uuid = industryId;
+        industry.name = industryName;
+        [MDirector sharedInstance].currentIndustry = industry;
     }
 }
 
@@ -60,7 +57,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [self login];
+    [self detectLoginState];
     
     //123
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -118,6 +115,9 @@
     NSString* documentsDirectory = [paths objectAtIndex:0];
     NSLog(@"data_path :%s\n", [documentsDirectory UTF8String]);
     
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [[UIApplication sharedApplication] becomeFirstResponder];
+    
     return YES;
 }
 
@@ -144,6 +144,20 @@
 }
 
 #pragma mark - MMDrawerController
+
+- (void)logout
+{
+    [MDirector sharedInstance].isLogin = NO;
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:NO forKey:@"IsLogin"];
+    [defaults synchronize];
+    
+    MMDrawerController* drawer = (MMDrawerController*)self.window.rootViewController;
+    
+    _tabBarController = [[MTabBarViewController alloc] init];
+    [drawer setCenterViewController:_tabBarController withCloseAnimation:YES completion:nil];
+}
 
 - (void) toggleLeft
 {
@@ -267,7 +281,28 @@
     UIViewController* vc2 = drawer.centerViewController;
     [vc2 presentViewController:nav animated:YES completion:nil];
     //drawer.centerViewController = nav;
-    //[drawer closeDrawerAnimated:YES completion:nil];
+   //[drawer closeDrawerAnimated:YES completion:nil];
+}
+
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event
+{
+    switch (event.subtype)
+    {
+        case UIEventSubtypeRemoteControlPlay:
+            // play code
+            NSLog(@"play");
+            break;
+        case UIEventSubtypeRemoteControlTogglePlayPause:
+            // toggle code
+            NSLog(@"pause");
+            break;
+        case UIEventSubtypeRemoteControlNextTrack:
+            // next code
+            NSLog(@"track");
+            break;
+        default:
+            break;
+    }
 }
 
 @end

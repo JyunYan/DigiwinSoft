@@ -91,7 +91,7 @@
     CGFloat width = rect.size.width;
     CGFloat height = rect.size.height;
     
-    NSArray *itemArray =[NSArray arrayWithObjects:@"進行中", @"已完成", nil];
+    NSArray *itemArray =[NSArray arrayWithObjects:NSLocalizedString(@"進行中", @"進行中"), NSLocalizedString(@"已完成", @"已完成"), nil];
     
     MCustomSegmentedControl* segment = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(width, height) BarIndex:0 TextSize:14.];
     segment.backgroundColor = [UIColor whiteColor];
@@ -150,20 +150,20 @@
     header.backgroundColor = [[MDirector sharedInstance] getCustomLightestGrayColor];
     
     // 對策
-    UILabel* cloumn1 = [self createLabelWithFrame:CGRectMake(posX, 0, width*0.45, 30.) text:@"對策"];
+    UILabel* cloumn1 = [self createLabelWithFrame:CGRectMake(posX, 0, width*0.45, 30.) text:NSLocalizedString(@"對策", @"對策")];
     [header addSubview:cloumn1];
     
     posX += cloumn1.frame.size.width;
     
     // 負責人
-    UILabel* cloumn2 = [self createLabelWithFrame:CGRectMake(posX, 0, width*0.2, 30.) text:@"負責人"];
+    UILabel* cloumn2 = [self createLabelWithFrame:CGRectMake(posX, 0, width*0.2, 30.) text:NSLocalizedString(@"負責人", @"負責人")];
     [header addSubview:cloumn2];
     
     
     posX += cloumn2.frame.size.width;
     
     // 完成度
-    UILabel* cloumn3 = [self createLabelWithFrame:CGRectMake(posX, 0, width*0.2, 30.) text:@"完成度"];
+    UILabel* cloumn3 = [self createLabelWithFrame:CGRectMake(posX, 0, width*0.2, 30.) text:NSLocalizedString(@"完成度", @"完成度")];
     [header addSubview:cloumn3];
     
     return header;

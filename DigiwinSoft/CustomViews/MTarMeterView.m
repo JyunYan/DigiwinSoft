@@ -88,10 +88,10 @@
 //    [self createTextAtView:self frame:CGRectMake(629,702, 104,37) text:@"均標" color:self.grayColor fontSize:12];
 //    [self createTextAtView:self frame:CGRectMake(825,702, 104,37) text:@"頂標" color:self.grayColor fontSize:12];
     
-    [self createTextAtView:self frame:CGRectMake(250,680, 104,37) text:@"自己" color:self.grayColor fontSize:12];
-    [self createTextAtView:self frame:CGRectMake(420,680, 104,37) text:@"低標" color:self.grayColor fontSize:12];
-    [self createTextAtView:self frame:CGRectMake(588,680, 104,37) text:@"均標" color:self.grayColor fontSize:12];
-    [self createTextAtView:self frame:CGRectMake(750,680, 104,37) text:@"頂標" color:self.grayColor fontSize:12];
+    [self createTextAtView:self frame:CGRectMake(250,680, 104,37) text:NSLocalizedString(@"自己", @"自己") color:self.grayColor fontSize:12];
+    [self createTextAtView:self frame:CGRectMake(420,680, 104,37) text:NSLocalizedString(@"低標", @"低標") color:self.grayColor fontSize:12];
+    [self createTextAtView:self frame:CGRectMake(588,680, 104,37) text:NSLocalizedString(@"均標", @"均標") color:self.grayColor fontSize:12];
+    [self createTextAtView:self frame:CGRectMake(750,680, 104,37) text:NSLocalizedString(@"頂標", @"頂標") color:self.grayColor fontSize:12];
     
     // 計量表
     for(int i = 0; i < 10; i++)

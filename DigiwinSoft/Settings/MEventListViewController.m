@@ -13,6 +13,7 @@
 #import "MDirector.h"
 #import <MessageUI/MessageUI.h>
 #import "MCustomSegmentedControl.h"
+#import "UIButton+AFNetworking.h"
 
 
 #define UIBarSystemButtonBackArrow 101
@@ -84,7 +85,7 @@
 
     // Do any additional setup after loading the view.
     
-    self.title = @"事件清單";
+    self.title = NSLocalizedString(@"事件清單", @"事件清單");
     self.view.backgroundColor = [UIColor whiteColor];
     
     if(_from == FROM_SETTINGS)
@@ -175,9 +176,9 @@
     int itemCount2 = [self getEventCountWithStatus:@"1"];
     int itemCount3 = itemCount1 + itemCount2;
     
-    NSString* item1 = [NSString stringWithFormat:@"待處理（%d）", itemCount1];
-    NSString* item2 = [NSString stringWithFormat:@"已處理（%d）", itemCount2];
-    NSString* item3 = [NSString stringWithFormat:@"全部（%d）", itemCount3];
+    NSString* item1 = [NSString stringWithFormat:@"%@（%d）", NSLocalizedString(@"待處理", @"待處理"), itemCount1];
+    NSString* item2 = [NSString stringWithFormat:@"%@（%d）", NSLocalizedString(@"已處理", @"已處理"), itemCount2];
+    NSString* item3 = [NSString stringWithFormat:@"%@（%d）", NSLocalizedString(@"全部", @"全部"), itemCount3];
     NSArray *itemArray =[NSArray arrayWithObjects:item1, item2, item3, nil];
     
     _customSegmentedControl = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(width, height)  BarIndex:0 TextSize:textSize];
@@ -390,7 +391,7 @@
         
         // 負責人
         UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, height/2, 60, 25)];
-        personInChargeTitleLabel.text = @"負責人：";
+        personInChargeTitleLabel.text = [NSString stringWithFormat:@"%@：",  NSLocalizedString(@"負責人", @"負責人")];
         personInChargeTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
         personInChargeTitleLabel.font = [UIFont systemFontOfSize:textSize];
         [cell addSubview:personInChargeTitleLabel];
@@ -507,14 +508,16 @@
 
     eventLabel.text = event.name;
 
-    NSString* occurrenceDateStr = [NSString stringWithFormat:@"發生日：%@", event.start];
+    NSString* occurrenceDateStr = [NSString stringWithFormat:@"%@：%@", NSLocalizedString(@"發生日", @"發生日"), event.start];
     occurrenceDateLabel.text = occurrenceDateStr;
 
     personInChargeLabel.text = _user.name;
 
 //    UIImage* image = [self loadLocationImage:nil];
-    UIImage* image = [UIImage imageNamed:@"z_thumbnail.jpg"];
-    [personInChargeButton setImage:image forState:UIControlStateNormal];
+//    UIImage* image = [UIImage imageNamed:@"z_thumbnail.jpg"];
+    [personInChargeButton setImageForState:UIControlStateNormal
+                                   withURL:[NSURL URLWithString:_user.thumbnail]
+                          placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
 
     
     // bottombar

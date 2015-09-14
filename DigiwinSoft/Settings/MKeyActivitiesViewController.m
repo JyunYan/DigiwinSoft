@@ -12,6 +12,7 @@
 #import "MCustActivity.h"
 #import "MCustWorkItem.h"
 #import "MDirector.h"
+#import "UIImageView+AFNetworking.h"
 
 #import "MTasksDeployedViewController.h"
 
@@ -122,9 +123,10 @@
     height = 30;
     
     // 指標
+    NSString* str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"指標", @"指標")];
     UILabel* indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     indexLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    indexLabel.attributedText=[self attStr:@"指標：" content:_guide.custTaregt.name];
+    indexLabel.attributedText=[self attStr:str content:_guide.custTaregt.name];
     indexLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:indexLabel];
     
@@ -132,11 +134,12 @@
     posY = indexLabel.frame.origin.y + indexLabel.frame.size.height;
     // 目標值
     NSString* presentValueStr = @"";
+    str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"目標值", @"目標值")];
     if (_guide.custTaregt.valueT && ![_guide.custTaregt.valueT isEqualToString:@""])
         presentValueStr = [NSString stringWithFormat:@"%@ %@", _guide.custTaregt.valueT, _guide.custTaregt.unit];
     UILabel* presentValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 25, height)];
     presentValueLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    presentValueLabel.attributedText=[self attStr:@"目標值：" content:presentValueStr];
+    presentValueLabel.attributedText=[self attStr:str content:presentValueStr];
 
     presentValueLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:presentValueLabel];
@@ -144,9 +147,10 @@
     
     posX = presentValueLabel.frame.origin.x + presentValueLabel.frame.size.width;
     // 負責人
+    str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"負責人", @"負責人")];
     UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width - 25, height)];
     personInChargeLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    personInChargeLabel.attributedText=[self attStr:@"負責人：" content:_guide.manager.name];
+    personInChargeLabel.attributedText=[self attStr:str content:_guide.manager.name];
     personInChargeLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:personInChargeLabel];
     
@@ -159,11 +163,12 @@
     imageView.layer.masksToBounds = YES;
     [view addSubview:imageView];
     
-    //imageView.image = [self loadLocationImage:nil];
-    if (_guide.manager.name != nil && ![_guide.manager.name isEqualToString:@""])
-        imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
-    else
-        imageView.image = [UIImage imageNamed:@"icon_manager.png"];
+    [imageView setImageWithURL:[NSURL URLWithString:_guide.manager.thumbnail]
+              placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
+//    if (_guide.manager.name != nil && ![_guide.manager.name isEqualToString:@""])
+//        imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
+//    else
+//        imageView.image = [UIImage imageNamed:@"icon_manager.png"];
     
     return view;
 }
@@ -258,9 +263,10 @@
     posX = 10;
     height = 35;
     // 關鍵活動
+    NSString* str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"關鍵活動", @"關鍵活動")];
     UILabel* keyActivitiesLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     keyActivitiesLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    keyActivitiesLabel.attributedText=[self attStr:@"關鍵活動：" content:keyActivitiesStr];
+    keyActivitiesLabel.attributedText=[self attStr:str content:keyActivitiesStr];
     keyActivitiesLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [infoView addSubview:keyActivitiesLabel];
     
@@ -269,7 +275,7 @@
     width = 55;
     // 負責人
     UILabel* personInChargeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    personInChargeTitleLabel.text = @"負責人：";
+    personInChargeTitleLabel.text = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"負責人", @"負責人")];
     personInChargeTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     personInChargeTitleLabel.font = [UIFont systemFontOfSize:textSize];
     [infoView addSubview:personInChargeTitleLabel];
@@ -280,7 +286,7 @@
     
     UILabel* personInChargeLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     if (personInChargeStr == nil || [personInChargeStr isEqualToString:@""]) {
-        personInChargeLabel.text = @"尚未設定";
+        personInChargeLabel.text = NSLocalizedString(@"尚未設定", @"尚未設定");
         personInChargeLabel.textColor = [UIColor redColor];
     } else {
         personInChargeLabel.text = personInChargeStr;
@@ -294,7 +300,7 @@
     width = 55;
     // 截止日
     UILabel* completeDateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    completeDateTitleLabel.text = @"截止日：";
+    completeDateTitleLabel.text = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"截止日", @"截止日")];
     completeDateTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     completeDateTitleLabel.font = [UIFont systemFontOfSize:textSize];
     [infoView addSubview:completeDateTitleLabel];
@@ -305,7 +311,7 @@
     
     UILabel* completeDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     if (completeDateStr == nil || [completeDateStr isEqualToString:@""]) {
-        completeDateLabel.text = @"尚未設定";
+        completeDateLabel.text = NSLocalizedString(@"尚未設定", @"尚未設定");
         completeDateLabel.textColor = [UIColor redColor];
     } else {
         completeDateLabel.text = completeDateStr;
@@ -340,7 +346,7 @@
     width = titleView.frame.size.width * 5 / 12;
     // 工作項目
     UILabel* workItemHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    workItemHeaderLabel.text = @"工作項目";
+    workItemHeaderLabel.text = NSLocalizedString(@"工作項目", @"工作項目");
     workItemHeaderLabel.textAlignment = NSTextAlignmentCenter;
     workItemHeaderLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     workItemHeaderLabel.font = [UIFont systemFontOfSize:textSize];
@@ -351,7 +357,7 @@
     width = titleView.frame.size.width * 3 / 12;
     // 指派負責人
     UILabel* appointResponsibleHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    appointResponsibleHeaderLabel.text = @"指派負責人";
+    appointResponsibleHeaderLabel.text = NSLocalizedString(@"指派負責人", @"指派負責人");
     appointResponsibleHeaderLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     appointResponsibleHeaderLabel.textAlignment = NSTextAlignmentCenter;
     appointResponsibleHeaderLabel.font = [UIFont systemFontOfSize:textSize];
@@ -362,7 +368,7 @@
     width = titleView.frame.size.width * 4 / 12;
     // 截止日
     UILabel* deadlineHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    deadlineHeaderLabel.text = @"截止日";
+    deadlineHeaderLabel.text = NSLocalizedString(@"截止日", @"截止日");
     deadlineHeaderLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     deadlineHeaderLabel.textAlignment = NSTextAlignmentCenter;
     deadlineHeaderLabel.font = [UIFont systemFontOfSize:textSize];
@@ -457,7 +463,7 @@
     
     MUser* user = workItem.manager;
     if (user.name == nil || [user.name isEqualToString:@""]) {
-        appointResponsibleLabel.text = @"尚未設定";
+        appointResponsibleLabel.text = NSLocalizedString(@"尚未設定", @"尚未設定");
         appointResponsibleLabel.textColor = [UIColor redColor];
     } else {
         appointResponsibleLabel.text = user.name;
@@ -470,7 +476,7 @@
     if (startDateStr == nil || [startDateStr isEqualToString:@""])
         completeDateStr = @"";
     if (completeDateStr == nil || [completeDateStr isEqualToString:@""]) {
-        completeDateLabel.text = @"尚未設定";
+        completeDateLabel.text = NSLocalizedString(@"尚未設定", @"尚未設定");
         completeDateLabel.textColor = [UIColor redColor];
     } else {
         completeDateLabel.text = completeDateStr;
@@ -523,7 +529,7 @@
         
         //紅色"尚未設定"
         NSDictionary * attributesRED = [NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
-        NSAttributedString * strDefault = [[NSAttributedString alloc] initWithString:@"尚未設定" attributes:attributesRED];
+        NSAttributedString * strDefault = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"尚未設定", @"尚未設定") attributes:attributesRED];
         
         [attStr appendAttributedString:strDefault];
     }

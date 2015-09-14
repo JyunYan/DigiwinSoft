@@ -201,7 +201,7 @@
     
     UIButton* maturityModelButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     maturityModelButton.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
-    [maturityModelButton setTitle:@"應用價值成熟度模型" forState:UIControlStateNormal];
+    [maturityModelButton setTitle:NSLocalizedString(@"應用價值成熟度模型", @"應用價值成熟度模型") forState:UIControlStateNormal];
     [maturityModelButton addTarget:self action:@selector(actionMaturityModel:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:maturityModelButton];
     

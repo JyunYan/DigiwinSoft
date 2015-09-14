@@ -270,7 +270,7 @@
     posY += scroll.frame.size.height;
     
     // 進行中&已完成
-    _statueSegment = [[MCustomSegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"進行中", @"已完成", nil]
+    _statueSegment = [[MCustomSegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:NSLocalizedString(@"進行中", @"進行中"), NSLocalizedString(@"已完成", @"已完成"), nil]
                                                            BarSize:CGSizeMake(width, 40.)
                                                           BarIndex:0
                                                           TextSize:14.];

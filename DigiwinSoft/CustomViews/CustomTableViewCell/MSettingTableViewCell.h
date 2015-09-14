@@ -10,4 +10,7 @@
 
 @interface MSettingTableViewCell : UITableViewCell
 
++ (instancetype)cellWithTableView:(UITableView *)tableView size:(CGSize)size;
+- (void)prepareWithImage:(NSString*)imgStr title:(NSString*)title number:(NSInteger)number hide:(BOOL)hide;
+
 @end

@@ -15,6 +15,7 @@
 #import "MSettingTableViewCell.h"
 #import "MDataBaseManager.h"
 #import "MIndustryListViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 
 #define TAG_IMAGEVIEW_NUM 100
@@ -45,6 +46,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     _user = [MDirector sharedInstance].currentUser;
     [_tableView reloadData];
@@ -104,10 +107,12 @@
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 60, 60)];
     imageView.backgroundColor = [UIColor clearColor];
 //    imageView.image = [self loadLocationImage:_user.thumbnail];
-    imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
     imageView.layer.cornerRadius = imageView.frame.size.width / 2;
     imageView.clipsToBounds = YES;
     [header addSubview:imageView];
+    
+    [imageView setImageWithURL:[NSURL URLWithString:_user.thumbnail]
+              placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
     
     
     posX = imageView.frame.origin.x + imageView.frame.size.width + 20;
@@ -162,102 +167,51 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
-    
-    static NSString *CellIdentifier = @"Cell";
-    MSettingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(cell == nil){
-        cell = [[MSettingTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        
-        CGFloat tableWidth = tableView.frame.size.width;
-        
-        if (row > 0) {
-            // up divider
-            UIView* up = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableWidth, 1)];
-            up.backgroundColor = [UIColor lightGrayColor];
-            [cell addSubview:up];
-        }
-        
-        UIImageView* numImageView = [[UIImageView alloc] initWithFrame:CGRectMake(tableWidth - 50, 12, 20, 20)];
-        numImageView.tag = TAG_IMAGEVIEW_NUM;
-        numImageView.image = [UIImage imageNamed:@"icon_red_circle.png"];
-        numImageView.hidden = YES;
-        [cell addSubview:numImageView];
-        
-        UILabel* numLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-        numLabel.tag = TAG_LABEL_NUM;
-        numLabel.textColor = [UIColor whiteColor];
-        numLabel.textAlignment = NSTextAlignmentCenter;
-        numLabel.font = [UIFont boldSystemFontOfSize:10.];
-        [numImageView addSubview:numLabel];
-    }
-    cell.backgroundColor = [UIColor blackColor];
-    
-    UIView* bgSelectionView = [[UIView alloc] init];
-    bgSelectionView.backgroundColor = [UIColor colorWithRed:53.0f/255.0f green:166.0f/255.0f blue:190.0f/255.0f alpha:1.0f];
-    bgSelectionView.layer.masksToBounds = YES;
-    cell.selectedBackgroundView = bgSelectionView;
-    
-    
-    UIImageView* numImageView = (UIImageView*)[cell viewWithTag:TAG_IMAGEVIEW_NUM];
-    UILabel* numLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_NUM];
-    
+
+    MSettingTableViewCell *cell = [MSettingTableViewCell cellWithTableView:tableView size:CGSizeMake(tableView.frame.size.width, 44.)];
 
     if (row == 0) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_1.png"];
-        cell.textLabel.text = @"我的攻略";
-        
-        numImageView.hidden = NO;
-
         NSArray* array = [[MDataBaseManager sharedInstance] loadMyRaidersArray];
-        numLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)array.count];
+        NSString* title = NSLocalizedString(@"我的攻略", @"我的攻略");
+        [cell prepareWithImage:@"icon_menu_1.png" title:title number:array.count hide:NO];
     } else if (row == 1) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_2.png"];
-        cell.textLabel.text = @"我的規劃";
-        
-        numImageView.hidden = NO;
-
         NSArray* array = [[MDataBaseManager sharedInstance] loadMyPlanArray];
-        numLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)array.count];
+        NSString* title = NSLocalizedString(@"我的規劃", @"我的規劃");
+        [cell prepareWithImage:@"icon_menu_2.png" title:title number:array.count hide:NO];
     } else if (row == 2) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_3.png"];
-        cell.textLabel.text = @"事件清單";
-        
-        numImageView.hidden = NO;
-
         NSInteger count = [[MDataBaseManager sharedInstance] loadEventsCountWithUser:_user];
-        numLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)count];
+        NSString* title = NSLocalizedString(@"事件清單", @"事件清單");
+        [cell prepareWithImage:@"icon_menu_3.png" title:title number:count hide:NO];
     } else if (row == 3) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_4.png"];
-        cell.textLabel.text = @"我的商業社群";
+        NSString* title = NSLocalizedString(@"我的商業社群", @"我的商業社群");
+        [cell prepareWithImage:@"icon_menu_4.png" title:title number:0 hide:YES];
     } else if (row == 4) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_5.png"];
-        cell.textLabel.text = @"會員帳戶";
+        NSString* title = NSLocalizedString(@"會員帳戶", @"會員帳戶");
+        [cell prepareWithImage:@"icon_menu_5.png" title:title number:0 hide:YES];
     } else if (row == 5) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_6.png"];
-        cell.textLabel.text = @"線上諮詢";
+        NSString* title = NSLocalizedString(@"線上諮詢", @"線上諮詢");
+        [cell prepareWithImage:@"icon_menu_6.png" title:title number:0 hide:YES];
     } else if (row == 6) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_7.png"];
-        cell.textLabel.text = @"兌換";
+        NSString* title = NSLocalizedString(@"兌換", @"兌換");
+        [cell prepareWithImage:@"icon_menu_7.png" title:title number:0 hide:YES];
     } else if (row == 7) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_8.png"];
-        cell.textLabel.text = @"設定";
+        NSString* title = NSLocalizedString(@"設定", @"設定");
+        [cell prepareWithImage:@"icon_menu_8.png" title:title number:0 hide:YES];
     } else if (row == 8) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_9.png"];
-        cell.textLabel.text = @"說明與意見回饋";
+        NSString* title = NSLocalizedString(@"說明與意見回饋", @"說明與意見回饋");
+        [cell prepareWithImage:@"icon_menu_9.png" title:title number:0 hide:YES];
     } else if (row == 9) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_10.png"];
-        cell.textLabel.text = @"操作導引";
+        NSString* title = NSLocalizedString(@"操作導引", @"操作導引");
+        [cell prepareWithImage:@"icon_menu_10.png" title:title number:0 hide:YES];
     } else if (row == 10) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_11.png"];
-        cell.textLabel.text = @"行業切換";
+        NSString* title = NSLocalizedString(@"行業切換", @"行業切換");
+        [cell prepareWithImage:@"icon_menu_11.png" title:title number:0 hide:YES];
     } else if (row == 11) {
-        cell.imageView.image = [UIImage imageNamed:@"icon_menu_11.png"];
-        cell.textLabel.text = @"登出";
+        NSString* title = NSLocalizedString(@"登出", @"登出");
+        [cell prepareWithImage:@"icon_menu_11.png" title:title number:0 hide:YES];
     }
 
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:15.0f];
-    cell.textLabel.textColor = [UIColor lightGrayColor];
-    cell.textLabel.highlightedTextColor = [UIColor whiteColor];
+    
 
     return cell;
 }
@@ -297,6 +251,8 @@
         [self.navigationController pushViewController:vc animated:YES];
     } else if (row == 11) {
         
+        AppDelegate* delegate = (AppDelegate*)([UIApplication sharedApplication].delegate);
+        [delegate logout];
     }
 }
 

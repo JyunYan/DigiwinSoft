@@ -12,6 +12,7 @@
 #import "MDataBaseManager.h"
 #import "MMonitorDetailTableCell.h"
 #import "MEventListViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 
 #define TAG_LABEL_TASK 100
@@ -112,7 +113,7 @@
     posY += 6.;
     
     // 目標
-    NSString* text = [NSString stringWithFormat:@"目標：%@ %@", _data.guide.custTaregt.valueT, _data.guide.custTaregt.unit];
+    NSString* text = [NSString stringWithFormat:@"%@：%@ %@", NSLocalizedString(@"目標", @"目標"), _data.guide.custTaregt.valueT, _data.guide.custTaregt.unit];
     UILabel* valueTLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width*0.4, 24)
                                             textColor:[[MDirector sharedInstance] getCustomGrayColor]
                                                  text:text];
@@ -122,9 +123,10 @@
     posX += valueTLabel.frame.size.width;
     
     // 完成度title
+    NSString* str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"完成度", @"完成度")];
     UILabel* completionDegreeTitleLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width*0.18, 24.)
                                                            textColor:[[MDirector sharedInstance] getCustomGrayColor]
-                                                                text:@"完成度："];
+                                                                text:str];
     completionDegreeTitleLabel.textAlignment = NSTextAlignmentRight;
     [view addSubview:completionDegreeTitleLabel];
     
@@ -142,7 +144,7 @@
     posY += valueTLabel.frame.size.height;
     
     // 實際
-    text = [NSString stringWithFormat:@"實際：%@ %@", _data.guide.custTaregt.valueR, _data.guide.custTaregt.unit];
+    text = [NSString stringWithFormat:@"%@：%@ %@", NSLocalizedString(@"實際", @"實際"), _data.guide.custTaregt.valueR, _data.guide.custTaregt.unit];
     UILabel* valueRLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width*0.4, 24.)
                                             textColor:[[MDirector sharedInstance] getCustomGrayColor]
                                                  text:text];
@@ -151,9 +153,10 @@
     posX += valueRLabel.frame.size.width;
     
     // 負責人title
+    str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"負責人", @"負責人")];
     UILabel* personInChargeLabel = [self createLabelWithFrame:CGRectMake(posX, posY, width*0.18, 24)
                                                     textColor:[[MDirector sharedInstance] getCustomGrayColor]
-                                                         text:@"負責人："];
+                                                         text:str];
     personInChargeLabel.textAlignment = NSTextAlignmentRight;
     [view addSubview:personInChargeLabel];
     
@@ -170,11 +173,13 @@
     
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 32., 32.)];
     imageView.backgroundColor = [UIColor clearColor];
-    imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
     imageView.layer.cornerRadius = imageView.frame.size.width / 2.;
     imageView.layer.masksToBounds = YES;
     [view addSubview:imageView];
     
+    [imageView setImageWithURL:[NSURL URLWithString:_data.guide.manager.thumbnail]
+              placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
+
     return view;
 }
 

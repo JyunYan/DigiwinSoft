@@ -8,7 +8,11 @@
 
 #import "MLoginViewController.h"
 #import "MDataBaseManager.h"
-@interface MLoginViewController ()
+#import "MIndustry.h"
+#import "MDirector.h"
+
+
+@interface MLoginViewController ()<UITextFieldDelegate>
 {
     UITextField *txtAccount;
     UITextField *txtPwd;
@@ -22,9 +26,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title=@"登入";
-    [self addMainMenu];
+    
     self.extendedLayoutIncludesOpaqueBars = YES;
-
+    
+    UIImageView* bg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT)];
+    bg.image = [UIImage imageNamed:@"bg_login.png"];
+    [self.view addSubview:bg];
+    
+    [self addMainMenu];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,82 +47,200 @@
     self.view.backgroundColor=[UIColor lightGrayColor];
 }
 
+
+
 - (void)addMainMenu
 {
-    CGSize screenSize =[[UIScreen mainScreen]bounds].size;
-    CGFloat screenWidth = screenSize.width;
-//    CGFloat screenHeight = screenSize.height;
-
-    
-    //Account
-    txtAccount=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,100,160,24)];
-    txtAccount.backgroundColor=[UIColor whiteColor];
-    txtAccount.borderStyle=UITextBorderStyleLine;
-    txtAccount.font=[UIFont systemFontOfSize:18];
-    txtAccount.delegate = self;
-    [self.view addSubview:txtAccount];
-
-    UILabel *labAccount=[[UILabel alloc]initWithFrame:CGRectMake(txtAccount.frame.origin.x-50, 100,40,24)];
-    labAccount.text=@"帳號";
-    labAccount.backgroundColor=[UIColor clearColor];
-    labAccount.textAlignment=NSTextAlignmentCenter;
-    [labAccount setFont:[UIFont systemFontOfSize:18]];
-    [self.view addSubview:labAccount];
+    CGRect frame = [self calculateInputBlockFrame];
+    UIView* block = [self createInputBlockWithFrame:frame];
+    [self.view addSubview:block];
     
     
-    //Password
-    txtPwd=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,130,160,24)];
-    txtPwd.backgroundColor=[UIColor whiteColor];
-    txtPwd.borderStyle=UITextBorderStyleLine;
-    txtPwd.font=[UIFont systemFontOfSize:18];
-    txtPwd.delegate = self;
-    [self.view addSubview:txtPwd];
-    
-    UILabel *labPwd=[[UILabel alloc]initWithFrame:CGRectMake(txtPwd.frame.origin.x-50, 130,40,24)];
-    labPwd.text=@"密碼";
-    labPwd.backgroundColor=[UIColor clearColor];
-    labPwd.textAlignment=NSTextAlignmentCenter;
-    [labPwd setFont:[UIFont systemFontOfSize:18]];
-    [self.view addSubview:labPwd];
-
-
-    //CompanyCode
-    txtCompany=[[UITextField alloc]initWithFrame:CGRectMake((screenWidth/2)-60,160,160,24)];
-    txtCompany.backgroundColor=[UIColor whiteColor];
-    txtCompany.borderStyle=UITextBorderStyleLine;
-    txtCompany.font=[UIFont systemFontOfSize:18];
-    txtCompany.delegate = self;
-    [self.view addSubview:txtCompany];
-    
-    UILabel *labCompany=[[UILabel alloc]initWithFrame:CGRectMake(txtCompany.frame.origin.x-90, 160,80,24)];
-    labCompany.text=@"企業代碼";
-    labCompany.backgroundColor=[UIColor clearColor];
-    labCompany.textAlignment=NSTextAlignmentCenter;
-    [labCompany setFont:[UIFont systemFontOfSize:18]];
-    [self.view addSubview:labCompany];
-    
+    CGFloat y = block.frame.origin.y + block.frame.size.height * 1.16;
     
     //btnLogin
-    UIButton *btnLogin=[[UIButton alloc]initWithFrame:CGRectMake((screenWidth/2)-60,200,160,26)];
-    btnLogin.backgroundColor=[UIColor brownColor];
-    btnLogin.layer.cornerRadius=5;
-    btnLogin.layer.borderWidth=1;
-    btnLogin.layer.borderColor=[[UIColor blackColor]CGColor];
-    [btnLogin setTitle:@"登入" forState:UIControlStateNormal];
+    UIButton *btnLogin = [[UIButton alloc]initWithFrame:CGRectMake(frame.origin.x, y, DEVICE_SCREEN_WIDTH*0.75, DEVICE_SCREEN_WIDTH*0.15)];
+    [btnLogin setBackgroundImage:[UIImage imageNamed:@"btn_login.png"] forState:UIControlStateNormal];
     [btnLogin addTarget:self action:@selector(actionLogin:) forControlEvents:UIControlEventTouchUpInside]; //設定按鈕動作
     [self.view addSubview:btnLogin];
 }
-#pragma mark - UIButton
-- (void)actionLogin:(id)sender{
-    BOOL isLogin=[[MDataBaseManager sharedInstance]loginWithAccount:txtAccount.text Password:txtPwd.text CompanyID:txtCompany.text];
-    if (isLogin==YES) {
+
+- (UIView*)createInputBlockWithFrame:(CGRect)frame
+{
+    UIImageView* view = [[UIImageView alloc] initWithFrame:frame];
+    view.image = [UIImage imageNamed:@"login_block.png"];
+    view.userInteractionEnabled = YES;
+    
+    CGFloat height = frame.size.height / 3.;
+    CGFloat width1 = frame.size.width*0.4;
+    CGFloat width2 = frame.size.width - width1;
+    CGFloat x = 0.;
+    CGFloat y = 0.;
+    
+    NSString* str = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"企業代號", @"企業代號")];
+    UILabel* title1 = [self createTitleLabelWithFrame:CGRectMake(x, y, width1, height) text:str];
+    [view addSubview:title1];
+    
+    x += title1.frame.size.width;
+    
+    txtCompany = [self createTextFieldWithFrame:CGRectMake(x, y, width2, height)];
+    [view addSubview:txtCompany];
+    
+    x = 0.;
+    y += title1.frame.size.height;
+    
+    str = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"使用者帳號", @"使用者帳號")];
+    UILabel* title2 = [self createTitleLabelWithFrame:CGRectMake(x, y, width1, height) text:str];
+    [view addSubview:title2];
+    
+    x += title1.frame.size.width;
+    
+    txtAccount = [self createTextFieldWithFrame:CGRectMake(x, y, width2, height)];
+    [view addSubview:txtAccount];
+    
+    x = 0.;
+    y += title2.frame.size.height;
+    
+    str = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"使用者密碼", @"使用者密碼")];
+    UILabel* title3 = [self createTitleLabelWithFrame:CGRectMake(x, y, width1, height) text:str];
+    [view addSubview:title3];
+    
+    x += title1.frame.size.width;
+    
+    txtPwd = [self createTextFieldWithFrame:CGRectMake(x, y, width2, height)];
+    [view addSubview:txtPwd];
+
+    return view;
+}
+
+- (UILabel*)createTitleLabelWithFrame:(CGRect)frame text:(NSString*)text
+{
+    UILabel* label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [self calculateInputFont];
+    label.textAlignment = NSTextAlignmentRight;
+    label.textColor = [UIColor whiteColor];
+    label.text = text;
+    
+    return label;
+}
+
+- (UITextField*)createTextFieldWithFrame:(CGRect)frame
+{
+    UIView* left = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
+    left.backgroundColor = [UIColor clearColor];
+    
+    UITextField* textfield = [[UITextField alloc] initWithFrame:frame];
+    textfield.delegate = self;
+    textfield.backgroundColor = [UIColor clearColor];
+    textfield.font = [self calculateInputFont];
+    textfield.textColor = [UIColor whiteColor];
+    textfield.leftView = left;
+    textfield.leftViewMode = UITextFieldViewModeAlways;
+    textfield.returnKeyType =   UIReturnKeyDone;
+    
+    return textfield;
+}
+
+- (CGRect)calculateInputBlockFrame
+{
+    if(DEVICE_SCREEN_HEIGHT == 480.)    // 3.5 inch
+        return CGRectMake(DEVICE_SCREEN_WIDTH*0.125, 220, DEVICE_SCREEN_WIDTH*0.75, DEVICE_SCREEN_WIDTH*0.46);
+    if(DEVICE_SCREEN_HEIGHT > 480.)    // 4.0 & 4.7 & 5.0 inch
+        return CGRectMake(DEVICE_SCREEN_WIDTH*0.125, DEVICE_SCREEN_HEIGHT*0.48, DEVICE_SCREEN_WIDTH*0.75, DEVICE_SCREEN_WIDTH*0.46);
+    return CGRectZero;
+}
+
+- (UIFont*)calculateInputFont
+{
+    if(DEVICE_SCREEN_WIDTH == 320.)    // 3.5 & 4.0 inch
+        return [UIFont systemFontOfSize:14.];
+    if(DEVICE_SCREEN_WIDTH == 375.)    // 4.7 inch
+        return [UIFont systemFontOfSize:16.];
+    if(DEVICE_SCREEN_WIDTH == 414.)    // 5.5 inch
+        return [UIFont systemFontOfSize:17.];;
+    return [UIFont systemFontOfSize:17.];
+}
+
+- (void)doLogin
+{
+    NSString* compid = txtCompany.text;
+    NSString* account = txtAccount.text;
+    NSString* password = txtPwd.text;
+    
+    BOOL isLogin = [[MDataBaseManager sharedInstance] loginWithAccount:account Password:password CompanyID:compid];
+    [MDirector sharedInstance].isLogin = isLogin;
+    
+    NSUserDefaults* pref = [NSUserDefaults standardUserDefaults];
+    [pref setBool:isLogin forKey:@"IsLogin"];
+    [pref synchronize];
+    
+    if(isLogin){
+        
+        [pref setObject:account forKey:@"Account"];
+        [pref setObject:password forKey:@"Password"];
+        [pref setObject:compid forKey:@"CompanyId"];
+        [pref synchronize];
+        
+        NSString* industryid = [pref stringForKey:@"IndustryId"];
+        NSString* industryname = [pref stringForKey:@"IndustryName"];
+        
+        //設定當前industry
+        if(industryid && industryname){
+            MIndustry* industry = [MIndustry new];
+            industry.uuid = industryid;
+            industry.name = industryname;
+            [MDirector sharedInstance].currentIndustry = industry;
+            
+        }else{
+            NSArray* array = [[MDataBaseManager sharedInstance] loadIndustryArray];
+            if(array.count > 0){
+                MIndustry* industry = [array firstObject];
+                [MDirector sharedInstance].currentIndustry = industry;
+                
+                [pref setObject:industry.uuid forKey:@"IndustryId"];
+                [pref setObject:industry.name forKey:@"IndustryName"];
+                [pref synchronize];
+            }
+        }
+        
+        if(_delegate && [_delegate respondsToSelector:@selector(didLoginSuccessed:)])
+            [_delegate didLoginSuccessed:self];
+        
         [self dismissViewControllerAnimated:YES completion:nil];
-    }else
-    {
-        UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:@"" message:@"查無此會員" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [theAlert show];
+        
+    }else{
+        [[MDirector sharedInstance] showAlertDialog:@"帳號或密碼有誤"];
     }
 }
+
+#pragma mark - UIButton
+- (void)actionLogin:(id)sender
+{
+    if(txtCompany.text.length == 0){
+        [[MDirector sharedInstance] showAlertDialog:@"尚未填寫企業代號"];
+        return;
+    }
+    if(txtAccount.text.length == 0){
+        [[MDirector sharedInstance] showAlertDialog:@"尚未填寫使用者帳號"];
+        return;
+    }
+    if(txtPwd.text.length == 0){
+        [[MDirector sharedInstance] showAlertDialog:@"尚未填寫使用者密碼"];
+        return;
+    }
+    
+    [self doLogin];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
 /*
 #pragma mark - Navigation
 

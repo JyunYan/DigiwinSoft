@@ -97,7 +97,7 @@
 - (void)addEarningsLabel
 {
     UIColor* color = [UIColor redColor];
-    NSString* text = [NSString stringWithFormat:@"現在值 : $ %ld", (long)[self calculateEarnings]];
+    NSString* text = [NSString stringWithFormat:@"%@ : $ %ld", NSLocalizedString(@"現在值", @"現在值"), (long)[self calculateEarnings]];
     CGSize size = [self calculateSizeWithText:text];
     CGFloat posY = self.frame.size.height * 0.2;
     

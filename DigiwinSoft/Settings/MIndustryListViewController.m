@@ -22,8 +22,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+
     self.tableView.backgroundColor = [UIColor blackColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -33,6 +32,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
 }
 
@@ -57,7 +57,7 @@
     label.font = [UIFont boldSystemFontOfSize:20];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor lightGrayColor];
-    label.text = @"行業切換";
+    label.text = NSLocalizedString(@"行業切換", @"行業切換");
     [header addSubview:label];
     
     UIView* bottomline = [[UIView alloc] initWithFrame:CGRectMake(0, 120, self.tableView.frame.size.width, 1)];
@@ -114,10 +114,9 @@
     MIndustry* current = [MDirector sharedInstance].currentIndustry;
     
     if(![industry.uuid isEqualToString:current.uuid]){
-        
+        [MDirector sharedInstance].currentIndustry = industry;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kIndustryDidChanged object:nil];
     }
-    [MDirector sharedInstance].currentIndustry = industry;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kIndustryDidChanged object:nil];
     
     [self.navigationController popViewControllerAnimated:YES];
 }

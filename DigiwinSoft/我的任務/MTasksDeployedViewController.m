@@ -25,7 +25,7 @@
 #define TAG_BUTTON_RAIDERS 3000
 
 
-@interface MTasksDeployedViewController ()<UITableViewDelegate, UITableViewDataSource, MActivityTableCellDelegate,SWTableViewCellDelegate>
+@interface MTasksDeployedViewController ()<UITableViewDelegate, UITableViewDataSource, MActivityTableCellDelegate,SWTableViewCellDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) NSMutableArray* activityArray;
@@ -49,7 +49,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"對策設定";
+    self.title = NSLocalizedString(@"對策設定", @"對策設定");
     self.view.backgroundColor = [UIColor lightGrayColor];
     self.extendedLayoutIncludesOpaqueBars = YES;
 
@@ -135,7 +135,7 @@
     CGFloat height = 30;
     //對策
     UILabel* countermeasureLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 40, height)];
-    countermeasureLabel.text = @"對策";
+    countermeasureLabel.text = NSLocalizedString(@"對策", @"對策");
     countermeasureLabel.textColor = [UIColor lightGrayColor];
     countermeasureLabel.font = [UIFont boldSystemFontOfSize:textSize];
     countermeasureLabel.textAlignment = NSTextAlignmentCenter;
@@ -173,7 +173,7 @@
     height = 30;
     
     // 目標
-    NSString* targetStr = [NSString stringWithFormat:@"目標：%@ ", _guide.custTaregt.name];
+    NSString* targetStr = [NSString stringWithFormat:@"%@：%@ ", NSLocalizedString(@"目標", @"目標"), _guide.custTaregt.name];
     if (_guide.custTaregt.valueR && ![_guide.custTaregt.valueR isEqualToString:@""])
     {
         targetStr = [targetStr stringByAppendingString:_guide.custTaregt.valueR];
@@ -189,7 +189,7 @@
     posY = targetLabel.frame.origin.y + targetLabel.frame.size.height;
     width = viewWidth - posX * 2;
     // 預計完成日
-    NSString* completeDateStr = [NSString stringWithFormat:@"預計完成日：%@", _guide.custTaregt.completeDate];
+    NSString* completeDateStr = [NSString stringWithFormat:@"%@：%@", NSLocalizedString(@"預計完成日", @"預計完成日"), _guide.custTaregt.completeDate];
     UILabel* completeDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     completeDateLabel.text = completeDateStr;
     completeDateLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
@@ -204,7 +204,7 @@
     // 甘特圖
     UIButton* ganttChartButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     ganttChartButton.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
-    [ganttChartButton setTitle:@"甘特圖" forState:UIControlStateNormal];
+    [ganttChartButton setTitle:NSLocalizedString(@"甘特圖", @"甘特圖") forState:UIControlStateNormal];
     ganttChartButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [ganttChartButton addTarget:self action:@selector(actionGanttChart:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:ganttChartButton];
@@ -237,7 +237,7 @@
 
     UIButton* addActButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     addActButton.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
-    [addActButton setTitle:@"新增關鍵活動" forState:UIControlStateNormal];
+    [addActButton setTitle:NSLocalizedString(@"新增關鍵活動", @"新增關鍵活動") forState:UIControlStateNormal];
     addActButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [addActButton addTarget:self action:@selector(addActivity:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addActButton];
@@ -247,7 +247,7 @@
     
     UIButton* notifyButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     notifyButton.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
-    [notifyButton setTitle:@"通知" forState:UIControlStateNormal];
+    [notifyButton setTitle:NSLocalizedString(@"通知", @"通知") forState:UIControlStateNormal];
     notifyButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [notifyButton addTarget:self action:@selector(actionNotify:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:notifyButton];
@@ -303,7 +303,7 @@
     height = 30;
     // 說明
     UILabel* descTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    descTitleLabel.text = @"說明：";
+    descTitleLabel.text = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"說明", @"說明")];
     descTitleLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:descTitleLabel];
     
@@ -370,8 +370,7 @@
     //NSArray* array = _guide.activityArray;
     //[[MDataBaseManager sharedInstance] insertCustActivitys:array];
     
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:@"成功發送通知" delegate:nil cancelButtonTitle:@"確認" otherButtonTitles:nil];
-    [alert show];
+    [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"成功發送通知", @"成功發送通知")];
 }
 
 #pragma mark - NSNotification method
@@ -519,16 +518,39 @@
 }
 #pragma mark - SWTableViewDelegate
 
-- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
-    MCustomAlertView *alert = [[MCustomAlertView alloc] initWithTitle:@"訊息"
-                                                              message:@"請再次確認是否要刪除？"
-                                                             delegate:self
-                                                    cancelButtonTitle:@"取消"
-                                                    otherButtonTitles:@"確定", nil];
-    //          [alert setObject:guide];
-    [alert show];
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index
+{
+    NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
+    MCustActivity* activity = [_activityArray objectAtIndex:indexPath.row];
+    
+    if(index == 0){
+        MCustomAlertView *alert = [[MCustomAlertView alloc] initWithTitle:NSLocalizedString(@"訊息", @"訊息")
+                                                                  message:NSLocalizedString(@"請再次確認是否要刪除？", @"請再次確認是否要刪除？")
+                                                                 delegate:self
+                                                        cancelButtonTitle:NSLocalizedString(@"取消", @"取消")
+                                                        otherButtonTitles:NSLocalizedString(@"確定", @"確定"), nil];
+        [alert setObject:activity];
+        [alert show];
+    }
+    
     
     NSLog(@"clock button was pressed");
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1){
+        MCustomAlertView *customAlertView = (MCustomAlertView*)alertView;
+        MCustActivity* activity = [customAlertView object];
+        BOOL b = [[MDataBaseManager sharedInstance] deleteCustActivity:activity];
+        if(b)
+            [_activityArray removeObject:activity];
+        else
+            [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"刪除失敗", @"刪除失敗")];
+        [_tableView reloadData];
+    }
 }
 
 - (NSArray *)rightButtons
@@ -537,9 +559,8 @@
     //    [rightUtilityButtons sw_addUtilityButtonWithColor:
     //     [UIColor colorWithRed:141.0f/255.0f green:206.0f/255.0f blue:231.0f/255.0f alpha:1.0]
     //                                                title:@"轉攻略"];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:140.0f/255.0f green:205.0f/255.0f blue:230.0f/255.0f alpha:1.0]
-                                                title:@"刪除"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:140.0f/255.0f green:205.0f/255.0f blue:230.0f/255.0f alpha:1.0]
+                                                title:NSLocalizedString(@"刪除", @"刪除")];
     
     return rightUtilityButtons;
 }

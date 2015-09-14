@@ -163,7 +163,7 @@
     CGFloat textSize = 14.0f;
     
     
-    NSArray *itemArray =[NSArray arrayWithObjects:@"進行中", @"已完成", nil];
+    NSArray *itemArray =[NSArray arrayWithObjects:NSLocalizedString(@"進行中", @"進行中"), NSLocalizedString(@"已完成", @"已完成"), nil];
     
     _customSegmentedControl = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(width, height)  BarIndex:0 TextSize:textSize];
     _customSegmentedControl.frame = CGRectMake(posX, posY, width, height);
@@ -215,7 +215,7 @@
     [view addSubview:centerView];
     
     UILabel* completionDegreeTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, height / 2)];
-    completionDegreeTitleLabel.text = @"完成度";
+    completionDegreeTitleLabel.text = NSLocalizedString(@"完成度", @"完成度");
     completionDegreeTitleLabel.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     completionDegreeTitleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     completionDegreeTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -326,7 +326,7 @@
     UIImageView* managerImageView = (UIImageView*)[view viewWithTag:TAG_TABEL_IMAGEVIEW_MANAGER];
 
     
-    guideLabel.text = @"對策";
+    guideLabel.text = NSLocalizedString(@"對策", @"對策");
     completeDateLabel.text = [self getPeriodDayWithCompleteDate:@"2015-12-02"];
     
     NSString* completionDegreeStr = @"33%";
@@ -394,7 +394,7 @@
     
     NSString* daysStr = [NSString stringWithFormat:@"%ld天", (long)days];
     
-    str = [NSString stringWithFormat:@"%@（剩%@）", str, daysStr];
+    str = [NSString stringWithFormat:@"%@（%@%@）", str, NSLocalizedString(@"剩", @"剩"), daysStr];
 
     
     return str;

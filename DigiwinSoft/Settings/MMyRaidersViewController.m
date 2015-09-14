@@ -161,19 +161,21 @@
     UILabel* presentValueLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PRESENT_VALUE];
     UILabel* personInChargeLabel = (UILabel*)[cell viewWithTag:TAG_LABEL_PERSON_IN_CHARGE];
     
-
-    countermeasureLabel.attributedText=[self attStr:@"對策：" content:guide.name];
+    NSString* str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"對策", @"對策")];
+    countermeasureLabel.attributedText=[self attStr:str content:guide.name];
     
-    indexLabel.attributedText=[self attStr:@"指標：" content:target.name];
+    str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"指標", @"指標")];
+    indexLabel.attributedText=[self attStr:str content:target.name];
 
+    str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"目標值", @"目標值")];
     NSString* presentValueStr = @"";
     if (target.valueT && ![target.valueT isEqualToString:@""])
         presentValueStr = [NSString stringWithFormat:@"%@ %@", target.valueT, target.unit];
-    presentValueLabel.attributedText=[self attStr:@"目標值：" content:presentValueStr];
+    presentValueLabel.attributedText=[self attStr:str content:presentValueStr];
 
     MUser* user = guide.manager;
-    personInChargeLabel.attributedText=[self attStr:@"負責人：" content:user.name];
-
+    str = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"負責人", @"負責人")];
+    personInChargeLabel.attributedText=[self attStr:str content:user.name];
 
     return cell;
 }
@@ -202,7 +204,7 @@
         
         //紅色"尚未設定"
         NSDictionary * attributesRED = [NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
-        NSAttributedString * strDefault = [[NSAttributedString alloc] initWithString:@"尚未設定" attributes:attributesRED];
+        NSAttributedString * strDefault = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"尚未設定", @"尚未設定") attributes:attributesRED];
         
         [attStr appendAttributedString:strDefault];
     }

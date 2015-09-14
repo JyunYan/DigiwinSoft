@@ -8,11 +8,13 @@
 
 #import "MRecommendTreasuresViewController.h"
 #import "AppDelegate.h"
+#import "MVideoPlayerView.h"
 
 
 @interface MRecommendTreasuresViewController ()
 
-@property (nonatomic, strong) MPMoviePlayerController *moviePlayerView;
+//@property (nonatomic, strong) MPMoviePlayerController *player;
+@property (nonatomic, strong) MVideoPlayerView* player;
 
 @property (nonatomic, strong) MTreasure* treasure;
 
@@ -32,7 +34,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"建議寶物";
+    self.title = NSLocalizedString(@"建議寶物", @"建議寶物");
     self.view.backgroundColor = [UIColor whiteColor];
     self.extendedLayoutIncludesOpaqueBars = YES;
 
@@ -47,7 +49,7 @@
     
     
     CGFloat posX = 0;
-    CGFloat posY = 0;
+    CGFloat posY = 64.;
     CGFloat width = screenWidth;
     CGFloat height = width * 3 / 4;
     
@@ -61,6 +63,17 @@
     
     UIView* tableView = [self createDetailView:CGRectMake(posX, posY, width, height)];
     [self.view addSubview:tableView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_player pause];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,18 +94,22 @@
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor blackColor];
     
+//    NSURL *url = [NSURL URLWithString:_treasure.url];
+//    //    NSURL *movieURL = [NSURL URLWithString:@"http://techslides.com/demos/sample-videos/small.mp4"];
+//    
+//    _player = [[MPMoviePlayerController alloc] initWithContentURL:url];
+//    _player.scalingMode = MPMovieScalingModeAspectFit;
+//    _player.view.frame = CGRectMake(0, 0, rect.size.width, rect.size.height);
+//    _player.shouldAutoplay = NO;
+//    [view addSubview: _player.view];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerStateDidChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerDidFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
     
-    NSURL *movieURL = [NSURL URLWithString:_treasure.url];
-//    NSURL *movieURL = [NSURL URLWithString:@"http://techslides.com/demos/sample-videos/small.mp4"];
-    _moviePlayerView = [[MPMoviePlayerController alloc] initWithContentURL:movieURL];
-        
-    _moviePlayerView.scalingMode = MPMovieScalingModeAspectFit;
-    
-    [_moviePlayerView.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
-    [view addSubview: _moviePlayerView.view];
-    
-    [_moviePlayerView prepareToPlay];
-    
+    _player = [[MVideoPlayerView alloc] initWithFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
+    [_player setUrl:_treasure.url];
+    [view addSubview:_player];
+   
     return view;
 }
 
@@ -189,5 +206,25 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+#pragma mark - notification methods
+
+//-(void)playerStateDidChange:(NSNotification*)note
+//{
+//    if(_player.playbackState == MPMoviePlaybackStatePlaying){
+//        [_player setFullscreen:YES animated:YES];
+//        NSLog(@"ppp");
+//    }
+//    if(_player.playbackState == MPMoviePlaybackStateStopped){
+//        [_player setFullscreen:NO animated:YES];
+//        NSLog(@"end1");
+//    }
+//}
+//
+//- (void)playerDidFinish:(NSNotification*)note
+//{
+//    [_player setFullscreen:NO animated:YES];
+//    NSLog(@"end");
+//}
 
 @end

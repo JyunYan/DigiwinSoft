@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) MTabBarViewController* tabBarController;
 
+- (void)logout;
 
 - (void) toggleLeft;
 

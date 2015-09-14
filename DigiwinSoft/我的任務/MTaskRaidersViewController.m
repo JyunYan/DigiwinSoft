@@ -25,7 +25,7 @@
 #define TAG_BUTTON_TARGET 2000
 
 
-@interface MTaskRaidersViewController ()<UITableViewDelegate, UITableViewDataSource, MWorkItemTableCellDelegate,SWTableViewCellDelegate>
+@interface MTaskRaidersViewController ()<UITableViewDelegate, UITableViewDataSource, MWorkItemTableCellDelegate,SWTableViewCellDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
 
@@ -88,7 +88,7 @@
     
     // 工作項目
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(10, posY, 100, 20)];
-    label.text = @"工作項目";
+    label.text = NSLocalizedString( @"工作項目",  @"工作項目");
     label.font = [UIFont boldSystemFontOfSize:14.];
     label.backgroundColor = [UIColor clearColor];
     [self.view addSubview:label];
@@ -154,7 +154,7 @@
     CGFloat height = viewHeight - posY * 2;
     // 說明
     UILabel* descTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, 45, height)];
-    descTitleLabel.text = @"說明：";
+    descTitleLabel.text = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"說明", @"說明")];
     descTitleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [view addSubview:descTitleLabel];
     
@@ -180,7 +180,7 @@
     
     UIButton* addActButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     addActButton.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
-    [addActButton setTitle:@"新增工作項目" forState:UIControlStateNormal];
+    [addActButton setTitle:NSLocalizedString(@"新增工作項目", @"新增工作項目") forState:UIControlStateNormal];
     addActButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [addActButton addTarget:self action:@selector(addActivity:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addActButton];
@@ -189,7 +189,7 @@
     
     UIButton* notifyButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     notifyButton.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
-    [notifyButton setTitle:@"通知" forState:UIControlStateNormal];
+    [notifyButton setTitle:NSLocalizedString(@"通知", @"通知") forState:UIControlStateNormal];
     notifyButton.titleLabel.font = [UIFont boldSystemFontOfSize:textSize];
     [notifyButton addTarget:self action:@selector(actionNotify:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:notifyButton];
@@ -211,8 +211,7 @@
     //NSArray* array = _act.workItemArray;
     //[[MDataBaseManager sharedInstance] insertCustWorkItems:array];
     
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:@"成功發送通知" delegate:nil cancelButtonTitle:@"確認" otherButtonTitles:nil];
-    [alert show];
+    [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"成功發送通知", @"成功發送通知")];
 }
 
 - (void)didAssignManager:(NSNotification*)note
@@ -344,17 +343,23 @@
 }
 #pragma mark - SWTableViewDelegate
 
-- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
-            MCustomAlertView *alert = [[MCustomAlertView alloc] initWithTitle:@"訊息"
-                                                                      message:@"請再次確認是否要刪除？"
-                                                                     delegate:self
-                                                            cancelButtonTitle:@"取消"
-                                                            otherButtonTitles:@"確定", nil];
-//          [alert setObject:guide];
-            [alert show];
-            
-            NSLog(@"clock button was pressed");
-      }
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index
+{
+    NSIndexPath* indexPath = [_tableView indexPathForCell:cell];
+    MCustWorkItem* item = [_act.workItemArray objectAtIndex:indexPath.row];
+    
+    if(index == 0){
+        MCustomAlertView *alert = [[MCustomAlertView alloc] initWithTitle:NSLocalizedString(@"訊息", @"訊息")
+                                                                  message:NSLocalizedString(@"請再次確認是否要刪除？", @"請再次確認是否要刪除？")
+                                                                 delegate:self
+                                                        cancelButtonTitle:NSLocalizedString(@"取消", @"取消")
+                                                        otherButtonTitles:NSLocalizedString(@"確定", @"確定"), nil];
+        [alert setObject:item];
+        [alert show];
+    }
+    
+    NSLog(@"clock button was pressed");
+}
 
 - (NSArray *)rightButtons
 {
@@ -362,9 +367,7 @@
 //    [rightUtilityButtons sw_addUtilityButtonWithColor:
 //     [UIColor colorWithRed:141.0f/255.0f green:206.0f/255.0f blue:231.0f/255.0f alpha:1.0]
 //                                                title:@"轉攻略"];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:140.0f/255.0f green:205.0f/255.0f blue:230.0f/255.0f alpha:1.0]
-                                                title:@"刪除"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:140.0f/255.0f green:205.0f/255.0f blue:230.0f/255.0f alpha:1.0] title:NSLocalizedString(@"刪除", @"刪除")];
     
     return rightUtilityButtons;
 }
@@ -373,21 +376,15 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex) {
-        case 0:
-            NSLog(@"Cancel Button Pressed");
-            break;
-            
-        case 1:
-        {
-            MCustomAlertView *customAlertView = (MCustomAlertView*)alertView;
-            MCustGuide* guide = [customAlertView object];
-            [[MDataBaseManager sharedInstance] deleteFromPlanWithCustGude:guide];
-            
-//            _guideArray = [[MDataBaseManager sharedInstance] loadMyPlanArray];
-            [_tableView reloadData];
-            break;
-        }
+    if(buttonIndex == 1){
+        MCustomAlertView *customAlertView = (MCustomAlertView*)alertView;
+        MCustWorkItem* item = [customAlertView object];
+        BOOL b = [[MDataBaseManager sharedInstance] deleteCustWorkItem:item];
+        if(b)
+            [_act.workItemArray removeObject:item];
+        else
+            [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"刪除失敗", @"刪除失敗")];
+        [_tableView reloadData];
     }
 }
 

@@ -67,7 +67,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title=@"行業攻略";
+    self.title = NSLocalizedString(@"行業攻略", @"行業攻略");
     self.view.backgroundColor = [UIColor whiteColor];
     [self loadData];
     [self addMainMenu];
@@ -149,8 +149,8 @@
     posY += grayView.frame.size.height;
     
     //Segmented
-    NSString* item1 = (_from == GUIDE_FROM_PHEN) ? @"說明" : @"議題說明";
-    NSArray *itemArray = [NSArray arrayWithObjects:item1,@"建議對策",nil];
+    NSString* item1 = (_from == GUIDE_FROM_PHEN) ? NSLocalizedString(@"說明", @"說明") : NSLocalizedString(@"議題說明", @"議題說明");
+    NSArray *itemArray = [NSArray arrayWithObjects:item1, NSLocalizedString(@"建議對策", @"建議對策"),nil];
     MCustomSegmentedControl* segment = [[MCustomSegmentedControl alloc] initWithItems:itemArray BarSize:CGSizeMake(DEVICE_SCREEN_WIDTH, 40) BarIndex:0 TextSize:14.];
     segment.frame = CGRectMake(0, posY,DEVICE_SCREEN_WIDTH, 40);
     [segment addTarget:self action:@selector(actionSegmented:) forControlEvents:UIControlEventValueChanged];
@@ -188,7 +188,7 @@
     
     _button = [[UIButton alloc]initWithFrame:CGRectMake(0, posY, view.frame.size.width, 40.)];
     _button.backgroundColor = [[MDirector sharedInstance] getCustomGrayColor];
-    [_button setTitle:@"+加入我的規劃清單" forState:UIControlStateNormal];
+    [_button setTitle:NSLocalizedString(@"+加入我的規劃清單", @"+加入我的規劃清單") forState:UIControlStateNormal];
     [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_button addTarget:self action:@selector(actionAddMyList:) forControlEvents:UIControlEventTouchUpInside]; //設定按鈕動作
     [view addSubview:_button];
@@ -229,7 +229,7 @@
     title.font = [UIFont systemFontOfSize:14];
     title.textAlignment=NSTextAlignmentCenter;
     title.textColor = [[MDirector sharedInstance] getCustomGrayColor];
-    title.text=@"指標項目";
+    title.text = NSLocalizedString(@"指標項目", @"指標項目");
     [view addSubview:title];
     
     posX += title.frame.size.width + 3;
@@ -350,9 +350,8 @@
         }
     }
     
-    NSString* message = (b) ? @"成功加入我的規劃" : @"請勾選對策";
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"訊息" message:message delegate:nil cancelButtonTitle:@"確定" otherButtonTitles:nil];
-    [alert show];
+    NSString* message = (b) ? NSLocalizedString(@"成功加入我的規劃", @"成功加入我的規劃") : NSLocalizedString(@"請勾選對策", @"請勾選對策");
+    [[MDirector sharedInstance] showAlertDialog:message];
 }
 
 - (void)goToBackPage:(id) sender

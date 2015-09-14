@@ -77,7 +77,7 @@
                                                         textColor:[[MDirector sharedInstance] getCustomGrayColor]
                                                         pointSize:12.];
     scheduledRateTitleLabel.textAlignment = NSTextAlignmentRight;
-    scheduledRateTitleLabel.text = @"如期率：";
+    scheduledRateTitleLabel.text = [NSString stringWithFormat:@"%@：", NSLocalizedString(@"如期率", @"如期率")];
     [self addSubview:scheduledRateTitleLabel];
     
     posX += scheduledRateTitleLabel.frame.size.width;
@@ -155,13 +155,13 @@
 - (NSString*)getStatusString
 {
     if(!_begin)
-        return @"未開始";
+        return NSLocalizedString(@"未開始", @"未開始");
     if(_dateBetween == 0)
-        return @"準時";
+        return NSLocalizedString(@"準時", @"準時");
     if(_dateBetween > 0)
-        return [NSString stringWithFormat:@"提前(%d天)", (int)_dateBetween];
+        return [NSString stringWithFormat:@"%@(%d天)", NSLocalizedString(@"提前", @"提前"), (int)_dateBetween];
     if(_dateBetween < 0)
-        return [NSString stringWithFormat:@"延宕(%d天)", (int)_dateBetween*-1];
+        return [NSString stringWithFormat:@"%@(%d天)", NSLocalizedString(@"延宕", @"延宕"), (int)_dateBetween*-1];
     return @"";
 }
 

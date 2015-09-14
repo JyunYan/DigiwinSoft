@@ -36,7 +36,8 @@
         UIColor* grayColor = [[MDirector sharedInstance] getCustomGrayColor];
         
         // title
-        UILabel *label = [self createLabelWithFrame:CGRectMake(posX,posY,DEVICE_SCREEN_WIDTH,40) text:@"請回報任務進度:"];
+        NSString* text = NSLocalizedString(@"請回報任務進度:", @"請回報任務進度:");
+        UILabel *label = [self createLabelWithFrame:CGRectMake(posX,posY,DEVICE_SCREEN_WIDTH,40) text:text];
         [self addSubview:label];
         
         UIView *grayLine=[[UIImageView alloc]initWithFrame:CGRectMake(10,38,DEVICE_SCREEN_WIDTH-20,2)];
@@ -51,7 +52,7 @@
         _group.selectedIndex = 0;
         _group.ciricleColor = [UIColor lightGrayColor];
         _group.titleColor = grayColor;
-        _group.items = [NSArray arrayWithObjects:@"未開始", @"進行中", @"已完成", nil];
+        _group.items = [NSArray arrayWithObjects:NSLocalizedString(@"未開始", @"未開始"), NSLocalizedString(@"進行中", @"進行中"), NSLocalizedString(@"已完成", @"已完成"), nil];
         [self addSubview:_group];
         
         posY += _group.frame.size.height;
@@ -63,7 +64,8 @@
         
         posY += _textView.frame.size.height + 20;
         
-        UILabel* label2 = [self createLabelWithFrame:CGRectMake(posX, posY, 60., 30.) text:@"實際值 :"];
+        text = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"實際值", @"實際值")];
+        UILabel* label2 = [self createLabelWithFrame:CGRectMake(posX, posY, 60., 30.) text:text];
         [self addSubview:label2];
         
         posX += label2.frame.size.width;
@@ -85,7 +87,8 @@
         posX = label2.frame.origin.x;
         posY += label2.frame.size.height + 20.;
         
-        UILabel* label3 = [self createLabelWithFrame:CGRectMake(posX, posY, 60., 30.) text:@"完成日 :"];
+        text = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"完成日", @"完成日")];
+        UILabel* label3 = [self createLabelWithFrame:CGRectMake(posX, posY, 60., 30.) text:text];
         [self addSubview:label3];
         
         posX += label3.frame.size.width;

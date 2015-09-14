@@ -54,7 +54,7 @@
 
     // Do any additional setup after loading the view.
     
-    self.title = @"事件清單";
+    self.title = NSLocalizedString(@"事件清單", @"事件清單");
     self.view.backgroundColor = [UIColor lightGrayColor];
     
     [self addMainMenu];
@@ -189,11 +189,11 @@
     label.font = [UIFont systemFontOfSize:textSize];
     label.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     if (section == 0)
-        label.text = @"原因";
+        label.text = NSLocalizedString(@"原因", @"原因");
     else if (section == 1)
-        label.text = @"建議加入任務";
+        label.text = NSLocalizedString(@"建議加入任務", @"建議加入任務");
     else if (section == 2)
-        label.text = @"建議寶物";
+        label.text = NSLocalizedString(@"建議寶物", @"建議寶物");
     [header addSubview:label];
     
     

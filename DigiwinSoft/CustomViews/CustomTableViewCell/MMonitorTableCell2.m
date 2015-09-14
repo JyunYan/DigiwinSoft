@@ -10,6 +10,7 @@
 #import "MDirector.h"
 #import "MCustActivity.h"
 #import "MCustWorkItem.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface MMonitorTableCell2 ()
 
@@ -108,19 +109,20 @@
     [self calculateDateBetween];
     
     if(_delay){
-        _title1.text = [NSString stringWithFormat:@"延宕%d天", (int)_dateBetween*-1];
+        _title1.text = [NSString stringWithFormat:@"%@%d天", NSLocalizedString(@"延宕", @"延宕"), (int)_dateBetween*-1];
         _title4.text = [NSString stringWithFormat:@"%d%%", (int)_data.completion];
         _title4.textColor = [UIColor redColor];
     }else{
-        _title1.text = [NSString stringWithFormat:@"剩%d天", (int)_dateBetween];
+        _title1.text = [NSString stringWithFormat:@"%@%d天", NSLocalizedString(@"剩", @"剩"), (int)_dateBetween];
         _title4.text = [NSString stringWithFormat:@"%d%%", (int)_data.completion];
         _title4.textColor = [[MDirector sharedInstance] getForestGreenColor];
     }
     
     _title2.text = _data.guide.name;
-    _title3.text = @"完成度";
+    _title3.text = NSLocalizedString(@"完成度", @"完成度");
     
-    _imageView1.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
+    [_imageView1 setImageWithURL:[NSURL URLWithString:_data.guide.manager.thumbnail]
+                placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
 }
 
 - (CGSize)calculateSizeWithText:(NSString*)text

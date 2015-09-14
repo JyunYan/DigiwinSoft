@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  DigiwinSoft
+
+  Created by Jyun on 2015/9/8.
+  Copyright (c) 2015年 Jyun. All rights reserved.
+*/
+
+
+"監控地圖"  = "map";
+"看現況"    = "look";
+"行業攻略"  = "raider";
+"找對策"   = "search";
+"我的任務"  = "mission";

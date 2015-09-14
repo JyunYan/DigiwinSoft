@@ -11,6 +11,7 @@
 #import "MMgRadarChartView.h"
 #import "MRouletteViewController.h"
 #import "MDataBaseManager.h"
+#import "MDirector.h"
 #import "MEfficacy.h"
 
 #import "MTimeLineView.h"
@@ -40,7 +41,7 @@
     [super viewDidLoad];
     self.extendedLayoutIncludesOpaqueBars = YES;
 
-    self.title = @"應用價值成熟度模型";
+    self.title = NSLocalizedString(@"應用價值成熟度模型", @"應用價值成熟度模型");
     self.view.backgroundColor=[UIColor whiteColor];
     [self prepareData];
     [self initViews];
@@ -296,8 +297,7 @@
     
     if(![self isValidSpokeQuality]){
         button.isChecked = NO;
-        UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"雷達圖最多只能顯示八筆資料" delegate:self cancelButtonTitle:@"確認" otherButtonTitles:nil, nil];
-        [theAlert show];
+        [[MDirector sharedInstance] showAlertDialog:@"雷達圖最多只能顯示八筆資料"];
         return;
     }
     

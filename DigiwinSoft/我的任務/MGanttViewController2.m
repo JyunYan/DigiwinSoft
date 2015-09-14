@@ -12,6 +12,7 @@
 #import "MCustTarget.h"
 #import "MCustActivity.h"
 #import "MGanttDashView.h"
+#import "UIImageView+AFNetworking.h"
 
 #import "MDirector.h"
 
@@ -276,18 +277,11 @@
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     
     //負責人image
-    NSString* uuid=[[_guide.activityArray[indexPath.row]manager]uuid];
-    if(uuid && ![uuid isEqualToString:@""]){
-        cell.imgViewHead.image=[UIImage imageNamed:@"z_thumbnail.jpg"];
-//        負責人name
-//        cell.managerLabel.text = [[_guide.activityArray[indexPath.row]manager]name];
-    }else{
-        cell.imgViewHead.image=[UIImage imageNamed:@"icon_manager.png"];
-//        負責人name
-//        cell.managerLabel.text = @"";
-    }
-
+    MCustActivity* activity = _guide.activityArray[indexPath.row];
+    NSURL* url = [NSURL URLWithString:activity.manager.thumbnail];
+    [cell.imgViewHead setImageWithURL:url placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
     
+
     //時程bar，title
     NSString *startDate=[[_guide.activityArray[indexPath.row] custTarget] startDate];
     NSString *completeDate=[[_guide.activityArray[indexPath.row] custTarget] completeDate];
@@ -295,6 +289,6 @@
     NSString *title=[[_guide.activityArray[indexPath.row] custTarget]name];
     [cell createtimeBar: startDate: completeDate: earlyDate: title];
     
-        return cell;
+    return cell;
 }
 @end

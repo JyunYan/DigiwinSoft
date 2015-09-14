@@ -7,6 +7,7 @@
 //
 
 #import "MIndustryRaidersTableViewCell.h"
+#import "UIButton+AFNetworking.h"
 
 @interface MIndustryRaidersTableViewCell ()
 
@@ -134,12 +135,13 @@
     
     NSString* uuid= guide.manager.uuid;
     if(uuid && ![uuid isEqualToString:@""]){
-        [_btnManager setImage:[UIImage imageNamed:@"z_thumbnail.jpg"] forState:UIControlStateNormal];
         _managerLabel.text = guide.manager.name;
     }else{
-        [_btnManager setImage:[UIImage imageNamed:@"icon_manager.png"] forState:UIControlStateNormal];
         _managerLabel.text = @"";
     }
+    
+    NSURL* url = [NSURL URLWithString:guide.manager.thumbnail];
+    [_btnManager setImageForState:UIControlStateNormal withURL:url placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
     
     // star
     NSInteger count = [guide.review integerValue];

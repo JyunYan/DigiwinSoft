@@ -10,6 +10,7 @@
 
 #import "MDesignateResponsibleViewController.h"
 #import "MDataBaseManager.h"
+#import "UIImageView+AFNetworking.h"
 
 #define UIBarSystemButtonBackArrow          101
 #define TAG_FOR_CHECK_BOX                   201
@@ -83,7 +84,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-    self.title = @"指派負責人";
+    self.title = NSLocalizedString(@"指派負責人", @"指派負責人");
     
     UIBarButtonItem* back  =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarSystemButtonBackArrow target:self action:@selector(backToPage:)];
     self.navigationItem.leftBarButtonItem = back;
@@ -130,7 +131,7 @@
     view.layer.borderWidth = 1.0f;
     
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, 250, 40)];
-    label.text = [NSString stringWithFormat:@"建議職能/層級 : %@ / Level%@ 以上", skill.name, skill.level];
+    label.text = [NSString stringWithFormat:@"%@ : %@ / Level%@ 以上", NSLocalizedString(@"建議職能/層級",@"建議職能/層級"), skill.name, skill.level];
 //    label.textColor = [UIColor colorWithRed:163.0/255.0 green:163.0/255.0 blue:163.0/255.0 alpha:1.0];
     [view addSubview:label];
     
@@ -151,7 +152,7 @@
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionToPopover:)];
 
     self.label2 = [[UILabel alloc] initWithFrame:CGRectMake(offset, 0, 60, frame.size.height)];
-    self.label2.text = @"全部";
+    self.label2.text = NSLocalizedString(@"全部", @"全部");
     self.label2.textAlignment = NSTextAlignmentCenter;
     self.label2.userInteractionEnabled = YES;
     [self.label2 addGestureRecognizer:tap];
@@ -269,14 +270,13 @@
     
     MUser* user = [_array objectAtIndex:indexPath.row];
     
-    UIImage* image = [UIImage imageNamed:user.thumbnail];
-    image = (image) ? image : [UIImage imageNamed:@"icon_manager.png"];
-    
     checkbox.image = (user.bSelected) ? [UIImage imageNamed:@"checkbox_fill.png"] : [UIImage imageNamed:@"checkbox_empty.png"];
-    thumbnail.image = image;
-    name.text = [NSString stringWithFormat:@"姓名 : %@", user.name];
-    level.text = [NSString stringWithFormat:@"職能 : %@", [self getSkillStringWithEmployee:user]];
-    day.text = [NSString stringWithFormat:@"到職日 : %@", user.arrive_date];
+    name.text = [NSString stringWithFormat:@"%@ : %@", NSLocalizedString(@"姓名", @"姓名"), user.name];
+    level.text = [NSString stringWithFormat:@"%@ : %@", NSLocalizedString(@"職能", @"職能"), [self getSkillStringWithEmployee:user]];
+    day.text = [NSString stringWithFormat:@"%@ : %@", NSLocalizedString(@"到職日", @"到職日"), user.arrive_date];
+    
+    NSURL* url = [NSURL URLWithString:user.thumbnail];
+    [thumbnail setImageWithURL:url placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
     
     return cell;
 }
@@ -326,14 +326,14 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
 
     if(row == 0)
-        return @"全部";
+        return NSLocalizedString(@"全部", @"全部");
     else
         return [[_arySkills objectAtIndex:row - 1] name];
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if(row == 0)
-        self.label2.text = @"全部";
+        self.label2.text = NSLocalizedString(@"全部", @"全部");
     else
         self.label2.text=[NSString stringWithFormat:@"%@",[[_arySkills objectAtIndex:row - 1] name]];
 }
@@ -385,7 +385,7 @@
 {
     NSString* cond = self.label2.text;
     
-    if([cond isEqualToString:@"全部"])
+    if([cond isEqualToString:NSLocalizedString(@"全部", @"全部")])
         return YES;
     
     for (MSkill* skill in employee.skillArray) {
@@ -462,7 +462,7 @@
 {
     NSInteger row = [self.PickerSkill selectedRowInComponent:0];
     if(row == 0)
-        self.label2.text = @"全部";
+        self.label2.text = NSLocalizedString(@"全部", @"全部");
     else
         self.label2.text=[NSString stringWithFormat:@"%@",[[_arySkills objectAtIndex:row - 1] name]];
     
@@ -473,11 +473,11 @@
 - (NSString*)getCorrectSubjectString
 {
     if(_type == TYPE_FOR_GUIDE_MANAGER)
-        return [NSString stringWithFormat:@"對策名稱 : %@", _guide.name];
+        return [NSString stringWithFormat:@"%@ : %@", NSLocalizedString(@"對策名稱", @"對策名稱"), _guide.name];
     if(_type == TYPE_FOR_ACTIVITY_MANAGER)
-        return [NSString stringWithFormat:@"關鍵活動名稱 : %@", _activity.name];
+        return [NSString stringWithFormat:@"%@ : %@", NSLocalizedString(@"關鍵活動名稱", @"關鍵活動名稱"), _activity.name];
     if(_type == TYPE_FOR_WORKITEM_MANAGER)
-        return [NSString stringWithFormat:@"工作項目名稱 : %@", _workitem.name];
+        return [NSString stringWithFormat:@"%@ : %@", NSLocalizedString(@"工作項目名稱", @"工作項目名稱"), _workitem.name];
     return @"";
 }
 

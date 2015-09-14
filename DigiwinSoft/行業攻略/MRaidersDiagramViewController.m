@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title=@"攻略展開圖";
+    self.title = NSLocalizedString(@"攻略展開圖", @"攻略展開圖");
     self.view.backgroundColor = [UIColor whiteColor];
     self.extendedLayoutIncludesOpaqueBars = YES;
 
@@ -82,7 +82,7 @@
 
     //Label
     UILabel *labReason=[[UILabel alloc]initWithFrame:CGRectMake(20,80, DEVICE_SCREEN_WIDTH-40, 15)];
-    labReason.text=[NSString stringWithFormat:@"緣起 : %@",reaosn];
+    labReason.text=[NSString stringWithFormat:@"%@ : %@", NSLocalizedString(@"緣起", @"緣起"),reaosn];
     labReason.backgroundColor=[UIColor clearColor];
     [labReason setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labReason];
@@ -94,14 +94,14 @@
     
     //Label
     UILabel *labTarget=[[UILabel alloc]initWithFrame:CGRectMake(20,125, 200, 15)];
-    labTarget.text=[NSString stringWithFormat:@"指標 : %@",name];;
+    labTarget.text=[NSString stringWithFormat:@"%@ : %@", NSLocalizedString(@"指標", @"指標"),name];;
     labTarget.backgroundColor=[UIColor clearColor];
     [labTarget setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labTarget];
     
     //Label
     UILabel *labValue=[[UILabel alloc]initWithFrame:CGRectMake(labTarget.frame.origin.x+labTarget.frame.size.width+5,125,100, 15)];
-    labValue.text=[NSString stringWithFormat:@"目標值 : %@%@",valueT,unit];
+    labValue.text=[NSString stringWithFormat:@"%@ : %@%@", NSLocalizedString(@"目標值", @"目標值"),valueT,unit];
     labValue.backgroundColor=[UIColor clearColor];
     [labValue setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labValue];
@@ -118,7 +118,7 @@
     txtName.layer.borderColor=[UIColor whiteColor].CGColor;
     txtName.enabled=NO;
     txtName.textAlignment = NSTextAlignmentCenter;
-    txtName.text=@"對策";
+    txtName.text = NSLocalizedString(@"對策", @"對策");
     [txtName setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:txtName];
     
@@ -131,14 +131,14 @@
     
     //Label
     UILabel *labTarget2=[[UILabel alloc]initWithFrame:CGRectMake(20,imgGray.frame.origin.y+60, 200, 15)];
-    labTarget2.text=[NSString stringWithFormat:@"指標 : %@",_guide.custTaregt.name];
+    labTarget2.text=[NSString stringWithFormat:@"%@ : %@", NSLocalizedString(@"指標", @"指標"),_guide.custTaregt.name];
     labTarget2.backgroundColor=[UIColor clearColor];
     [labTarget2 setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labTarget2];
     
     //Label
     UILabel *labValue2=[[UILabel alloc]initWithFrame:CGRectMake(labTarget2.frame.origin.x+labTarget2.frame.size.width+5,imgGray.frame.origin.y+60,100, 15)];
-    labValue2.text=[NSString stringWithFormat:@"目標值 : %@%@",_guide.custTaregt.valueT,_guide.custTaregt.unit];
+    labValue2.text=[NSString stringWithFormat:@"%@ : %@%@", NSLocalizedString(@"目標值", @"目標值"),_guide.custTaregt.valueT,_guide.custTaregt.unit];
     labValue2.backgroundColor=[UIColor clearColor];
     [labValue2 setFont:[UIFont systemFontOfSize:14]];
     [self.view addSubview:labValue2];
@@ -220,13 +220,13 @@
     if (tableView.tag==101)
     {
         label.text=[aryActivity[indexPath.row]name];
-        detailLabel.text=[NSString stringWithFormat:@"指標:%@",[[aryActivity[indexPath.row]target]name]];
+        detailLabel.text=[NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"指標", @"指標"), [[aryActivity[indexPath.row]target]name]];
         
     }
     else
     {
         label.text=[aryWorkItem[indexPath.row]name];
-        detailLabel.text =[NSString stringWithFormat:@"指標:%@",[[aryWorkItem[indexPath.row]target]name]];
+        detailLabel.text =[NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"指標", @"指標"), [[aryWorkItem[indexPath.row]target]name]];
     }
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [cell.contentView addSubview:label];
@@ -248,6 +248,7 @@
     }
     
 }
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *viewSection = [[UIView alloc] init];
@@ -260,12 +261,11 @@
     [viewSection addSubview:labHeader];
     
     if(tableView.tag==101){
-        labHeader.text = @"關鍵活動";
+        labHeader.text = NSLocalizedString(@"關鍵活動", @"關鍵活動");
     }else
     {
-        labHeader.text = @"工作項目";
+        labHeader.text = NSLocalizedString(@"工作項目", @"工作項目");
     }
-    
     
     //imgGray
     UIImageView *imgGray=[[UIImageView alloc]initWithFrame:CGRectMake(0,30,tableView.frame.size.width,2)];
