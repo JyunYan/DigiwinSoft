@@ -70,9 +70,12 @@
         
         posX += label2.frame.size.width;
         
+        UIColor* lightGrayColor = [[MDirector sharedInstance] getCustomLightGrayColor];
         // 實際值
         _textValue = [self createTextFieldWithFrame:CGRectMake(posX, posY, DEVICE_SCREEN_WIDTH*0.2, 30)];
         _textValue.tag = TEXT_FIELD_VALUE;
+        _textValue.layer.borderColor=[lightGrayColor CGColor];
+        _textValue.layer.borderWidth = 2;
         [self addSubview:_textValue];
         
         posX += _textValue.frame.size.width + 20;
@@ -81,6 +84,7 @@
         _textUnit = [self createTextFieldWithFrame:CGRectMake(posX, posY, DEVICE_SCREEN_WIDTH*0.2, 30)];
         _textUnit.textColor = grayColor;
         _textUnit.text = @"單位";
+        _textUnit.textAlignment = NSTextAlignmentLeft;
         _textUnit.enabled = NO;
         [self addSubview:_textUnit];
         
@@ -103,15 +107,11 @@
 
 - (UITextField*)createTextFieldWithFrame:(CGRect)frame
 {
-    UIColor* lightGrayColor = [[MDirector sharedInstance] getCustomLightGrayColor];
-    
     UITextField* textField = [[UITextField alloc]initWithFrame:frame];
     textField.delegate = self;
     textField.backgroundColor=[UIColor clearColor];
     textField.font = [UIFont systemFontOfSize:14.];
     textField.textAlignment = NSTextAlignmentCenter;
-    textField.layer.borderColor=[lightGrayColor CGColor];
-    textField.layer.borderWidth = 2;
     [textField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
     
     return textField;
