@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) iCarousel* carousel;
 @property (nonatomic, assign) NSInteger itemCount;
-@property (nonatomic, assign) BOOL bFirst;
+//@property (nonatomic, assign) BOOL bFirst;
 
 @end
 
@@ -26,7 +26,7 @@
 - (id)init
 {
     if(self = [super init]){
-        _bFirst = YES;
+        //_bFirst = YES;
     }
     return self;
 }
@@ -34,7 +34,7 @@
 - (id)initWithFrame:(CGRect)frame
 {
     if(self = [super initWithFrame:frame]){
-        _bFirst = YES;
+        //_bFirst = YES;
     }
     return self;
 }
@@ -90,6 +90,8 @@
     [self addSubview:_carousel];
     
     [self addTraceLine];
+    
+    [self refresh];
 }
 
 // 橢圓軌跡線
@@ -153,7 +155,6 @@
     if(!view){
         view = [[MCarouselItemView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH*0.2, 280)];
         view.backgroundColor = [UIColor clearColor];
-        view.alpha = .3;
     }
     
     NSInteger count = _phenArray.count;
@@ -163,20 +164,20 @@
     ciview.content = phen.subject;
     ciview.onFacus = (index == carousel.currentItemIndex);
     
-    if (_bFirst){
-        if(index == 0)
-            ciview.alpha = 1.;
-        else if(index == 1 || index == _itemCount-1)
-            ciview.alpha = 0.8;
-        else if(index == 2 || index == _itemCount-2)
-            ciview.alpha = 0.7;
-        else if(index == 3 || index == _itemCount-3)
-            ciview.alpha = 0.6;
-        else if(index == 8 || index == _itemCount-8)
-            ciview.alpha = 0.5;
-        else
-            ciview.alpha = 0.0;
-    }
+//    if (_bFirst){
+//        if(index == 0)
+//            ciview.alpha = 1.;
+//        else if(index == 1 || index == _itemCount-1)
+//            ciview.alpha = 0.8;
+//        else if(index == 2 || index == _itemCount-2)
+//            ciview.alpha = 0.7;
+//        else if(index == 3 || index == _itemCount-3)
+//            ciview.alpha = 0.6;
+//        else if(index == 8 || index == _itemCount-8)
+//            ciview.alpha = 0.5;
+//        else
+//            ciview.alpha = 0.0;
+//    }
     
 //    ciview.content = [NSString stringWithFormat:@"現象%d，現象，現象", (int)index];
 //    ciview.content = @"小批量接單沒好配套，呆滯急遽增加";
@@ -208,7 +209,7 @@
 
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel
 {
-    _bFirst = NO;
+    //_bFirst = NO;
     [self refresh];
     
 //    NSInteger last = _itemCount - 1;
@@ -243,12 +244,14 @@
 
         if(i==1)
             alpha = 0.8;
-        if(i==2)
+        else if(i==2)
             alpha = 0.7;
-        if(i==3)
+        else if(i==3)
             alpha = 0.6;
-        if(i==8)
+        else if(i==8)
             alpha = 0.5;
+        else
+            alpha = 0.0;
         
         [self refreshWithIndex:right alpha:alpha];
         [self refreshWithIndex:left alpha:alpha];

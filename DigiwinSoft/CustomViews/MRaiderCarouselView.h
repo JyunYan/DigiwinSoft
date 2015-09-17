@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong) NSArray* phenArray;
 
+- (void)refresh;
+
 @end

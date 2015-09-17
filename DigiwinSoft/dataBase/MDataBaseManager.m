@@ -2082,7 +2082,7 @@ static MDataBaseManager* _director = nil;
 - (BOOL)loadTargetDetailWithTarget:(MTarget*)target
 {
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* sql = @"select * from R_COMP_TAR where TAR_ID = ? and COMP_ID = ? order by DATETIME limit 1";
+    NSString* sql = @"select * from R_COMP_TAR where TAR_ID = ? and COMP_ID = ? order by DATETIME desc limit 1";
     
     FMResultSet* rs = [self.db executeQuery:sql, target.uuid, compid];
     if([rs next]){
@@ -2097,7 +2097,7 @@ static MDataBaseManager* _director = nil;
 - (BOOL)loadTargetDetailWithCustTarget:(MCustTarget*)target
 {
     NSString* compid = [MDirector sharedInstance].currentUser.companyId;
-    NSString* sql = @"select * from R_COMP_TAR where TAR_ID = ? and COMP_ID = ? order by DATETIME limit 1";
+    NSString* sql = @"select * from R_COMP_TAR where TAR_ID = ? and COMP_ID = ? order by DATETIME desc limit 1";
     
     FMResultSet* rs = [self.db executeQuery:sql, target.tar_uuid, compid];
     if([rs next]){

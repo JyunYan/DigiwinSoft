@@ -113,7 +113,7 @@
     
     /* 開始繪製矩形*/
     CGContextBeginPath(context);
-    CGContextSetRGBFillColor(context, 212./255., 219./255., 227./255., 1.0);
+    CGContextSetRGBFillColor(context, 170./255., 170./255., 170./255., 1.0);
     CGContextAddRect( context , CGRectMake(0, 0, rect.size.width , rect.size.height));
     CGContextClosePath(context);
     CGContextDrawPath(context,kCGPathFill);
@@ -136,7 +136,7 @@
 {
     //UIColor* blue = [UIColor colorWithRed:131/255.0 green:208/255.0 blue:229/255.0 alpha:0.8];
     //CGContextSetRGBStrokeColor(context, 131/255., 208/255., 229/255., 0.5);
-    CGContextSetRGBFillColor(context, 131/255., 208/255., 229/255., 0.5);
+    CGContextSetRGBFillColor(context, 27./255., 177./255., 194./255., 0.5);
     //CGContextSetLineJoin(context, kCGLineJoinRound);
     //CGContextSetLineWidth(context, 3.0);
     CGMutablePathRef pathRef = CGPathCreateMutable();
@@ -168,7 +168,7 @@
 - (void)drawLineWithContext:(CGContextRef)context
 {
     CGContextSetLineWidth(context, 2.0);
-    UIColor* color = [UIColor colorWithRed:0.0/255.0 green:61.0/255.0 blue:121.0/255.0 alpha:1.0];
+    UIColor* color = [UIColor colorWithRed:27.0/255.0 green:177.0/255.0 blue:184.0/255.0 alpha:1.0];
     CGContextSetStrokeColorWithColor(context, color.CGColor);   //線的顏色
     
     

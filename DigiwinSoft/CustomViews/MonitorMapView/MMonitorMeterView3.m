@@ -79,13 +79,14 @@
 
 - (void)addBottomLabel
 {
+    
     CGRect frame = CGRectMake(_meterRect.origin.x, _meterRect.origin.y + _meterRect.size.height, _meterRect.size.width, 20);
     UILabel* label = [[UILabel alloc] initWithFrame:frame];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont systemFontOfSize:12.];
     label.textColor = [[MDirector sharedInstance] getCustomGrayColor];
     label.textAlignment = NSTextAlignmentRight;
-    label.text = [NSString stringWithFormat:@"$ %@", _issType.gainP];
+    label.text = [NSString stringWithFormat:@"$ %@", [self getCurrencyWithString:_issType.gainP]];
     [self addSubview:label];
 }
 
@@ -102,7 +103,7 @@
 
 - (void)addEarningsLabel
 {
-    NSString* text = [NSString stringWithFormat:@"$ %@", _issType.gainR];
+    NSString* text = [NSString stringWithFormat:@"$ %@", [self getCurrencyWithString:_issType.gainR]];
     
     CGSize size = [self calculateSizeWithText:text];
     CGRect frame = CGRectMake(_meterRect.origin.x, _meterRect.origin.y - size.height, size.width, size.height);
@@ -139,6 +140,13 @@
                                   attributes:dict
                                      context:nil].size;
     return size;
+}
+
+- (NSString*)getCurrencyWithString:(NSString*)string
+{
+    NSNumberFormatter* formatter = [NSNumberFormatter new];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    return [formatter stringFromNumber:[NSNumber numberWithInteger:[string integerValue]]];
 }
 
 

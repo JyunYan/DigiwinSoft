@@ -43,7 +43,7 @@
 - (void)addEarningsLabel
 {
     UIColor* color = [UIColor redColor];
-    NSString* text = [NSString stringWithFormat:@"%@ : $ %ld", NSLocalizedString(@"現在值", @"現在值"), (long)[self calculateEarnings]];
+    NSString* text = [NSString stringWithFormat:@"%@ : $ %@", NSLocalizedString(@"目標值", @"目標值"), [self calculateEarnings]];
     CGSize size = [self calculateSizeWithText:text];
     CGFloat posY = self.frame.size.height * 0.12;
     
@@ -75,7 +75,7 @@
 - (void)addBottomLabel
 {
     UIColor* color = [[MDirector sharedInstance] getCustomGrayColor];
-    NSString* text = [NSString stringWithFormat:@"%@\n$ %ld", NSLocalizedString(@"缺口", @"缺口"), (long)[self calculateEarnings2]];
+    NSString* text = [NSString stringWithFormat:@"%@\n$ %@", NSLocalizedString(@"缺口", @"缺口"), [self calculateEarnings2]];
     
     CGFloat offsetY = _meterView.frame.origin.y + _meterView.frame.size.height;
     CGFloat centerY = offsetY + (self.frame.size.height - offsetY) / 2.;
@@ -110,7 +110,7 @@
 }
 
 //計算實際總收益
-- (NSInteger)calculateEarnings
+- (NSString*)calculateEarnings
 {
     NSInteger total = 0;   //實際總收益
     NSArray* array = _issue.issTypeArray;
@@ -118,11 +118,14 @@
         total += [type.gainR integerValue];
     }
     
-    return total;
+    NSNumberFormatter* formatter = [NSNumberFormatter new];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    
+    return [formatter stringFromNumber:[NSNumber numberWithInteger:total]];
 }
 
 //計算預計總收益
-- (NSInteger)calculateEarnings2
+- (NSString*)calculateEarnings2
 {
     NSInteger total = 0;   //實際總收益
     NSArray* array = _issue.issTypeArray;
@@ -130,7 +133,10 @@
         total += [type.gainP integerValue];
     }
     
-    return total;
+    NSNumberFormatter* formatter = [NSNumberFormatter new];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    
+    return [formatter stringFromNumber:[NSNumber numberWithInteger:total]];
 }
 
 - (CGSize)calculateSizeWithText:(NSString*)text
