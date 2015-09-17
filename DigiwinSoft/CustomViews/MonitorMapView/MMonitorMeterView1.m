@@ -97,7 +97,7 @@
 - (void)addEarningsLabel
 {
     UIColor* color = [UIColor redColor];
-    NSString* text = [NSString stringWithFormat:@"%@ : $ %ld", NSLocalizedString(@"現在值", @"現在值"), (long)[self calculateEarnings]];
+    NSString* text = [NSString stringWithFormat:@"%@ : $ %@", NSLocalizedString(@"目標值", @"目標值"), [self calculateEarnings]];
     CGSize size = [self calculateSizeWithText:text];
     CGFloat posY = self.frame.size.height * 0.2;
     
@@ -132,7 +132,7 @@
 - (UILabel*)createDifferenceLabelWithFrame:(CGRect)frame
 {
     UIColor* color = [[MDirector sharedInstance] getCustomGrayColor];
-    NSString* text = [NSString stringWithFormat:@"$ %ld", (long)[self calculateDiffence]];
+    NSString* text = [NSString stringWithFormat:@"$ %@", [self calculateDiffence]];
     
     UILabel* label = [self createLabelWithFrame:frame textColor:color text:text];
     label.textAlignment = NSTextAlignmentRight;
@@ -154,12 +154,16 @@
     CGFloat width = (self.frame.size.width - gap*(count+1))/count;
     CGFloat height = frame.size.height / 2.;
     
+    NSNumberFormatter* formatter = [NSNumberFormatter new];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    
     for (int index = 0; index< count; index++) {
         MIssue* issue = [_issueGroup objectAtIndex:index];
         
         //收益
         UIColor* color = [self getColorWithIndex:index];
-        NSString* text = [NSString stringWithFormat:@"$ %@", issue.gainR];
+        NSString* gain = [formatter stringFromNumber:[NSNumber numberWithInteger:[issue.gainR integerValue]]];
+        NSString* text = [NSString stringWithFormat:@"$ %@", gain];
         UILabel* label1 = [self createLabelWithFrame:CGRectMake(posX, 0, width, height)
                                            textColor:color
                                                 text:text];
@@ -213,7 +217,7 @@
 }
 
 //計算不足差額
-- (NSInteger)calculateDiffence
+- (NSString*)calculateDiffence
 {
     NSInteger total1 = 0;   //預計總收益
     NSInteger total2 = 0;   //實際總收益
@@ -223,11 +227,15 @@
         total2 += [issue.gainR integerValue];
     }
     
-    return total1 - total2;
+    NSInteger diff = total1 - total2;
+    NSNumberFormatter* formatter = [NSNumberFormatter new];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    
+    return [formatter stringFromNumber:[NSNumber numberWithInteger:diff]];
 }
 
 //計算總收益
-- (NSInteger)calculateEarnings
+- (NSString*)calculateEarnings
 {
     NSInteger total = 0;   //實際總收益
     
@@ -235,7 +243,11 @@
         total += [issue.gainR integerValue];
     }
     
-    return total;
+    NSNumberFormatter* formatter = [NSNumberFormatter new];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    
+    
+    return [formatter stringFromNumber:[NSNumber numberWithInteger:total]];
 }
 
 - (CGSize)calculateSizeWithText:(NSString*)text

@@ -252,7 +252,7 @@
     
     CGFloat width = _scroll.frame.size.width/3.;
     _rangeView = [[UIView alloc] initWithFrame:CGRectMake(width * _rangeIndex, 0, width, _scroll.frame.size.height)];
-    _rangeView.backgroundColor = [UIColor colorWithRed:139./255. green:137./255. blue:137./255. alpha:0.6];
+    _rangeView.backgroundColor = [UIColor colorWithRed:1. green:1. blue:1. alpha:0.4];
     [view addSubview:_rangeView];
     
     UIPanGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
