@@ -1212,7 +1212,7 @@ static MDataBaseManager* _director = nil;
 // p35
 - (NSArray*)loadReports
 {
-    NSString* sql = @"select * from U_REPORT";
+    NSString* sql = @"select * from U_REPORT order by CREATE_DATE desc";
     // select *
     // from U_REPORT
     
