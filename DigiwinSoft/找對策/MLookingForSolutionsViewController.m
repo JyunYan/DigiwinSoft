@@ -21,6 +21,7 @@
 #define TAG_QUESTION_CELL_READS 104
 #define TAG_ISSUE_CELL_TITLE    105
 #define TAG_ISSUE_CELL_READS    106
+#define TAG_ISSUE_CELL_IMAGE    107
 
 
 @interface MLookingForSolutionsViewController ()
@@ -267,7 +268,9 @@
         UILabel* reads = (UILabel*)[cell viewWithTag:TAG_ISSUE_CELL_READS];
         
         title.text = issue.name;
-        reads.text = [self convertToCommaType:issue.reads];;
+        reads.text = [self convertToCommaType:issue.reads];
+        
+        [self makeIssueReadsSizeToFitOnCell:cell];
     }
     
     return cell;
@@ -378,6 +381,7 @@
         
         //image
         UIImageView *img = [[UIImageView alloc]initWithFrame:CGRectMake(60,30, 20, 20)];
+        img.tag = TAG_ISSUE_CELL_IMAGE;
         img.image=[UIImage imageNamed:@"icon_menu_5_blue.png"];
         img.tintColor=[UIColor colorWithRed:138.0/255.0 green:206.0/255.0 blue:225.0/255.0 alpha:1.0];
         [cell addSubview:img];
@@ -386,6 +390,26 @@
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     return cell;
+}
+
+- (void)makeIssueReadsSizeToFitOnCell:(UITableViewCell*)cell
+{
+    UILabel* reads = (UILabel*)[cell viewWithTag:TAG_ISSUE_CELL_READS];
+    UIImageView* img = (UIImageView*)[cell viewWithTag:TAG_ISSUE_CELL_IMAGE];
+    
+    NSMutableDictionary* attributes = [NSMutableDictionary new];
+    [attributes setObject:reads.font forKey:NSFontAttributeName];
+    
+    CGSize size = [reads.text sizeWithAttributes:attributes];
+    reads.frame = CGRectMake(reads.frame.origin.x,
+                             reads.frame.origin.y,
+                             size.width,
+                             reads.frame.size.height);
+    
+    img.frame = CGRectMake(reads.frame.origin.x + size.width + 4.,
+                           img.frame.origin.y,
+                           img.frame.size.width,
+                           img.frame.size.height);
 }
 
 - (void)prepareData
@@ -426,6 +450,9 @@
 
 -(NSString*)convertToCommaType:(NSString*)str
 {
+    if([str rangeOfString:@","].location != NSNotFound)
+        return str;
+    
     NSNumberFormatter *formatter = [NSNumberFormatter new];
     [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
     NSNumber *num=[NSNumber numberWithInteger:[str integerValue]];

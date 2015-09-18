@@ -21,6 +21,7 @@
 #import "MSkill.h"
 #import "MReport.h"
 #import "MEfficacy.h"
+#import "MQuestion.h"
 
 #import "MCustGuide.h"
 #import "MCustActivity.h"
@@ -93,7 +94,7 @@
 
 #pragma mark - 找對策
 - (NSArray*)loadQuestionArrayWithKeyword:(NSString*)keyword;
-- (NSArray*)loadIssueArrayWithQuestionID:(NSString*)uuid;
+- (NSArray*)loadIssueArrayWithQuestion:(MQuestion*)question;
 
 #pragma mark - 看現況(經營效能)
 - (NSArray*)loadCompanyEfficacyArray;

@@ -97,7 +97,7 @@
 - (void)addEarningsLabel
 {
     UIColor* color = [UIColor redColor];
-    NSString* text = [NSString stringWithFormat:@"%@ : $ %@", NSLocalizedString(@"目標值", @"目標值"), [self calculateEarnings]];
+    NSString* text = [NSString stringWithFormat:@"%@ : $ %@", NSLocalizedString(@"現在值", @"現在值"), [self calculateEarningsReal]];
     CGSize size = [self calculateSizeWithText:text];
     CGFloat posY = self.frame.size.height * 0.2;
     
@@ -123,16 +123,16 @@
     
     posY = _metterView.frame.origin.y - 20;
     
-    // 差額
-    _diffLabel = [self createDifferenceLabelWithFrame:CGRectMake(posX+6, posY, width-12, 20)];
+    // 期望值total
+    _diffLabel = [self createExpectationsLabelWithFrame:CGRectMake(posX+6, posY, width-12, 20)];
     [self addSubview:_diffLabel];
 }
 
-// 差額label
-- (UILabel*)createDifferenceLabelWithFrame:(CGRect)frame
+// 期望值label
+- (UILabel*)createExpectationsLabelWithFrame:(CGRect)frame
 {
     UIColor* color = [[MDirector sharedInstance] getCustomGrayColor];
-    NSString* text = [NSString stringWithFormat:@"$ %@", [self calculateDiffence]];
+    NSString* text = [NSString stringWithFormat:@"%@ : $ %@", NSLocalizedString(@"目標值", @"目標值"), [self calculateEarningsExpectations]];
     
     UILabel* label = [self createLabelWithFrame:frame textColor:color text:text];
     label.textAlignment = NSTextAlignmentRight;
@@ -234,8 +234,23 @@
     return [formatter stringFromNumber:[NSNumber numberWithInteger:diff]];
 }
 
+//預計總收益
+- (NSString*)calculateEarningsExpectations
+{
+    NSInteger total = 0;
+    
+    for (MIssue* issue in _issueGroup) {
+        total += [issue.gainP integerValue];
+    }
+    
+    NSNumberFormatter* formatter = [NSNumberFormatter new];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    
+    return [formatter stringFromNumber:[NSNumber numberWithInteger:total]];
+}
+
 //計算總收益
-- (NSString*)calculateEarnings
+- (NSString*)calculateEarningsReal
 {
     NSInteger total = 0;   //實際總收益
     
@@ -245,7 +260,6 @@
     
     NSNumberFormatter* formatter = [NSNumberFormatter new];
     formatter.numberStyle = NSNumberFormatterDecimalStyle;
-    
     
     return [formatter stringFromNumber:[NSNumber numberWithInteger:total]];
 }

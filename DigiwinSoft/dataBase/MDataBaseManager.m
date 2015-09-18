@@ -11,7 +11,6 @@
 #import "MMonitorData.h"
 #import "MIssType.h"
 #import "MManageItem.h"
-#import "MQuestion.h"
 #import "MIndustryInfo.h"
 #import "MIndustryInfoKind.h"
 #import "MIndustry.h"
@@ -1640,7 +1639,7 @@ static MDataBaseManager* _director = nil;
         qu.subject = [rs stringForColumn:@"SUBJECT"];
         qu.reads = [rs stringForColumn:@"READS"];
         
-        NSArray* issArray = [self loadIssueArrayWithQuestionID:qu.uuid];
+        NSArray* issArray = [self loadIssueArrayWithQuestion:qu];
         qu.issueArray = issArray;
         
         [array addObject:qu];
@@ -1648,17 +1647,21 @@ static MDataBaseManager* _director = nil;
     return array;
 }
 
-- (NSArray*)loadIssueArrayWithQuestionID:(NSString*)uuid
+- (NSArray*)loadIssueArrayWithQuestion:(MQuestion*)question
 {
-    NSString* sql = @"select * from R_QU_ISS as rqi inner join M_ISSUE as mi on mi.ID = rqi.ISS_ID where rqi.QU_ID = ?";
+    NSString* indid = [MDirector sharedInstance].currentIndustry.uuid;
+    
+    //NSString* sql = @"select * from R_QU_ISS as rqi inner join M_ISSUE as mi on mi.ID = rqi.ISS_ID where rqi.QU_ID = ?";
+    NSString* sql = @"select * from R_IND_ISSUE as rii inner join M_ISSUE as mi on mi.ID = rii.ISSUE_ID where rii.IND_ID = ?";
+    sql = [sql stringByAppendingFormat:@" and (mi.NAME like '%%%@%%' or mi.DESCRIPTION like '%%%@%%')", question.subject, question.subject];
     
     NSMutableArray* array = [NSMutableArray new];
     
-    FMResultSet* rs = [self.db executeQuery:sql, uuid];
+    FMResultSet* rs = [self.db executeQuery:sql, indid];
     while ([rs next]) {
         MIssue* issue = [MIssue new];
         issue.uuid = [rs stringForColumn:@"ID"];
-        issue.name = [rs stringForColumn:@"NAMe"];
+        issue.name = [rs stringForColumn:@"NAME"];
         issue.desc = [rs stringForColumn:@"DESCRIPTION"];
         issue.reads = [rs stringForColumn:@"READS"];
         
