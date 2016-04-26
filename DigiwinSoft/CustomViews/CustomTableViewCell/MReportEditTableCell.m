@@ -126,6 +126,7 @@
     picker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];;
     picker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
     picker.datePickerMode = UIDatePickerModeDate;
+    picker.date = [NSDate date];
     [picker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
     
     // 建立 UIToolbar
@@ -213,7 +214,9 @@
 //dismiss picker
 - (void)closeDatePicker:(id)sender
 {
-    [self endEditing:YES];
+    UIDatePicker* picker = (UIDatePicker*)_textDate.inputView;
+    [self datePickerValueChanged:picker];
+    [_textDate endEditing:YES];
 }
 
 //dismiss keyboard
@@ -269,7 +272,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    return YES;
+    return YES; 
 }
 
 #pragma mark - UITextField 相關

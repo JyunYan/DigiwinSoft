@@ -41,8 +41,8 @@
             [_treasureArray addObjectsFromArray:array];
         }
         
-        _actArray = [NSMutableArray new];
-        _actArray = actArray;
+        //_actArray = actArray;
+        _actArray = [NSArray new];
         _situationArray = situationArray;
     }
     return self;

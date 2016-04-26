@@ -9,16 +9,16 @@
 // p42
 
 #import "MTaskRaidersViewController.h"
-#import "MDirector.h"
 #import "MDesignateResponsibleViewController.h"
 #import "MGoalSettingViewController.h"
 
 #import "MWorkItemFlowChart.h"
-
 #import "MRaidersTableCell.h"
-
 #import "SWTableViewCell.h"
 #import "MCustomAlertView.h"
+
+#import "MDirector.h"
+
 #define TAG_LABEL_WORKITEM 100
 
 #define TAG_BUTTON_APPOINT_RESPONSIBLE 1000
@@ -43,18 +43,18 @@
 
 @implementation MTaskRaidersViewController
 
-- (id)initWithCustGuide:(MCustGuide*) guide Index:(NSInteger) index {
-    self = [super init];
-    if (self) {
-        //_guide = guide;
-        
-        _activityArray = guide.activityArray;
-        _actIndex = index;
-        _act = [_activityArray objectAtIndex:index];
-        _tabBarExisted = YES;
-    }
-    return self;
-}
+//- (id)initWithCustGuide:(MCustGuide*) guide Index:(NSInteger) index {
+//    self = [super init];
+//    if (self) {
+//        //_guide = guide;
+//        
+//        _activityArray = guide.activityArray;
+//        _actIndex = index;
+//        _act = [_activityArray objectAtIndex:index];
+//        _tabBarExisted = YES;
+//    }
+//    return self;
+//}
 
 - (id)initWithCustActivity:(MCustActivity*)activity
 {
@@ -175,9 +175,10 @@
     
     CGFloat posX = rect.origin.x;
     CGFloat posY = rect.origin.y;
-    CGFloat width = rect.size.width / 2.;
+    CGFloat width = rect.size.width;
     CGFloat height = rect.size.height;
     
+    /*
     UIButton* addActButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     addActButton.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
     [addActButton setTitle:NSLocalizedString(@"新增工作項目", @"新增工作項目") forState:UIControlStateNormal];
@@ -186,6 +187,7 @@
     [self.view addSubview:addActButton];
     
     posX += addActButton.frame.size.width;
+    */
     
     UIButton* notifyButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     notifyButton.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
@@ -295,7 +297,7 @@
     CGSize size = CGSizeMake(tableView.frame.size.width, 50.);
     MWorkItemTableCell* cell = [MWorkItemTableCell cellWithTableView:tableView size:size];
     
-    cell.rightUtilityButtons = [self rightButtons];
+    //cell.rightUtilityButtons = [self rightButtons];
     [cell setDelegateW:self];
     [cell setDelegate:self];
     [cell prepareWithCustWorkItem:workitem];
@@ -379,12 +381,80 @@
     if(buttonIndex == 1){
         MCustomAlertView *customAlertView = (MCustomAlertView*)alertView;
         MCustWorkItem* item = [customAlertView object];
+        
         BOOL b = [[MDataBaseManager sharedInstance] deleteCustWorkItem:item];
-        if(b)
+        if(b){
             [_act.workItemArray removeObject:item];
-        else
+            [self modifyPreJobWithCustWorkItem:item];
+            
+            if(_bNeedSaved)
+                [[MDataBaseManager sharedInstance] insertCustWorkItems:_act.workItemArray];
+            
+            [_tableView reloadData];
+        }else{
             [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"刪除失敗", @"刪除失敗")];
-        [_tableView reloadData];
+        }
+        
+//        BOOL b = [[MDataBaseManager sharedInstance] deleteCustWorkItem:item];
+//        if(b)
+//            [_act.workItemArray removeObject:item];
+//        else
+//            [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"刪除失敗", @"刪除失敗")];
+//        [_tableView reloadData];
+    }
+}
+
+- (void)modifyPreJobWithCustWorkItem:(MCustWorkItem*)item
+{
+    NSInteger prevCount = 0;
+    
+    if(item.previos1 && ![item.previos1 isEqualToString:@""])
+        prevCount ++;
+    if(item.previos2 && ![item.previos2 isEqualToString:@""])
+        prevCount ++;
+    
+    if(prevCount == 2){
+        //狀況ㄧ & 三
+        //邏輯有漏洞,客戶尚未解決
+        BOOL first = YES;
+        NSString* newPrev = @"";
+        for (MCustWorkItem* wi in _act.workItemArray) {
+            
+            if([wi.previos1 isEqualToString:item.uuid]){
+                if(first){
+                    first = NO;
+                    wi.previos1 = item.previos1;
+                    wi.previos2 = item.previos2;
+                    newPrev = wi.uuid;
+                }else{
+                    wi.previos1 = newPrev;
+                }
+            }
+            else if([wi.previos2 isEqualToString:item.uuid]){
+                if(first){
+                    first = NO;
+                    wi.previos1 = item.previos1;
+                    wi.previos2 = item.previos2;
+                    newPrev = wi.uuid;
+                }else{
+                    wi.previos2 = newPrev;
+                }
+            }
+        }
+    }else{
+        //狀況二
+        NSString* newPrev = nil;
+        if(item.previos1 && ![item.previos1 isEqualToString:@""])
+            newPrev = item.previos1;
+        else if (item.previos2 && ![item.previos2 isEqualToString:@""])
+            newPrev = item.previos2;
+        
+        for (MCustWorkItem* wi in _act.workItemArray) {
+            if([wi.previos1 isEqualToString:item.uuid])
+                wi.previos1 = newPrev;
+            if([wi.previos2 isEqualToString:item.uuid])
+                wi.previos2 = newPrev;
+        }
     }
 }
 

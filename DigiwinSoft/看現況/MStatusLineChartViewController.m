@@ -7,9 +7,11 @@
 //
 
 #import "MStatusLineChartViewController.h"
-#import "MStatusLineChartView.h"
-#import "MDirector.h"
 #import "MIndustryRaiders2ViewController.h"
+
+#import "MStatusLineChartView.h"
+
+#import "MDirector.h"
 
 
 @interface MStatusLineChartViewController ()

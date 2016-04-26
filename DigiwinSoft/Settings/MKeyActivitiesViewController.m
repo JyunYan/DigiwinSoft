@@ -7,19 +7,25 @@
 //
 
 #import "MKeyActivitiesViewController.h"
-#import "AppDelegate.h"
-#import "ASFileManager.h"
+#import "MTasksDeployedViewController.h"
+#import "MInventoryTurnoverViewController.h"
+#import "MDesignateResponsibleViewController.h"
+
 #import "MCustActivity.h"
 #import "MCustWorkItem.h"
-#import "MDirector.h"
-#import "UIImageView+AFNetworking.h"
 
-#import "MTasksDeployedViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "UIButton+AFNetworking.h"
+
+#import "MDirector.h"
+#import "AppDelegate.h"
+#import "ASFileManager.h"
 
 
 #define TAG_LABEL_WORK_ITEM 200
 #define TAG_LABEL_APPOINT_RESPONSIBLE 201
-#define TAG_LABEL_DEADLINE 202
+#define TAG_LABEL_DEADLINE  202
+#define TAG_FOR_TOP_VIEW    203
 
 @interface MKeyActivitiesViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -68,6 +74,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadGuide:) name:@"ReloadGuide" object:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -87,6 +104,7 @@
     
 
     UIView* view = [[UIView alloc] initWithFrame:rect];
+    view.tag = TAG_FOR_TOP_VIEW;
     
     CGFloat viewWidth = rect.size.width;
     
@@ -130,7 +148,19 @@
     indexLabel.font = [UIFont systemFontOfSize:textSize];
     [view addSubview:indexLabel];
     
+    CGRect autoRect = [self autoSizeWithFont:indexLabel.font
+                                 MaxSize:CGSizeMake(DEVICE_SCREEN_WIDTH - posX*2 - 30., height)
+                                    text:indexLabel.text];
+    indexLabel.frame = CGRectMake(posX, posY, autoRect.size.width, height);
     
+    posX = indexLabel.frame.origin.x + indexLabel.frame.size.width;
+    //設定指標button
+    UIButton* tarButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, 30., 30.)];
+    [tarButton setBackgroundImage:[UIImage imageNamed:@"icon_menu_8.png"] forState:UIControlStateNormal];
+    [tarButton addTarget:self action:@selector(btnTargetSetClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:tarButton];
+    
+    posX = indexLabel.frame.origin.x;
     posY = indexLabel.frame.origin.y + indexLabel.frame.size.height;
     // 目標值
     NSString* presentValueStr = @"";
@@ -156,15 +186,29 @@
     
     
     posX = personInChargeLabel.frame.origin.x + personInChargeLabel.frame.size.width;
-
+    
+    UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, 30, 30)];
+    button.backgroundColor = [UIColor clearColor];
+    button.layer.cornerRadius = button.frame.size.width/2.;
+    button.layer.masksToBounds = YES;
+    [button addTarget:self action:@selector(actionToDesignManager:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:button];
+    
+    
+    [button setImageForState:UIControlStateNormal
+                     withURL:[NSURL URLWithString:_guide.manager.thumbnail]
+            placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
+/*
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(posX, posY, 30, 30)];
-    imageView.backgroundColor = [UIColor clearColor];
+    imageView.backgroundColor = [UIColor redColor];
     imageView.layer.cornerRadius = imageView.frame.size.width / 2.;
     imageView.layer.masksToBounds = YES;
     [view addSubview:imageView];
     
     [imageView setImageWithURL:[NSURL URLWithString:_guide.manager.thumbnail]
               placeholderImage:[UIImage imageNamed:@"icon_manager.png"]];
+ */
+    
 //    if (_guide.manager.name != nil && ![_guide.manager.name isEqualToString:@""])
 //        imageView.image = [UIImage imageNamed:@"z_thumbnail.jpg"];
 //    else
@@ -504,6 +548,65 @@
     [_tableView reloadData];
 }
 
+- (void)didAsignedManager:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidAssignManager object:nil];
+    
+    id obj = notification.object;
+    if([obj isKindOfClass:[MCustGuide class]]){
+        MCustGuide* guide = (MCustGuide*)obj;
+        _guide = guide;
+        
+        BOOL b = [[MDataBaseManager sharedInstance] updateGuide:_guide managerID:guide.manager.uuid];
+        if(b){
+            UIView* top = [self.view viewWithTag:TAG_FOR_TOP_VIEW];
+            CGRect frame = top.frame;
+            
+            [top removeFromSuperview];
+            top = [self createTopView:frame];
+            [self.view addSubview:top];
+        }
+    }
+}
+
+- (void)UpGuideTarget:(NSNotification*)notification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UpGuideTarget" object:nil];
+    
+    id obj = notification.object;
+    MCustGuide* guide = (MCustGuide*)obj;
+    _guide = guide;
+    
+    MCustTarget* target = _guide.custTaregt;
+    [[MDataBaseManager sharedInstance] insertCustTarget:target withID:target.uuid];
+}
+
+#pragma mark - button methods
+
+- (void)actionToDesignManager:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didAsignedManager:) name:kDidAssignManager object:nil];
+    
+    MDesignateResponsibleViewController* vc = [[MDesignateResponsibleViewController alloc] initWithGuide:_guide];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.navigationBar.barStyle = UIStatusBarStyleLightContent;
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
+}
+
+-(void)btnTargetSetClicked:(id)sender
+{
+    //for p27 帶回目標值與達成日
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(UpGuideTarget:)
+                                                 name:@"UpGuideTarget"
+                                               object:nil];
+    
+    MInventoryTurnoverViewController *vc = [[MInventoryTurnoverViewController alloc]init];
+    vc.guide = _guide;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
 #pragma mark - other methods
 
 -(UIImage*)loadLocationImage:(NSString*)urlstr
@@ -518,6 +621,12 @@
     if(!image)
         image = nil;
     return image;
+}
+
+- (CGRect)autoSizeWithFont:(UIFont*)font MaxSize:(CGSize)size text:(NSString*)text
+{
+    NSDictionary *attributes = @{NSFontAttributeName:font};
+    return [text boundingRectWithSize:size options:NSStringDrawingUsesFontLeading attributes:attributes context:nil];
 }
 
 #pragma mark - other
@@ -540,5 +649,6 @@
     }
     return attStr;
 }
+
 
 @end

@@ -7,11 +7,12 @@
 //
 
 #import "MGoalSettingViewController.h"
-#import "DownPicker.h"
+
+#import "MRadioGroupView.h"
+#import "CustomIOSAlertView.h"
+
 #import "MDirector.h"
 #import "MDataBaseManager.h"
-#import "CustomIOSAlertView.h"
-#import "MRadioGroupView.h"
 
 #define TAG_TEXTFIELD_NAME  101
 #define TAG_TEXTFIELD_VALUE 102
@@ -84,7 +85,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self postData];
+    //[self postData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -96,8 +97,10 @@
 
 -(void) addMainMenu
 {
-    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
-    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
+    //UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+    //self.navigationController.navigationBar.topItem.backBarButtonItem = back;
+    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:101 target:self action:@selector(back:)];
+    self.navigationItem.leftBarButtonItem = back;
 }
 
 - (UILabel*)createLabelWithFrame:(CGRect)frame text:(NSString*)text textColor:(UIColor*)color font:(UIFont*)font textAlignmentCenter:(NSTextAlignment)textAlignmentCenter
@@ -134,9 +137,18 @@
     // date picker
     UIDatePicker* picker = [[UIDatePicker alloc] init];
     picker.tag = tag;
-    picker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];;
-    picker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    //picker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];;
+    //picker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
     picker.datePickerMode = UIDatePickerModeDate;
+    [picker addTarget:self action:@selector(dateIsChanged:) forControlEvents:UIControlEventValueChanged];
+    
+    if(text.length > 0){
+        NSDateFormatter* fm = [NSDateFormatter new];
+        fm.dateFormat = @"yyyy/MM/dd";
+        picker.date = [fm dateFromString:text];
+    }else{
+        picker.date = [NSDate date];
+    }
     
     // tool bar
     UIToolbar* toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH, 44)];
@@ -360,6 +372,7 @@
     
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor whiteColor];
+    view.layer.cornerRadius = 7.;
     
     CGFloat viewWidth = view.frame.size.width;
     CGFloat viewHeight = view.frame.size.height;
@@ -532,49 +545,29 @@
 
 - (void)closeDatePicker:(UIBarButtonItem*)button
 {
-    [self.view endEditing:YES];
-    
-    NSDateFormatter *fm1 = [[NSDateFormatter alloc] init];
-    [fm1 setDateFormat:@"yyyy-MM-dd"];
-    
-    NSDateFormatter *fm2 = [[NSDateFormatter alloc] init];
-    [fm2 setDateFormat:@"yyyy/MM/dd"];
-    
     NSInteger tag = button.tag;
-    if(tag == TAG_TEXTFIELD_START){
-        UIDatePicker* picker = (UIDatePicker*)_startTF.inputView;
-        NSString *strStartTF=[fm2 stringFromDate:picker.date];
-        
-        if ([self compareDate:_endTF.text withDate:strStartTF]) {
-            UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"訊息", @"訊息")
-                                                            message:NSLocalizedString(@"日期設定錯誤", @"日期設定錯誤")
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"確認", @"確認")
-                                                  otherButtonTitles:nil, nil];
-            [theAlert show];
-            return;
-        }
-        
-        _startTF.text =strStartTF;
-        [self setStartDate:[fm1 stringFromDate:picker.date]];
+    if(tag == TAG_TEXTFIELD_START)
+        [self textFieldDidEndEditing:_startTF];
+    if(tag == TAG_TEXTFIELD_END)
+        [self textFieldDidEndEditing:_endTF];
     
-    }else if(tag == TAG_TEXTFIELD_END){
-        UIDatePicker* picker = (UIDatePicker*)_endTF.inputView;
-        NSString *strEndTF=[fm2 stringFromDate:picker.date];
-
-        if ([self compareDate:strEndTF withDate:_startTF.text]) {
-            UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"訊息", @"訊息")
-                                                            message:NSLocalizedString(@"日期設定錯誤", @"日期設定錯誤")
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"確認", @"確認")
-                                                  otherButtonTitles:nil, nil];
-            [theAlert show];
-            return;
-        }
-
-        _endTF.text = strEndTF;
-        [self setEndDate:[fm1 stringFromDate:picker.date]];
+    NSString* start = _startTF.text;
+    NSString* end = _endTF.text;
+    if([self compareDate:end withDate:start]){
+        UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"訊息", @"訊息")
+                                                        message:NSLocalizedString(@"日期設定錯誤", @"日期設定錯誤")
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"確認", @"確認")
+                                              otherButtonTitles:nil, nil];
+        [theAlert show];
+        return;
     }
+    
+    
+    if(tag == TAG_TEXTFIELD_START)
+        [_startTF endEditing:YES];
+    if(tag == TAG_TEXTFIELD_END)
+        [_endTF endEditing:YES];
 }
 
 -(int)compareDate:(NSString*)date01 withDate:(NSString*)date02{
@@ -607,13 +600,12 @@
 }
 -(void)showDescAlert:(id)sender
 {
-    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    CGFloat screenWidth = screenFrame.size.width;
-    
-    _customIOSAlertView = [[CustomIOSAlertView alloc] initWithParentView:self.view.superview];
+    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+
+    _customIOSAlertView = [[CustomIOSAlertView alloc] initWithParentView:window];
     [_customIOSAlertView setButtonTitles:nil];
     
-    UIView* view = [self createDescView:CGRectMake(0, 0, screenWidth, 300)];
+    UIView* view = [self createDescView:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH-20, 300)];
     [_customIOSAlertView setContainerView:view];
     [_customIOSAlertView show];
 }
@@ -638,6 +630,25 @@
     return YES;
 }
 
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSInteger tag = textField.tag;
+    UIDatePicker* picker = (UIDatePicker*)textField.inputView;
+    
+    NSDateFormatter* fm = [NSDateFormatter new];
+    fm.dateFormat = @"yyyy/MM/dd";
+    NSString* dateStr = [fm stringFromDate:[picker date]];
+    
+    if(tag == TAG_TEXTFIELD_START){
+        _startTF.text = dateStr;
+        //[self setStartDate:dateStr];
+    }else if(tag == TAG_TEXTFIELD_END){
+        _endTF.text = dateStr;
+        //[self setEndDate:dateStr];
+    }
+        
+}
+
 #pragma mark - MRadioGroupViewDelegate
 
 - (void)didRadioGroupIndexChanged:(MRadioGroupView *)radioGroupView
@@ -658,7 +669,60 @@
         default:
             break;
     }
+}
+
+#pragma mark - 其他
+
+- (void)dateIsChanged:(UIDatePicker*)picker
+{
+    NSInteger tag = picker.tag;
+    
+    NSDateFormatter *fm = [NSDateFormatter new];
+    [fm setDateFormat:@"yyyy/MM/dd"];
+    NSString* dateStr = [fm stringFromDate:[picker date]];
+    
+    if(tag == TAG_TEXTFIELD_START){
+        _startTF.text = dateStr;
+        //[self setStartDate:dateStr];
+        
+    }else if(tag == TAG_TEXTFIELD_END){
+        _endTF.text = dateStr;
+        //[self setEndDate:dateStr];
     }
+    
+}
+
+- (void)back:(id)button
+{
+    NSString* start = _startTF.text;
+    NSString* end = _endTF.text;
+    
+    if([start isEqualToString:@""] || [end isEqualToString:@""]){
+        UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"訊息", @"訊息")
+                                                        message:NSLocalizedString(@"日期設定不可為空", @"日期設定不可為空")
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"確認", @"確認")
+                                              otherButtonTitles:nil, nil];
+        [theAlert show];
+        return;
+    }
+    
+    
+    if([self compareDate:end withDate:start]){
+        UIAlertView *theAlert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"訊息", @"訊息")
+                                                        message:NSLocalizedString(@"日期設定錯誤", @"日期設定錯誤")
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"確認", @"確認")
+                                              otherButtonTitles:nil, nil];
+        [theAlert show];
+        return;
+    }
+    
+    [self setStartDate:start];
+    [self setEndDate:end];
+    [self postData];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - activity / workitem 區分
 

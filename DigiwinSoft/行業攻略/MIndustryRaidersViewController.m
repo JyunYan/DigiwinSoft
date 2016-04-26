@@ -47,7 +47,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(industryDidChanged:) name:kIndustryDidChanged object:nil];
     
     BOOL isLogin = [MDirector sharedInstance].isLogin;
-    if(isLogin){
+    if(true){
         [self refresh];
     }else{
         MLoginViewController *vc=[[MLoginViewController alloc]init];

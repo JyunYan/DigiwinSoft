@@ -7,6 +7,7 @@
 //
 
 #import "MDirector.h"
+#import "MBProgressHUD.h"
 
 @implementation MDirector
 static MDirector* _director = nil;
@@ -105,6 +106,18 @@ static MDirector* _director = nil;
                                           cancelButtonTitle:NSLocalizedString(@"確定", @"確定")
                                           otherButtonTitles: nil];
     [alert show];
+}
+
+- (void)showHUD
+{
+    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    [MBProgressHUD showHUDAddedTo:window animated:YES];
+}
+
+- (void)hideHUD
+{
+    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    [MBProgressHUD hideAllHUDsForView:window animated:YES];
 }
 
 // 隨機產生uuid

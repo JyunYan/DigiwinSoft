@@ -8,10 +8,12 @@
 
 #import "MLookingForSolutionsViewController.h"
 #import "MIndustryRaiders2ViewController.h"
+
 #import "MDataBaseManager.h"
 #import "MDirector.h"
-#import "AppDelegate.h"
 #import "MConfig.h"
+
+#import "AppDelegate.h"
 #import "MQuestion.h"
 
 #define TAG_TABLE 101

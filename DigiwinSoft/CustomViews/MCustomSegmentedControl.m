@@ -43,14 +43,14 @@
         [[UISegmentedControl appearance] setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
         
         //imgblueBar
-        _imgblueBar = [[UIImageView alloc]initWithFrame:CGRectMake((width / _itemCount) * barIndex + 5, height - 4, (width/_itemCount) -20, 3)];
+        _imgblueBar = [[UIImageView alloc]initWithFrame:CGRectMake((width / _itemCount) * barIndex + 5 , height - 4, (width/_itemCount)-10, 3)];
         _imgblueBar.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
         [self addSubview:_imgblueBar];
         
         //imgGray
         UIImageView *imgGray = [[UIImageView alloc]initWithFrame:CGRectMake(0, height - 1, width, 1)];
         imgGray.backgroundColor = [UIColor colorWithRed:194.0/255.0 green:194.0/255.0 blue:194.0/255.0 alpha:1.0];
-        [self addSubview:imgGray];
+        //[self addSubview:imgGray];
     }
     return self;
 }

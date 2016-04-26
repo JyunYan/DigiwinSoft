@@ -22,7 +22,7 @@
 @property (nonatomic, assign) BOOL bNeedSaved;
 @property (nonatomic, strong) id<MTaskRaidersViewControllerDelegate> delegate;
 
-- (id)initWithCustGuide:(MCustGuide*) guide Index:(NSInteger) index;
+//- (id)initWithCustGuide:(MCustGuide*) guide Index:(NSInteger) index;
 - (id)initWithCustActivity:(MCustActivity*)activity;
 
 @end

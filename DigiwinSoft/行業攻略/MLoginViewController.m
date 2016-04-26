@@ -176,33 +176,22 @@
     [pref synchronize];
     
     if(isLogin){
+    
+        //設定當前industry
+        NSString* industryid = [pref stringForKey:@"IndustryId"];
+        //NSString* industryname = [pref stringForKey:@"IndustryName"];
+        MIndustry* industry = [self findIndustryWithID:industryid];
+        [MDirector sharedInstance].currentIndustry = industry;
+        
+        if(industry){
+            [pref setObject:industry.uuid forKey:@"IndustryId"];
+            [pref setObject:industry.name forKey:@"IndustryName"];
+        }
         
         [pref setObject:account forKey:@"Account"];
         [pref setObject:password forKey:@"Password"];
         [pref setObject:compid forKey:@"CompanyId"];
         [pref synchronize];
-        
-        NSString* industryid = [pref stringForKey:@"IndustryId"];
-        NSString* industryname = [pref stringForKey:@"IndustryName"];
-        
-        //設定當前industry
-        if(industryid && industryname){
-            MIndustry* industry = [MIndustry new];
-            industry.uuid = industryid;
-            industry.name = industryname;
-            [MDirector sharedInstance].currentIndustry = industry;
-            
-        }else{
-            NSArray* array = [[MDataBaseManager sharedInstance] loadIndustryArray];
-            if(array.count > 0){
-                MIndustry* industry = [array firstObject];
-                [MDirector sharedInstance].currentIndustry = industry;
-                
-                [pref setObject:industry.uuid forKey:@"IndustryId"];
-                [pref setObject:industry.name forKey:@"IndustryName"];
-                [pref synchronize];
-            }
-        }
         
         if(_delegate && [_delegate respondsToSelector:@selector(didLoginSuccessed:)])
             [_delegate didLoginSuccessed:self];
@@ -212,6 +201,27 @@
     }else{
         [[MDirector sharedInstance] showAlertDialog:@"帳號或密碼有誤"];
     }
+}
+
+- (MIndustry*)findIndustryWithID:(NSString*)industryid
+{
+    NSArray* array = [[MDataBaseManager sharedInstance] loadIndustryArray];
+    if(!industryid && array.count > 0)
+        return [array firstObject];
+    
+    MIndustry* industry = nil;
+    for (MIndustry* ind in array) {
+        if(![ind.uuid isEqualToString:industryid])
+            continue;
+        
+        industry = ind;
+        break;
+    }
+    
+    if(!industry && array.count > 0)
+        return [array firstObject];
+    
+    return industry;
 }
 
 #pragma mark - UIButton
@@ -239,6 +249,28 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    
+    CGSize size = self.view.frame.size;
+    self.view.frame = CGRectMake(0, -216, size.width, size.height);
+    
+    [UIView commitAnimations];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    
+    CGSize size = self.view.frame.size;
+    self.view.frame = CGRectMake(0, 0, size.width, size.height);
+    
+    [UIView commitAnimations];
 }
 
 /*

@@ -7,13 +7,17 @@
 //
 
 #import "MSeeStatusViewController.h"
-#import "AppDelegate.h"
 #import "MRouletteViewController.h"
-#import "MCustomSegmentedControl.h"
-#import "MConfig.h"
+#import "MEfficacyViewController.h"
 #import "MStatusPieChartViewController.h"
 #import "MIndustryInformationViewController.h"
-#import "MEfficacyViewController.h"
+
+#import "AppDelegate.h"
+
+#import "MCustomSegmentedControl.h"
+#import "MConfig.h"
+
+
 @interface MSeeStatusViewController ()
 @property (nonatomic, strong) MCustomSegmentedControl* customSegmentedControl;
 @property (nonatomic, strong) MEfficacyViewController* MEfficacyViewController;

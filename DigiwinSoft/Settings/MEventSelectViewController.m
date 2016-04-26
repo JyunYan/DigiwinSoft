@@ -7,9 +7,10 @@
 //
 
 #import "MEventSelectViewController.h"
-#import "AppDelegate.h"
-#import "DownPicker.h"
 #import "MEventDetailViewController.h"
+
+#import "AppDelegate.h"
+//#import "DownPicker.h"
 #import "MDirector.h"
 
 
@@ -27,8 +28,10 @@
 
 @interface MEventSelectViewController ()<UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) DownPicker *downPicker1;
-@property (strong, nonatomic) DownPicker *downPicker2;
+//@property (strong, nonatomic) DownPicker *downPicker1;
+//@property (strong, nonatomic) DownPicker *downPicker2;
+
+@property (nonatomic, strong) UIButton* btnNext;
 
 @property (nonatomic, strong) MEvent* event;
 @property (nonatomic, strong) MUser* user;
@@ -236,16 +239,17 @@
     CGFloat width = viewWidth / 2 - 2;
     CGFloat height = viewHeight - 1;
 
-    UIButton* nextButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    nextButton.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
-    [nextButton setTitle:NSLocalizedString(@"下一步", @"下一步") forState:UIControlStateNormal];
-    [nextButton addTarget:self action:@selector(actionNext:) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:nextButton];
+    _btnNext = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
+    _btnNext.backgroundColor = [[MDirector sharedInstance] getCustomGrayColor];
+    _btnNext.enabled = NO;
+    [_btnNext setTitle:NSLocalizedString(@"下一步", @"下一步") forState:UIControlStateNormal];
+    [_btnNext addTarget:self action:@selector(actionNext:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:_btnNext];
     
-    posX = nextButton.frame.origin.x + nextButton.frame.size.width + 2;
+    posX = _btnNext.frame.origin.x + _btnNext.frame.size.width + 2;
     
     UIButton* addButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
-    addButton.backgroundColor = [UIColor lightGrayColor];
+    addButton.backgroundColor = [[MDirector sharedInstance] getCustomGrayColor];
     [addButton setTitle:NSLocalizedString(@"新增", @"新增") forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(actionAdd:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:addButton];
@@ -316,15 +320,15 @@
 */
 #pragma mark - DownPicker
 
--(void)dp1_Selected:(id)dp {
-    NSString* selectedValue = [_downPicker1 text];
-    
-}
-
--(void)dp2_Selected:(id)dp {
-    NSString* selectedValue = [_downPicker2 text];
-    
-}
+//-(void)dp1_Selected:(id)dp {
+//    NSString* selectedValue = [_downPicker1 text];
+//    
+//}
+//
+//-(void)dp2_Selected:(id)dp {
+//    NSString* selectedValue = [_downPicker2 text];
+//    
+//}
 
 #pragma mark - Table view data source
 
@@ -507,9 +511,16 @@
     BOOL isSelected = button.selected;
     
     [button setSelected: !isSelected];
+    
+    [self changeNextButtonState];
 }
 
 #pragma mark - other methods
+
+//- (void)getSuggestActivityArray
+//{
+//    NSArray* actArray = [[MDataBaseManager sharedInstance] loadActivitysWithEvent:_event];
+//}
 
 - (NSString*)getPeriodDayWithStartDate:(NSString*) dateStr
 {
@@ -532,6 +543,23 @@
     daysStr = [NSString stringWithFormat:@"%ld 天", (long)days];
     
     return daysStr;
+}
+
+- (void)changeNextButtonState
+{
+    BOOL isSelected = NO;
+    for (int index = 0; index < _situationArray.count; index++) {
+        UIButton* button = (UIButton*)[self.view viewWithTag:TAG_CHECKBOX + index];
+        
+        if (button.selected == YES) {
+            isSelected = YES;
+            break;
+        }
+    }
+    
+    MDirector* director = [MDirector sharedInstance];
+    _btnNext.backgroundColor = (isSelected) ? [director getCustomRedColor] : [director getCustomGrayColor];
+    _btnNext.enabled = isSelected;
 }
 
 @end

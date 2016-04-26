@@ -8,6 +8,7 @@
 
 #import "MTarMeterView.h"
 #import "MDirector.h"
+#import "MDataBaseManager.h"
 
 @interface MTarMeterView ()
 
@@ -18,6 +19,8 @@
 @property (nonatomic) UIColor* darkGrayColor;
 @property (nonatomic) UIColor* yellowColor;
 @property (nonatomic) UIColor* redColor;
+
+@property (nonatomic, assign) CGFloat interval;   //每格計量表的數值
 
 @end
 
@@ -53,6 +56,36 @@
         self.redColor = [UIColor colorWithRed:242/255.0 green:97/255.0 blue:95/255.0 alpha:1.0];
     }
     return self;
+}
+
+- (void)setTarget:(MTarget *)target
+{
+    _target = target;
+    [self calulateInterval];
+}
+
+- (void)calulateInterval
+{
+    //NSString* uuid = _target.uuid;
+    //NSInteger max = [[MDataBaseManager sharedInstance] loadHistoryTargetMaxValueRWithTargetID:uuid];
+    NSInteger max = [self calulateMax];
+    
+    _interval = max / 10.;
+}
+
+- (NSInteger)calulateMax
+{
+    NSInteger valueR = [_target.valueR integerValue];
+    NSInteger top = [_target.top integerValue];
+    NSInteger avg = [_target.avg integerValue];
+    NSInteger bottom = [_target.bottom integerValue];
+    
+    NSInteger max = MAX(valueR, top);
+    max = MAX(max, avg);
+    max = MAX(max, bottom);
+    max = MAX(max, 100);
+    
+    return max;
 }
 
 - (void)drawRect:(CGRect)rect
@@ -106,62 +139,62 @@
     
     if(true)
     {
-        int value = [self.target.valueR intValue];
+        float value = [self.target.valueR floatValue];
         int i = 0;
         while( value > 0)
         {
             float ratio = 1.0f;
-            if( value < 10)
-                ratio = value / 10.0;
+            if( value < _interval)
+                ratio = value / _interval;
             float h = 20 * ratio;
             [self createRectAtView:self frame:CGRectMake(240,618 - i * 28 - h,104, h)color:self.blueColor];
             i++;
-            value -= 10;
+            value -= _interval;
         }
     }
     if(true)
     {
-        int value = [self.target.bottom intValue];
+        float value = [self.target.bottom intValue];
         int i = 0;
         while( value > 0)
         {
             float ratio = 1.0f;
-            if( value < 10)
-                ratio = value / 10.0;
+            if( value < _interval)
+                ratio = value / _interval;
             float h = 20 * ratio;
             [self createRectAtView:self frame:CGRectMake(408,618 - i * 28 - h,104, h)color:self.greenColor];
             i++;
-            value -= 10;
+            value -= _interval;
         }
     }
     if(true)
     {
-        int value = [self.target.avg intValue];
+        float value = [self.target.avg intValue];
         int i = 0;
         while( value > 0)
         {
             float ratio = 1.0f;
-            if( value < 10)
-                ratio = value / 10.0;
+            if( value < _interval)
+                ratio = value / _interval;
             float h = 20 * ratio;
             [self createRectAtView:self frame:CGRectMake(576,618 - i * 28 - h,104, h)color:self.grayColor];
             i++;
-            value -= 10;
+            value -= _interval;
         }
     }
     if(true)
     {
-        int value = [self.target.top intValue];
+        float value = [self.target.top intValue];
         int i = 0;
         while( value > 0)
         {
             float ratio = 1.0f;
-            if( value < 10)
-                ratio = value / 10.0;
+            if( value < _interval)
+                ratio = value / _interval;
             float h = 20 * ratio;
             [self createRectAtView:self frame:CGRectMake(743,618 - i * 28 - h,104, h)color:self.yellowColor];
             i++;
-            value -= 10;
+            value -= _interval;
         }
     }
     

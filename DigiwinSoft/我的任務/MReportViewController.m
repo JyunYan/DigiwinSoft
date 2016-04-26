@@ -7,12 +7,15 @@
 //
 
 #import "MReportViewController.h"
-#import "MConfig.h"
-#import "MReportTableViewCell.h"
-#import "MDataBaseManager.h"
-#import "MDirector.h"
 
 #import "MReportEditTableCell.h"
+#import "MReportTableViewCell.h"
+
+#import "MDataBaseManager.h"
+#import "MDirector.h"
+#import "MConfig.h"
+
+
 
 #define TAG_BUTTON_Not_Start 101
 #define TAG_BUTTON_Start 102
@@ -75,20 +78,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    if(_guide)
+    if(_guide){
         self.title=_guide.name;
-    
-    if(_workItem)
+        _reportArray = [[MDataBaseManager sharedInstance] loadReportsWithObject:_guide];
+    }else if(_workItem){
         self.title=_workItem.name;
-    
-    if(_activity)
+        _reportArray = [[MDataBaseManager sharedInstance] loadReportsWithObject:_workItem];
+    }else if(_activity){
         self.title=_activity.name;
+        _reportArray = [[MDataBaseManager sharedInstance] loadReportsWithObject:_activity];
+    }
+    
     self.extendedLayoutIncludesOpaqueBars = YES;
 
     self.view.backgroundColor= [UIColor whiteColor];
     CGFloat posY=64.;
     
-    _reportArray = [[MDataBaseManager sharedInstance] loadReports];
+    
     _tableView = [self createTableViewWithFrame:CGRectMake(0., posY, DEVICE_SCREEN_WIDTH, DEVICE_SCREEN_HEIGHT - 40.- 64.)];
     [self.view addSubview:_tableView];
 
@@ -157,6 +163,8 @@
 
 - (void)actionConfirm:(id) sender
 {
+    [[MDirector sharedInstance] showHUD];
+    
     //uuid
     _report.uuid = [[MDirector sharedInstance] getCustUuidWithPrev:REPORT_UUID_PREV];
     
@@ -178,11 +186,36 @@
     
     BOOL bOK = [[MDataBaseManager sharedInstance] insertReport:_report];
     if (bOK) {
-        _reportArray = [[MDataBaseManager sharedInstance] loadReports];
+        if(_guide)
+            _reportArray = [[MDataBaseManager sharedInstance] loadReportsWithObject:_guide];
+        else if(_workItem)
+            _reportArray = [[MDataBaseManager sharedInstance] loadReportsWithObject:_workItem];
+        else if(_activity)
+            _reportArray = [[MDataBaseManager sharedInstance] loadReportsWithObject:_activity];
+        
+        // 更新 關鍵活動/工作項目 狀態
+        [self updateObjStatus];
+        
         [self.tableView reloadData];
+        [[MDirector sharedInstance] hideHUD];
+        [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"回報成功", @"回報成功")];
+        
     } else {
-        [[MDirector sharedInstance] showAlertDialog:@"回報失敗"];
+        [[MDirector sharedInstance] hideHUD];
+        [[MDirector sharedInstance] showAlertDialog:NSLocalizedString(@"回報失敗", @"回報失敗")];
     }
+}
+
+- (void)updateObjStatus
+{
+    NSString* status = _report.status;
+    
+    if(_guide)
+        [[MDataBaseManager sharedInstance] updateCustGuideWithUID:_guide.uuid status:status];
+    else if(_activity)
+        [[MDataBaseManager sharedInstance] updateCustActivityWithUID:_activity.uuid status:status];
+    else if(_workItem)
+        [[MDataBaseManager sharedInstance] updateCustWorkItemWithUID:_workItem.uuid status:status];
 }
 
 #pragma mark - UITableViewDelegate

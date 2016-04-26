@@ -34,7 +34,7 @@ static MDataBaseManager* _director = nil;
 }
 
 - (id)init
-{
+{   
     self = [super init];
     
     if (self)
@@ -271,6 +271,11 @@ static MDataBaseManager* _director = nil;
     
     return array;
 }
+
+//- (void)loadEventSuggestActivityWithEvent:(MEvent*)event
+//{
+//    NSArray* array1 = [self loadActivitysWithEvent:event];
+//}
 
 - (NSArray*)loadActivitysWithEvent:(MEvent*)event
 {
@@ -924,6 +929,20 @@ static MDataBaseManager* _director = nil;
     
 }
 
+- (NSInteger)loadHistoryTargetMaxValueRWithTargetID:(NSString*)tarid
+{
+    NSString* indid = [MDirector sharedInstance].currentIndustry.uuid;
+    NSString* compid = [MDirector sharedInstance].currentUser.companyId;
+    NSString* sql = @"select rct.VALUE_R from R_IND_TAR as rit inner join M_TARGET as tar on tar.ID = rit.TAR_ID inner join R_COMP_TAR as rct on tar.ID = rct.TAR_ID where rit.IND_ID = ? and tar.ID = ? and rct.COMP_ID = ? order by rct.VALUE_R * 1 desc limit 1";
+    
+    FMResultSet* rs = [self.db executeQuery:sql, indid, tarid, compid];
+    if([rs next]){
+        NSString* value = [rs stringForColumn:@"VALUE_R"];
+        return [value integerValue];
+    }
+    return 100;
+}
+
 // p29
 - (NSArray*)loadHistoryTargetArrayWithTargetID:(NSString*)tarid limit:(NSInteger)limit
 {
@@ -1210,11 +1229,24 @@ static MDataBaseManager* _director = nil;
 }
 
 // p35
-- (NSArray*)loadReports
+- (NSArray*)loadReportsWithObject:(id)obj
 {
-    NSString* sql = @"select * from U_REPORT order by CREATE_DATE desc";
+    NSString* sql = @"select * from U_REPORT ";
     // select *
     // from U_REPORT
+    
+    if([obj isKindOfClass:[MCustGuide class]]){
+        MCustGuide* guide = (MCustGuide*)obj;
+        sql = [sql stringByAppendingFormat:@"where GUI_ID = '%@' ", guide.uuid];
+    }else if([obj isKindOfClass:[MCustActivity class]]){
+        MCustActivity* activity = (MCustActivity*)obj;
+        sql = [sql stringByAppendingFormat:@"where ACT_ID = '%@' ", activity.uuid];
+    }else if([obj isKindOfClass:[MCustWorkItem class]]){
+        MCustWorkItem* wi = (MCustWorkItem*)obj;
+        sql = [sql stringByAppendingFormat:@"where WI_ID = '%@' ", wi.uuid];
+    }
+    
+    sql = [sql stringByAppendingString:@"order by CREATE_DATE desc"];
     
     NSMutableArray* array = [NSMutableArray new];
     
@@ -2316,6 +2348,14 @@ static MDataBaseManager* _director = nil;
     return b;
 }
 
+- (void)updateCustGuideWithUID:(NSString*)uid status:(NSString*)status
+{
+    NSString* sql = @"update U_GUIDE set STATUS = ? where ID = ?";
+    BOOL b = [self.db executeUpdate:sql, uid, status];
+    if(!b)
+        NSLog(@"update cust guide status failed : %@", uid);
+}
+
 - (void)insertCustActivitys:(NSArray*)array
 {
     for (MCustActivity* act in array) {
@@ -2353,6 +2393,15 @@ static MDataBaseManager* _director = nil;
     return b;
 }
 
+- (void)updateCustActivityWithUID:(NSString*)uid status:(NSString*)status
+{
+    NSString* sql = @"update U_ACTIVITY set STATUS = ? where ID = ?";
+    BOOL b = [self.db executeUpdate:sql, status, uid];
+    if(!b)
+        NSLog(@"update cust activity status failed : %@", uid);
+}
+
+/*
 - (BOOL)deleteCustActivityWithGuideId:(NSString*)uuid
 {
     NSString* sql = @"delete from U_ACTIVITY where GUIDE_ID = ?";
@@ -2364,6 +2413,7 @@ static MDataBaseManager* _director = nil;
     }
     return b;
 }
+ */
 
 - (BOOL)deleteCustActivity:(MCustActivity*)activity
 {
@@ -2420,6 +2470,15 @@ static MDataBaseManager* _director = nil;
     return b;
 }
 
+- (void)updateCustWorkItemWithUID:(NSString*)uid status:(NSString*)status
+{
+    NSString* sql = @"update U_WORK_ITEM set STATUS = ? where ID = ?";
+    BOOL b = [self.db executeUpdate:sql, uid, status];
+    if(!b)
+        NSLog(@"update cust work item status failed : %@", uid);
+}
+
+/*
 - (BOOL)deleteCustWorkItemWithGuideId:(NSString*)uuid
 {
     NSString* sql = @"delete from U_WORK_ITEM where GUIDE_ID = ?";
@@ -2443,6 +2502,7 @@ static MDataBaseManager* _director = nil;
     }
     return b;
 }
+ */
 
 - (BOOL)deleteCustWorkItem:(MCustWorkItem*)item
 {
@@ -2516,7 +2576,18 @@ static MDataBaseManager* _director = nil;
     
     BOOL b = [self.db executeUpdate:sql, rel, guide.uuid];
     if(!b)
-        NSLog(@"update guide release to %@ failed: %@", rel, [self.db lastErrorMessage]);
+        NSLog(@"update guide RELEASE to %@ failed: %@", rel, [self.db lastErrorMessage]);
+    
+    return b;
+}
+
+- (BOOL)updateGuide:(MCustGuide *)guide managerID:(NSString*)manaID
+{
+    NSString* sql = @"update U_GUIDE set EMP_ID = ? where ID = ?";
+    
+    BOOL b = [self.db executeUpdate:sql, manaID, guide.uuid];
+    if(!b)
+        NSLog(@"update guide  EMP_ID to %@ failed: %@", manaID, [self.db lastErrorMessage]);
     
     return b;
 }

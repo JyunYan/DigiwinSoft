@@ -7,16 +7,18 @@
 //
 
 #import "MTasksDeployedViewController.h"
-#import "MDirector.h"
-#import "MActivity.h"
-#import "CustomIOSAlertView.h"
 #import "MDesignateResponsibleViewController.h"
 #import "MGoalSettingViewController.h"
 #import "MTaskRaidersViewController.h"
+
+#import "CustomIOSAlertView.h"
 #import "MGanttViewController2.h"
 #import "MRaidersTableCell.h"
 #import "MRaidersTableHeader.h"
 #import "MCustomAlertView.h"
+
+#import "MDirector.h"
+#import "MActivity.h"
 
 #define TAG_LABEL_ACTIVITY 100
 
@@ -232,9 +234,10 @@
     
     CGFloat posX = 0;
     CGFloat posY = rect.origin.y;
-    CGFloat width = rect.size.width / 2.;
+    CGFloat width = rect.size.width;
     CGFloat height = rect.size.height;
 
+    /*
     UIButton* addActButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     addActButton.backgroundColor = [[MDirector sharedInstance] getCustomBlueColor];
     [addActButton setTitle:NSLocalizedString(@"新增關鍵活動", @"新增關鍵活動") forState:UIControlStateNormal];
@@ -244,6 +247,7 @@
     
     
     posX += addActButton.frame.size.width;
+     */
     
     UIButton* notifyButton = [[UIButton alloc] initWithFrame:CGRectMake(posX, posY, width, height)];
     notifyButton.backgroundColor = [[MDirector sharedInstance] getCustomRedColor];
@@ -260,6 +264,7 @@
     
     UIView* view = [[UIView alloc] initWithFrame:rect];
     view.backgroundColor = [UIColor whiteColor];
+    view.layer.cornerRadius = 7.;
     
     CGFloat viewWidth = view.frame.size.width;
     CGFloat viewHeight = view.frame.size.height;
@@ -337,13 +342,12 @@
 
 -(void)showDescAlert:(id)sender
 {
-    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    CGFloat screenWidth = screenFrame.size.width;
-
-    _customIOSAlertView = [[CustomIOSAlertView alloc] initWithParentView:self.view.superview];
+    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    
+    _customIOSAlertView = [[CustomIOSAlertView alloc] initWithParentView:window];
     [_customIOSAlertView setButtonTitles:nil];
     
-    UIView* view = [self createDescView:CGRectMake(0, 0, screenWidth, 300)];
+    UIView* view = [self createDescView:CGRectMake(0, 0, DEVICE_SCREEN_WIDTH-20, 300)];
     [_customIOSAlertView setContainerView:view];
     [_customIOSAlertView show];    
 }
@@ -480,7 +484,7 @@
     [cell setDelegate:self];
     [cell setDelegateA:self];
     [cell prepareWithCustActivity:act];
-    cell.rightUtilityButtons = [self rightButtons];
+    //cell.rightUtilityButtons = [self rightButtons];
     
     cell.btnRaiders.hidden=YES;
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;

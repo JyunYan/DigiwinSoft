@@ -16,7 +16,9 @@
 
 #import "MTarInfoChartView.h"
 
-@interface MInventoryTurnoverViewController ()<UITextFieldDelegate>
+#define TEXTFIELD_COMPLETED_DATE 101
+
+@interface MInventoryTurnoverViewController ()<UITextFieldDelegate, UIPickerViewDelegate>
 {
     UITextField *txtTarget;
     UITextField *txtTargetDay;
@@ -67,7 +69,6 @@
 
 -(void)addMainMenu
 {
-    
     //screenSize
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
     screenWidth = screenSize.width;
@@ -103,7 +104,6 @@
     txtName.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
     txtName.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:txtName];
-    
     
     //Label
     UILabel *labInit=[[UILabel alloc]initWithFrame:CGRectMake(20, 170, 85, 15)];
@@ -191,47 +191,53 @@
 
     //UITextField
     txtTargetDay=[[UITextField alloc]initWithFrame:CGRectMake(105,308, 140, 29)];
+    txtTargetDay.delegate = self;
     txtTargetDay.borderStyle=UITextBorderStyleLine;
     txtTargetDay.text = _guide.custTaregt.completeDate;
-    txtTargetDay.tag=101;
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textFieldChanged:)
-                                                 name:UITextFieldTextDidBeginEditingNotification
-                                               object:nil];
+    txtTargetDay.tag=TEXTFIELD_COMPLETED_DATE;
+    
     txtTargetDay.rightViewMode = UITextFieldViewModeAlways;
     txtTargetDay.rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
     txtTargetDay.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 0)];
     txtTargetDay.leftViewMode = UITextFieldViewModeAlways;
-    [self.view addSubview:txtTargetDay];
-
-}
--(void)textFieldChanged:(UITextField*)textField
-{
-    datePicker=[[UIDatePicker alloc]init];//WithFrame:CGRectMake(0,screenHeight-70,screenWidth, 70)];
-    datelocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];
-    datePicker.locale = datelocale;
-    datePicker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
-    datePicker.datePickerMode = UIDatePickerModeDate;
-       txtTargetDay.inputView = datePicker;
     
-    // 建立 UIToolbar
     UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
     UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelPicker)];
     toolBar.items = [NSArray arrayWithObject:right];
-      txtTargetDay.inputAccessoryView = toolBar;
+    txtTargetDay.inputAccessoryView = toolBar;
     
+    datePicker=[[UIDatePicker alloc]init];//WithFrame:CGRectMake(0,screenHeight-70,screenWidth, 70)];
+//    datelocale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_TW"];
+//    datePicker.locale = datelocale;
+//    datePicker.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    datePicker.datePickerMode = UIDatePickerModeDate;
+    [datePicker addTarget:self action:@selector(dateIsChanged:) forControlEvents:UIControlEventValueChanged];
+    txtTargetDay.inputView = datePicker;
+    
+    if(txtTargetDay.text.length > 0){
+        NSDateFormatter* fm = [NSDateFormatter new];
+        fm.dateFormat = @"yyyy/MM/dd";
+        NSDate* date = [fm dateFromString:txtTargetDay.text];
+        datePicker.date = date;
+    }else{
+        datePicker.date = [NSDate date];
+    }
+    
+    [self.view addSubview:txtTargetDay];
+
 }
 
--(void) cancelPicker {
-    if ([self.view endEditing:NO]) {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:@"yyyy-MM-dd" options:0 locale:datelocale];
-        [formatter setDateFormat:dateFormat];
-        [formatter setLocale:datelocale];
-        
-        //將選取後的日期填入UITextField
-        txtTargetDay.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
-    }
+- (void)dateIsChanged:(UIDatePicker*)picker
+{
+    [self setCompleteDate:[picker date]];
+}
+
+-(void) cancelPicker
+{
+    UIDatePicker* picker = (UIDatePicker*)txtTargetDay.inputView;
+    [self setCompleteDate:[picker date]];
+    
+    [txtTargetDay endEditing:YES];
 }
 
 #pragma mark - UIButton
@@ -258,13 +264,26 @@
     return;
 }
 
-#pragma mark - UITextFieldDelegate 相關
+#pragma mark - UITextFieldDelegate 相關   
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return YES;
 }
+
+- (void)setCompleteDate:(NSDate*)date
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    [formatter setDateFormat:@"yyyy/MM/dd"];
+    txtTargetDay.text = [formatter stringFromDate:date];
+    //將選取後的日期填入UITextField
+    
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    _guide.custTaregt.completeDate = [formatter stringFromDate:date];;
+}
+
 /*
 #pragma mark - Navigation
 

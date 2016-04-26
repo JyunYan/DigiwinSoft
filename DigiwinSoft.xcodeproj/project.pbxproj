@@ -260,6 +260,7 @@
 		DCF46B271B454A0800C771BB /* MCustActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B261B454A0800C771BB /* MCustActivity.m */; };
 		DCF46B2A1B454FA800C771BB /* MCustWorkItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B291B454FA800C771BB /* MCustWorkItem.m */; };
 		DCF46B2D1B462D5A00C771BB /* MSkill.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF46B2C1B462D5A00C771BB /* MSkill.m */; };
+		DCFC00E81BD8E335001357CD /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFC00E71BD8E335001357CD /* MBProgressHUD.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -688,6 +689,8 @@
 		DCF46B291B454FA800C771BB /* MCustWorkItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCustWorkItem.m; path = structure/MCustWorkItem.m; sourceTree = "<group>"; };
 		DCF46B2B1B462D5A00C771BB /* MSkill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSkill.h; path = structure/MSkill.h; sourceTree = "<group>"; };
 		DCF46B2C1B462D5A00C771BB /* MSkill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSkill.m; path = structure/MSkill.m; sourceTree = "<group>"; };
+		DCFC00E61BD8E335001357CD /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		DCFC00E71BD8E335001357CD /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -906,6 +909,7 @@
 		3AB4CE1E1B32895C00143374 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				DCFC00E51BD8E335001357CD /* MBProgressHUD */,
 				38FD52EF1B54BF3F00AC03F4 /* RPRadarChart */,
 				3AE9972F1B550CF5005D590C /* ChartView */,
 				38DCDD881B4E1852008B57A2 /* RVCollectionView */,
@@ -1420,6 +1424,15 @@
 			name = iCarousel;
 			sourceTree = "<group>";
 		};
+		DCFC00E51BD8E335001357CD /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				DCFC00E61BD8E335001357CD /* MBProgressHUD.h */,
+				DCFC00E71BD8E335001357CD /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1710,6 +1723,7 @@
 				3AE997381B550CF5005D590C /* RotatedView.m in Sources */,
 				DCF46AB91B41279900C771BB /* iCarousel.m in Sources */,
 				DCE9517B1B60C27F00E3C059 /* MActFlowChart.m in Sources */,
+				DCFC00E81BD8E335001357CD /* MBProgressHUD.m in Sources */,
 				38F3BF8C1B58CF94007BBC30 /* MGanttViewController.m in Sources */,
 				3AB4CE111B32831500143374 /* MMonitorMapViewController.m in Sources */,
 				DCE9518A1B60E6AC00E3C059 /* MMyPlanTableViewCell.m in Sources */,

@@ -114,6 +114,12 @@
     MIndustry* current = [MDirector sharedInstance].currentIndustry;
     
     if(![industry.uuid isEqualToString:current.uuid]){
+        
+        NSUserDefaults* pref = [NSUserDefaults standardUserDefaults];
+        [pref setObject:industry.uuid forKey:@"IndustryId"];
+        [pref setObject:industry.name forKey:@"IndustryName"];
+        [pref synchronize];
+        
         [MDirector sharedInstance].currentIndustry = industry;
         [[NSNotificationCenter defaultCenter] postNotificationName:kIndustryDidChanged object:nil];
     }

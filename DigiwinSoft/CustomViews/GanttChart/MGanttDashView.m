@@ -34,11 +34,11 @@
         }
         
         if (bChang) {
-            _ChangColor=[[MDirector sharedInstance]getCustomRedColor];
+            _ChangColor=[[[MDirector sharedInstance] getCustomRedColor] colorWithAlphaComponent:0.3];
         }
         else
         {
-            _ChangColor=[[MDirector sharedInstance]getCustomBlueColor];
+            _ChangColor=[[[MDirector sharedInstance] getCustomBlueColor] colorWithAlphaComponent:0.3];
         }
         
         

@@ -7,16 +7,18 @@
 //
 
 #import "MRadarChartViewController.h"
-#import "MConfig.h"
-#import "MMgRadarChartView.h"
 #import "MRouletteViewController.h"
-#import "MDataBaseManager.h"
-#import "MDirector.h"
-#import "MEfficacy.h"
 
 #import "MTimeLineView.h"
 #import "MMgRadarButton.h"
+#import "MMgRadarChartView.h"
+
+#import "MConfig.h"
+#import "MDirector.h"
+#import "MDataBaseManager.h"
+
 #import "MManageItem.h"
+#import "MEfficacy.h"
 
 #define clickTo    @"clickTo"
 #define kRadarSpokeQualityMax   8

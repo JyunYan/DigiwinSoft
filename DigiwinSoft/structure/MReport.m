@@ -10,4 +10,14 @@
 
 @implementation MReport
 
+- (id)init
+{
+    self = [super init];
+    if(self){
+        
+        _status = @"0";
+    }
+    return self;
+}
+
 @end

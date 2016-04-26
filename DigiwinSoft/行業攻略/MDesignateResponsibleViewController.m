@@ -88,6 +88,9 @@
     
     UIBarButtonItem* back  =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarSystemButtonBackArrow target:self action:@selector(backToPage:)];
     self.navigationItem.leftBarButtonItem = back;
+    
+//    UIBarButtonItem* back = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+//    self.navigationController.navigationBar.topItem.backBarButtonItem = back;
 }
 
 - (void)viewWillAppear:(BOOL)animated

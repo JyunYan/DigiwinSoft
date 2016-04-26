@@ -83,7 +83,7 @@
 - (NSArray*)loadMyGuideMissionsWithRelese:(BOOL)brelease status:(NSString*)status;
 - (NSArray*)loadMyActivityMissionWithRelese:(BOOL)brelease status:(NSString*)status;
 - (NSArray*)loadMyWorkItemMissionWithRelese:(BOOL)brelease status:(NSString*)status accepted:(NSString*)accepted;
-- (NSArray*)loadReports;
+- (NSArray*)loadReportsWithObject:(id)obj;
 
 - (BOOL)insertReport:(MReport*)report;
 
@@ -130,6 +130,7 @@
 - (NSArray*)loadCustWorkItemArrayWithActivity:(MCustActivity*)act;
 
 // get 某企業指標實際值的歷史資料(過去一年)
+- (NSInteger)loadHistoryTargetMaxValueRWithTargetID:(NSString*)tarid;
 - (NSArray*)loadHistoryTargetArrayWithTargetID:tarid limit:(NSInteger)limit;
 - (NSArray*)loadAllHistoryTargetArrayWithTargetID:(NSString*)tarid;
 
@@ -150,15 +151,22 @@
 - (void)insertCustWorkItems:(NSArray*)array;
 - (BOOL)insertCustWorkItem:(MCustWorkItem*)item;
 
-- (BOOL)deleteCustActivityWithGuideId:(NSString*)uuid;
+- (BOOL)insertCustTarget:(MCustTarget*)target withID:(NSString*)uuid;
+
+- (void)updateCustGuideWithUID:(NSString*)uid status:(NSString*)status;
+- (void)updateCustActivityWithUID:(NSString*)uid status:(NSString*)status;
+- (void)updateCustWorkItemWithUID:(NSString*)uid status:(NSString*)status;
+
+//- (BOOL)deleteCustActivityWithGuideId:(NSString*)uuid;
 - (BOOL)deleteCustActivity:(MCustActivity*)activity;
-- (BOOL)deleteCustWorkItemWithGuideId:(NSString*)uuid;
-- (BOOL)deleteCustWorkItemWithActivityId:(NSString*)uuid;
+//- (BOOL)deleteCustWorkItemWithGuideId:(NSString*)uuid;
+//- (BOOL)deleteCustWorkItemWithActivityId:(NSString*)uuid;
 - (BOOL)deleteCustWorkItem:(MCustWorkItem*)item;
 - (BOOL)deleteCustTargetWithId:(NSString*)uuid;
 
 // 更新對策 release 狀態 Yes:攻略 No:規劃
 - (BOOL)updateGuide:(MCustGuide*)guide release:(BOOL)release;
+- (BOOL)updateGuide:(MCustGuide *)guide managerID:(NSString*)manaID;
 
 // 判斷此攻略是否都有負責人
 - (BOOL)hasEmptyManagerUnderCustGudie:(MCustGuide*)guide;
